@@ -604,12 +604,12 @@ html.mn-lock,html.mn-lock body{overflow:hidden}
 .df.dark-card .dico{color:var(--lime)}
 .df.dark-card p{color:#AFC0BC}
 .df-zip{grid-column:span 2;display:grid;grid-template-columns:1fr 228px;gap:28px;align-items:center}
-.zip{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;aspect-ratio:1}
+.zip{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:repeat(4,minmax(0,1fr));gap:4px;aspect-ratio:1}
 .zip span{border-radius:6px;background:#D3DAD7}
 .zip .g{background:#2C3A37}
 .zip .t{background:var(--teal-2)}
 .zip .m{background:var(--mint-2)}
-.zip .you{background:var(--lime);display:grid;place-items:center;color:var(--ink);font-size:1.25rem}
+.zip .you{background:var(--lime);display:grid;place-items:center;color:var(--ink);font-size:1.25rem;line-height:1;min-height:0}
 .zip-key{display:flex;gap:16px;margin-top:18px;font-size:.8125rem;color:var(--body)}
 .zip-key b{display:inline-block;width:10px;height:10px;border-radius:3px;margin-right:6px;vertical-align:-1px}
 .df-cal{grid-column:3;grid-row:1 / span 2;justify-content:space-between;gap:28px}
