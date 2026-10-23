@@ -497,7 +497,7 @@ html.mn-lock,html.mn-lock body{overflow:hidden}
 
 /* ---------- contact ---------- */
 .contact{padding:0 var(--pad)}
-.ct-panel{max-width:var(--max);margin:0 auto;background:#151817;border-radius:40px;padding:clamp(48px,6vw,80px) clamp(12px,3vw,40px) clamp(12px,3vw,40px);display:flex;flex-direction:column;align-items:center;gap:44px;color:#fff}
+.ct-panel{max-width:var(--max);margin:0 auto;background:#151817;border-radius:40px;padding:clamp(12px,2vw,80px) clamp(12px,3vw,40px) clamp(12px,3vw,40px);display:flex;flex-direction:column;align-items:center;gap:44px;color:#fff}
 .ct-copy{display:flex;flex-direction:column;align-items:center;text-align:center;max-width:760px;padding:0 8px}
 .ct-copy .label{color:#fff}
 .ct-copy h2{color:#fff;margin-top:22px;font-size:clamp(2.5rem,4.8vw,4rem);line-height:1.05}
@@ -627,20 +627,20 @@ html.mn-lock,html.mn-lock body{overflow:hidden}
 @media (max-width:639px){.diff-grid{grid-template-columns:1fr}.df-zip,.df-cal{grid-column:auto}.df{min-height:0;padding:24px}.df-zip{grid-template-columns:1fr;gap:22px}.zip{width:100%;max-width:none;aspect-ratio:2/1;gap:6px}.zip-key{flex-wrap:wrap;gap:8px 16px}.df .dico{margin-bottom:28px}.df-cal{gap:22px}}
 
 /* H. will / won't help */
-.fit2{display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:1040px;margin:56px auto 0;align-items:start}
+.fit2{display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:1040px;margin:56px auto 0;align-items:stretch}
 .fw{border-radius:24px;padding:40px}
 .fw.dark-card{box-shadow:0 40px 60px -30px rgba(15,23,22,.55)}
 .fw-k{display:block;text-align:center;font-size:.8125rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px}
 .fw.dark-card .fw-k{color:var(--lime)}
 .fw.lite-card .fw-k{color:#D9573A}
 .fw h3{text-align:center;font-size:clamp(1.5rem,2.2vw,1.875rem)}
-.fw li span b{display:block;margin-bottom:4px;font-weight:600}
+.fw li span b{display:block;font-weight:600}
 .fw.dark-card li span{color:#AFC0BC;font-weight:400}
 .fw.dark-card li span b{color:#fff}
 .fw.lite-card li span b{color:var(--ink)}
 .fw.dark-card h3 em{font-style:normal;color:var(--lime)}
 .fw.lite-card h3 em{font-style:normal;color:#D9573A}
-.fw ul{margin-top:26px;display:grid;gap:18px}
+.fw ul{margin-top:26px;display:grid;gap:14px}
 .fw li{display:flex;gap:12px;font-size:1.0625rem;line-height:1.5}
 .fw.dark-card li{color:#F1F6F4;font-weight:500}
 .fw.lite-card li{color:var(--body)}
@@ -648,6 +648,8 @@ html.mn-lock,html.mn-lock body{overflow:hidden}
 .fw.dark-card li i{color:#4ADE80}
 .fw.lite-card li i{color:#D9573A}
 @media (max-width:767px){.fit2{grid-template-columns:1fr;gap:16px}.fw{padding:28px}}
+/* desktop: label, heading and each point sit on shared rows, so both cards match line for line */
+@supports (grid-template-rows:subgrid){@media (min-width:768px){.fit2{row-gap:0}.fw{display:grid;grid-row:span 7;grid-template-rows:subgrid;row-gap:14px}.fw-k{margin-bottom:-4px}.fw h3{margin-bottom:12px;align-self:start}.fw ul{display:contents}}}
 
 /* J. contact: booking calendar (Calendly-style, live LeadConnector availability) */
 .ct-body{width:100%;max-width:1100px}
@@ -843,13 +845,13 @@ html.mn-lock,html.mn-lock body{overflow:hidden}
     <span class="tagpill glass">The DMC Method</span>
     <div class="shead" style="margin-top:22px">
       <h2 class="h2" id="sys-title">A complete patient<br><span class="acc">acquisition system.</span></h2>
-      <p>Four pillars, engineered to work together. The full pipeline from first click to confirmed consultation lives under one roof, one team, and one accountable plan.</p>
+      <p>Four pillars, engineered to work together.</p>
     </div>
     <div class="sys-grid">
       <article class="sys dark-card sys-a up">
         <i class="ph ph-headset sico" aria-hidden="true"></i>
         <h3>End-to-end management</h3>
-        <p>We manage your patient acquisition end-to-end: ads, screening, follow-up and booking, so you stay focused on treatment.</p>
+        <p>We manage your patient acquisition end-to-end, so you stay focused on treatment.</p>
         <div class="phone">
           <img class="phx" src="assets/img/phone.webp" alt="" width="800" height="1007" style="object-position:50% 25%" loading="lazy" decoding="async">
           <div class="callpill"><img src="assets/dmc-mark.png" alt="" width="24" height="23"><span><small>Incoming call</small>Dental Media Corp</span><span class="bt"><i class="ph-fill ph-phone-x no" aria-hidden="true"></i><i class="ph-fill ph-phone yes" aria-hidden="true"></i></span></div>
@@ -858,17 +860,17 @@ html.mn-lock,html.mn-lock body{overflow:hidden}
       <article class="sys dark-card sys-b up">
         <i class="ph ph-funnel sico" aria-hidden="true"></i>
         <h3>Qualified patients only</h3>
-        <p>Every lead is vetted for intent and financial readiness, then books with a deposit. No time wasted on uncommitted inquiries.</p>
+        <p>Every lead is vetted, then books with a deposit.</p>
       </article>
       <article class="sys dark-card up">
         <i class="ph ph-video-camera sico" aria-hidden="true"></i>
         <h3>Original video campaigns</h3>
-        <p>We produce custom content inside your clinic, real people, real cases, built to earn trust before the consult.</p>
+        <p>Real people, real cases, built to earn trust before the consult.</p>
       </article>
       <article class="sys dark-card up">
         <i class="ph ph-users-three sico" aria-hidden="true"></i>
         <h3>The DMC Network</h3>
-        <p>Access a private group of partner clinics sharing what works, from case acceptance to patient communication.</p>
+        <p>Partner clinics sharing what works.</p>
       </article>
     </div>
   </div>
@@ -888,19 +890,19 @@ html.mn-lock,html.mn-lock body{overflow:hidden}
     <div class="bento">
       <article class="bx b1">
         <span class="num">5-20×</span>
-        <div class="foot"><h3>Predictable ROI</h3><p>Clinics typically see 5-20× return on ad spend, depending on market and offer, driven by a structured acquisition system, not guesswork.</p></div>
+        <div class="foot"><h3>Predictable ROI</h3><p>Driven by a structured acquisition system, not guesswork.</p></div>
       </article>
       <article class="bx b2">
-        <div><h3>Dental-trained patient coordinators</h3><p>Your leads are handled by people who understand dentistry, not generic call-center reps.</p></div>
+        <div><h3>Dental-trained patient coordinators</h3><p>People who understand dentistry, not generic call-center reps.</p></div>
         <span class="pill"><i class="ph ph-headset" aria-hidden="true"></i></span>
       </article>
       <article class="bx b3">
         <span class="num" data-to="80" data-suf="%+">80%+</span>
-        <div class="foot"><h3>80%+ show-up rates</h3><p>We maintain 80%+ show-up rates through strict screening, fast follow-up and deposit-based booking.</p></div>
+        <div class="foot"><h3>80%+ show-up rates</h3><p>Strict screening, fast follow-up and deposit-based booking.</p></div>
       </article>
       <article class="bx b4">
         <i class="ph ph-flow-arrow bico" aria-hidden="true"></i>
-        <div class="foot"><h3>A complete system</h3><p>We manage the full pipeline, from first click to confirmed consultation, so nothing is lost along the way.</p></div>
+        <div class="foot"><h3>A complete system</h3><p>From first click to confirmed consultation.</p></div>
       </article>
       <div class="bx b5">
         <p class="b5-t">Your complete dental marketing team, all in one place.</p>
@@ -916,7 +918,7 @@ html.mn-lock,html.mn-lock body{overflow:hidden}
     <span class="tagpill glass">Results</span>
     <div class="sv-head">
       <h2 id="res-title"><span class="g">Real clinics. Real results.</span>Real <span class="acc">growth.</span></h2>
-      <p>Helping clinics grow with clarity, consistency and confidence. Rather than tell you what we do, here's what our partner clinics say.</p>
+      <p>Here’s what our partner clinics say.</p>
     </div>
 
     <div class="sv-grid">
@@ -978,7 +980,7 @@ html.mn-lock,html.mn-lock body{overflow:hidden}
     <span class="label">Case studies</span>
     <div>
       <h2 class="h2" id="case-title">The numbers behind<br>the growth.</h2>
-      <p>Real campaigns. Real spend. Real revenue. Here’s what a structured acquisition system looks like in the wild.</p>
+      <p>Real campaigns. Real spend. Real revenue.</p>
     </div>
     <a class="btn btn-lime mag" href="#book">Book a Demo</a>
   </div>
@@ -1030,13 +1032,13 @@ html.mn-lock,html.mn-lock body{overflow:hidden}
   <div class="wrap">
     <div class="shead">
       <h2 class="h2" id="df-title">Stop wasting time on<br><span class="acc">no-shows &amp; tire-kickers.</span></h2>
-      <p>You’ve seen the numbers. Now see how the system works, and whether it fits your clinic.</p>
+      <p>You’ve seen the numbers. Now see how the system works.</p>
     </div>
     <div class="diff-grid">
       <article class="df lite-card df-zip up">
         <div>
           <h3>One clinic per area</h3>
-          <p>We protect our clients’ territories to avoid competition and ensure the strategy we build is exclusively yours. No recycled ads, no copy-paste campaigns.</p>
+          <p>The strategy we build is exclusively yours.</p>
           <div class="zip-key"><span><b style="background:var(--lime)"></b>Your clinic</span><span><b style="background:var(--teal-2)"></b>Your territory</span><span><b style="background:#2C3A37"></b>Taken</span></div>
         </div>
         <div class="zip" id="zip" role="img" aria-label="Map grid: your clinic in the middle of a protected territory">
@@ -1054,22 +1056,21 @@ html.mn-lock,html.mn-lock body{overflow:hidden}
         </div>
         <div>
           <h3>Traction in 30-60 days</h3>
-          <p>Every clinic is different, but most begin seeing traction within the first 30-60 days once campaigns, content and systems are fully activated.</p>
+          <p>Once campaigns, content and systems are fully activated.</p>
         </div>
       </article>
       <article class="df dark-card up">
         <i class="ph ph-calendar-check dico" aria-hidden="true"></i>
         <h3>Month-to-month</h3>
-        <p>Everything is month-to-month. We believe in earning your business every single month through results, transparency and partnership.</p>
+        <p>Earning your business every single month through results, transparency and partnership.</p>
       </article>
       <article class="df lite-card up">
         <i class="ph ph-stack dico" aria-hidden="true"></i>
         <h3>Full-service</h3>
-        <p>From content to SEO, ads, social, funnels and lead follow-up. Most clinics eliminate 3-5 vendors after partnering with us.</p>
+        <p>Most clinics eliminate 3-5 vendors.</p>
       </article>
     </div>
     <div class="cta-row">
-      <p class="cta-note">We’ll break down what’s possible based on your location, offer and goals.</p>
       <a class="btn btn-lime mag" href="#book">Book a Demo</a>
     </div>
   </div>
@@ -1081,14 +1082,14 @@ html.mn-lock,html.mn-lock body{overflow:hidden}
     <div class="center">
       <span class="label">What we do</span>
       <h2 class="h2" id="pv-title" style="margin-top:16px">Full-service dental<br><span class="acc">marketing solutions.</span></h2>
-      <p class="sub">Five disciplines. One accountable team. Pulled together, sequenced, measured and delivered, they become an acquisition engine.</p>
+      <p class="sub">Five disciplines. One accountable team.</p>
     </div>
     <div class="stack" id="stack">
-      <article class="step" id="svc-video" style="--i:0"><span class="step-n">01</span><div><h3>Video &amp; Content Production</h3><p class="txt">Cinematic video that builds trust before patients ever walk in. Shot in-clinic by our own crew, never stock, never recycled.</p></div><div class="step-prog"><span>01 / 05</span><div class="road" aria-hidden="true"><i class="f"></i><i></i><i></i><i></i><i></i></div></div></article>
-      <article class="step" id="svc-social" style="--i:1"><span class="step-n">02</span><div><h3>Social Media Management</h3><p class="txt">Story-driven social that reflects the experience you deliver in-clinic. Planned, produced and published by a team that only works with dental.</p></div><div class="step-prog"><span>02 / 05</span><div class="road" aria-hidden="true"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></div></div></article>
-      <article class="step" id="svc-seo" style="--i:2"><span class="step-n">03</span><div><h3>Website &amp; SEO</h3><p class="txt">Conversion-focused sites and local SEO that attract high-intent patients, built to rank and built to book.</p></div><div class="step-prog"><span>03 / 05</span><div class="road" aria-hidden="true"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i></div></div></article>
-      <article class="step" id="svc-paid" style="--i:3"><span class="step-n">04</span><div><h3>Paid Media &amp; Acquisition</h3><p class="txt">Meta and Google Ads with pre-qualified leads and dental-trained appointment setters closing the loop.</p></div><div class="step-prog"><span>04 / 05</span><div class="road" aria-hidden="true"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></div></div></article>
-      <article class="step" id="svc-reporting" style="--i:4"><span class="step-n">05</span><div><h3>Reporting &amp; Analytics</h3><p class="txt">Transparent reporting and strategy based on real performance data: booked revenue, not vanity metrics.</p></div><div class="step-prog"><span>05 / 05</span><div class="road" aria-hidden="true"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></div></div></article>
+      <article class="step" id="svc-video" style="--i:0"><span class="step-n">01</span><div><h3>Video &amp; Content Production</h3><p class="txt">Cinematic video that builds trust before patients ever walk in.</p></div><div class="step-prog"><span>01 / 05</span><div class="road" aria-hidden="true"><i class="f"></i><i></i><i></i><i></i><i></i></div></div></article>
+      <article class="step" id="svc-social" style="--i:1"><span class="step-n">02</span><div><h3>Social Media Management</h3><p class="txt">Story-driven social that reflects the experience you deliver in-clinic.</p></div><div class="step-prog"><span>02 / 05</span><div class="road" aria-hidden="true"><i class="f"></i><i class="f"></i><i></i><i></i><i></i></div></div></article>
+      <article class="step" id="svc-seo" style="--i:2"><span class="step-n">03</span><div><h3>Website &amp; SEO</h3><p class="txt">Built to rank and built to book.</p></div><div class="step-prog"><span>03 / 05</span><div class="road" aria-hidden="true"><i class="f"></i><i class="f"></i><i class="f"></i><i></i><i></i></div></div></article>
+      <article class="step" id="svc-paid" style="--i:3"><span class="step-n">04</span><div><h3>Paid Media &amp; Acquisition</h3><p class="txt">Pre-qualified leads and dental-trained appointment setters.</p></div><div class="step-prog"><span>04 / 05</span><div class="road" aria-hidden="true"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i></i></div></div></article>
+      <article class="step" id="svc-reporting" style="--i:4"><span class="step-n">05</span><div><h3>Reporting &amp; Analytics</h3><p class="txt">Booked revenue, not vanity metrics.</p></div><div class="step-prog"><span>05 / 05</span><div class="road" aria-hidden="true"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></div></div></article>
     </div>
   </div>
 </section>
@@ -1098,7 +1099,7 @@ html.mn-lock,html.mn-lock body{overflow:hidden}
   <div class="wrap center">
     <span class="label">High-value cases</span>
     <h2 class="h2" id="treat-title">Want more patient flow,<br>especially high-value cases?</h2>
-    <p class="sub" style="max-width:720px;margin-left:auto;margin-right:auto">These are our specialty areas. We build targeted campaigns, patient-journey systems and content that positions your clinic as the trusted choice for transformative treatment.</p>
+    <p class="sub" style="max-width:720px;margin-left:auto;margin-right:auto">These are our specialty areas.</p>
   </div>
   <div class="t-row" id="tRow" tabindex="0" aria-label="High-value cases carousel. Use the arrow keys to move.">
     <article class="tcard on" aria-current="true"><div class="tc-text"><span class="tico"><i class="ph-fill ph-tooth" aria-hidden="true"></i></span><h3>Implants</h3></div><div class="tc-img"><img class="phx" src="assets/img/implant.webp" alt="Gloved hand holding a dental implant and crown" width="900" height="1350" style="object-position:50% 50%" loading="lazy" decoding="async"></div></article>
@@ -1119,29 +1120,29 @@ html.mn-lock,html.mn-lock body{overflow:hidden}
     <div class="center">
       <span class="label">Is DMC right for you?</span>
       <h2 class="h2" id="fit-title" style="margin-top:16px">Would we make a <span class="acc">good fit?</span></h2>
-      <p class="sub" style="max-width:760px;margin-left:auto;margin-right:auto">Truth is, we’re not the right partner for every clinic. And that’s intentional. We work best with practices that value quality, alignment and long-term growth. Here’s how to know if DMC is the right fit for you.</p>
+      <p class="sub" style="max-width:760px;margin-left:auto;margin-right:auto">We’re not the right partner for every clinic. And that’s intentional.</p>
     </div>
     <div class="fit2">
       <article class="fw dark-card up">
         <span class="fw-k">We will help</span>
         <h3>We’re the right partner for clinics who…</h3>
         <ul>
-          <li><i class="ph ph-check-circle" aria-hidden="true"></i><span><b>Value an all-in-one marketing solution</b>Eliminating the need to juggle multiple vendors for website, social, photography, SEO, paid ads and appointment setting.</span></li>
-          <li><i class="ph ph-check-circle" aria-hidden="true"></i><span><b>Want more patient flow, especially high-value cases</b>Ideal for clinics looking to attract implants, full-arch, Invisalign, sedation and comprehensive dentistry.</span></li>
-          <li><i class="ph ph-check-circle" aria-hidden="true"></i><span><b>Are committed to consistent, qualified patient systems</b>Teams who understand marketing works best when paired with proper follow-up, communication and patient experience.</span></li>
-          <li><i class="ph ph-check-circle" aria-hidden="true"></i><span><b>Are open to cohesive, innovative marketing efforts</b>Clinics willing to collaborate, implement and engage with a streamlined, under-one-roof provider.</span></li>
-          <li><i class="ph ph-check-circle" aria-hidden="true"></i><span><b>Understand comprehensive treatment &amp; lifetime value</b>Focused on retention, book-back rates, annual value and long-term patient relationships, not just one-off visits.</span></li>
+          <li><i class="ph ph-check-circle" aria-hidden="true"></i><span><b>Value an all-in-one marketing solution</b></span></li>
+          <li><i class="ph ph-check-circle" aria-hidden="true"></i><span><b>Want more patient flow, especially high-value cases</b></span></li>
+          <li><i class="ph ph-check-circle" aria-hidden="true"></i><span><b>Are committed to consistent, qualified patient systems</b></span></li>
+          <li><i class="ph ph-check-circle" aria-hidden="true"></i><span><b>Are open to cohesive, innovative marketing efforts</b></span></li>
+          <li><i class="ph ph-check-circle" aria-hidden="true"></i><span><b>Understand comprehensive treatment &amp; lifetime value</b></span></li>
         </ul>
       </article>
       <article class="fw lite-card up">
         <span class="fw-k">We won’t help</span>
         <h3>We’re not the right fit for practices who…</h3>
         <ul>
-          <li><i class="ph ph-x-circle" aria-hidden="true"></i><span><b>Want “quick fix” or piecemeal marketing</b>If you’re looking for a logo here, a random ad there or patchwork services, we’re not the right partner.</span></li>
-          <li><i class="ph ph-x-circle" aria-hidden="true"></i><span><b>Prefer managing multiple vendors independently</b>If you want to micromanage separate teams for SEO, ads, site, content and social, our integrated model isn’t for you.</span></li>
-          <li><i class="ph ph-x-circle" aria-hidden="true"></i><span><b>Aren’t ready to invest in patient-centered growth</b>If a clinic isn’t prepared to improve systems, communication or follow-up, marketing performance will always plateau.</span></li>
-          <li><i class="ph ph-x-circle" aria-hidden="true"></i><span><b>Expect results without internal alignment</b>If the team doesn’t respond to leads or adopt simple workflow adjustments, no marketing partner can succeed.</span></li>
-          <li><i class="ph ph-x-circle" aria-hidden="true"></i><span><b>Are seeking untested marketing support</b>Clinics wanting to work with new brands or products that have yet to be tested in the marketplace.</span></li>
+          <li><i class="ph ph-x-circle" aria-hidden="true"></i><span><b>Want “quick fix” or piecemeal marketing</b></span></li>
+          <li><i class="ph ph-x-circle" aria-hidden="true"></i><span><b>Prefer managing multiple vendors independently</b></span></li>
+          <li><i class="ph ph-x-circle" aria-hidden="true"></i><span><b>Aren’t ready to invest in patient-centered growth</b></span></li>
+          <li><i class="ph ph-x-circle" aria-hidden="true"></i><span><b>Expect results without internal alignment</b></span></li>
+          <li><i class="ph ph-x-circle" aria-hidden="true"></i><span><b>Are seeking untested marketing support</b></span></li>
         </ul>
       </article>
     </div>
@@ -1177,10 +1178,8 @@ html.mn-lock,html.mn-lock body{overflow:hidden}
 <section class="contact" id="book" aria-labelledby="ct-title">
   <div class="ct-panel" id="ctPanel">
     <div class="ct-copy">
-      <span class="label">Book a Demo</span>
-      <h2 id="ct-title">Ready to see how DMC can transform your practice?</h2>
+      <h2 id="ct-title">Book a Demo</h2>
       <p class="ct-lead">Honest insight into what your clinic needs to grow. No pressure, no fluff.</p>
-      <p>Book a free strategy call and we’ll walk you through the frameworks we use to help clinics grow with clarity, consistency and confidence.</p>
     </div>
     <div class="ct-body">
       <!-- Elementor: HTML widget. Open times are read live from LeadConnector (calendar eUrf2zbFwuzAXtbJs1I8).
@@ -1197,7 +1196,7 @@ html.mn-lock,html.mn-lock body{overflow:hidden}
             <li class="bk-when" id="bkWhenRow" hidden><i class="ph ph-calendar-check" aria-hidden="true"></i><span id="bkWhen"></span></li>
             <li><i class="ph ph-globe-hemisphere-west" aria-hidden="true"></i><span id="bkTzLabel"></span></li>
           </ul>
-          <p class="bk-desc">We’ll audit your website, social media, SEO, ads and brand messaging before the meeting. On the call, we’ll walk you through what’s working, what’s missing and whether partnering makes sense.</p>
+          <p class="bk-desc">We’ll audit your website, social media, SEO, ads and brand messaging before the meeting.</p>
         </aside>
         <div class="bk-main">
           <div class="bk-step" id="bkS1">
