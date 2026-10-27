@@ -1,0 +1,297 @@
+/* =========================================================
+   Dental Media Corp: service pages (services/<slug>/)
+   Loaded after base.css. The hero reuses .h-card from base.css.
+   ========================================================= */
+.sp-hero {
+  padding: 5px;
+}
+
+.page-service .h-media {
+  background: #0b1513;
+}
+
+.page-service .df {
+  min-height: 280px;
+}
+
+.sp-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 48px;
+}
+
+.sp-grid .df h3 {
+  font-size: clamp(1.375rem, 1.9vw, 1.75rem);
+}
+
+.sp-grid .df p {
+  font-size: 1rem;
+}
+
+.sp-flow {
+  padding: 0 5px;
+}
+
+.sp-panel {
+  max-width: 1400px;
+  margin: 0 auto;
+  background: var(--sand);
+  border-radius: var(--r-panel);
+  padding: clamp(24px, 4vw, 60px);
+}
+
+.sp-panel-in {
+  max-width: var(--max);
+  margin: 0 auto;
+}
+
+.sp-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+  margin-top: 48px;
+}
+
+.sp-step {
+  background: #fff;
+  border-radius: var(--r-card);
+  padding: 24px;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sp-step .n {
+  font-size: clamp(3rem, 4.6vw, 4.25rem);
+  font-weight: 500;
+  letter-spacing: -0.05em;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.sp-step .road {
+  margin-top: 18px;
+}
+
+.sp-step h3 {
+  margin-top: auto;
+  padding-top: 32px;
+  font-size: 1.5rem;
+  letter-spacing: -0.025em;
+}
+
+.sp-step p {
+  margin-top: 10px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--body);
+}
+
+.sp-proof {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 2fr);
+  gap: 16px;
+  margin-top: 48px;
+}
+
+.sp-q {
+  margin: 0;
+  border-radius: 24px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+}
+
+.sp-q > i {
+  font-size: 2rem;
+  color: var(--lime);
+}
+
+.sp-q blockquote {
+  margin: 18px 0 0;
+  font-size: clamp(1.375rem, 2vw, 1.75rem);
+  line-height: 1.3;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.sp-q figcaption {
+  margin-top: auto;
+  padding-top: 32px;
+  display: flex;
+  flex-direction: column;
+  font-size: 1.125rem;
+  color: #fff;
+}
+
+.sp-q figcaption span {
+  font-size: 0.875rem;
+  color: #afc0bc;
+}
+
+.sp-case {
+  background: #f5f6f4;
+  border-radius: var(--r-panel);
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 24px;
+  min-height: 440px;
+}
+
+.sp-case .cc-text h3 {
+  font-size: clamp(1.75rem, 2.6vw, 2.375rem);
+}
+
+.sp-case .cc-media {
+  min-height: 320px;
+}
+
+.sp-end {
+  display: grid;
+  grid-template-columns: minmax(0, 1.6fr) minmax(0, 1fr);
+  gap: 16px;
+}
+
+.sp-nx {
+  border-radius: var(--r-panel);
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  min-height: 340px;
+  color: #fff;
+}
+
+.sp-nx-t {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 12px;
+}
+
+.sp-nx-k {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mint-2);
+}
+
+.sp-nx h3 {
+  margin-top: 18px;
+  font-size: clamp(1.875rem, 3vw, 2.75rem);
+  letter-spacing: -0.045em;
+}
+
+.sp-nx-go {
+  margin-top: auto;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 1.25rem;
+  background: var(--lime);
+  color: var(--ink);
+  transition: transform 0.5s var(--ease);
+}
+
+.sp-nx:hover .sp-nx-go {
+  transform: rotate(45deg);
+}
+
+.sp-nx-media {
+  position: relative;
+  min-height: 220px;
+  border-radius: var(--r-card);
+  overflow: hidden;
+}
+
+.sp-nx-media .phx {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.9s var(--ease);
+}
+
+.sp-nx:hover .sp-nx-media .phx {
+  transform: scale(1.06);
+}
+
+.sp-cta {
+  border-radius: var(--r-panel);
+  padding: 32px;
+  background: var(--mint);
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.sp-cta h3 {
+  font-size: clamp(1.75rem, 2.6vw, 2.375rem);
+}
+
+.sp-cta p {
+  margin: 12px 0 28px;
+  font-size: 1.0625rem;
+  line-height: 1.55;
+  color: var(--body);
+}
+
+.sp-cta .btn {
+  margin-top: auto;
+}
+
+@media (max-width: 1023px) {
+  .sp-grid,
+  .sp-steps {
+    grid-template-columns: 1fr 1fr;
+  }
+  .sp-proof,
+  .sp-end {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .page-service .h-media img {
+    object-position: 50% 35% !important;
+  }
+  .sp-grid,
+  .sp-steps,
+  .sp-case,
+  .sp-nx {
+    grid-template-columns: 1fr;
+  }
+  .page-service .df,
+  .sp-step {
+    min-height: 220px;
+  }
+  .sp-case .cc-media {
+    min-height: 260px;
+  }
+}
+
+/* breadcrumb in the hero eyebrow */
+.sp-crumbs ol {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+.sp-crumbs li + li::before {
+  content: "/";
+  margin-right: 8px;
+  opacity: 0.55;
+}
+.sp-crumbs a {
+  transition: color 0.25s;
+}
+.sp-crumbs a:hover {
+  color: var(--lime);
+}
+.sp-crumbs [aria-current] {
+  color: #fff;
+}
