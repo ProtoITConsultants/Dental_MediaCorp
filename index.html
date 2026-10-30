@@ -370,34 +370,36 @@
       }
 
       /* ---------- buttons ---------- */
-      /* black pill + attached circle (inspo "Submit an application") */
+      /* one pill with the arrow inside it, on a teal circle */
       .cta {
         display: inline-flex;
         align-items: center;
+        gap: 18px;
         height: 62px;
+        padding: 0 7px 0 32px;
+        border-radius: var(--r-pill);
+        background: var(--ink);
         color: #fff;
         font-size: var(--fs-body);
         font-weight: 500;
         white-space: nowrap;
+        transition: background-color 0.35s;
       }
       .cta-t {
         display: flex;
         align-items: center;
         height: 100%;
-        padding: 0 44px 0 40px;
-        border-radius: var(--r-pill);
-        background: var(--ink);
-        transition: background-color 0.35s;
       }
       .cta-i {
         position: relative;
         display: grid;
+        flex: none;
         place-items: center;
-        width: 62px;
-        height: 62px;
-        margin-left: -8px;
+        width: 48px;
+        height: 48px;
         border-radius: 50%;
-        background: var(--ink);
+        background: var(--teal);
+        color: #fff;
         overflow: hidden;
         transition: background-color 0.35s;
       }
@@ -409,9 +411,11 @@
         position: absolute;
         transform: translateX(-48px);
       }
-      .cta:hover .cta-t,
-      .cta:hover .cta-i {
+      .cta:hover {
         background: var(--deep);
+      }
+      .cta:hover .cta-i {
+        background: var(--teal-2);
       }
       .cta:hover .cta-i i:first-child {
         transform: translateX(48px);
@@ -419,25 +423,20 @@
       .cta:hover .cta-i i + i {
         transform: none;
       }
-      .cta.teal .cta-t,
-      .cta.teal .cta-i {
+      .cta.teal {
         background: var(--teal);
       }
-      .cta.teal:hover .cta-t,
-      .cta.teal:hover .cta-i {
+      .cta.teal .cta-i {
+        background: var(--ink);
+      }
+      .cta.teal:hover {
         background: var(--teal-2);
       }
       .cta.light {
-        color: var(--ink);
-      }
-      .cta.light .cta-t {
-        background: #fff;
-      }
-      .cta.light .cta-i {
         background: #fff;
         color: var(--ink);
       }
-      .cta.light:hover .cta-t {
+      .cta.light:hover {
         background: var(--mint);
       }
       /* outline pill (inspo "Submit an application ↓" in the dark band) */
@@ -864,13 +863,11 @@
       }
       .mnav-foot .cta {
         height: 54px;
-      }
-      .mnav-foot .cta-t {
-        padding: 0 30px 0 26px;
+        padding: 0 6px 0 26px;
       }
       .mnav-foot .cta-i {
-        width: 54px;
-        height: 54px;
+        width: 42px;
+        height: 42px;
       }
       .mnav-foot small {
         display: block;
@@ -882,7 +879,8 @@
       /* ---------- 1. hero ---------- */
       .hero {
         position: relative;
-        height: max(700px, min(100svh, 920px));
+        height: 100vh;
+        height: 100svh; /* exactly one screen, on every device */
         overflow: hidden;
         background:
           radial-gradient(42% 46% at 14% 88%, rgba(191, 230, 220, 0.55), transparent 70%),
@@ -1087,12 +1085,6 @@
         background: var(--teal);
         color: #fff;
       }
-      .hero-spin {
-        position: absolute;
-        left: 50%;
-        bottom: clamp(36px, 7vh, 64px);
-        margin-left: calc(clamp(116px, 9vw, 136px) / -2);
-      }
       /* the badge that follows the cursor over rows and cards (fine pointers only) */
       .cbadge {
         position: fixed;
@@ -1260,12 +1252,13 @@
         height: 52px;
         font-size: var(--fs-small);
       }
-      .sr-cta .cta-t {
-        padding: 0 26px 0 24px;
+      .sr-cta {
+        gap: 14px;
+        padding: 0 6px 0 24px;
       }
       .sr-cta .cta-i {
-        width: 52px;
-        height: 52px;
+        width: 40px;
+        height: 40px;
       }
       @media (hover: hover) and (pointer: fine) {
         .sr-cta {
@@ -2266,11 +2259,8 @@
       }
 
       /* ---------- responsive ---------- */
-      /* mid widths: the label row would run under the "our services" badge, so it sits just above it */
+      /* mid widths: a slightly tighter label row */
       @media (min-width: 900px) and (max-width: 1339px) {
-        .h-badges {
-          bottom: calc(clamp(36px, 7vh, 64px) + clamp(116px, 9vw, 136px) + 28px);
-        }
         .h-badges li {
           padding: 0 18px;
           font-size: 15px;
@@ -2305,23 +2295,22 @@
           height: 40px;
         }
         .hero {
-          height: auto;
-          min-height: 100svh;
           display: flex;
           flex-direction: column;
         }
         .h-top {
           flex-direction: column;
           gap: 18px;
-          padding-top: 112px;
+          padding-top: clamp(92px, 13svh, 112px);
         }
         .h-side {
           width: auto;
           padding-top: 0;
         }
+        /* on short phones the mark shrinks and sinks so it stays under the copy */
         .h-obj {
-          width: min(88vw, 460px);
-          bottom: -7%;
+          width: min(88vw, 460px, 46svh);
+          bottom: clamp(-140px, calc((100svh - 800px) * 0.5 - 60px), -40px);
         }
         .h-stat {
           display: none;
@@ -2341,11 +2330,6 @@
         }
         .h-badges li:first-child {
           padding-left: 6px;
-        }
-        .hero-spin {
-          bottom: 24px;
-          width: 104px;
-          margin-left: -52px;
         }
         .svc {
           padding: 24px 0 56px;
@@ -2488,20 +2472,29 @@
           padding-inline: var(--side);
         }
       }
+      /* tablets: the label row lines up with the copy instead of spreading across */
+      @media (min-width: 600px) and (max-width: 899px) {
+        .h-badges li {
+          flex: none;
+          padding: 2px 22px;
+          font-size: 15px;
+        }
+        .h-badges li:first-child {
+          padding-left: 0;
+        }
+      }
       @media (max-width: 599px) {
         .nav-cta {
           display: none;
         }
         .cta {
           height: 56px;
+          padding: 0 6px 0 26px;
           font-size: 15px;
         }
-        .cta-t {
-          padding: 0 30px 0 28px;
-        }
         .cta-i {
-          width: 56px;
-          height: 56px;
+          width: 44px;
+          height: 44px;
         }
         .f-cols {
           flex-wrap: wrap;
@@ -3269,10 +3262,6 @@
           <li><i class="ph-fill ph-meta-logo meta" aria-hidden="true"></i><span><b>Meta</b> Partner</span></li>
           <li><i class="ph-fill ph-shield-check hipaa" aria-hidden="true"></i><span><b>HIPAA</b> Compliant</span></li>
         </ul>
-        <a class="badge hero-spin" href="#services" aria-label="See our services">
-          <svg class="ring spin" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="rgH" d="M60 60m-45 0a45 45 0 1 1 90 0a45 45 0 1 1-90 0"/></defs><text><textPath href="#rgH" textLength="280" lengthAdjust="spacing">our services · our services · </textPath></text></svg>
-          <span class="badge-core"><i class="ph ph-arrow-down" aria-hidden="true"></i></span>
-        </a>
         <div class="h-stat">
           <b><em>19.4×</em> ROAS</b>
           <small>best return on ad spend<br />in our case studies</small>
@@ -3855,7 +3844,7 @@
         /* ---------- smooth scroll ---------- */
         let lenis = null;
         if (!reduce && window.Lenis) {
-          lenis = new Lenis({ lerp: 0.09 });
+          lenis = new Lenis({ lerp: 0.08, wheelMultiplier: 0.8 }); // a touch calmer on the wheel
           if (hasG) {
             lenis.on("scroll", ScrollTrigger.update);
             gsap.ticker.add((t) => lenis.raf(t * 1000));
@@ -3945,8 +3934,7 @@
             .from(".nav > *", { y: -16, opacity: 0, duration: 0.9, ease: "power3.out", stagger: 0.07 }, 0.25)
             .from(".h-side p", { y: 18, opacity: 0, duration: 1, ease: "power3.out" }, 0.45)
             .from(".h-side .cta", { y: 18, opacity: 0, duration: 1, ease: "power3.out" }, 0.55)
-            .from([".h-badges li", ".h-stat"], { y: 34, opacity: 0, duration: 1.1, ease: "expo.out", stagger: 0.09 }, 0.75)
-            .from(".hero-spin", { scale: 0, rotation: -90, duration: 1.1, ease: "back.out(1.6)" }, 0.9);
+            .from([".h-badges li", ".h-stat"], { y: 34, opacity: 0, duration: 1.1, ease: "expo.out", stagger: 0.09 }, 0.75);
           return tl;
         };
         const pre = $("#pre");
@@ -3986,8 +3974,8 @@
               orot = gsap.quickTo(".h-obj img", "rotation", { duration: 1.6, ease: "power3" });
             $(".hero").addEventListener("mousemove", (e) => {
               const k = e.clientX / innerWidth - 0.5;
-              ox(k * 40);
-              orot(k * 2.2);
+              ox(k * 28);
+              orot(k * 1.5);
             });
           }
         }
