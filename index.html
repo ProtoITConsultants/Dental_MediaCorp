@@ -794,6 +794,8 @@
         inset: 0;
         z-index: 90;
         display: none;
+        height: 100vh;
+        height: 100dvh; /* exactly the visible screen, browser bars included */
         background:
           radial-gradient(120% 60% at 100% 100%, rgba(27, 127, 115, 0.35), transparent 60%),
           #050807;
@@ -808,8 +810,8 @@
         display: flex;
         flex-direction: column;
         height: 100%;
-        padding: 18px 20px 22px;
-        overflow-y: auto;
+        padding: clamp(12px, 2.4dvh, 18px) 20px clamp(14px, 3dvh, 24px);
+        overflow-y: auto; /* only if the treatments are open on a very short phone */
       }
       .mnav-hd {
         display: flex;
@@ -828,38 +830,90 @@
         font-size: 20px;
       }
       .mnav-cap {
-        margin: 34px 0 6px;
+        margin: clamp(12px, 3.6dvh, 34px) 0 clamp(2px, 0.6dvh, 6px);
         font-size: var(--fs-small);
         color: rgba(255, 255, 255, 0.5);
       }
       .mnav-list a {
         display: block;
-        padding: 7px 0;
-        font-size: var(--fs-h4);
+        padding: clamp(3px, 0.9dvh, 8px) 0;
+        font-size: min(var(--fs-h4), max(17px, 3.1dvh));
+        line-height: 1.2;
         letter-spacing: -0.02em;
+      }
+      /* Dental Marketing: link + a toggle for its four treatments */
+      .mnav-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .mnav-tg {
+        display: grid;
+        flex: none;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        color: #fff;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+      .mnav-tg i {
+        transition: transform 0.4s var(--ease);
+      }
+      .mnav-tg[aria-expanded="true"] {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .mnav-tg[aria-expanded="true"] i {
+        transform: rotate(180deg);
+      }
+      /* treatments open: the sheet tightens (caption + copyright go, gaps shrink) so it still fits one screen */
+      .mnav-in:has(.mnav-tg[aria-expanded="true"]) .mnav-cap,
+      .mnav-in:has(.mnav-tg[aria-expanded="true"]) .mnav-foot small {
+        display: none;
+      }
+      .mnav-in:has(.mnav-tg[aria-expanded="true"]) .mnav-hd {
+        margin-bottom: clamp(6px, 1.6dvh, 30px);
+      }
+      .mnav-in:has(.mnav-tg[aria-expanded="true"]) .mnav-list a {
+        padding-block: clamp(2px, 0.6dvh, 8px);
+      }
+      .mnav-in:has(.mnav-tg[aria-expanded="true"]) .mnav-sub a {
+        padding-block: clamp(2px, 0.4dvh, 5px);
+      }
+      .mnav-in:has(.mnav-tg[aria-expanded="true"]) .mnav-foot {
+        padding-top: clamp(8px, 1.6dvh, 32px);
+      }
+      /* the page links sit two by two */
+      .mnav-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 16px;
       }
       .mnav-list a:hover {
         color: var(--teal-3);
       }
       .mnav-sub {
-        margin: 0 0 6px 16px;
+        margin: 2px 0 6px 16px;
         padding-left: 14px;
         border-left: 1px solid rgba(255, 255, 255, 0.18);
       }
       .mnav-sub a {
-        padding: 5px 0;
+        padding: clamp(3px, 0.6dvh, 5px) 0;
         font-size: var(--fs-body);
         color: rgba(255, 255, 255, 0.72);
       }
       .mnav-rule {
         height: 1px;
-        margin: 20px 0 16px;
+        margin: clamp(10px, 2.2dvh, 20px) 0 clamp(6px, 1.6dvh, 16px);
         background: rgba(255, 255, 255, 0.18);
       }
       .mnav-foot {
         position: relative;
         margin-top: auto;
-        padding-top: 32px;
+        padding-top: clamp(14px, 3dvh, 32px);
       }
       .mnav-foot .cta {
         height: 54px;
@@ -871,7 +925,7 @@
       }
       .mnav-foot small {
         display: block;
-        margin-top: 22px;
+        margin-top: clamp(10px, 2dvh, 22px);
         font-size: var(--fs-xs);
         color: rgba(255, 255, 255, 0.55);
       }
@@ -3060,6 +3114,10 @@
       }
       .bk-days button {
         font-weight: 600;
+        /* colour only: a transform transition here froze the GSAP scale-in part-way (days ended at mixed sizes) */
+        transition:
+          background-color 0.25s,
+          color 0.25s;
       }
       .bk-msg,
       .bk-err,
@@ -3209,8 +3267,12 @@
         </div>
         <p class="mnav-cap">Services:</p>
         <ul class="mnav-list">
-          <li><a href="#svc-marketing">Dental Marketing</a>
-            <ul class="mnav-sub">
+          <li>
+            <div class="mnav-row">
+              <a href="#svc-marketing">Dental Marketing</a>
+              <button class="mnav-tg" type="button" aria-expanded="false" aria-controls="mnSub" aria-label="Show Dental Marketing treatments"><i class="ph ph-caret-down" aria-hidden="true"></i></button>
+            </div>
+            <ul class="mnav-sub" id="mnSub" hidden>
               <li><a href="#treatments">Dental Implant Marketing</a></li>
               <li><a href="#treatments">Full-Arch Marketing</a></li>
               <li><a href="#treatments">Invisalign Marketing</a></li>
@@ -3225,9 +3287,9 @@
           <li><a href="#svc-reporting">Dental Reporting Dashboard</a></li>
         </ul>
         <div class="mnav-rule"></div>
-        <ul class="mnav-list">
+        <ul class="mnav-list mnav-2">
           <li><a href="#results">Case Studies</a></li>
-          <li><a href="#dmc">The DMC Method</a></li>
+          <li><a href="#dmc">DMC Method</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="/blog/">Blog</a></li>
         </ul>
@@ -4219,6 +4281,19 @@
           if (items[0]) setOpen(items[0], true, true);
         }
 
+        /* mobile menu: Dental Marketing's treatments open under it */
+        {
+          const tg = $(".mnav-tg"),
+            sub = $("#mnSub");
+          tg.addEventListener("click", () => {
+            const open = tg.getAttribute("aria-expanded") !== "true";
+            tg.setAttribute("aria-expanded", open);
+            tg.setAttribute("aria-label", (open ? "Hide" : "Show") + " Dental Marketing treatments");
+            sub.hidden = !open;
+            if (open && motion) gsap.fromTo($$("li", sub), { y: 10, opacity: 0 }, { y: 0, opacity: 1, duration: 0.45, ease: "power3.out", stagger: 0.04, clearProps: "transform,opacity" });
+          });
+        }
+
         addEventListener("keydown", (e) => e.key === "Escape" && mOpen && closeMnav());
 
         /* ---------- booking calendar: live open times from LeadConnector ---------- */
@@ -4453,9 +4528,10 @@
                 MONTHS[m] +
                 '. <button type="button" data-jump>See next month</button>';
             if (hasG && !reduce)
-              gsap.from($$("button", daysEl), {
-                scale: 0.6,
-                opacity: 0,
+              gsap.fromTo($$("button", daysEl), { scale: 0.6, opacity: 0 }, {
+                scale: 1,
+                opacity: 1,
+                clearProps: "transform,opacity",
                 duration: 0.5,
                 ease: "back.out(2)",
                 stagger: 0.025,
