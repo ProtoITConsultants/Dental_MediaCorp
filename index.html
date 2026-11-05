@@ -214,15 +214,15 @@
         --mint-2: #bfe6dc;
         --deep: #123b36;
         --lime: #d8f56b;
-        /* accent: bright yellow-lime, the zesty partner to the teal / mint; statement pieces only.
-           soft = tint for panels, 2 = mid, acc = the accent itself (fills, marks, bars),
-           mid = a deeper lime for small icons and lines on white, ink = olive for text on light, deep = labels on lime */
-        --acc-soft: #f6fdd6;
-        --acc-2: #e9fa8f;
-        --acc: #d6f53a;
-        --acc-mid: #a9c800;
-        --acc-ink: #4f6300;
-        --acc-deep: #33400a;
+        /* accent: tangy coral, a zestier #E8846C, the warm partner to the teal / mint; statement pieces only.
+           soft = tint for panels, 2 = mid, acc = the accent itself (fills, marks, bars; ink text on it),
+           mid = small icons and lines on white, ink = text on light, deep = labels on the coral card */
+        --acc-soft: #feeae3;
+        --acc-2: #fdc3b0;
+        --acc: #f9744f;
+        --acc-mid: #ee6238;
+        --acc-ink: #c2421d;
+        --acc-deep: #4a1608;
         --f: "Onest", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
         /* one frame for every section, taken from the hero: a single side gutter (~58px at 1440)
            and content as wide as the hero (which stops at 1920px) */
@@ -526,6 +526,23 @@
         position: static;
         width: 22px;
         height: auto;
+      }
+
+      /* the accent line on the wipe: appears as the panel starts to lift and travels with its edge */
+      .pre-edge {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 121;
+        display: none;
+        height: 6px;
+        background: var(--acc);
+        opacity: 0;
+        pointer-events: none;
+      }
+      html.is-pre .pre-edge {
+        display: block;
       }
 
       /* ---------- header ---------- */
@@ -957,7 +974,7 @@
       }
       main > .sbreak:nth-of-type(even)::before {
         left: 64%;
-        background: radial-gradient(closest-side, rgba(226, 247, 130, 0.42), rgba(221, 242, 236, 0.3) 55%, transparent);
+        background: radial-gradient(closest-side, rgba(253, 195, 176, 0.42), rgba(221, 242, 236, 0.3) 55%, transparent);
       }
 
       /* ---------- 1. hero ---------- */
@@ -975,7 +992,7 @@
         overflow-y: visible;
         background:
           radial-gradient(42% 36% at 14% 68%, rgba(191, 230, 220, 0.55), transparent 70%),
-          radial-gradient(30% 32% at 92% 66%, rgba(226, 247, 130, 0.45), transparent 70%);
+          radial-gradient(30% 32% at 92% 66%, rgba(253, 195, 176, 0.45), transparent 70%);
       }
       /* the DMC mark, sculpted from stacked contour layers */
       .h-obj {
@@ -1723,6 +1740,9 @@
       .mp:nth-child(n + 3) .road i.f {
         background: var(--acc);
       }
+      .mp:nth-child(4) .road i.f {
+        background: var(--acc-2);
+      }
       .mp-img {
         position: relative;
         min-height: 220px;
@@ -2412,7 +2432,7 @@
           --fs-h1: min(4.06vw, 112px);
           background:
             radial-gradient(34% 36% at 24% 68%, rgba(191, 230, 220, 0.55), transparent 70%),
-            radial-gradient(26% 32% at 80% 66%, rgba(226, 247, 130, 0.45), transparent 70%);
+            radial-gradient(26% 32% at 80% 66%, rgba(253, 195, 176, 0.45), transparent 70%);
         }
       }
       /* wider screens: side copy, button, labels and ROAS scale up in steps with the headline */
@@ -3376,6 +3396,7 @@
       <img class="pre-obj" src="assets/img/v11/mark-pre.webp" alt="" width="1920" height="1080" fetchpriority="high" />
       <span class="pre-b"><img src="assets/dmc-mark.png" alt="" width="22" height="22" />Dental Media Corp</span>
     </div>
+    <span class="pre-edge" id="preEdge" aria-hidden="true"></span>
 
     <!-- ============ HEADER (Elementor: Theme Builder > Header) ============ -->
     <header class="top" id="top">
@@ -4222,12 +4243,15 @@
                 onComplete: () => {
                   root.classList.remove("is-pre");
                   pre.remove();
+                  $("#preEdge").remove();
                   lock(false);
                   ScrollTrigger.refresh();
                 },
               })
               .to(".pre-b", { yPercent: -40, opacity: 0, duration: 0.5, ease: "power2.in" })
               .to(pre, { clipPath: "inset(0 0 100% 0)", duration: 1.1, ease: "expo.inOut" }, 0.2)
+              .set("#preEdge", { opacity: 1 }, 0.2)
+              .to("#preEdge", { y: -innerHeight, duration: 1.1, ease: "expo.inOut" }, 0.2)
               .add(heroIn(), 0.75);
           });
         } else {
