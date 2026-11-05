@@ -214,9 +214,20 @@
         --mint-2: #bfe6dc;
         --deep: #123b36;
         --lime: #d8f56b;
+        /* accent: bright yellow-lime, the zesty partner to the teal / mint; statement pieces only.
+           soft = tint for panels, 2 = mid, acc = the accent itself (fills, marks, bars),
+           mid = a deeper lime for small icons and lines on white, ink = olive for text on light, deep = labels on lime */
+        --acc-soft: #f6fdd6;
+        --acc-2: #e9fa8f;
+        --acc: #d6f53a;
+        --acc-mid: #a9c800;
+        --acc-ink: #4f6300;
+        --acc-deep: #33400a;
         --f: "Onest", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
-        --side: clamp(20px, 6vw, 86px);
-        --max: 1200px; /* one content width for every section */
+        /* one frame for every section, taken from the hero: a single side gutter (~58px at 1440)
+           and content as wide as the hero (which stops at 1920px) */
+        --side: clamp(20px, 4vw, 80px);
+        --max: calc(1920px - 2 * var(--side));
         /* radius system: cards & panels / things nested inside a card / buttons & chips */
         --r-card: 18px;
         --r-inner: 12px;
@@ -395,8 +406,8 @@
         width: 48px;
         height: 48px;
         border-radius: 50%;
-        background: var(--teal);
-        color: #fff;
+        background: var(--acc);
+        color: var(--ink);
         overflow: hidden;
         transition: background-color 0.35s;
       }
@@ -412,7 +423,7 @@
         background: var(--deep);
       }
       .cta:hover .cta-i {
-        background: var(--teal-2);
+        background: var(--acc-2);
       }
       .cta:hover .cta-i i:first-child {
         transform: translateX(48px);
@@ -500,17 +511,6 @@
         inset: 0;
         background: linear-gradient(180deg, rgba(4, 7, 6, 0) 40%, rgba(4, 7, 6, 0.7));
       }
-      .pre-n {
-        position: absolute;
-        left: var(--side);
-        bottom: clamp(24px, 5vh, 56px);
-        z-index: 1;
-        font-size: clamp(88px, 13vw, 200px);
-        font-weight: 300;
-        letter-spacing: -0.05em;
-        line-height: 0.8;
-        font-variant-numeric: tabular-nums;
-      }
       .pre-b {
         position: absolute;
         right: var(--side);
@@ -570,7 +570,7 @@
         max-width: 1920px; /* lines up with the hero on ultra-wide screens */
         margin-inline: auto;
         height: 84px;
-        padding: 0 31px 0 30px;
+        padding: 0 var(--side);
         transition: height 0.4s var(--ease);
       }
       .top.is-stuck .nav {
@@ -957,6 +957,7 @@
       }
       main > .sbreak:nth-of-type(even)::before {
         left: 64%;
+        background: radial-gradient(closest-side, rgba(226, 247, 130, 0.42), rgba(221, 242, 236, 0.3) 55%, transparent);
       }
 
       /* ---------- 1. hero ---------- */
@@ -974,7 +975,7 @@
         overflow-y: visible;
         background:
           radial-gradient(42% 36% at 14% 68%, rgba(191, 230, 220, 0.55), transparent 70%),
-          radial-gradient(30% 32% at 92% 66%, rgba(221, 242, 236, 0.6), transparent 70%);
+          radial-gradient(30% 32% at 92% 66%, rgba(226, 247, 130, 0.45), transparent 70%);
       }
       /* the DMC mark, sculpted from stacked contour layers */
       .h-obj {
@@ -1033,7 +1034,7 @@
       }
       .h-stat {
         position: absolute;
-        right: 31px;
+        right: var(--side);
         bottom: clamp(70px, 11vh, 98px);
         text-align: right;
       }
@@ -1046,7 +1047,9 @@
       }
       .h-stat b em {
         font-style: normal;
-        color: var(--teal);
+        color: var(--ink);
+        padding: 0 0.1em;
+        background: linear-gradient(180deg, transparent 52%, var(--acc) 52%, var(--acc) 94%, transparent 94%);
       }
       .h-stat small {
         display: block;
@@ -1065,6 +1068,7 @@
         height: 42px;
         border-radius: 50%;
         object-fit: cover;
+        background: #fff;
         border: 2px solid var(--bg);
       }
       .h-faces .phx + .phx {
@@ -1073,7 +1077,7 @@
       /* partner / compliance labels: one row, no tiles, hairline dividers */
       .h-badges {
         position: absolute;
-        left: 30px;
+        left: var(--side);
         bottom: clamp(72px, 11vh, 100px);
         display: flex;
         align-items: center;
@@ -1130,74 +1134,6 @@
         }
       }
 
-      /* ---------- spinning badge (proto's .badge.spin-host), DMC colours ---------- */
-      .badge {
-        position: relative;
-        display: grid;
-        place-items: center;
-        width: clamp(116px, 9vw, 136px);
-        aspect-ratio: 1;
-        border-radius: 50%;
-        background: var(--ink);
-        color: #fff;
-        box-shadow: 0 16px 36px -14px rgba(13, 19, 18, 0.5);
-      }
-      .badge .ring {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        overflow: visible;
-      }
-      .badge text {
-        font-family: var(--f);
-        font-size: 9.5px;
-        font-weight: 600;
-        letter-spacing: 0.14em;
-        text-transform: uppercase;
-        fill: currentColor;
-      }
-      .badge-core {
-        display: grid;
-        place-items: center;
-        width: 40%;
-        aspect-ratio: 1;
-        border-radius: 50%;
-        background: var(--mint-2);
-        color: var(--ink);
-        font-size: 20px;
-        transition: transform 0.5s var(--ease);
-      }
-      .badge:hover .badge-core {
-        transform: scale(1.12);
-      }
-      .badge.light {
-        background: #fff;
-        color: var(--ink);
-      }
-      .badge.light .badge-core {
-        background: var(--teal);
-        color: #fff;
-      }
-      /* the badge that follows the cursor over rows and cards (fine pointers only) */
-      .cbadge {
-        position: fixed;
-        left: 0;
-        top: 0;
-        z-index: 46;
-        width: 124px;
-        pointer-events: none;
-        visibility: hidden;
-      }
-      .js-cb .cbadge {
-        visibility: visible;
-      }
-      .js-cb .srow,
-      .js-cb .cs,
-      .js-cb .mc {
-        cursor: none;
-      }
-
       /* ---------- 3. services ---------- */
       .svc {
         position: relative;
@@ -1219,54 +1155,16 @@
         position: relative;
         flex: none;
         width: clamp(48px, 7vw, 110px);
-        height: 1px;
+        height: 4px;
         margin-right: 0.35em;
-        background: rgba(13, 19, 18, 0.25);
+        border-radius: 4px;
+        background: var(--acc);
         transform-origin: left;
-      }
-      .sh-rule i {
-        position: absolute;
-        left: -11px;
-        top: -11px;
-        font-size: 22px;
-        color: var(--teal);
       }
       .svc .t-sub {
         color: rgba(13, 19, 18, 0.78);
       }
-      /* numbered rows: number | title + line | render tile */
-      .sl {
-        max-width: var(--max);
-        margin: 72px auto 0;
-      }
-      .srow {
-        position: relative;
-        display: grid;
-        grid-template-columns: 120px minmax(0, 1fr) 440px;
-        align-items: start;
-        gap: 0 32px;
-        padding: 44px 0;
-        border-top: 1px solid rgba(13, 19, 18, 0.12);
-        cursor: default;
-      }
-      .srow:last-child {
-        border-bottom: 1px solid rgba(13, 19, 18, 0.12);
-      }
-      .srow::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: -1px;
-        height: 1px;
-        background: var(--teal);
-        transform: scaleX(0);
-        transform-origin: left;
-        transition: transform 0.7s var(--ease);
-      }
-      .srow:hover::before {
-        transform: scaleX(1);
-      }
+      /* big teal numbers (case study and DMC Method cards) */
       .sr-n {
         font-size: var(--fs-stat);
         font-weight: 600;
@@ -1276,18 +1174,51 @@
         font-variant-numeric: tabular-nums;
         transition: color 0.3s;
       }
-      .srow:hover .sr-n {
-        color: var(--deep);
+      /* the list (Ondule "selected work", DMC theme): big name | kicker + description | features | arrow */
+      .sl {
+        max-width: var(--max);
+        margin: 72px auto 0;
+        padding: 0;
+        list-style: none;
+        border-bottom: 1px solid rgba(13, 19, 18, 0.12);
       }
-      .sr-c h3 {
-        font-size: var(--fs-h3);
+      .srow {
+        position: relative;
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 360px) 48px;
+        align-items: center;
+        gap: 0 48px;
+        padding: 30px 0;
+        border-top: 1px solid rgba(13, 19, 18, 0.12);
+      }
+      /* a teal line draws across the top of the row being hovered */
+      .srow::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -1px;
+        height: 2px;
+        background: var(--acc-mid);
+        transform: scaleX(0);
+        transform-origin: left;
+        transition: transform 0.7s var(--ease);
+      }
+      .srow:hover::before {
+        transform: scaleX(1);
+      }
+      /* hovering one row quiets the rest (children fade, so GSAP's own reveal of the row is untouched) */
+      .srow > * {
+        transition: opacity 0.45s var(--ease);
+      }
+      .sr-name {
+        font-size: clamp(34px, 4.3vw, 62px);
         font-weight: 600;
-        letter-spacing: -0.03em;
-        line-height: 1.05;
-        transition: transform 0.6s var(--ease);
-      }
-      .srow:hover .sr-c h3 {
-        transform: translateX(14px);
+        letter-spacing: -0.045em;
+        line-height: 0.98;
+        transition:
+          transform 0.7s var(--ease),
+          opacity 0.45s var(--ease);
       }
       .sr-link::after {
         content: "";
@@ -1303,58 +1234,136 @@
         outline-offset: 6px;
         border-radius: var(--r-card);
       }
-      /* the features named inside the description, lifted out of the grey */
-      .sr-p b {
-        font-weight: 600;
-        color: var(--deep);
-      }
-      .sr-kick {
-        max-width: 560px;
-        margin-top: 16px;
-        font-size: var(--fs-h5);
-        font-weight: 500;
-        line-height: 1.3;
-        letter-spacing: -0.015em;
-        color: var(--teal);
+      .sr-anchor {
+        position: absolute;
+        top: -120px;
       }
       .sr-p {
-        max-width: 580px;
-        margin-top: 12px;
-        font-size: var(--fs-body);
-        line-height: 1.55;
-        color: rgba(13, 19, 18, 0.72);
+        font-size: var(--fs-lead);
+        line-height: 1.45;
+        color: rgba(13, 19, 18, 0.66);
       }
+      /* the same lime circle as the arrow in the Book a Strategy Call button */
+      .sr-arr {
+        position: relative;
+        justify-self: end;
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--acc);
+        color: var(--ink);
+        font-size: 18px;
+        line-height: 1;
+        overflow: hidden;
+        transition:
+          background-color 0.35s,
+          opacity 0.45s var(--ease);
+      }
+      .sr-arr i {
+        transition: transform 0.45s var(--ease);
+      }
+      .sr-arr i + i {
+        position: absolute;
+        transform: translate(-48px, 48px);
+      }
+      @media (hover: hover) {
+        .sl:hover .srow > * {
+          opacity: 0.3;
+        }
+        .sl .srow:hover > * {
+          opacity: 1;
+        }
+        .srow:hover .sr-name {
+          transform: translateX(24px);
+        }
+        .srow:hover .sr-arr {
+          background: var(--acc-2);
+        }
+        .srow:hover .sr-arr i:first-child {
+          transform: translate(48px, -48px);
+        }
+        .srow:hover .sr-arr i + i {
+          transform: none;
+        }
+      }
+      /* the explore button: touch screens only (a fine pointer gets the floating preview instead) */
       .sr-cta {
-        margin-top: 26px;
+        grid-column: 1 / -1;
+        justify-self: start;
+        margin-top: 22px;
         height: 52px;
-        font-size: var(--fs-small);
-      }
-      .sr-cta {
         gap: 14px;
         padding: 0 6px 0 24px;
+        font-size: var(--fs-small);
       }
       .sr-cta .cta-i {
         width: 40px;
         height: 40px;
+      }
+      /* in-row image: touch screens only; with a mouse the floating card shows it */
+      .sr-thumb {
+        display: none;
+      }
+      .sv-pv {
+        position: fixed;
+        left: 0;
+        top: 0;
+        z-index: 40;
+        width: clamp(200px, 17vw, 280px);
+        aspect-ratio: 4 / 3;
+        border-radius: var(--r-card);
+        overflow: hidden;
+        background: var(--soft);
+        box-shadow: 0 30px 60px -30px rgba(13, 19, 18, 0.45);
+        pointer-events: none;
+        opacity: 0;
+        visibility: hidden;
+      }
+      .sv-pv.is-live {
+        visibility: visible;
+      }
+      .sv-pv .phx {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        clip-path: inset(100% 0 0 0);
+        transition: clip-path 0.7s var(--ease);
+      }
+      .sv-pv .phx.on {
+        clip-path: inset(0 0 0 0);
+      }
+      @media (hover: none), (pointer: coarse) {
+        .sr-thumb {
+          display: block;
+          grid-column: 1 / -1;
+          aspect-ratio: 4 / 3;
+          max-height: 300px;
+          width: 100%;
+          margin-bottom: 18px;
+          border-radius: var(--r-card);
+          overflow: hidden;
+          background: var(--soft);
+        }
+        .sr-thumb .phx {
+          width: 100%;
+          height: 100%;
+        }
+        .sv-pv {
+          display: none;
+        }
+        /* touch: the Explore button carries the arrow, so the row circle would be a second one */
+        .sr-arr {
+          display: none;
+        }
       }
       @media (hover: hover) and (pointer: fine) {
         .sr-cta {
           display: none;
         }
       }
-      /* the explore button that follows the cursor over a row (fine pointers only) */
-      /* the render: hidden until its row is hovered (GSAP reveal, see .js-reveal) */
-      .sr-img {
-        align-self: stretch;
-        min-height: 260px;
-        border-radius: var(--r-card);
-        overflow: hidden;
-        background: var(--soft);
-      }
-      .js-reveal .sr-img {
-        opacity: 0;
-      }
-      /* the tooth card that follows the cursor over the list */
 
       /* ---------- 3. case studies ---------- */
       .cases {
@@ -1425,6 +1434,42 @@
         height: 100%;
         object-fit: cover;
       }
+      /* the clinic photo is the cover; on hover it slides up and the logo underneath shows beside the number */
+      .cs-img:has(.cs-logo) {
+        background: #fff;
+      }
+      .cs-img > .cs-logo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        padding: 12px 20px 12px 112px;
+        object-fit: contain;
+      }
+      .cs-cover {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        overflow: hidden;
+        border-radius: inherit;
+        transition: transform 0.7s var(--ease);
+      }
+      .cs-cover::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(160deg, rgba(18, 59, 54, 0.62), rgba(18, 59, 54, 0) 46%);
+      }
+      .cs-cover > .phx {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .cs:hover .cs-cover,
+      .cs.on .cs-cover,
+      .cs:focus-within .cs-cover {
+        transform: translateY(-101%);
+      }
       .cs-img span {
         position: absolute;
         top: 13px;
@@ -1443,7 +1488,13 @@
         font-size: var(--fs-stat);
         top: 14px;
         left: 16px;
-        z-index: 1;
+        z-index: 2;
+        color: #fff;
+        transition: color 0.5s var(--ease);
+      }
+      .cs:hover .cs-img .cs-n,
+      .cs.on .cs-img .cs-n,
+      .cs:focus-within .cs-img .cs-n {
         color: var(--teal);
       }
       .cs h3 {
@@ -1457,6 +1508,13 @@
         margin: 6px 12px 0;
         font-size: var(--fs-small);
         color: var(--body);
+      }
+      .cs-meta b {
+        padding: 1px 7px;
+        border-radius: 6px;
+        font-weight: 600;
+        color: var(--ink);
+        background: var(--acc);
       }
       .cs-res {
         position: absolute;
@@ -1559,202 +1617,158 @@
         color: var(--fade);
       }
 
-      /* ---------- 2. the DMC Method: expanding card row (proto's services layout, DMC theme) ---------- */
+      /* ---------- 6. the DMC Method: stacking cards (proto's process), DMC colours ----------
+         no overflow clipping on .meth: an overflow:hidden ancestor would stop position: sticky */
       .meth {
         position: relative;
         padding: 110px 0 80px;
-        overflow: hidden;
+        --stick: 104px; /* stuck header (68px) + breathing room */
       }
-      .mrow {
-        display: flex;
-        gap: 16px;
+      .mstack {
+        display: grid;
+        gap: 24px;
         max-width: var(--max);
-        height: clamp(460px, 64vh, 600px);
         margin: 64px auto 0;
       }
-      .mc {
-        position: relative;
-        flex: 1 1 0;
-        min-width: 0;
+      .mp {
+        position: sticky;
+        top: calc(var(--stick) + var(--i) * 16px);
+        display: grid;
+        grid-template-columns: minmax(0, 0.5fr) minmax(0, 1.45fr) minmax(0, 1.05fr);
+        gap: 32px clamp(32px, 4vw, 72px);
+        min-height: clamp(340px, 46vh, 460px);
+        padding: clamp(24px, 3vw, 44px);
         border-radius: var(--r-card);
-        overflow: hidden;
+        background: var(--mint);
+        color: var(--ink);
+        transform-origin: 50% 0;
+        box-shadow: 0 -12px 32px rgba(18, 59, 54, 0.07);
+      }
+      .mp:nth-child(2) {
+        background: var(--acc-soft);
+      }
+      .mp:nth-child(2) .mp-n {
+        color: var(--acc-ink);
+      }
+      .mp:nth-child(3) {
         background: var(--deep);
         color: #fff;
-        isolation: isolate;
-        transition: flex-grow 0.9s var(--ease);
       }
-      .mc.on {
-        flex-grow: 2.7;
+      .mp:nth-child(4) {
+        background: var(--teal);
+        color: #fff;
       }
-      .mc > .phx {
+      .mp-n {
+        font-size: clamp(64px, 7.4vw, 124px);
+        font-weight: 600;
+        letter-spacing: -0.06em;
+        line-height: 0.8;
+        color: var(--teal);
+      }
+      .mp:nth-child(n + 3) .mp-n {
+        color: var(--mint-2);
+      }
+      .mp-body {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+      .mp h3 {
+        font-size: clamp(28px, 2.9vw, 46px);
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1.05;
+      }
+      .mp p {
+        max-width: 34rem;
+        margin-top: 16px;
+        font-size: var(--fs-lead);
+        line-height: 1.5;
+        color: var(--body);
+      }
+      .mp:nth-child(n + 3) p {
+        color: rgba(255, 255, 255, 0.8);
+      }
+      .mp-prog {
+        display: grid;
+        gap: 10px;
+        margin-top: auto;
+        padding-top: 28px;
+      }
+      .mp-prog span {
+        font-size: var(--fs-small);
+        font-weight: 500;
+        color: var(--body);
+      }
+      .mp:nth-child(n + 3) .mp-prog span {
+        color: rgba(255, 255, 255, 0.7);
+      }
+      .road {
+        display: grid;
+        grid-auto-flow: column;
+        gap: 6px;
+        width: min(220px, 100%);
+      }
+      .road i {
+        height: 4px;
+        border-radius: 4px;
+        background: rgba(13, 19, 18, 0.12);
+      }
+      .road i.f {
+        background: var(--acc-mid);
+      }
+      .mp:nth-child(n + 3) .road i {
+        background: rgba(255, 255, 255, 0.2);
+      }
+      .mp:nth-child(n + 3) .road i.f {
+        background: var(--acc);
+      }
+      .mp-img {
+        position: relative;
+        min-height: 220px;
+        border-radius: var(--r-inner);
+        overflow: hidden;
+      }
+      .mp-img .phx {
         position: absolute;
         inset: 0;
-        z-index: -2;
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transform: scale(1.12);
-        transition: transform 1.2s var(--ease);
-      }
-      .mc.on > .phx {
-        transform: scale(1);
-      }
-      .mc::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        z-index: -1;
-        background: linear-gradient(180deg, rgba(18, 59, 54, 0.05) 25%, rgba(18, 59, 54, 0.88));
-      }
-      .mc-n {
-        position: absolute;
-        top: 20px;
-        left: 24px;
-        color: var(--teal);
-        transition: color 0.4s;
-      }
-      .mc:not(.on) .mc-n {
-        color: var(--teal-3);
-      }
-      /* placeholder labels only on the open card, so they never cross the vertical titles */
-      .mc > .phx > svg {
-        transition: opacity 0.4s;
-      }
-      .mc:not(.on) > .phx > svg {
-        opacity: 0;
-      }
-      .mc-arr {
-        position: absolute;
-        top: 16px;
-        right: 16px;
-        display: grid;
-        place-items: center;
-        width: 52px;
-        height: 52px;
-        border-radius: 50%;
-        background: #fff;
-        color: var(--ink);
-        font-size: 20px;
-        opacity: 0;
-        transform: rotate(45deg) scale(0.6);
-        transition:
-          transform 0.7s var(--ease),
-          opacity 0.4s;
-      }
-      .mc.on .mc-arr {
-        opacity: 1;
-        transform: none;
-      }
-      .mc-body {
-        position: absolute;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        padding: 28px 28px 30px;
-      }
-      .mc h3 {
-        font-size: var(--fs-h3);
-        font-weight: 600;
-        letter-spacing: -0.03em;
-        line-height: 1.05;
-      }
-      .mc p {
-        width: min(440px, calc(100vw - 6rem));
-        margin-top: 12px;
-        font-size: var(--fs-body);
-        line-height: 1.5;
-        color: rgba(255, 255, 255, 0.82);
-        opacity: 0;
-        transform: translateY(12px);
-        transition:
-          opacity 0.4s,
-          transform 0.7s var(--ease);
-      }
-      .mc.on p {
-        opacity: 1;
-        transform: none;
-        transition-delay: 0.25s;
-      }
-      .mc-vt {
-        display: none;
-      }
-      @media (min-width: 900px) {
-        /* closed cards: title runs up the side; the open card shows it flat with the copy */
-        .mc-vt {
-          position: absolute;
-          left: 22px;
-          bottom: 26px;
-          display: block;
-          font-size: var(--fs-h3);
-          font-weight: 600;
-          letter-spacing: -0.035em;
-          line-height: 0.95;
-          white-space: nowrap;
-          writing-mode: vertical-rl;
-          transform: rotate(180deg);
-          transition:
-            opacity 0.45s,
-            transform 0.8s var(--ease);
-        }
-        .mc.on .mc-vt {
-          opacity: 0;
-          transform: rotate(180deg) translateY(2.5rem);
-        }
-        .mc:not(.on) .mc-vt {
-          transition-delay: 0.2s;
-        }
-        .mc .mc-body h3 {
-          opacity: 0;
-          transform: translateY(16px);
-          transition:
-            opacity 0.4s,
-            transform 0.7s var(--ease);
-        }
-        .mc.on .mc-body h3 {
-          opacity: 1;
-          transform: none;
-          transition-delay: 0.2s;
-        }
-        .mc::before {
-          content: "";
-          position: absolute;
-          inset: 0;
-          z-index: -1;
-          background: rgba(18, 59, 54, 0.4);
-          opacity: 0;
-          transition: opacity 0.7s var(--ease);
-        }
-        .mc:not(.on)::before {
-          opacity: 1;
-        }
       }
       @media (max-width: 899px) {
         .meth {
           padding: 84px 0 90px;
+          --stick: 84px;
         }
-        .mrow {
-          flex-direction: column;
-          height: auto;
+        .mstack {
+          gap: 16px;
           margin-top: 40px;
         }
-        .mc {
-          flex: none;
-          height: 440px;
+        .mp {
+          top: calc(var(--stick) + var(--i) * 10px);
+          grid-template-columns: 1fr;
+          gap: 18px;
+          min-height: 0;
         }
-        .mc .phx .hint {
+        .mp-n {
+          font-size: 56px;
+        }
+        .mp-prog {
+          padding-top: 20px;
+        }
+        .mp-img {
+          min-height: 0;
+          aspect-ratio: 16 / 9;
+        }
+        .mp-img .phx .hint {
           display: none;
         }
-        .mc p {
-          width: auto;
-          opacity: 1;
-          transform: none;
-        }
-        .mc > .phx {
-          transform: none;
-        }
-        .mc-arr {
-          opacity: 1;
-          transform: none;
+      }
+      /* short phones: a sticky card taller than the screen would hide its own bottom, so drop the picture */
+      @media (max-width: 899px) and (max-height: 760px) {
+        .mp-img {
+          display: none;
         }
       }
 
@@ -1817,13 +1831,13 @@
       }
       .q-top > i {
         font-size: 24px;
-        color: var(--teal-2);
+        color: var(--acc-mid);
       }
       .q-stars {
         display: flex;
         gap: 2px;
         font-size: 15px;
-        color: #f5b301;
+        color: var(--acc-mid);
       }
       .q-who {
         margin-top: 16px;
@@ -1853,21 +1867,84 @@
         min-height: 100%;
         background: var(--soft);
       }
-      .q-media video {
-        display: block;
+      .q-media > img {
+        position: absolute;
+        inset: 0;
         width: 100%;
         height: 100%;
         object-fit: cover;
+        object-position: 50% 22%;
+        pointer-events: none;
+      }
+      /* video-only cards: name, role and length (no quote) */
+      .q-tag {
+        font-size: var(--fs-small);
+        font-weight: 500;
+        color: var(--teal);
+      }
+      .q-len {
+        margin-top: auto;
+        font-size: var(--fs-small);
+        color: var(--body);
+      }
+      .q-vid .q-body {
+        display: flex;
+        flex-direction: column;
+      }
+      /* the video lightbox: 16:9, or 9:16 for a Short */
+      .vbox {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        display: grid;
+        place-items: center;
+        padding: clamp(16px, 4vw, 48px);
+        background: rgba(18, 59, 54, 0.86);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+      }
+      .vbox[hidden] {
+        display: none;
+      }
+      .vbox-f {
+        width: min(100%, 1180px, calc((100svh - 96px) * 16 / 9));
+        aspect-ratio: 16 / 9;
+        border-radius: var(--r-card);
+        overflow: hidden;
+        background: var(--deep);
+      }
+      .vbox.tall .vbox-f {
+        width: min(100%, 420px, calc((100svh - 96px) * 9 / 16));
+        aspect-ratio: 9 / 16;
+      }
+      .vbox iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+      .vbox-x {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        z-index: 1;
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: var(--acc);
+        color: var(--ink);
+        font-size: 20px;
       }
       .q-play {
         position: absolute;
-        left: 50%;
-        top: 50%;
+        right: 12px;
+        bottom: 12px;
         display: grid;
         place-items: center;
         width: 46px;
         height: 46px;
-        margin: -23px 0 0 -23px;
         border-radius: 50%;
         background: #fff;
         color: var(--ink);
@@ -1961,28 +2038,16 @@
       .rb-5 {
         grid-area: 2 / 4;
         border-color: transparent;
-        background: linear-gradient(160deg, var(--mint), var(--mint-2));
+        background: linear-gradient(160deg, var(--acc-2), var(--acc));
         color: var(--ink);
       }
       .rb-5 p {
-        color: var(--deep);
-      }
-      /* the render sits in the top-right corner, the label beside it, the number below: nothing overlaps */
-      .rb-5 img {
-        position: absolute;
-        top: 12px;
-        right: 10px;
-        width: 36%;
-        height: 42%;
-        object-fit: contain;
-        transition: transform 0.8s var(--ease);
+        color: var(--acc-deep);
       }
       .rb-5:hover {
-        background: linear-gradient(160deg, var(--mint), var(--mint-2));
+        background: linear-gradient(160deg, var(--acc-2), var(--acc));
       }
-      .rb-5 p {
-        max-width: 62%;
-      }
+
       .pz {
         position: relative;
         aspect-ratio: 1 / 0.9;
@@ -2057,9 +2122,6 @@
         font-size: 18px;
         color: var(--teal);
       }
-      .rb-5:hover img {
-        transform: scale(1.08) rotate(-5deg);
-      }
 
       /* ---------- 7. booking (its own section) ---------- */
       .book {
@@ -2090,7 +2152,7 @@
       .fq-list {
         display: grid;
         gap: 12px;
-        max-width: 920px;
+        max-width: var(--max);
         margin: 64px auto 0;
       }
       .fq {
@@ -2143,8 +2205,11 @@
       }
       .fq.open .fq-i {
         transform: rotate(45deg);
-        background: var(--ink);
-        color: #fff;
+        background: var(--acc);
+        color: var(--ink);
+      }
+      .fq.open .fq-n {
+        color: var(--acc-ink);
       }
       .js-fq .fq-a {
         height: 0;
@@ -2171,6 +2236,7 @@
         grid-template-columns: minmax(0, 1fr) auto;
         max-width: var(--max);
         margin-inline: auto;
+        padding-inline: var(--side);
         box-sizing: content-box;
         gap: 64px 40px;
       }
@@ -2211,7 +2277,7 @@
         transition: color 0.3s;
       }
       .f-cols a:hover {
-        color: var(--teal);
+        color: var(--acc-ink);
       }
       /* contact strip: its own full-width line under the brand + links, so it never collides */
       .f-big {
@@ -2238,7 +2304,7 @@
         transition: color 0.3s;
       }
       .f-big a:hover {
-        color: var(--teal);
+        color: var(--acc-ink);
       }
       .f-bot {
         display: flex;
@@ -2346,7 +2412,7 @@
           --fs-h1: min(4.06vw, 112px);
           background:
             radial-gradient(34% 36% at 24% 68%, rgba(191, 230, 220, 0.55), transparent 70%),
-            radial-gradient(26% 32% at 80% 66%, rgba(221, 242, 236, 0.6), transparent 70%);
+            radial-gradient(26% 32% at 80% 66%, rgba(226, 247, 130, 0.45), transparent 70%);
         }
       }
       /* wider screens: side copy, button, labels and ROAS scale up in steps with the headline */
@@ -2355,6 +2421,12 @@
         .h-badges,
         .h-stat {
           zoom: 1.15;
+        }
+        .h-badges {
+          left: calc(var(--side) / 1.15);
+        }
+        .h-stat {
+          right: calc(var(--side) / 1.15);
         }
         .h-side {
           margin-right: 110px;
@@ -2366,6 +2438,12 @@
         .h-stat {
           zoom: 1.3;
         }
+        .h-badges {
+          left: calc(var(--side) / 1.3);
+        }
+        .h-stat {
+          right: calc(var(--side) / 1.3);
+        }
         .h-side {
           margin-right: 100px;
         }
@@ -2375,6 +2453,12 @@
         .h-badges,
         .h-stat {
           zoom: 1.4;
+        }
+        .h-badges {
+          left: calc(var(--side) / 1.4);
+        }
+        .h-stat {
+          right: calc(var(--side) / 1.4);
         }
       }
       /* mid widths: a slightly tighter label row */
@@ -2391,7 +2475,7 @@
         }
         .nav {
           grid-template-columns: 1fr auto;
-          padding: 0 20px;
+          padding: 0 var(--side);
         }
         .burger {
           display: grid;
@@ -2400,11 +2484,8 @@
           margin-right: 0;
         }
         .srow {
-          grid-template-columns: 96px minmax(0, 1fr) 320px;
-          gap: 0 28px;
-        }
-        .sr-img {
-          height: 170px;
+          grid-template-columns: minmax(0, 1fr) minmax(0, 300px) 36px;
+          gap: 0 32px;
         }
       }
       @media (max-width: 899px) {
@@ -2459,17 +2540,12 @@
           margin-top: 44px;
         }
         .srow {
-          grid-template-columns: 1fr;
-          gap: 10px;
-          padding: 24px 0;
+          grid-template-columns: minmax(0, 1fr) auto;
+          gap: 14px 20px;
+          padding: 28px 0 32px;
         }
-        .sr-n {
-          font-size: 48px;
-        }
-        .sr-img {
-          order: 3;
-          height: 180px;
-          margin-top: 8px;
+        .sr-name {
+          grid-column: 1 / -1;
         }
         .cases {
           padding-top: 84px;
@@ -2542,14 +2618,6 @@
         }
         .rb-5 p {
           max-width: none;
-        }
-        .rb-5 img {
-          top: auto;
-          right: auto;
-          left: 18px;
-          bottom: 68px;
-          width: 62px;
-          height: 62px;
         }
         .rb {
           aspect-ratio: auto;
@@ -2640,6 +2708,26 @@
         .cs.on .cs-img,
         .cs:focus-within .cs-img {
           height: 190px;
+        }
+        /* touch: there is no hover, so the photo stays and the logo sits on it in a white chip */
+        .cs:hover .cs-cover,
+        .cs.on .cs-cover,
+        .cs:focus-within .cs-cover {
+          transform: none;
+        }
+        .cs-img > .cs-logo {
+          inset: auto 10px 10px auto;
+          z-index: 2;
+          width: 112px;
+          height: 62px;
+          padding: 8px 10px;
+          border-radius: var(--r-inner);
+          background: #fff;
+        }
+        .cs:hover .cs-img .cs-n,
+        .cs.on .cs-img .cs-n,
+        .cs:focus-within .cs-img .cs-n {
+          color: #fff;
         }
         .cs-in {
           height: auto;
@@ -3286,7 +3374,6 @@
     <!-- ============ PRELOADER (Elementor: skip, or a Custom Code snippet) ============ -->
     <div class="pre" id="pre" aria-hidden="true">
       <img class="pre-obj" src="assets/img/v11/mark-pre.webp" alt="" width="1920" height="1080" fetchpriority="high" />
-      <span class="pre-n" id="preN">0%</span>
       <span class="pre-b"><img src="assets/dmc-mark.png" alt="" width="22" height="22" />Dental Media Corp</span>
     </div>
 
@@ -3318,6 +3405,7 @@
             </div>
           </div>
           <a href="#results">Case Studies</a>
+          <a href="#testimonials">Reviews</a>
           <a href="#dmc">DMC Method</a>
           <a href="#faq">FAQ</a>
         </div>
@@ -3362,6 +3450,7 @@
         <div class="mnav-rule"></div>
         <ul class="mnav-list mnav-2">
           <li><a href="#results">Case Studies</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
           <li><a href="#dmc">DMC Method</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="/blog/">Blog</a></li>
@@ -3401,7 +3490,7 @@
           <b><em>19.4×</em> ROAS</b>
           <small>best return on ad spend<br />in our case studies</small>
           <div class="h-faces" aria-hidden="true">
-            <svg class="phx xs" role="img" aria-label="Image 1 placeholder: Clinic photo"><defs><pattern id="phs1" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs1)"/><text class="lbl" x="50%" y="50%">1</text></svg><svg class="phx xs" role="img" aria-label="Image 2 placeholder: Clinic photo"><defs><pattern id="phs2" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs2)"/><text class="lbl" x="50%" y="50%">2</text></svg><svg class="phx xs" role="img" aria-label="Image 3 placeholder: Clinic photo"><defs><pattern id="phs3" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs3)"/><text class="lbl" x="50%" y="50%">3</text></svg>
+            <img class="phx xs" src="assets/img/clients/face-east-village.webp" alt="" width="42" height="42" /><img class="phx xs" src="assets/img/clients/face-northern-lights.webp" alt="" width="42" height="42" /><img class="phx xs" src="assets/img/clients/face-modern-smiles.webp" alt="" width="42" height="42" />
           </div>
         </div>
       </section>
@@ -3415,7 +3504,7 @@
             <div>
               <h2 class="t-h2" id="ab-title">
                 <span class="ln-m"><span>Your complete dental marketing team.</span></span>
-                <span class="sh-l2"><span class="sh-rule" aria-hidden="true"><i class="ph-fill ph-tooth"></i></span><span class="ln-m"><span class="hl">All in one place.</span></span></span>
+                <span class="sh-l2"><span class="sh-rule" aria-hidden="true"></span><span class="ln-m"><span class="hl">All in one place.</span></span></span>
               </h2>
             </div>
           </div>
@@ -3437,7 +3526,7 @@
               <svg class="pz-svg" viewBox="0 0 100 90" preserveAspectRatio="none" overflow="visible"><defs><clipPath id="pzc3"><path d="M6,0 H94 Q100,0 100,6 V84 Q100,90 94,90 H64 L64,89 C64,84 58,80 50,80 C42,80 36,84 36,89 L36,90 H6 Q0,90 0,84 V6 Q0,0 6,0 Z"/></clipPath></defs><path class="pz-shape" d="M6,0 H94 Q100,0 100,6 V84 Q100,90 94,90 H64 L64,89 C64,84 58,80 50,80 C42,80 36,84 36,89 L36,90 H6 Q0,90 0,84 V6 Q0,0 6,0 Z"/><g clip-path="url(#pzc3)"><svg x="0" y="0" width="100" height="90" viewBox="107 0 100 90" preserveAspectRatio="none" overflow="visible"><g class="pz-grid"><line x1="-20" x2="230" y1="18" y2="18"/><line x1="-20" x2="230" y1="42" y2="42"/><line x1="-20" x2="230" y1="66" y2="66"/><line x1="-20" x2="230" y1="118" y2="118"/><line x1="-20" x2="230" y1="142" y2="142"/><line x1="-20" x2="230" y1="166" y2="166"/></g><path class="pz-area" d="M6,178 C40,174 72,166 100,152 S150,132 158,104 S178,42 196,16 L214,10 L214,190 L6,190 Z"/><path class="pz-line" pathLength="1" d="M6,178 C40,174 72,166 100,152 S150,132 158,104 S178,42 196,16"/><path class="pz-arrow" d="M184,14 L197,14 L197,27"/></svg></g></svg>
               <p class="pz-l"><span>03</span>Revenue <i class="ph ph-trend-up"></i></p>
             </div>
-            <div class="rb rb-5"><img src="assets/img/v11/mark-t8.webp" alt="" loading="lazy" /><p>best return on ad spend in our case studies</p><b>19.4×</b></div>
+            <div class="rb rb-5"><p>best return on ad spend in our case studies</p><b>19.4×</b></div>
           </div>
         </div>
       </section>
@@ -3451,88 +3540,73 @@
             <div>
               <h2 class="t-h2" id="sv-title">
                 <span class="ln-m"><span>Full-service dental</span></span>
-                <span class="sh-l2"><span class="sh-rule" aria-hidden="true"><i class="ph-fill ph-tooth"></i></span><span class="ln-m"><span class="hl">marketing</span></span></span>
+                <span class="sh-l2"><span class="sh-rule" aria-hidden="true"></span><span class="ln-m"><span class="hl">marketing</span></span></span>
               </h2>
             </div>
           </div>
           <!-- Elementor: Loop Grid over the "Service" CPT (ACF: number, title, tagline, description, features, render, page link) -->
           <ol class="sl" id="sList">
-            <li class="srow" id="svc-marketing" data-more="Explore Dental Marketing">
-              <span class="sr-n">01</span>
-              <div class="sr-c">
-                <h3><a class="sr-link" href="/dental-marketing/">Dental<br />Marketing</a></h3>
-                <p class="sr-kick">Advertising That Drives Dental Implants, Invisalign &amp; New Patients.</p>
-                <p id="treatments" class="sr-p">Targeted Google and Meta Ads built to attract qualified dental patients and drive measurable growth. Includes <b>Google Ads</b>, <b>Meta Ads</b>, <b>Dental implants &amp; full-arch</b>, <b>Invisalign</b> and <b>General dentistry</b>.</p>
-                <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Marketing</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
-              </div>
-              <figure class="sr-img"><svg class="phx" role="img" aria-label="Image 4 placeholder: Dental Marketing visual"><defs><pattern id="phs4" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs4)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 4</text><text class="hint" x="0" y="27">Dental Marketing visual</text></svg></svg></figure>
+            <li class="srow" id="svc-marketing" data-i="0">
+              <span id="treatments" class="sr-anchor"></span>
+              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-marketing.webp" alt="Smiling woman at a dental clinic" loading="lazy" /></figure>
+              <h3 class="sr-name"><a class="sr-link" href="/dental-marketing/">Dental Marketing</a></h3>
+              <p class="sr-p">Targeted Google and Meta Ads that bring in implant, Invisalign and new patients.</p>
+              <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
+              <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Marketing</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
             </li>
-            <li class="srow" id="svc-video" data-more="Explore Dental Video Marketing">
-              <span class="sr-n">02</span>
-              <div class="sr-c">
-                <h3><a class="sr-link" href="/dental-video-marketing/">Dental Video<br />Marketing</a></h3>
-                <p class="sr-kick">Content That Builds Trust. Patients Who Take Action.</p>
-                <p class="sr-p">Premium video production, patient testimonials, and custom advertising creative filmed inside your clinic. Includes <b>Premium video production</b>, <b>Patient testimonials</b>, <b>Doctor interviews</b>, <b>Educational content</b> and <b>Custom advertising creative</b>.</p>
-                <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Video Marketing</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
-              </div>
-              <figure class="sr-img"><svg class="phx" role="img" aria-label="Image 5 placeholder: Dental Video Marketing visual"><defs><pattern id="phs5" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs5)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 5</text><text class="hint" x="0" y="27">Dental Video Marketing visual</text></svg></svg></figure>
+            <li class="srow" id="svc-video" data-i="1">
+              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-video.webp" alt="Clinic video reels, including East Village Dental" loading="lazy" /></figure>
+              <h3 class="sr-name"><a class="sr-link" href="/dental-video-marketing/">Dental Video Marketing</a></h3>
+              <p class="sr-p">Premium video, patient testimonials and ad creative, filmed inside your clinic.</p>
+              <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
+              <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Video Marketing</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
             </li>
-            <li class="srow" id="svc-seo" data-more="Explore Dental SEO">
-              <span class="sr-n">03</span>
-              <div class="sr-c">
-                <h3><a class="sr-link" href="/dental-seo/">Dental SEO<br />&amp; AI SEO</a></h3>
-                <p class="sr-kick">Get Found. Get Chosen. Get More Patients.</p>
-                <p class="sr-p">Increase your visibility across Google Search, Google Maps, and AI-powered search platforms like ChatGPT, Claude, Gemini, and more. Includes <b>Google Business Profile optimization</b>, <b>Local dental SEO</b>, <b>Keyword targeting</b>, <b>Content creation</b> and <b>Website optimization</b>.</p>
-                <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental SEO</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
-              </div>
-              <figure class="sr-img"><svg class="phx" role="img" aria-label="Image 6 placeholder: Dental SEO visual"><defs><pattern id="phs6" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs6)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 6</text><text class="hint" x="0" y="27">Dental SEO visual</text></svg></svg></figure>
+            <li class="srow" id="svc-seo" data-i="2">
+              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-seo.webp" alt="Google search page" loading="lazy" /></figure>
+              <h3 class="sr-name"><a class="sr-link" href="/dental-seo/">Dental SEO &amp; AI SEO</a></h3>
+              <p class="sr-p">Get found on Google Search, Maps and AI search like ChatGPT, Claude and Gemini.</p>
+              <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
+              <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental SEO</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
             </li>
-            <li class="srow" id="svc-web" data-more="Explore Dental Website Design">
-              <span class="sr-n">04</span>
-              <div class="sr-c">
-                <h3><a class="sr-link" href="/dental-website-design/">Dental Website<br />Design</a></h3>
-                <p class="sr-kick">Designed to Impress. Built to Convert.</p>
-                <p class="sr-p">Modern, fast, SEO-optimized dental websites designed to turn visitors into patient inquiries. Includes <b>Modern design</b>, <b>Fast loading</b>, <b>SEO-optimized</b> and <b>Built to convert</b>.</p>
-                <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Website Design</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
-              </div>
-              <figure class="sr-img"><svg class="phx" role="img" aria-label="Image 7 placeholder: Dental Website Design visual"><defs><pattern id="phs7" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs7)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 7</text><text class="hint" x="0" y="27">Dental Website Design visual</text></svg></svg></figure>
+            <li class="srow" id="svc-web" data-i="3">
+              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-website.webp" alt="Digital smile design on a tablet" loading="lazy" /></figure>
+              <h3 class="sr-name"><a class="sr-link" href="/dental-website-design/">Dental Website Design</a></h3>
+              <p class="sr-p">Modern, fast, SEO-optimized websites that turn visitors into patient inquiries.</p>
+              <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
+              <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Website Design</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
             </li>
-            <li class="srow" id="svc-call" data-more="Explore Dental Call Centre">
-              <span class="sr-n">05</span>
-              <div class="sr-c">
-                <h3><a class="sr-link" href="/dental-call-centre/">Dental<br />Call Centre</a></h3>
-                <p class="sr-kick">Real People. Real Conversations. More Bookings.</p>
-                <p class="sr-p">Our dental-trained, human appointment setters qualify patients for treatment readiness, income, and 660+ credit scores, securing a $50 consultation deposit before booking. The goal? Patients who show up ready to move forward with treatment. Includes <b>Dental-trained appointment setters</b>, <b>2-minute speed-to-lead</b>, <b>660+ credit score screening</b>, <b>$50 consultation deposit</b> and <b>Branded calling</b>.</p>
-                <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Call Centre</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
-              </div>
-              <figure class="sr-img"><svg class="phx" role="img" aria-label="Image 8 placeholder: Dental Call Centre visual"><defs><pattern id="phs8" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs8)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 8</text><text class="hint" x="0" y="27">Dental Call Centre visual</text></svg></svg></figure>
+            <li class="srow" id="svc-call" data-i="4">
+              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-call.webp" alt="Man taking a phone call at his laptop" loading="lazy" /></figure>
+              <h3 class="sr-name"><a class="sr-link" href="/dental-call-centre/">Dental Call Centre</a></h3>
+              <p class="sr-p">Dental-trained setters qualify every patient and secure a $50 deposit before booking.</p>
+              <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
+              <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Call Centre</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
             </li>
-            <li class="srow" id="svc-training" data-more="Explore Treatment Coordinator Training">
-              <span class="sr-n">06</span>
-              <div class="sr-c">
-                <h3><a class="sr-link" href="/treatment-coordinator-training/">Treatment Coordinator<br />Training</a></h3>
-                <p class="sr-kick">Better Consultations. Increase Case Acceptance.</p>
-                <p class="sr-p">Improve patient communication, treatment presentations, and follow-up to help convert more consultations into treatment. Includes <b>Patient communication</b>, <b>Treatment presentations</b>, <b>Follow-up</b> and <b>Case acceptance</b>.</p>
-                <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Treatment Coordinator Training</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
-              </div>
-              <figure class="sr-img"><svg class="phx" role="img" aria-label="Image 9 placeholder: Treatment Coordinator Training visual"><defs><pattern id="phs9" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs9)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 9</text><text class="hint" x="0" y="27">Treatment Coordinator Training visual</text></svg></svg></figure>
+            <li class="srow" id="svc-training" data-i="5">
+              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-coordinator.webp" alt="Dental team reviewing a scan on screen" loading="lazy" /></figure>
+              <h3 class="sr-name"><a class="sr-link" href="/treatment-coordinator-training/">Treatment Coordinator Training</a></h3>
+              <p class="sr-p">Better patient communication, presentations and follow-up for higher case acceptance.</p>
+              <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
+              <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Treatment Coordinator Training</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
             </li>
-            <li class="srow" id="svc-reporting" data-more="Explore Dental Connect">
-              <span class="sr-n">07</span>
-              <div class="sr-c">
-                <h3><a class="sr-link" href="/dental-reporting-dashboard/">Dental Reporting<br />Dashboard</a></h3>
-                <p class="sr-kick">Complete Visibility. Real-Time Results.</p>
-                <p class="sr-p">See every stage of your patient acquisition pipeline through our proprietary Dental Connect dashboard.</p>
-                <p class="sr-p">No guesswork. No chasing reports. Just the numbers that matter. Includes <b>Leads</b>, <b>Booked consultations</b>, <b>Show-up rates</b> and <b>Treatment outcomes</b>.</p>
-                <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Connect</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
-              </div>
-              <figure class="sr-img"><svg class="phx" role="img" aria-label="Image 10 placeholder: Dental Connect visual"><defs><pattern id="phs10" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs10)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 10</text><text class="hint" x="0" y="27">Dental Connect visual</text></svg></svg></figure>
+            <li class="srow" id="svc-reporting" data-i="6">
+              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-dashboard.webp" alt="Reporting dashboard" loading="lazy" /></figure>
+              <h3 class="sr-name"><a class="sr-link" href="/dental-reporting-dashboard/">Dental Reporting Dashboard</a></h3>
+              <p class="sr-p">Every stage of your patient pipeline, live in our Dental Connect dashboard.</p>
+              <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
+              <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Connect</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
             </li>
           </ol>
-        </div>
-        <div class="badge light cbadge" id="cBadge" aria-hidden="true">
-          <svg class="ring spin" viewBox="0 0 120 120" aria-hidden="true"><defs><path id="rgC" d="M60 60m-45 0a45 45 0 1 1 90 0a45 45 0 1 1-90 0"/></defs><text><textPath href="#rgC" textLength="280" lengthAdjust="spacing" id="cBadgeT">explore · explore · explore · </textPath></text></svg>
-          <span class="badge-core"><i class="ph ph-arrow-up-right"></i></span>
+          <!-- the card that follows the cursor over the list (fine pointers), one image per service -->
+          <div class="sv-pv" id="svPv" aria-hidden="true">
+            <img class="phx" src="assets/img/services/svc-marketing.webp" alt="" />
+            <img class="phx" src="assets/img/services/svc-video.webp" alt="" />
+            <img class="phx" src="assets/img/services/svc-seo.webp" alt="" />
+            <img class="phx" src="assets/img/services/svc-website.webp" alt="" />
+            <img class="phx" src="assets/img/services/svc-call.webp" alt="" />
+            <img class="phx" src="assets/img/services/svc-coordinator.webp" alt="" />
+            <img class="phx" src="assets/img/services/svc-dashboard.webp" alt="" />
+          </div>
         </div>
       </section>
 
@@ -3543,39 +3617,39 @@
         <div class="cases-head sh">
           <h2 class="t-h2" id="res-title">
             <span class="ln-m"><span>Real clinics,</span></span>
-            <span class="sh-l2"><span class="sh-rule" aria-hidden="true"><i class="ph-fill ph-tooth"></i></span><span class="ln-m"><span class="hl">real results</span></span></span>
+            <span class="sh-l2"><span class="sh-rule" aria-hidden="true"></span><span class="ln-m"><span class="hl">real results</span></span></span>
           </h2>
         </div>
         <!-- Elementor: Loop Carousel over the "Case Study" CPT (ACF: render, logo, revenue, ad_spend, roas) -->
         <div class="row" id="cRow" tabindex="0" aria-label="Clinic results. Scroll sideways or use the arrows.">
           <article class="cs"><div class="cs-in">
-            <div class="cs-img"><svg class="phx" role="img" aria-label="Image 11 placeholder: West Grande Prairie Dental photo"><defs><pattern id="phs11" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs11)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 11</text><text class="hint" x="0" y="27">West Grande Prairie Dental photo</text></svg></svg><span class="sr-n cs-n">01</span></div>
+            <div class="cs-img"><img class="cs-logo" src="assets/img/clients/case-wgp.webp" alt="West Grande Prairie Dental logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/wgp-photo.jpg" alt="West Grande Prairie Dental storefront" loading="lazy" /></div><span class="sr-n cs-n">01</span></div>
             <h3>West Grande Prairie Dental</h3>
-            <p class="cs-meta">return on ad spend: 19.4×</p>
+            <p class="cs-meta">return on ad spend: <b>19.4×</b></p>
             <div class="cs-res"><p>Campaign results:</p><ul><li><b>$97,000</b> revenue</li><li>from <b>$5,000</b> ad spend</li></ul></div>
           </div></article>
           <article class="cs"><div class="cs-in">
-            <div class="cs-img"><svg class="phx" role="img" aria-label="Image 12 placeholder: Riverbend Denture &amp; Implant photo"><defs><pattern id="phs12" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs12)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 12</text><text class="hint" x="0" y="27">Riverbend Denture &amp; Implant photo</text></svg></svg><span class="sr-n cs-n">02</span></div>
+            <div class="cs-img"><img class="cs-logo" src="assets/img/clients/riverbend.png" alt="Riverbend Denture &amp; Implant logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/riverbend-photo.webp" alt="Riverbend Denture &amp; Implant Clinic reception" loading="lazy" /></div><span class="sr-n cs-n">02</span></div>
             <h3>Riverbend Denture &amp; Implant</h3>
-            <p class="cs-meta">return on ad spend: 13.4×</p>
+            <p class="cs-meta">return on ad spend: <b>13.4×</b></p>
             <div class="cs-res"><p>Campaign results:</p><ul><li><b>$255,000</b> revenue</li><li>from <b>$19,000</b> ad spend</li></ul></div>
           </div></article>
           <article class="cs"><div class="cs-in">
-            <div class="cs-img"><svg class="phx" role="img" aria-label="Image 13 placeholder: Smile Now photo"><defs><pattern id="phs13" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs13)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 13</text><text class="hint" x="0" y="27">Smile Now photo</text></svg></svg><span class="sr-n cs-n">03</span></div>
+            <div class="cs-img"><img class="cs-logo" src="assets/img/clients/case-smilenow.webp" alt="Smile Now logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/smilenow-photo.webp" alt="Calgary skyline and the Peace Bridge" loading="lazy" /></div><span class="sr-n cs-n">03</span></div>
             <h3>Smile Now</h3>
-            <p class="cs-meta">return on ad spend: 12.4×</p>
+            <p class="cs-meta">return on ad spend: <b>12.4×</b></p>
             <div class="cs-res"><p>Campaign results:</p><ul><li><b>$161,000</b> revenue</li><li>from <b>$13,000</b> ad spend</li></ul></div>
           </div></article>
           <article class="cs"><div class="cs-in">
-            <div class="cs-img"><svg class="phx" role="img" aria-label="Image 14 placeholder: Wye Dental photo"><defs><pattern id="phs14" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs14)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 14</text><text class="hint" x="0" y="27">Wye Dental photo</text></svg></svg><span class="sr-n cs-n">04</span></div>
+            <div class="cs-img"><img class="cs-logo" src="assets/img/clients/case-wye.webp" alt="Wye Dental logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/wye-photo.webp" alt="The Wye Dental team" loading="lazy" /></div><span class="sr-n cs-n">04</span></div>
             <h3>Wye Dental</h3>
-            <p class="cs-meta">return on ad spend: 15.3×</p>
+            <p class="cs-meta">return on ad spend: <b>15.3×</b></p>
             <div class="cs-res"><p>Campaign results:</p><ul><li><b>$92,000</b> revenue</li><li>from <b>$6,000</b> ad spend</li></ul></div>
           </div></article>
           <article class="cs"><div class="cs-in">
-            <div class="cs-img"><svg class="phx" role="img" aria-label="Image 15 placeholder: Modern Smiles photo"><defs><pattern id="phs15" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs15)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 15</text><text class="hint" x="0" y="27">Modern Smiles photo</text></svg></svg><span class="sr-n cs-n">05</span></div>
+            <div class="cs-img"><img class="cs-logo" src="assets/img/clients/case-modern-smiles.webp" alt="Modern Smiles logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/modern-smiles-photo.webp" alt="A denture being made at Modern Smiles" loading="lazy" /></div><span class="sr-n cs-n">05</span></div>
             <h3>Modern Smiles</h3>
-            <p class="cs-meta">return on ad spend: 12×</p>
+            <p class="cs-meta">return on ad spend: <b>12×</b></p>
             <div class="cs-res"><p>Campaign results:</p><ul><li><b>$72,000</b> revenue</li><li>from <b>$6,000</b> ad spend</li></ul></div>
           </div></article>
         </div>
@@ -3593,10 +3667,10 @@
         <div class="say-head sh">
           <h2 class="t-h2" id="say-title">
             <span class="ln-m"><span>What dentists</span></span>
-            <span class="sh-l2"><span class="sh-rule" aria-hidden="true"><i class="ph-fill ph-tooth"></i></span><span class="ln-m"><span class="hl">say about us</span></span></span>
+            <span class="sh-l2"><span class="sh-rule" aria-hidden="true"></span><span class="ln-m"><span class="hl">say about us</span></span></span>
           </h2>
         </div>
-        <!-- Elementor: Loop Carousel over the "Testimonial" CPT (ACF: name, role, quote, video still, video URL -> data-video) -->
+        <!-- Elementor: Loop Carousel over the "Testimonial" CPT (ACF: name, role, quote, video still, YouTube ID -> data-video; add data-tall for a Short) -->
         <div class="q-row" id="qRow">
           <div class="q-track" id="qTrack">
             <figure class="q">
@@ -3605,7 +3679,7 @@
                 <div class="q-who"><b>Dr. Mark Warawa</b><span>Bright Smile Dental</span></div>
                 <blockquote>We’ve opened up another operatory just to deal with the overflow of new patients.</blockquote>
               </div>
-              <div class="q-media"><svg class="phx" role="img" aria-label="Image 20 placeholder: Video testimonial still"><defs><pattern id="phs20" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs20)"/><svg x="50%" y="76%" overflow="visible"><text class="lbl" x="0" y="6">Image 20</text><text class="hint" x="0" y="24">Video testimonial still</text></svg></svg><button class="q-play" type="button" data-video="" aria-label="Play Dr. Mark Warawa’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+              <div class="q-media"><img src="assets/img/testimonials/warawa.webp" alt="Dr. Mark Warawa" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="LzVfobN6T40" aria-label="Play Dr. Mark Warawa’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
             </figure>
             <figure class="q">
               <div class="q-body">
@@ -3613,7 +3687,7 @@
                 <div class="q-who"><b>Dr. Greg Broyde</b><span>West Grande Prairie Dental &amp; East Village Dental</span></div>
                 <blockquote>For every dollar I spend, DMC makes sure that I get at least $6 to $10 back.</blockquote>
               </div>
-              <div class="q-media"><svg class="phx" role="img" aria-label="Image 21 placeholder: Video testimonial still"><defs><pattern id="phs21" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs21)"/><svg x="50%" y="76%" overflow="visible"><text class="lbl" x="0" y="6">Image 21</text><text class="hint" x="0" y="24">Video testimonial still</text></svg></svg><button class="q-play" type="button" data-video="" aria-label="Play Dr. Greg Broyde’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+              <div class="q-media"><img src="assets/img/testimonials/broyde.webp" alt="Dr. Greg Broyde" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="xulePDv7Zt8" aria-label="Play Dr. Greg Broyde’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
             </figure>
             <figure class="q">
               <div class="q-body">
@@ -3621,7 +3695,39 @@
                 <div class="q-who"><b>Rae-Lynne D.</b><span>Modern Smiles &amp; Northern Lights</span></div>
                 <blockquote>DMC is the first marketing that’s actually paid off since I opened in 2012.</blockquote>
               </div>
-              <div class="q-media"><svg class="phx" role="img" aria-label="Image 22 placeholder: Video testimonial still"><defs><pattern id="phs22" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs22)"/><svg x="50%" y="76%" overflow="visible"><text class="lbl" x="0" y="6">Image 22</text><text class="hint" x="0" y="24">Video testimonial still</text></svg></svg><button class="q-play" type="button" data-video="" aria-label="Play Rae-Lynne D.’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+              <div class="q-media"><img src="assets/img/testimonials/rae-lynne.webp" alt="Rae-Lynne" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="NgVZUXrVF44" aria-label="Play Rae-Lynne D.’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+            </figure>
+            <figure class="q q-vid">
+              <div class="q-body">
+                <div class="q-top"><span class="q-tag">Video testimonial</span></div>
+                <div class="q-who"><b>Dr. Albert Voravong</b><span>On working with Dental Media Corp</span></div>
+                <p class="q-len">23 sec</p>
+              </div>
+              <div class="q-media"><img src="assets/img/testimonials/voravong.webp" alt="Dr. Albert Voravong" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="1gKTOT7zsbY" aria-label="Play Dr. Albert Voravong’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+            </figure>
+            <figure class="q q-vid">
+              <div class="q-body">
+                <div class="q-top"><span class="q-tag">Video testimonial</span></div>
+                <div class="q-who"><b>Corey Hyde</b><span>Owner, Centre Street Denture Clinic</span></div>
+                <p class="q-len">44 sec</p>
+              </div>
+              <div class="q-media"><img src="assets/img/testimonials/corey.webp" alt="Corey Hyde" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="PZ1iatxqWl8" data-tall aria-label="Play Corey Hyde’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+            </figure>
+            <figure class="q q-vid">
+              <div class="q-body">
+                <div class="q-top"><span class="q-tag">Video testimonial</span></div>
+                <div class="q-who"><b>Val</b><span>Office Manager, Westgate GP Dental</span></div>
+                <p class="q-len">57 sec</p>
+              </div>
+              <div class="q-media"><img src="assets/img/testimonials/val.webp" alt="Val" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="GWBPfeuAf4Q" aria-label="Play Val’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+            </figure>
+            <figure class="q q-vid">
+              <div class="q-body">
+                <div class="q-top"><span class="q-tag">Video testimonial</span></div>
+                <div class="q-who"><b>Brandie</b><span>Treatment Coordinator, Trader Ridge</span></div>
+                <p class="q-len">35 sec</p>
+              </div>
+              <div class="q-media"><img src="assets/img/testimonials/brandie.webp" alt="Brandie" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="YA7YKZU5grE" aria-label="Play Brandie’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
             </figure>
           </div>
         </div>
@@ -3629,45 +3735,54 @@
 
       <div class="sbreak" aria-hidden="true"></div>
 
-      <!-- ============ 6. THE DMC METHOD (expanding card row, layout from proto's services) ============ -->
+      <!-- ============ 6. THE DMC METHOD (stacking cards, layout from proto's process) ============ -->
       <section class="meth" id="dmc" aria-labelledby="dmc-title">
         <div class="wrap">
           <div class="sh">
             <h2 class="t-h2" id="dmc-title">
               <span class="ln-m"><span>More than lead generation.</span></span>
-              <span class="sh-l2"><span class="sh-rule" aria-hidden="true"><i class="ph-fill ph-tooth"></i></span><span class="ln-m"><span class="hl">The DMC Method.</span></span></span>
+              <span class="sh-l2"><span class="sh-rule" aria-hidden="true"></span><span class="ln-m"><span class="hl">The DMC Method.</span></span></span>
             </h2>
           </div>
-          <!-- Elementor: Container row of 4 cards; the hovered card grows (flex-grow), see the script -->
-          <div class="mrow" id="mRow">
-            <a class="mc on" href="#contact">
-              <svg class="phx" role="img" aria-label="Image 16 placeholder: End-to-end management visual"><defs><pattern id="phs16" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs16)"/><svg x="50%" y="42%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 16</text><text class="hint" x="0" y="27">End-to-end management visual</text></svg></svg>
-              <span class="sr-n mc-n">01</span>
-              <span class="mc-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i></span>
-              <span class="mc-vt" aria-hidden="true">End-to-end management</span>
-              <div class="mc-body"><h3>End-to-end management</h3><p>We manage your patient acquisition end-to-end: ads, screening, follow-up and booking, so you stay focused on treatment.</p></div>
-            </a>
-            <a class="mc" href="#contact">
-              <svg class="phx" role="img" aria-label="Image 17 placeholder: Qualified patients only visual"><defs><pattern id="phs17" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs17)"/><svg x="50%" y="42%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 17</text><text class="hint" x="0" y="27">Qualified patients only visual</text></svg></svg>
-              <span class="sr-n mc-n">02</span>
-              <span class="mc-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i></span>
-              <span class="mc-vt" aria-hidden="true">Qualified patients only</span>
-              <div class="mc-body"><h3>Qualified patients only</h3><p>Every lead is vetted for intent and financial readiness, then books with a deposit. No time wasted on uncommitted inquiries.</p></div>
-            </a>
-            <a class="mc" href="#contact">
-              <svg class="phx" role="img" aria-label="Image 18 placeholder: Original video campaigns visual"><defs><pattern id="phs18" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs18)"/><svg x="50%" y="42%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 18</text><text class="hint" x="0" y="27">Original video campaigns visual</text></svg></svg>
-              <span class="sr-n mc-n">03</span>
-              <span class="mc-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i></span>
-              <span class="mc-vt" aria-hidden="true">Original video campaigns</span>
-              <div class="mc-body"><h3>Original video campaigns</h3><p>We produce custom content inside your clinic: real people, real cases, built to earn trust before the consult.</p></div>
-            </a>
-            <a class="mc" href="#contact">
-              <svg class="phx" role="img" aria-label="Image 19 placeholder: The DMC Network visual"><defs><pattern id="phs19" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs19)"/><svg x="50%" y="42%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 19</text><text class="hint" x="0" y="27">The DMC Network visual</text></svg></svg>
-              <span class="sr-n mc-n">04</span>
-              <span class="mc-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i></span>
-              <span class="mc-vt" aria-hidden="true">The DMC Network</span>
-              <div class="mc-body"><h3>The DMC Network</h3><p>Access a private group of partner clinics sharing what works, from case acceptance to patient communication.</p></div>
-            </a>
+          <!-- Elementor: 4 sticky cards (position: sticky, top offset grows per card); as each next card
+               slides up over the previous one, the previous card scales back a little (see the script) -->
+          <div class="mstack" id="mStack">
+            <article class="mp" style="--i: 0">
+              <span class="mp-n">01</span>
+              <div class="mp-body">
+                <h3>End-to-end management</h3>
+                <p>We manage your patient acquisition end-to-end: ads, screening, follow-up and booking, so you stay focused on treatment.</p>
+                <div class="mp-prog"><span>1 of 4</span><div class="road" aria-hidden="true"><i class="f"></i><i></i><i></i><i></i></div></div>
+              </div>
+              <div class="mp-img"><img class="phx" src="assets/img/services/dmc-management.webp" alt="Clinic receptionist greeting a patient" loading="lazy" /></div>
+            </article>
+            <article class="mp" style="--i: 1">
+              <span class="mp-n">02</span>
+              <div class="mp-body">
+                <h3>Qualified patients only</h3>
+                <p>Every lead is vetted for intent and financial readiness, then books with a deposit. No time wasted on uncommitted inquiries.</p>
+                <div class="mp-prog"><span>2 of 4</span><div class="road" aria-hidden="true"><i class="f"></i><i class="f"></i><i></i><i></i></div></div>
+              </div>
+              <div class="mp-img"><img class="phx" src="assets/img/services/dmc-qualified.webp" alt="Patient smiling in a dental chair" loading="lazy" /></div>
+            </article>
+            <article class="mp" style="--i: 2">
+              <span class="mp-n">03</span>
+              <div class="mp-body">
+                <h3>Original video campaigns</h3>
+                <p>We produce custom content inside your clinic: real people, real cases, built to earn trust before the consult.</p>
+                <div class="mp-prog"><span>3 of 4</span><div class="road" aria-hidden="true"><i class="f"></i><i class="f"></i><i class="f"></i><i></i></div></div>
+              </div>
+              <div class="mp-img"><img class="phx" src="assets/img/services/dmc-video.webp" alt="Presenter filming inside a dental clinic" loading="lazy" /></div>
+            </article>
+            <article class="mp" style="--i: 3">
+              <span class="mp-n">04</span>
+              <div class="mp-body">
+                <h3>The DMC Network</h3>
+                <p>Access a private group of partner clinics sharing what works, from case acceptance to patient communication.</p>
+                <div class="mp-prog"><span>4 of 4</span><div class="road" aria-hidden="true"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></div></div>
+              </div>
+              <div class="mp-img"><img class="phx" src="assets/img/services/dmc-network.webp" alt="Dental team treating a patient" loading="lazy" /></div>
+            </article>
           </div>
         </div>
       </section>
@@ -3681,7 +3796,7 @@
             <div class="sh">
           <h2 class="t-h2" id="ct-title">
             <span class="ln-m"><span>Book a free</span></span>
-            <span class="sh-l2"><span class="sh-rule" aria-hidden="true"><i class="ph-fill ph-tooth"></i></span><span class="ln-m"><span class="hl">strategy call</span></span></span>
+            <span class="sh-l2"><span class="sh-rule" aria-hidden="true"></span><span class="ln-m"><span class="hl">strategy call</span></span></span>
           </h2>
             </div>
             <div class="ct-body">
@@ -3883,7 +3998,7 @@
           <div class="sh">
             <h2 class="t-h2" id="faq-title">
               <span class="ln-m"><span>Dental marketing,</span></span>
-              <span class="sh-l2"><span class="sh-rule" aria-hidden="true"><i class="ph-fill ph-tooth"></i></span><span class="ln-m"><span class="hl">answered.</span></span></span>
+              <span class="sh-l2"><span class="sh-rule" aria-hidden="true"></span><span class="ln-m"><span class="hl">answered.</span></span></span>
             </h2>
           </div>
           <div class="fq-list">
@@ -3935,6 +4050,12 @@
         </div>
       </section>
     </main>
+
+    <!-- video lightbox: the play buttons fill it with a YouTube embed -->
+    <div class="vbox" id="vbox" role="dialog" aria-modal="true" aria-label="Video testimonial" hidden>
+      <button class="vbox-x" type="button" aria-label="Close video"><i class="ph ph-x" aria-hidden="true"></i></button>
+      <div class="vbox-f" id="vboxF"></div>
+    </div>
 
     <div class="sbreak" aria-hidden="true"></div>
     <!-- ============ FOOTER ============ -->
@@ -4079,7 +4200,7 @@
         burger.addEventListener("click", openMnav);
         $(".mnav-x").addEventListener("click", () => closeMnav());
 
-        /* ---------- preloader (% counter over the render) + hero build ---------- */
+        /* ---------- preloader (no counter: it slides up as soon as the hero image is ready) + hero build ---------- */
         const heroIn = () => {
           const tl = gsap.timeline();
           tl.from(".h-obj img", { yPercent: 30, scale: 0.88, opacity: 0, filter: "blur(16px)", duration: 1.9, ease: "expo.out", clearProps: "filter" }, 0)
@@ -4093,12 +4214,9 @@
         const pre = $("#pre");
         if (motion && root.classList.contains("is-pre")) {
           lock(true);
-          const n = { v: 0 },
-            out = $("#preN");
           const imgs = [$(".pre-obj"), $(".h-obj img")].map((i) => (i.decode ? i.decode().catch(() => {}) : 0));
           gsap.from(".pre-obj", { scale: 1.15, duration: 2.6, ease: "power2.out" });
-          const count = gsap.to(n, { v: 100, duration: 1.7, ease: "power2.inOut", onUpdate: () => (out.textContent = Math.round(n.v) + "%") });
-          Promise.race([Promise.all([...imgs, count.then()]), new Promise((r) => setTimeout(r, 5000))]).then(() => {
+          Promise.race([Promise.all(imgs), new Promise((r) => setTimeout(r, 1500))]).then(() => {
             gsap
               .timeline({
                 onComplete: () => {
@@ -4108,7 +4226,7 @@
                   ScrollTrigger.refresh();
                 },
               })
-              .to([out, ".pre-b"], { yPercent: -40, opacity: 0, duration: 0.5, ease: "power2.in" })
+              .to(".pre-b", { yPercent: -40, opacity: 0, duration: 0.5, ease: "power2.in" })
               .to(pre, { clipPath: "inset(0 0 100% 0)", duration: 1.1, ease: "expo.inOut" }, 0.2)
               .add(heroIn(), 0.75);
           });
@@ -4227,17 +4345,39 @@
           requestAnimationFrame(tick);
           qRow.addEventListener("mouseenter", () => (hover = true));
           qRow.addEventListener("mouseleave", () => (hover = false));
-          // play: swaps the still for the clinic's video (set its URL in data-video) and stops the drift
+          // play: opens the YouTube video (ID in data-video) in the lightbox and stops the drift
+          const vb = $("#vbox"),
+            vbF = $("#vboxF"),
+            vbX = $(".vbox-x");
+          let vbFrom = null;
+          const closeV = () => {
+            if (vb.hidden) return;
+            vb.hidden = true;
+            vbF.replaceChildren();
+            hold = false;
+            lock(false);
+            if (vbFrom) vbFrom.focus({ preventScroll: true });
+          };
           qRow.addEventListener("click", (e) => {
             const btn = e.target.closest(".q-play");
             if (!btn || !btn.dataset.video) return;
-            const v = document.createElement("video");
-            v.src = btn.dataset.video;
-            v.controls = v.autoplay = v.playsInline = true;
-            btn.closest(".q-media").replaceChildren(v);
+            const f = document.createElement("iframe");
+            f.src = "https://www.youtube-nocookie.com/embed/" + btn.dataset.video + "?autoplay=1&rel=0&playsinline=1";
+            f.title = btn.getAttribute("aria-label").replace(/^Play /, "");
+            f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+            f.allowFullscreen = true;
+            f.referrerPolicy = "strict-origin-when-cross-origin";
+            vbF.replaceChildren(f);
+            vb.classList.toggle("tall", "tall" in btn.dataset);
+            vb.hidden = false;
+            vbFrom = btn;
             hold = true;
-            v.play().catch(() => {});
+            lock(true);
+            vbX.focus();
           });
+          vbX.addEventListener("click", closeV);
+          vb.addEventListener("click", (e) => e.target === vb && closeV());
+          addEventListener("keydown", (e) => e.key === "Escape" && closeV());
           qRow.addEventListener("pointerdown", (e) => {
             if (e.target.closest(".q-play, video")) return;
             drag = { x: e.clientX, s: x };
@@ -4258,95 +4398,33 @@
           qRow.addEventListener("pointercancel", end);
         }
 
-        /* ---------- services: each row shows its render only while it is hovered ---------- */
+        /* ---------- services: one card follows the cursor over the list, tilting with its speed,
+           and reveals the hovered service's image from below (Ondule "selected work") ---------- */
         if (motion && fine) {
-          root.classList.add("js-reveal");
-          const closed = "inset(50% 50% 50% 50% round 18px)",
-            open = "inset(0% 0% 0% 0% round 18px)";
-          $$(".srow").forEach((r) => {
-            const fig = $(".sr-img", r),
-              img = $(".phx", fig);
-            gsap.set(fig, { clipPath: closed, opacity: 0, rotation: -4, y: 24 });
-            const show = () => {
-              gsap.to(fig, { clipPath: open, opacity: 1, rotation: 0, y: 0, duration: 0.8, ease: "expo.out", overwrite: true });
-              gsap.fromTo(img, { scale: 1.35, rotation: 12 }, { scale: 1, rotation: 0, duration: 1.1, ease: "expo.out", overwrite: true });
-            };
-            const hide = () => gsap.to(fig, { clipPath: closed, opacity: 0, rotation: 4, y: -16, duration: 0.45, ease: "power3.in", overwrite: true });
-            r.addEventListener("pointerenter", show);
-            r.addEventListener("pointerleave", hide);
-            r.addEventListener("focusin", show);
-            r.addEventListener("focusout", hide);
+          const pv = $("#svPv"),
+            shots = $$(".phx", pv),
+            list = $("#sList");
+          const px = gsap.quickTo(pv, "x", { duration: 0.7, ease: "power3" }),
+            py = gsap.quickTo(pv, "y", { duration: 0.7, ease: "power3" }),
+            pr = gsap.quickTo(pv, "rotation", { duration: 0.9, ease: "power3" });
+          gsap.set(pv, { xPercent: -50, yPercent: -50, x: innerWidth / 2, y: innerHeight / 2, scale: 0.6 });
+          let lastX = 0;
+          addEventListener("pointermove", (e) => {
+            px(e.clientX);
+            py(e.clientY);
+            pr(gsap.utils.clamp(-10, 10, (e.clientX - lastX) * 0.6));
+            lastX = e.clientX;
           });
-
-        }
-
-        /* ---------- spinning badge: rings turn, faster with scroll speed (proto) ---------- */
-        if (!reduce) {
-          const rings = $$(".spin");
-          let rot = 0,
-            dir = 1,
-            boost = 0,
-            lastY = scrollY,
-            last = performance.now();
-          addEventListener(
-            "scroll",
-            () => {
-              const dy = scrollY - lastY;
-              lastY = scrollY;
-              if (dy) {
-                dir = dy > 0 ? 1 : -1;
-                boost = Math.min(boost + Math.abs(dy) * 0.04, 7);
-              }
-            },
-            { passive: true },
-          );
-          const spin = (now) => {
-            const dt = Math.min(now - last, 50);
-            last = now;
-            boost *= 0.93;
-            rot += (1 + boost * 2) * dir * dt * 0.012;
-            rings.forEach((r) => (r.style.transform = "rotate(" + rot + "deg)"));
-            requestAnimationFrame(spin);
-          };
-          requestAnimationFrame(spin);
-        }
-
-        /* ---------- the badge follows the cursor over services, case cards and DMC Method cards ---------- */
-        if (motion && fine) {
-          const cb = $("#cBadge"),
-            cbT = $("#cBadgeT");
-          root.classList.add("js-cb");
-          gsap.set(cb, { xPercent: -50, yPercent: -50, scale: 0, opacity: 0 });
-          const xTo = gsap.quickTo(cb, "x", { duration: 0.45, ease: "power3" }),
-            yTo = gsap.quickTo(cb, "y", { duration: 0.45, ease: "power3" });
-          [
-            [".srow", "explore · explore · explore · ", true],
-            [".cs", "view results · view results · ", false],
-            [".mc", "book a call · book a call · ", true],
-          ].forEach(([sel, text, light]) =>
-            $$(sel).forEach((el) => {
-              el.addEventListener("pointerenter", (e) => {
-                cbT.textContent = text;
-                cb.classList.toggle("light", light);
-                gsap.set(cb, { x: e.clientX, y: e.clientY });
-                gsap.to(cb, { scale: 1, opacity: 1, duration: 0.5, ease: "back.out(1.7)", overwrite: "auto" });
-              });
-              el.addEventListener("pointermove", (e) => {
-                xTo(e.clientX);
-                yTo(e.clientY);
-              });
-              el.addEventListener("pointerleave", () => gsap.to(cb, { scale: 0, opacity: 0, duration: 0.3, ease: "power3.in", overwrite: "auto" }));
+          $$(".srow", list).forEach((r, i) =>
+            r.addEventListener("pointerenter", () => {
+              shots.forEach((s, k) => s.classList.toggle("on", k === i));
+              pv.classList.add("is-live");
+              gsap.to(pv, { opacity: 1, scale: 1, duration: 0.6, ease: "expo.out", overwrite: "auto" });
             }),
           );
-        }
-
-        /* ---------- the DMC Method: the hovered / focused card opens ---------- */
-        {
-          const mcs = $$(".mc");
-          mcs.forEach((m) => {
-            const open = () => mcs.forEach((x) => x.classList.toggle("on", x === m));
-            m.addEventListener("mouseenter", open);
-            m.addEventListener("focus", open);
+          list.addEventListener("pointerleave", () => {
+            gsap.to(pv, { opacity: 0, scale: 0.6, duration: 0.5, ease: "power3.out", overwrite: "auto", onComplete: () => pv.classList.remove("is-live") });
+            shots.forEach((s) => s.classList.remove("on"));
           });
         }
 
@@ -4830,10 +4908,9 @@
         // services + why DMC: headings draw their rule, rows and boxes rise in
         $$(".sh-rule").forEach((r) => {
           gsap.from(r, { scaleX: 0, duration: 1.4, ease: "expo.inOut", scrollTrigger: st(r, "top 90%") });
-          gsap.from($("i", r), { rotation: -180, scale: 0, duration: 1.2, ease: "back.out(2)", delay: 0.3, scrollTrigger: st(r, "top 90%") });
         });
         gsap.set(".srow", { opacity: 0, y: 50 });
-        ScrollTrigger.batch(".srow", { start: "top 90%", once: true, onEnter: (b) => gsap.to(b, { opacity: 1, y: 0, duration: 1.1, ease: "expo.out", stagger: 0.1 }) });
+        ScrollTrigger.batch(".srow", { start: "top 90%", once: true, onEnter: (b) => gsap.to(b, { opacity: 1, y: 0, duration: 1.1, ease: "expo.out", stagger: 0.1, clearProps: "opacity,transform" }) });
         gsap.set(".rb", { opacity: 0, y: 60 });
         ScrollTrigger.batch(".rb", { start: "top 92%", once: true, onEnter: (b) => gsap.to(b, { opacity: 1, y: 0, duration: 1.1, ease: "expo.out", stagger: 0.1 }) });
         // the three puzzle pieces fly in, lock together, then one growth line draws through all of them
@@ -4847,18 +4924,23 @@
             .from(".pz-arrow", { opacity: 0, duration: 0.4 }, 2.6)
             .from(".pz-l", { y: 12, opacity: 0, duration: 0.6, stagger: 0.25, ease: "power3.out" }, 1.2);
         }
-        gsap.from(".rb-5 img", { scale: 0.5, rotation: -20, duration: 1.6, ease: "expo.out", clearProps: "transform", scrollTrigger: st(".rb-5", "top 90%") });
 
         // FAQ rows rise in
         gsap.set(".fq", { opacity: 0, y: 30 });
         ScrollTrigger.batch(".fq", { start: "top 94%", once: true, onEnter: (bt) => gsap.to(bt, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.06 }) });
 
-        // the DMC Method: cards rise in one after another
-        gsap.from(".mc", { y: 80, opacity: 0, duration: 1.2, ease: "expo.out", stagger: 0.08, scrollTrigger: st("#mRow", "top 88%") });
+        // the DMC Method: each card scales back a little as the next one stacks on top of it (proto's process)
+        {
+          const mps = $$(".mp");
+          mps.forEach((m, i) => {
+            if (i === mps.length - 1) return;
+            gsap.to(m, { scale: 0.9 + i * 0.012, ease: "none", scrollTrigger: { trigger: mps[i + 1], start: "top bottom", end: "top 30%", scrub: true } });
+          });
+        }
 
         // case studies: cards slide in from the right, renders settle
         gsap.from(".cs", { x: 120, opacity: 0, duration: 1.3, ease: "expo.out", stagger: 0.08, scrollTrigger: st("#cRow", "top 85%") });
-        gsap.from(".cs-img > .phx", { scale: 1.35, duration: 1.8, ease: "expo.out", stagger: 0.08, scrollTrigger: st("#cRow", "top 85%") });
+        gsap.from(".cs-cover > .phx", { scale: 1.35, duration: 1.8, ease: "expo.out", stagger: 0.08, scrollTrigger: st("#cRow", "top 85%") });
         gsap.from(".arw, .note", { opacity: 0, y: 16, duration: 0.9, ease: "power3.out", scrollTrigger: st(".arw", "top 96%") });
 
         // testimonials: cards slide in
