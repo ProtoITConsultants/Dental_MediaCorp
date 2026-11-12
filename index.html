@@ -1110,32 +1110,36 @@
         margin-left: -12px;
       }
       /* partner / compliance labels: one row, no tiles, hairline dividers */
+      /* labels and ROAS sit on the same glass as the sticky nav, so they read over the mark */
+      .h-badges,
+      .h-stat {
+        background: rgba(247, 247, 247, 0.62);
+        -webkit-backdrop-filter: blur(18px) saturate(160%);
+        backdrop-filter: blur(18px) saturate(160%);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        border-radius: var(--r-card);
+        box-shadow: 0 18px 40px -30px rgba(13, 19, 18, 0.35);
+      }
       .h-badges {
-        position: relative;
         display: flex;
         align-items: center;
+        justify-content: space-between;
+        padding: 16px 6px;
       }
-      /* a soft patch of page colour behind the labels, so they read over the mark */
-      .h-badges::before {
-        content: "";
-        position: absolute;
-        inset: -36px -70px -36px -50px;
-        z-index: -1;
-        background: radial-gradient(closest-side, rgba(247, 247, 247, 0.9), rgba(247, 247, 247, 0.6) 60%, transparent);
-        pointer-events: none;
+      .h-stat {
+        padding: 14px 24px 14px 18px;
       }
       .h-badges li {
+        flex: 1 1 auto;
         display: flex;
         align-items: center;
+        justify-content: center;
         gap: 10px;
         padding: 0 24px;
         font-size: 17px;
         letter-spacing: -0.02em;
         color: var(--body);
         white-space: nowrap;
-      }
-      .h-badges li:first-child {
-        padding-left: 0;
       }
       .h-badges li + li {
         border-left: 1px solid rgba(13, 19, 18, 0.18);
@@ -1241,7 +1245,7 @@
         padding: 30px 0;
         border-top: 1px solid rgba(13, 19, 18, 0.12);
       }
-      /* hover (inspo news-list): a deep teal fill wipes up from the bottom of the row and the words turn light.
+      /* hover (inspo news-list): a teal fill wipes up from the bottom of the row and the words turn light.
          The fill reaches a little past the row's sides so the text keeps breathing room; content does not move. */
       .srow::before {
         content: "";
@@ -1251,7 +1255,7 @@
         left: calc(-1 * min(28px, var(--side)));
         right: calc(-1 * min(28px, var(--side)));
         z-index: -1;
-        background: var(--deep);
+        background: var(--teal);
         transform: scaleY(0);
         transform-origin: bottom;
         transition: transform 0.55s var(--ease);
@@ -1336,7 +1340,7 @@
           color: #fff;
         }
         .srow:hover .sr-p {
-          color: rgba(255, 255, 255, 0.78);
+          color: rgba(255, 255, 255, 0.9);
         }
         .srow:hover .sr-arr {
           background: var(--acc-hover);
@@ -1884,21 +1888,6 @@
         object-fit: cover;
         object-position: 50% 22%;
         pointer-events: none;
-      }
-      /* video-only cards: name, role and length (no quote) */
-      .q-tag {
-        font-size: var(--fs-small);
-        font-weight: 500;
-        color: var(--teal);
-      }
-      .q-len {
-        margin-top: auto;
-        font-size: var(--fs-small);
-        color: var(--body);
-      }
-      .q-vid .q-body {
-        display: flex;
-        flex-direction: column;
       }
       /* the video lightbox: 16:9, or 9:16 for a Short */
       .vbox {
@@ -2542,14 +2531,13 @@
           flex: 1;
         }
         .h-badges li {
-          flex: 1 1 0;
           justify-content: center;
           gap: 7px;
           padding: 2px 6px;
           font-size: var(--fs-xs);
         }
-        .h-badges li:first-child {
-          padding-left: 6px;
+        .h-badges {
+          padding: 12px 6px;
         }
         .svc {
           padding: 110px 0 110px;
@@ -2685,12 +2673,8 @@
       /* tablets: the label row lines up with the copy instead of spreading across */
       @media (min-width: 600px) and (max-width: 899px) {
         .h-badges li {
-          flex: none;
           padding: 2px 22px;
           font-size: 15px;
-        }
-        .h-badges li:first-child {
-          padding-left: 0;
         }
       }
       @media (max-width: 599px) {
@@ -3534,35 +3518,35 @@
               </div>
               <div class="q-media"><img src="assets/img/testimonials/rae-lynne.webp" alt="Rae-Lynne" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="NgVZUXrVF44" aria-label="Play Rae-Lynne D.’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
             </figure>
-            <figure class="q q-vid">
+            <figure class="q">
               <div class="q-body">
-                <div class="q-top"><span class="q-tag">Video testimonial</span></div>
-                <div class="q-who"><b>Dr. Albert Voravong</b><span>On working with Dental Media Corp</span></div>
-                <p class="q-len">23 sec</p>
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-who"><b>Dr. Albert Voravong</b><span>Dental Media Corp client</span></div>
+                <blockquote>Hear Dr. Voravong talk about working with Dental Media Corp.</blockquote>
               </div>
               <div class="q-media"><img src="assets/img/testimonials/voravong.webp" alt="Dr. Albert Voravong" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="1gKTOT7zsbY" aria-label="Play Dr. Albert Voravong’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
             </figure>
-            <figure class="q q-vid">
+            <figure class="q">
               <div class="q-body">
-                <div class="q-top"><span class="q-tag">Video testimonial</span></div>
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
                 <div class="q-who"><b>Corey Hyde</b><span>Owner, Centre Street Denture Clinic</span></div>
-                <p class="q-len">44 sec</p>
+                <blockquote>Hear Corey talk about working with Dental Media Corp.</blockquote>
               </div>
               <div class="q-media"><img src="assets/img/testimonials/corey.webp" alt="Corey Hyde" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="PZ1iatxqWl8" data-tall aria-label="Play Corey Hyde’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
             </figure>
-            <figure class="q q-vid">
+            <figure class="q">
               <div class="q-body">
-                <div class="q-top"><span class="q-tag">Video testimonial</span></div>
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
                 <div class="q-who"><b>Val</b><span>Office Manager, Westgate GP Dental</span></div>
-                <p class="q-len">57 sec</p>
+                <blockquote>Hear Val talk about working with Dental Media Corp.</blockquote>
               </div>
               <div class="q-media"><img src="assets/img/testimonials/val.webp" alt="Val" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="GWBPfeuAf4Q" aria-label="Play Val’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
             </figure>
-            <figure class="q q-vid">
+            <figure class="q">
               <div class="q-body">
-                <div class="q-top"><span class="q-tag">Video testimonial</span></div>
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
                 <div class="q-who"><b>Brandie</b><span>Treatment Coordinator, Trader Ridge</span></div>
-                <p class="q-len">35 sec</p>
+                <blockquote>Hear Brandie talk about working with Dental Media Corp.</blockquote>
               </div>
               <div class="q-media"><img src="assets/img/testimonials/brandie.webp" alt="Brandie" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="YA7YKZU5grE" aria-label="Play Brandie’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
             </figure>
