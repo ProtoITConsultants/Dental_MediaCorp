@@ -995,6 +995,8 @@
         width: 100%;
         max-width: 1920px;
         margin-inline: auto;
+        /* the headline runs to four lines, so it is a step smaller than the section headings */
+        --fs-h1: clamp(38px, calc(4.2 * var(--uvw)), 68px);
         /* headline, labels and the reviews carousel: as tall as its content, the cards peek at the fold */
         padding-bottom: clamp(56px, calc(8 * var(--uvh)), 96px);
         overflow-x: clip;
@@ -1028,7 +1030,7 @@
         inset: 0;
         pointer-events: none;
         background:
-          radial-gradient(34% 26% at 22% 26%, rgba(247, 247, 247, 0.82), rgba(247, 247, 247, 0.5) 55%, transparent 100%),
+          radial-gradient(40% 32% at 24% 30%, rgba(247, 247, 247, 0.84), rgba(247, 247, 247, 0.5) 55%, transparent 100%),
           radial-gradient(22% 18% at 84% 24%, rgba(247, 247, 247, 0.7), transparent 100%);
       }
       .h-top,
@@ -2414,7 +2416,7 @@
           mask-image: linear-gradient(90deg, transparent, #000 160px, #000 calc(100% - 160px), transparent);
         }
         .hero {
-          --fs-h1: min(calc(4.06 * var(--uvw)), 112px);
+          --fs-h1: min(calc(3.55 * var(--uvw)), 92px);
           background:
             radial-gradient(32% 28% at 24% 58%, rgba(191, 230, 220, 0.55), transparent 70%),
             radial-gradient(24% 30% at 78% 30%, rgba(255, 191, 215, 0.4), transparent 70%);
@@ -2533,6 +2535,9 @@
         .h-row > .h-stat {
           flex: none;
           min-height: 92px;
+        }
+        .hero {
+          --fs-h1: clamp(30px, 8.2vw, 40px);
         }
         .h-stat {
           justify-content: center;
@@ -3483,12 +3488,13 @@
         </div>
         <div class="wrap h-top">
           <h1 class="t-h1" id="hero-title">
-            <span class="ln-m"><span>The complete dental</span></span>
-            <span class="ln-m"><span class="hl">marketing &amp; patient</span></span>
-            <span class="ln-m"><span>acquisition system.</span></span>
+            <span class="ln-m"><span>Dental marketing that</span></span>
+            <span class="ln-m"><span>gets you <span class="hl">more patients</span></span></span>
+            <span class="ln-m"><span>without adding to your</span></span>
+            <span class="ln-m"><span>front desk’s workload.</span></span>
           </h1>
           <div class="h-side">
-            <p>Google &amp; Meta ads, premium dental video and a human call centre that books high-value patients.</p>
+            <p>We attract qualified patients through custom advertising and video production.</p>
             <a class="cta mag" href="#contact"><span class="cta-t">Book a Strategy Call</span><span class="cta-i"><i class="ph ph-arrow-right" aria-hidden="true"></i><i class="ph ph-arrow-right" aria-hidden="true"></i></span></a>
           </div>
         </div>
