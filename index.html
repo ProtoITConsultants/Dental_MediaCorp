@@ -1179,8 +1179,15 @@
       /* ---------- 3. services ---------- */
       .svc {
         position: relative;
-        padding: 72px 0 64px;
+        padding: 150px 0 150px;
         overflow: hidden;
+        background: linear-gradient(
+          180deg,
+          rgba(221, 242, 236, 0) 0,
+          var(--mint) 140px,
+          var(--mint) calc(100% - 140px),
+          rgba(221, 242, 236, 0) 100%
+        );
       }
       /* section head (reference layout): small label column + heading whose 2nd line is drawn in */
       .sh {
@@ -2545,7 +2552,7 @@
           padding-left: 6px;
         }
         .svc {
-          padding: 24px 0 56px;
+          padding: 110px 0 110px;
         }
         .sh-rule {
           width: 44px;
@@ -3494,7 +3501,7 @@
           <b><em>19.4×</em> ROAS</b>
           <small>best return on ad spend<br />in our case studies</small>
           <div class="h-faces" aria-hidden="true">
-            <svg class="phx xs" role="img" aria-label="Image 1 placeholder: Clinic photo"><defs><pattern id="phs1" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs1)"/><text class="lbl" x="50%" y="50%">1</text></svg><svg class="phx xs" role="img" aria-label="Image 2 placeholder: Clinic photo"><defs><pattern id="phs2" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs2)"/><text class="lbl" x="50%" y="50%">2</text></svg><svg class="phx xs" role="img" aria-label="Image 3 placeholder: Clinic photo"><defs><pattern id="phs3" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs3)"/><text class="lbl" x="50%" y="50%">3</text></svg>
+            <img class="phx xs" src="assets/img/clients/face-east-village.webp" alt="" width="42" height="42" /><img class="phx xs" src="assets/img/clients/face-northern-lights.webp" alt="" width="42" height="42" /><img class="phx xs" src="assets/img/clients/face-modern-smiles.webp" alt="" width="42" height="42" />
           </div>
         </div>
         </div>
@@ -3509,7 +3516,7 @@
                 <div class="q-who"><b>Dr. Mark Warawa</b><span>Bright Smile Dental</span></div>
                 <blockquote>We’ve opened up another operatory just to deal with the overflow of new patients.</blockquote>
               </div>
-              <div class="q-media"><svg class="phx" role="img" aria-label="Image 20 placeholder: Video testimonial still"><defs><pattern id="phs20" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs20)"/><svg x="50%" y="76%" overflow="visible"><text class="lbl" x="0" y="6">Image 20</text><text class="hint" x="0" y="24">Video testimonial still</text></svg></svg><button class="q-play" type="button" data-video="LzVfobN6T40" aria-label="Play Dr. Mark Warawa’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+              <div class="q-media"><img src="assets/img/testimonials/warawa.webp" alt="Dr. Mark Warawa" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="LzVfobN6T40" aria-label="Play Dr. Mark Warawa’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
             </figure>
             <figure class="q">
               <div class="q-body">
@@ -3517,7 +3524,7 @@
                 <div class="q-who"><b>Dr. Greg Broyde</b><span>West Grande Prairie Dental &amp; East Village Dental</span></div>
                 <blockquote>For every dollar I spend, DMC makes sure that I get at least $6 to $10 back.</blockquote>
               </div>
-              <div class="q-media"><svg class="phx" role="img" aria-label="Image 21 placeholder: Video testimonial still"><defs><pattern id="phs21" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs21)"/><svg x="50%" y="76%" overflow="visible"><text class="lbl" x="0" y="6">Image 21</text><text class="hint" x="0" y="24">Video testimonial still</text></svg></svg><button class="q-play" type="button" data-video="xulePDv7Zt8" aria-label="Play Dr. Greg Broyde’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+              <div class="q-media"><img src="assets/img/testimonials/broyde.webp" alt="Dr. Greg Broyde" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="xulePDv7Zt8" aria-label="Play Dr. Greg Broyde’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
             </figure>
             <figure class="q">
               <div class="q-body">
@@ -3525,7 +3532,7 @@
                 <div class="q-who"><b>Rae-Lynne D.</b><span>Modern Smiles &amp; Northern Lights</span></div>
                 <blockquote>DMC is the first marketing that’s actually paid off since I opened in 2012.</blockquote>
               </div>
-              <div class="q-media"><svg class="phx" role="img" aria-label="Image 22 placeholder: Video testimonial still"><defs><pattern id="phs22" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs22)"/><svg x="50%" y="76%" overflow="visible"><text class="lbl" x="0" y="6">Image 22</text><text class="hint" x="0" y="24">Video testimonial still</text></svg></svg><button class="q-play" type="button" data-video="NgVZUXrVF44" aria-label="Play Rae-Lynne D.’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+              <div class="q-media"><img src="assets/img/testimonials/rae-lynne.webp" alt="Rae-Lynne" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="NgVZUXrVF44" aria-label="Play Rae-Lynne D.’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
             </figure>
             <figure class="q q-vid">
               <div class="q-body">
@@ -3533,7 +3540,7 @@
                 <div class="q-who"><b>Dr. Albert Voravong</b><span>On working with Dental Media Corp</span></div>
                 <p class="q-len">23 sec</p>
               </div>
-              <div class="q-media"><svg class="phx" role="img" aria-label="Image 23 placeholder: Video testimonial still"><defs><pattern id="phs23" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs23)"/><svg x="50%" y="76%" overflow="visible"><text class="lbl" x="0" y="6">Image 23</text><text class="hint" x="0" y="24">Video testimonial still</text></svg></svg><button class="q-play" type="button" data-video="1gKTOT7zsbY" aria-label="Play Dr. Albert Voravong’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+              <div class="q-media"><img src="assets/img/testimonials/voravong.webp" alt="Dr. Albert Voravong" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="1gKTOT7zsbY" aria-label="Play Dr. Albert Voravong’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
             </figure>
             <figure class="q q-vid">
               <div class="q-body">
@@ -3541,7 +3548,7 @@
                 <div class="q-who"><b>Corey Hyde</b><span>Owner, Centre Street Denture Clinic</span></div>
                 <p class="q-len">44 sec</p>
               </div>
-              <div class="q-media"><svg class="phx" role="img" aria-label="Image 24 placeholder: Video testimonial still"><defs><pattern id="phs24" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs24)"/><svg x="50%" y="76%" overflow="visible"><text class="lbl" x="0" y="6">Image 24</text><text class="hint" x="0" y="24">Video testimonial still</text></svg></svg><button class="q-play" type="button" data-video="PZ1iatxqWl8" data-tall aria-label="Play Corey Hyde’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+              <div class="q-media"><img src="assets/img/testimonials/corey.webp" alt="Corey Hyde" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="PZ1iatxqWl8" data-tall aria-label="Play Corey Hyde’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
             </figure>
             <figure class="q q-vid">
               <div class="q-body">
@@ -3549,7 +3556,7 @@
                 <div class="q-who"><b>Val</b><span>Office Manager, Westgate GP Dental</span></div>
                 <p class="q-len">57 sec</p>
               </div>
-              <div class="q-media"><svg class="phx" role="img" aria-label="Image 25 placeholder: Video testimonial still"><defs><pattern id="phs25" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs25)"/><svg x="50%" y="76%" overflow="visible"><text class="lbl" x="0" y="6">Image 25</text><text class="hint" x="0" y="24">Video testimonial still</text></svg></svg><button class="q-play" type="button" data-video="GWBPfeuAf4Q" aria-label="Play Val’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+              <div class="q-media"><img src="assets/img/testimonials/val.webp" alt="Val" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="GWBPfeuAf4Q" aria-label="Play Val’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
             </figure>
             <figure class="q q-vid">
               <div class="q-body">
@@ -3557,7 +3564,7 @@
                 <div class="q-who"><b>Brandie</b><span>Treatment Coordinator, Trader Ridge</span></div>
                 <p class="q-len">35 sec</p>
               </div>
-              <div class="q-media"><svg class="phx" role="img" aria-label="Image 26 placeholder: Video testimonial still"><defs><pattern id="phs26" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs26)"/><svg x="50%" y="76%" overflow="visible"><text class="lbl" x="0" y="6">Image 26</text><text class="hint" x="0" y="24">Video testimonial still</text></svg></svg><button class="q-play" type="button" data-video="YA7YKZU5grE" aria-label="Play Brandie’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+              <div class="q-media"><img src="assets/img/testimonials/brandie.webp" alt="Brandie" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="YA7YKZU5grE" aria-label="Play Brandie’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
             </figure>
           </div>
         </div>
@@ -3617,49 +3624,49 @@
           <ol class="sl" id="sList">
             <li class="srow" id="svc-marketing" data-i="0">
               <span id="treatments" class="sr-anchor"></span>
-              <figure class="sr-thumb"><svg class="phx" role="img" aria-label="Image 4 placeholder: Dental Marketing visual"><defs><pattern id="pht4" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#pht4)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 4</text><text class="hint" x="0" y="27">Dental Marketing visual</text></svg></svg></figure>
+              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-marketing.webp" alt="Smiling woman at a dental clinic" loading="lazy" /></figure>
               <h3 class="sr-name"><a class="sr-link" href="/dental-marketing/">Dental Marketing</a></h3>
               <p class="sr-p">Targeted Google and Meta Ads that bring in implant, Invisalign and new patients.</p>
               <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
               <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Marketing</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
             </li>
             <li class="srow" id="svc-video" data-i="1">
-              <figure class="sr-thumb"><svg class="phx" role="img" aria-label="Image 5 placeholder: Dental Video Marketing visual"><defs><pattern id="pht5" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#pht5)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 5</text><text class="hint" x="0" y="27">Dental Video Marketing visual</text></svg></svg></figure>
+              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-video.webp" alt="Clinic video reels, including East Village Dental" loading="lazy" /></figure>
               <h3 class="sr-name"><a class="sr-link" href="/dental-video-marketing/">Dental Video Marketing</a></h3>
               <p class="sr-p">Premium video, patient testimonials and ad creative, filmed inside your clinic.</p>
               <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
               <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Video Marketing</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
             </li>
             <li class="srow" id="svc-seo" data-i="2">
-              <figure class="sr-thumb"><svg class="phx" role="img" aria-label="Image 6 placeholder: Dental SEO visual"><defs><pattern id="pht6" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#pht6)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 6</text><text class="hint" x="0" y="27">Dental SEO visual</text></svg></svg></figure>
+              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-seo.webp" alt="Google search page" loading="lazy" /></figure>
               <h3 class="sr-name"><a class="sr-link" href="/dental-seo/">Dental SEO &amp; AI SEO</a></h3>
               <p class="sr-p">Get found on Google Search, Maps and AI search like ChatGPT, Claude and Gemini.</p>
               <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
               <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental SEO</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
             </li>
             <li class="srow" id="svc-web" data-i="3">
-              <figure class="sr-thumb"><svg class="phx" role="img" aria-label="Image 7 placeholder: Dental Website Design visual"><defs><pattern id="pht7" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#pht7)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 7</text><text class="hint" x="0" y="27">Dental Website Design visual</text></svg></svg></figure>
+              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-website.webp" alt="Digital smile design on a tablet" loading="lazy" /></figure>
               <h3 class="sr-name"><a class="sr-link" href="/dental-website-design/">Dental Website Design</a></h3>
               <p class="sr-p">Modern, fast, SEO-optimized websites that turn visitors into patient inquiries.</p>
               <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
               <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Website Design</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
             </li>
             <li class="srow" id="svc-call" data-i="4">
-              <figure class="sr-thumb"><svg class="phx" role="img" aria-label="Image 8 placeholder: Dental Call Centre visual"><defs><pattern id="pht8" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#pht8)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 8</text><text class="hint" x="0" y="27">Dental Call Centre visual</text></svg></svg></figure>
+              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-call.webp" alt="Man taking a phone call at his laptop" loading="lazy" /></figure>
               <h3 class="sr-name"><a class="sr-link" href="/dental-call-centre/">Dental Call Centre</a></h3>
               <p class="sr-p">Dental-trained setters qualify every patient and secure a $50 deposit before booking.</p>
               <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
               <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Call Centre</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
             </li>
             <li class="srow" id="svc-training" data-i="5">
-              <figure class="sr-thumb"><svg class="phx" role="img" aria-label="Image 9 placeholder: Treatment Coordinator Training visual"><defs><pattern id="pht9" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#pht9)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 9</text><text class="hint" x="0" y="27">Treatment Coordinator Training visual</text></svg></svg></figure>
+              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-coordinator.webp" alt="Dental team reviewing a scan on screen" loading="lazy" /></figure>
               <h3 class="sr-name"><a class="sr-link" href="/treatment-coordinator-training/">Treatment Coordinator Training</a></h3>
               <p class="sr-p">Better patient communication, presentations and follow-up for higher case acceptance.</p>
               <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
               <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Treatment Coordinator Training</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
             </li>
             <li class="srow" id="svc-reporting" data-i="6">
-              <figure class="sr-thumb"><svg class="phx" role="img" aria-label="Image 10 placeholder: Dental Connect visual"><defs><pattern id="pht10" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#pht10)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 10</text><text class="hint" x="0" y="27">Dental Connect visual</text></svg></svg></figure>
+              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-dashboard.webp" alt="Reporting dashboard" loading="lazy" /></figure>
               <h3 class="sr-name"><a class="sr-link" href="/dental-reporting-dashboard/">Dental Reporting Dashboard</a></h3>
               <p class="sr-p">Every stage of your patient pipeline, live in our Dental Connect dashboard.</p>
               <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
@@ -3682,31 +3689,31 @@
         <!-- Elementor: Loop Carousel over the "Case Study" CPT (ACF: render, logo, revenue, ad_spend, roas) -->
         <div class="row" id="cRow" tabindex="0" aria-label="Clinic results. Scroll sideways or use the arrows.">
           <article class="cs"><div class="cs-in">
-            <div class="cs-img"><div class="cs-logo" style="display:grid;place-items:center;font-size:var(--fs-xs);color:var(--body)">Clinic logo</div><div class="cs-cover"><svg class="phx" role="img" aria-label="Image 11 placeholder: West Grande Prairie Dental photo"><defs><pattern id="phs11" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs11)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 11</text><text class="hint" x="0" y="27">West Grande Prairie Dental photo</text></svg></svg></div></div>
+            <div class="cs-img"><img class="cs-logo" src="assets/img/clients/case-wgp.webp" alt="West Grande Prairie Dental logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/wgp-photo.jpg" alt="West Grande Prairie Dental storefront" loading="lazy" /></div></div>
             <h3>West Grande Prairie Dental</h3>
             <p class="cs-meta">return on ad spend: <b>19.4×</b></p>
             <div class="cs-res"><p>Campaign results:</p><ul><li><b>$97,000</b> revenue</li><li>from <b>$5,000</b> ad spend</li></ul></div>
           </div></article>
           <article class="cs"><div class="cs-in">
-            <div class="cs-img"><div class="cs-logo" style="display:grid;place-items:center;font-size:var(--fs-xs);color:var(--body)">Clinic logo</div><div class="cs-cover"><svg class="phx" role="img" aria-label="Image 12 placeholder: Riverbend Denture &amp; Implant photo"><defs><pattern id="phs12" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs12)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 12</text><text class="hint" x="0" y="27">Riverbend Denture &amp; Implant photo</text></svg></svg></div></div>
+            <div class="cs-img"><img class="cs-logo" src="assets/img/clients/riverbend.png" alt="Riverbend Denture &amp; Implant logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/riverbend-photo.webp" alt="Riverbend Denture &amp; Implant Clinic reception" loading="lazy" /></div></div>
             <h3>Riverbend Denture &amp; Implant</h3>
             <p class="cs-meta">return on ad spend: <b>13.4×</b></p>
             <div class="cs-res"><p>Campaign results:</p><ul><li><b>$255,000</b> revenue</li><li>from <b>$19,000</b> ad spend</li></ul></div>
           </div></article>
           <article class="cs"><div class="cs-in">
-            <div class="cs-img"><div class="cs-logo" style="display:grid;place-items:center;font-size:var(--fs-xs);color:var(--body)">Clinic logo</div><div class="cs-cover"><svg class="phx" role="img" aria-label="Image 13 placeholder: Smile Now photo"><defs><pattern id="phs13" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs13)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 13</text><text class="hint" x="0" y="27">Smile Now photo</text></svg></svg></div></div>
+            <div class="cs-img"><img class="cs-logo" src="assets/img/clients/case-smilenow.webp" alt="Smile Now logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/smilenow-photo.webp" alt="Calgary skyline and the Peace Bridge" loading="lazy" /></div></div>
             <h3>Smile Now</h3>
             <p class="cs-meta">return on ad spend: <b>12.4×</b></p>
             <div class="cs-res"><p>Campaign results:</p><ul><li><b>$161,000</b> revenue</li><li>from <b>$13,000</b> ad spend</li></ul></div>
           </div></article>
           <article class="cs"><div class="cs-in">
-            <div class="cs-img"><div class="cs-logo" style="display:grid;place-items:center;font-size:var(--fs-xs);color:var(--body)">Clinic logo</div><div class="cs-cover"><svg class="phx" role="img" aria-label="Image 14 placeholder: Wye Dental photo"><defs><pattern id="phs14" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs14)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 14</text><text class="hint" x="0" y="27">Wye Dental photo</text></svg></svg></div></div>
+            <div class="cs-img"><img class="cs-logo" src="assets/img/clients/case-wye.webp" alt="Wye Dental logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/wye-photo.webp" alt="The Wye Dental team" loading="lazy" /></div></div>
             <h3>Wye Dental</h3>
             <p class="cs-meta">return on ad spend: <b>15.3×</b></p>
             <div class="cs-res"><p>Campaign results:</p><ul><li><b>$92,000</b> revenue</li><li>from <b>$6,000</b> ad spend</li></ul></div>
           </div></article>
           <article class="cs"><div class="cs-in">
-            <div class="cs-img"><div class="cs-logo" style="display:grid;place-items:center;font-size:var(--fs-xs);color:var(--body)">Clinic logo</div><div class="cs-cover"><svg class="phx" role="img" aria-label="Image 15 placeholder: Modern Smiles photo"><defs><pattern id="phs15" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs15)"/><svg x="50%" y="50%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 15</text><text class="hint" x="0" y="27">Modern Smiles photo</text></svg></svg></div></div>
+            <div class="cs-img"><img class="cs-logo" src="assets/img/clients/case-modern-smiles.webp" alt="Modern Smiles logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/modern-smiles-photo.webp" alt="A denture being made at Modern Smiles" loading="lazy" /></div></div>
             <h3>Modern Smiles</h3>
             <p class="cs-meta">return on ad spend: <b>12×</b></p>
             <div class="cs-res"><p>Campaign results:</p><ul><li><b>$72,000</b> revenue</li><li>from <b>$6,000</b> ad spend</li></ul></div>
@@ -3740,7 +3747,7 @@
                 <p>We manage your patient acquisition end-to-end: ads, screening, follow-up and booking, so you stay focused on treatment.</p>
                 <div class="mp-prog"><span>1 of 4</span><div class="road" aria-hidden="true"><i class="f"></i><i></i><i></i><i></i></div></div>
               </div>
-              <div class="mp-img"><svg class="phx" role="img" aria-label="Image 16 placeholder: End-to-end management visual"><defs><pattern id="phs16" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs16)"/><svg x="50%" y="42%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 16</text><text class="hint" x="0" y="27">End-to-end management visual</text></svg></svg></div>
+              <div class="mp-img"><img class="phx" src="assets/img/services/dmc-management.webp" alt="Clinic receptionist greeting a patient" loading="lazy" /></div>
             </article>
             <article class="mp" style="--i: 1">
               <span class="mp-n">02</span>
@@ -3749,7 +3756,7 @@
                 <p>Every lead is vetted for intent and financial readiness, then books with a deposit. No time wasted on uncommitted inquiries.</p>
                 <div class="mp-prog"><span>2 of 4</span><div class="road" aria-hidden="true"><i class="f"></i><i class="f"></i><i></i><i></i></div></div>
               </div>
-              <div class="mp-img"><svg class="phx" role="img" aria-label="Image 17 placeholder: Qualified patients only visual"><defs><pattern id="phs17" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs17)"/><svg x="50%" y="42%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 17</text><text class="hint" x="0" y="27">Qualified patients only visual</text></svg></svg></div>
+              <div class="mp-img"><img class="phx" src="assets/img/services/dmc-qualified.webp" alt="Patient smiling in a dental chair" loading="lazy" /></div>
             </article>
             <article class="mp" style="--i: 2">
               <span class="mp-n">03</span>
@@ -3758,7 +3765,7 @@
                 <p>We produce custom content inside your clinic: real people, real cases, built to earn trust before the consult.</p>
                 <div class="mp-prog"><span>3 of 4</span><div class="road" aria-hidden="true"><i class="f"></i><i class="f"></i><i class="f"></i><i></i></div></div>
               </div>
-              <div class="mp-img"><svg class="phx" role="img" aria-label="Image 18 placeholder: Original video campaigns visual"><defs><pattern id="phs18" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs18)"/><svg x="50%" y="42%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 18</text><text class="hint" x="0" y="27">Original video campaigns visual</text></svg></svg></div>
+              <div class="mp-img"><img class="phx" src="assets/img/services/dmc-video.webp" alt="Presenter filming inside a dental clinic" loading="lazy" /></div>
             </article>
             <article class="mp" style="--i: 3">
               <span class="mp-n">04</span>
@@ -3767,7 +3774,7 @@
                 <p>Access a private group of partner clinics sharing what works, from case acceptance to patient communication.</p>
                 <div class="mp-prog"><span>4 of 4</span><div class="road" aria-hidden="true"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></div></div>
               </div>
-              <div class="mp-img"><svg class="phx" role="img" aria-label="Image 19 placeholder: The DMC Network visual"><defs><pattern id="phs19" width="14" height="14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><line class="phx-stripe" x1="0" y1="0" x2="0" y2="14"/></pattern></defs><rect class="phx-bg" width="100%" height="100%"/><rect width="100%" height="100%" fill="url(#phs19)"/><svg x="50%" y="42%" overflow="visible"><g class="ico" transform="translate(-20 -46)"><rect x="0" y="0" width="40" height="32" rx="6"/><circle cx="13" cy="11" r="3.5"/><path d="M3 28l11-11 8 8 5-5 10 10"/></g><text class="lbl" x="0" y="6">Image 19</text><text class="hint" x="0" y="27">The DMC Network visual</text></svg></svg></div>
+              <div class="mp-img"><img class="phx" src="assets/img/services/dmc-network.webp" alt="Dental team treating a patient" loading="lazy" /></div>
             </article>
           </div>
         </div>
