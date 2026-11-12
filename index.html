@@ -196,6 +196,12 @@
    - Every photo slot is an "Image N" placeholder SVG (.phx) until real photos arrive.
    ========================================================= */
       :root {
+        /* viewport units, corrected for the page zoom below (CSS zoom shrinks vw/vh too; browser zoom does not) */
+        --z: 1;
+        --uvw: calc(1vw / var(--z));
+        --uvh: calc(1vh / var(--z));
+        --usvh: calc(1svh / var(--z));
+        --udvh: calc(1dvh / var(--z));
         --bg: #f7f7f7;
         --white: #ffffff;
         --ink: #0d1312;
@@ -229,23 +235,23 @@
         --f: "Onest", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
         /* one frame for every section, taken from the hero: a single side gutter (~58px at 1440)
            and content as wide as the hero (which stops at 1920px) */
-        --side: clamp(20px, 4vw, 80px);
+        --side: clamp(20px, calc(4 * var(--uvw)), 80px);
         --max: calc(1920px - 2 * var(--side));
         /* radius system: cards & panels / things nested inside a card / buttons & chips */
         --r-card: 18px;
         --r-inner: 12px;
         --r-pill: 999px;
         /* type scale: use these everywhere, never a one-off size */
-        --fs-h1: clamp(44px, 5.1vw, 78px); /* hero headline */
-        --fs-h2: clamp(38px, 4.8vw, 70px); /* section headings */
-        --fs-h3: clamp(26px, 2.3vw, 34px); /* list titles, big card titles */
+        --fs-h1: clamp(44px, calc(5.1 * var(--uvw)), 78px); /* hero headline */
+        --fs-h2: clamp(38px, calc(4.8 * var(--uvw)), 70px); /* section headings */
+        --fs-h3: clamp(26px, calc(2.3 * var(--uvw)), 34px); /* list titles, big card titles */
         --fs-h4: 24px; /* card titles */
         --fs-h5: 20px; /* names, small titles, numbers */
-        --fs-lead: clamp(17px, 1.35vw, 20px); /* intros under headings */
+        --fs-lead: clamp(17px, calc(1.35 * var(--uvw)), 20px); /* intros under headings */
         --fs-body: 16px; /* descriptions, quotes, buttons */
         --fs-small: 14px; /* labels, meta, nav */
         --fs-xs: 13px; /* tags, legal, captions */
-        --fs-stat: clamp(48px, 5vw, 76px); /* big numbers */
+        --fs-stat: clamp(48px, calc(5 * var(--uvw)), 76px); /* big numbers */
         --r-card: 14px;
         --ease: cubic-bezier(0.16, 1, 0.3, 1);
       }
@@ -357,7 +363,7 @@
         font-size: var(--fs-h1);
       }
       .t-h2 {
-        font-size: clamp(34px, 3.8vw, 58px);
+        font-size: clamp(34px, calc(3.8 * var(--uvw)), 58px);
       }
       .ln {
         display: block;
@@ -517,7 +523,7 @@
       .pre-b {
         position: absolute;
         right: var(--side);
-        bottom: clamp(30px, 5.6vh, 64px);
+        bottom: clamp(30px, calc(5.6 * var(--uvh)), 64px);
         z-index: 1;
         display: flex;
         align-items: center;
@@ -626,7 +632,7 @@
       }
       .menu {
         display: flex;
-        gap: clamp(28px, 4vw, 56px);
+        gap: clamp(28px, calc(4 * var(--uvw)), 56px);
         font-size: var(--fs-small);
       }
       .menu a,
@@ -814,8 +820,8 @@
         inset: 0;
         z-index: 90;
         display: none;
-        height: 100vh;
-        height: 100dvh; /* exactly the visible screen, browser bars included */
+        height: calc(100 * var(--uvh));
+        height: calc(100 * var(--udvh)); /* exactly the visible screen, browser bars included */
         background:
           radial-gradient(120% 60% at 100% 100%, rgba(27, 127, 115, 0.35), transparent 60%),
           #050807;
@@ -830,7 +836,7 @@
         display: flex;
         flex-direction: column;
         height: 100%;
-        padding: clamp(12px, 2.4dvh, 18px) 20px clamp(14px, 3dvh, 24px);
+        padding: clamp(12px, calc(2.4 * var(--udvh)), 18px) 20px clamp(14px, calc(3 * var(--udvh)), 24px);
         overflow-y: auto; /* only if the treatments are open on a very short phone */
       }
       .mnav-hd {
@@ -850,14 +856,14 @@
         font-size: 20px;
       }
       .mnav-cap {
-        margin: clamp(12px, 3.6dvh, 34px) 0 clamp(2px, 0.6dvh, 6px);
+        margin: clamp(12px, calc(3.6 * var(--udvh)), 34px) 0 clamp(2px, calc(0.6 * var(--udvh)), 6px);
         font-size: var(--fs-small);
         color: rgba(255, 255, 255, 0.5);
       }
       .mnav-list a {
         display: block;
-        padding: clamp(3px, 0.9dvh, 8px) 0;
-        font-size: min(var(--fs-h4), max(17px, 3.1dvh));
+        padding: clamp(3px, calc(0.9 * var(--udvh)), 8px) 0;
+        font-size: min(var(--fs-h4), max(17px, calc(3.1 * var(--udvh))));
         line-height: 1.2;
         letter-spacing: -0.02em;
       }
@@ -895,16 +901,16 @@
         display: none;
       }
       .mnav-in:has(.mnav-tg[aria-expanded="true"]) .mnav-hd {
-        margin-bottom: clamp(6px, 1.6dvh, 30px);
+        margin-bottom: clamp(6px, calc(1.6 * var(--udvh)), 30px);
       }
       .mnav-in:has(.mnav-tg[aria-expanded="true"]) .mnav-list a {
-        padding-block: clamp(2px, 0.6dvh, 8px);
+        padding-block: clamp(2px, calc(0.6 * var(--udvh)), 8px);
       }
       .mnav-in:has(.mnav-tg[aria-expanded="true"]) .mnav-sub a {
-        padding-block: clamp(2px, 0.4dvh, 5px);
+        padding-block: clamp(2px, calc(0.4 * var(--udvh)), 5px);
       }
       .mnav-in:has(.mnav-tg[aria-expanded="true"]) .mnav-foot {
-        padding-top: clamp(8px, 1.6dvh, 32px);
+        padding-top: clamp(8px, calc(1.6 * var(--udvh)), 32px);
       }
       /* the page links sit two by two */
       .mnav-2 {
@@ -921,19 +927,19 @@
         border-left: 1px solid rgba(255, 255, 255, 0.18);
       }
       .mnav-sub a {
-        padding: clamp(3px, 0.6dvh, 5px) 0;
+        padding: clamp(3px, calc(0.6 * var(--udvh)), 5px) 0;
         font-size: var(--fs-body);
         color: rgba(255, 255, 255, 0.72);
       }
       .mnav-rule {
         height: 1px;
-        margin: clamp(10px, 2.2dvh, 20px) 0 clamp(6px, 1.6dvh, 16px);
+        margin: clamp(10px, calc(2.2 * var(--udvh)), 20px) 0 clamp(6px, calc(1.6 * var(--udvh)), 16px);
         background: rgba(255, 255, 255, 0.18);
       }
       .mnav-foot {
         position: relative;
         margin-top: auto;
-        padding-top: clamp(14px, 3dvh, 32px);
+        padding-top: clamp(14px, calc(3 * var(--udvh)), 32px);
       }
       .mnav-foot .cta {
         height: 54px;
@@ -945,7 +951,7 @@
       }
       .mnav-foot small {
         display: block;
-        margin-top: clamp(10px, 2dvh, 22px);
+        margin-top: clamp(10px, calc(2 * var(--udvh)), 22px);
         font-size: var(--fs-xs);
         color: rgba(255, 255, 255, 0.55);
       }
@@ -954,7 +960,7 @@
       /* a full-width strip centred on the boundary (takes no space: negative margins), clipped so
          the glow can never widen the page; the glow inside is soft enough that the clip never shows */
       .sbreak {
-        --sb-h: clamp(520px, 60vw, 900px);
+        --sb-h: clamp(520px, calc(60 * var(--uvw)), 900px);
         position: relative;
         z-index: -1;
         height: var(--sb-h);
@@ -967,7 +973,7 @@
         position: absolute;
         left: 50%;
         top: 50%;
-        width: max(600px, 85vw);
+        width: max(600px, calc(85 * var(--uvw)));
         height: calc(var(--sb-h) - 180px);
         transform: translate(-50%, -50%);
         background: radial-gradient(closest-side, rgba(191, 230, 220, 0.55), rgba(221, 242, 236, 0.28) 50%, transparent);
@@ -990,7 +996,7 @@
         max-width: 1920px;
         margin-inline: auto;
         /* headline, labels and the reviews carousel: as tall as its content, the cards peek at the fold */
-        padding-bottom: clamp(56px, 8vh, 96px);
+        padding-bottom: clamp(56px, calc(8 * var(--uvh)), 96px);
         overflow-x: clip;
         overflow-y: visible;
         background:
@@ -998,13 +1004,12 @@
           radial-gradient(30% 32% at 82% 30%, rgba(255, 191, 215, 0.4), transparent 70%);
       }
       /* the DMC mark, sculpted from stacked contour layers */
-      /* the DMC mark sits in the top-right corner, beside the headline */
-      /* the DMC mark: a big centred background piece; headline, labels and reviews sit over it */
+      /* the DMC mark: a centred background piece, sized so it still reads as a tooth; headline, labels and reviews sit over it */
       .h-obj {
         position: absolute;
-        top: clamp(96px, 12vh, 130px);
+        top: clamp(110px, calc(14 * var(--uvh)), 150px);
         left: 50%;
-        width: clamp(560px, 52vw, 1000px);
+        width: clamp(420px, calc(37 * var(--uvw)), 720px);
         transform: translateX(-50%);
         pointer-events: none;
       }
@@ -1036,7 +1041,7 @@
         display: flex;
         justify-content: space-between;
         gap: 40px;
-        padding-top: clamp(118px, 16.4vh, 150px);
+        padding-top: clamp(118px, calc(16.4 * var(--uvh)), 150px);
       }
       /* subline and button on the right, level with the headline */
       .h-side {
@@ -1052,28 +1057,32 @@
       .h-side .cta {
         margin-top: 26px;
       }
+      /* the two glass panels are a matched pair: same width, same height (the row stretches them) */
       .h-row {
         position: relative;
         display: flex;
-        align-items: flex-end;
+        align-items: stretch;
         justify-content: space-between;
         gap: 32px;
-        margin-top: clamp(80px, 13vh, 140px);
+        margin-top: clamp(80px, calc(13 * var(--uvh)), 140px);
+      }
+      .h-row > .h-badges,
+      .h-row > .h-stat {
+        flex: 0 0 min(540px, calc(50% - 16px));
+        box-sizing: border-box;
       }
       /* faces beside the figure, so the ROAS line is as short as the label row */
+      /* faces, then two figures divided by a hairline */
       .h-stat {
-        display: grid;
-        grid-template-columns: auto auto;
-        grid-template-areas: "faces b" "faces s";
+        display: flex;
         align-items: center;
-        gap: 0 18px;
+        justify-content: center;
+        gap: 22px;
         text-align: left;
       }
-      .h-stat b {
-        grid-area: b;
-      }
-      .h-stat small {
-        grid-area: s;
+      .h-num + .h-num {
+        padding-left: 22px;
+        border-left: 1px solid rgba(13, 19, 18, 0.14);
       }
       .h-stat b {
         display: block;
@@ -1096,7 +1105,6 @@
         color: var(--body);
       }
       .h-faces {
-        grid-area: faces;
         display: flex;
       }
       .h-faces .phx {
@@ -1208,7 +1216,7 @@
       .sh-rule {
         position: relative;
         flex: none;
-        width: clamp(48px, 7vw, 110px);
+        width: clamp(48px, calc(7 * var(--uvw)), 110px);
         height: 4px;
         margin-right: 0.35em;
         border-radius: 4px;
@@ -1266,7 +1274,7 @@
         transition: opacity 0.45s var(--ease);
       }
       .sr-name {
-        font-size: clamp(34px, 4.3vw, 62px);
+        font-size: clamp(34px, calc(4.3 * var(--uvw)), 62px);
         font-weight: 600;
         letter-spacing: -0.045em;
         line-height: 0.98;
@@ -1637,168 +1645,143 @@
         color: var(--fade);
       }
 
-      /* ---------- 6. the DMC Method: stacking cards (proto's process), DMC colours ----------
+      /* ---------- 6. the DMC Method: the hero mark pinned on the left, the steps listed on the right ----------
          no overflow clipping on .meth: an overflow:hidden ancestor would stop position: sticky */
       .meth {
         position: relative;
-        padding: 110px 0 80px;
-        --stick: 104px; /* stuck header (68px) + breathing room */
+        padding: 110px 0 110px;
       }
-      .mstack {
+      .mgrid {
         display: grid;
-        gap: 24px;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+        align-items: start;
+        gap: clamp(40px, calc(6 * var(--uvw)), 120px);
         max-width: var(--max);
-        margin: 64px auto 0;
+        margin: 80px auto 0;
       }
-      .mp {
+      /* pinned in the middle of the screen while the steps scroll past */
+      .mtooth {
         position: sticky;
-        top: calc(var(--stick) + var(--i) * 16px);
+        top: max(100px, calc(50 * var(--uvh) - 230px));
         display: grid;
-        grid-template-columns: minmax(0, 0.5fr) minmax(0, 1.45fr) minmax(0, 1.05fr);
-        gap: 32px clamp(32px, 4vw, 72px);
-        min-height: clamp(340px, 46vh, 460px);
-        padding: clamp(24px, 3vw, 44px);
-        border-radius: var(--r-card);
-        background: var(--mint);
-        color: var(--ink);
-        transform-origin: 50% 0;
-        box-shadow: 0 -12px 32px rgba(18, 59, 54, 0.07);
+        place-items: center;
       }
-      .mp:nth-child(2) {
-        background: var(--acc-soft);
+      /* a soft mint and pink glow behind the mark */
+      .mtooth::before {
+        content: "";
+        position: absolute;
+        inset: -8%;
+        background:
+          radial-gradient(closest-side at 42% 46%, rgba(191, 230, 220, 0.75), transparent 72%),
+          radial-gradient(closest-side at 70% 70%, rgba(255, 191, 215, 0.45), transparent 70%);
+        pointer-events: none;
       }
-      .mp:nth-child(2) .mp-n {
-        color: var(--acc-ink);
+      .mtooth img {
+        position: relative;
+        width: min(100%, 440px);
+        height: auto;
       }
-      .mp:nth-child(3) {
-        background: var(--deep);
-        color: #fff;
+      .mcol {
+        position: relative;
+        padding-left: clamp(28px, calc(3 * var(--uvw)), 48px);
       }
-      .mp:nth-child(4) {
+      .mlist {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      /* the line down the list: a hairline, filled in teal as you scroll */
+      .mline {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        border-radius: 2px;
+        background: rgba(13, 19, 18, 0.1);
+      }
+      .mline i {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
         background: var(--teal);
-        color: #fff;
+        transform-origin: top;
       }
-      .mp-n {
-        font-size: clamp(64px, 7.4vw, 124px);
+      .mstep {
+        display: grid;
+        grid-template-columns: clamp(64px, calc(6 * var(--uvw)), 110px) minmax(0, 1fr);
+        gap: 0 clamp(16px, calc(2 * var(--uvw)), 32px);
+        padding: clamp(40px, calc(7 * var(--uvh)), 72px) 0;
+        border-top: 1px solid rgba(13, 19, 18, 0.1);
+        transition: opacity 0.5s var(--ease);
+      }
+      .mstep:first-of-type {
+        border-top: 0;
+        padding-top: 0;
+      }
+      .mstep:last-of-type {
+        padding-bottom: 0;
+      }
+      .mstep-n {
+        font-size: var(--fs-stat);
         font-weight: 600;
-        letter-spacing: -0.06em;
-        line-height: 0.8;
+        letter-spacing: -0.05em;
+        line-height: 0.85;
         color: var(--teal);
+        font-variant-numeric: tabular-nums;
+        transition: color 0.5s var(--ease);
       }
-      .mp:nth-child(n + 3) .mp-n {
-        color: var(--mint-2);
-      }
-      .mp-body {
-        display: flex;
-        flex-direction: column;
-        min-width: 0;
-      }
-      .mp h3 {
-        font-size: clamp(28px, 2.9vw, 46px);
+      .mstep h3 {
+        font-size: clamp(28px, calc(2.6 * var(--uvw)), 42px);
         font-weight: 600;
         letter-spacing: -0.035em;
-        line-height: 1.05;
+        line-height: 1.08;
       }
-      .mp p {
+      .mstep p {
         max-width: 34rem;
-        margin-top: 16px;
+        margin-top: 14px;
         font-size: var(--fs-lead);
         line-height: 1.5;
         color: var(--body);
       }
-      .mp:nth-child(n + 3) p {
-        color: rgba(255, 255, 255, 0.8);
+      /* with motion on, the step being read is lit and the rest fade back */
+      .mlist.live:has(.mstep.on) .mstep:not(.on) {
+        opacity: 0.38;
       }
-      .mp-prog {
-        display: grid;
-        gap: 10px;
-        margin-top: auto;
-        padding-top: 28px;
-      }
-      .mp-prog span {
-        font-size: var(--fs-small);
-        font-weight: 500;
-        color: var(--body);
-      }
-      .mp:nth-child(n + 3) .mp-prog span {
-        color: rgba(255, 255, 255, 0.7);
-      }
-      .road {
-        display: grid;
-        grid-auto-flow: column;
-        gap: 6px;
-        width: min(220px, 100%);
-      }
-      .road i {
-        height: 4px;
-        border-radius: 4px;
-        background: rgba(13, 19, 18, 0.12);
-      }
-      .road i.f {
-        background: var(--acc-mid);
-      }
-      .mp:nth-child(n + 3) .road i {
-        background: rgba(255, 255, 255, 0.2);
-      }
-      .mp:nth-child(n + 3) .road i.f {
-        background: var(--acc-2);
-      }
-      .mp:nth-child(4) .road i.f {
-        background: var(--acc-2);
-      }
-      .mp-img {
-        position: relative;
-        min-height: 220px;
-        border-radius: var(--r-inner);
-        overflow: hidden;
-      }
-      .mp-img .phx {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
+      .mstep.on .mstep-n {
+        color: var(--acc-mid);
       }
       @media (max-width: 899px) {
         .meth {
           padding: 84px 0 90px;
-          --stick: 84px;
         }
-        .mstack {
-          gap: 16px;
-          margin-top: 40px;
+        .mgrid {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 24px;
+          margin-top: 36px;
         }
-        .mp {
-          top: calc(var(--stick) + var(--i) * 10px);
-          grid-template-columns: 1fr;
-          gap: 18px;
-          min-height: 0;
+        .mtooth {
+          position: relative;
+          top: auto;
+          width: min(70%, 320px);
+          justify-self: center;
         }
-        .mp-n {
-          font-size: 56px;
+        .mstep {
+          grid-template-columns: 56px minmax(0, 1fr);
+          padding: 32px 0;
         }
-        .mp-prog {
-          padding-top: 20px;
+        .mstep-n {
+          font-size: 40px;
         }
-        .mp-img {
-          min-height: 0;
-          aspect-ratio: 16 / 9;
-        }
-        .mp-img .phx .hint {
-          display: none;
-        }
-      }
-      /* short phones: a sticky card taller than the screen would hide its own bottom, so drop the picture */
-      @media (max-width: 899px) and (max-height: 760px) {
-        .mp-img {
-          display: none;
+        .mstep h3 {
+          font-size: var(--fs-h4);
         }
       }
 
       /* ---------- reviews: glass cards at the foot of the hero ---------- */
       .h-say {
         position: relative;
-        margin-top: clamp(36px, 5vh, 56px);
+        margin-top: clamp(36px, calc(5 * var(--uvh)), 56px);
         scroll-margin-top: 100px;
       }
       .q-row {
@@ -1897,7 +1880,7 @@
         z-index: 200;
         display: grid;
         place-items: center;
-        padding: clamp(16px, 4vw, 48px);
+        padding: clamp(16px, calc(4 * var(--uvw)), 48px);
         background: rgba(18, 59, 54, 0.86);
         -webkit-backdrop-filter: blur(10px);
         backdrop-filter: blur(10px);
@@ -1906,14 +1889,14 @@
         display: none;
       }
       .vbox-f {
-        width: min(100%, 1180px, calc((100svh - 96px) * 16 / 9));
+        width: min(100%, 1180px, calc((calc(100 * var(--usvh)) - 96px) * 16 / 9));
         aspect-ratio: 16 / 9;
         border-radius: var(--r-card);
         overflow: hidden;
         background: var(--deep);
       }
       .vbox.tall .vbox-f {
-        width: min(100%, 420px, calc((100svh - 96px) * 9 / 16));
+        width: min(100%, 420px, calc((calc(100 * var(--usvh)) - 96px) * 9 / 16));
         aspect-ratio: 9 / 16;
       }
       .vbox iframe {
@@ -2251,7 +2234,7 @@
       }
       .f-cols {
         display: flex;
-        gap: clamp(28px, 4vw, 56px);
+        gap: clamp(28px, calc(4 * var(--uvw)), 56px);
         white-space: nowrap;
       }
       .f-cols ul {
@@ -2288,7 +2271,7 @@
         gap: 12px 40px;
         padding-top: 40px;
         border-top: 1px solid rgba(13, 19, 18, 0.12);
-        font-size: clamp(22px, 3.6vw, 52px);
+        font-size: clamp(22px, calc(3.6 * var(--uvw)), 52px);
         font-weight: 600;
         letter-spacing: -0.035em;
         line-height: 1.1;
@@ -2403,19 +2386,35 @@
         font-weight: 700;
       }
 
+      /* ---------- laptop proportions ----------
+         the layout is tuned on a 1920px screen; laptops (1280-1680px wide, e.g. 1920x1080 at 125% scaling = 1536px)
+         get the same picture scaled down, like a browser zoom of 80-90% */
+      @media (min-width: 1200px) and (max-width: 1699px) {
+        :root {
+          --z: 0.8;
+          zoom: 0.8;
+        }
+      }
+      @media (min-width: 1700px) and (max-width: 1919px) {
+        :root {
+          --z: 0.9;
+          zoom: 0.9;
+        }
+      }
+
       /* ---------- responsive ---------- */
       /* wider than the 1920px hero: the corner glows fade out before its edges, so no seam shows,
          and the headline keeps growing past its 78px cap (78px at 1920, ~104px at 2560, max 112px) */
       @media (min-width: 1921px) {
         .h-obj {
-          width: min(42vw, 84vh, 1100px);
+          width: min(calc(30 * var(--uvw)), calc(60 * var(--uvh)), 800px);
         }
         .q-row {
           -webkit-mask-image: linear-gradient(90deg, transparent, #000 160px, #000 calc(100% - 160px), transparent);
           mask-image: linear-gradient(90deg, transparent, #000 160px, #000 calc(100% - 160px), transparent);
         }
         .hero {
-          --fs-h1: min(4.06vw, 112px);
+          --fs-h1: min(calc(4.06 * var(--uvw)), 112px);
           background:
             radial-gradient(32% 28% at 24% 58%, rgba(191, 230, 220, 0.55), transparent 70%),
             radial-gradient(24% 30% at 78% 30%, rgba(255, 191, 215, 0.4), transparent 70%);
@@ -2449,7 +2448,7 @@
           width: 300px;
         }
         .h-obj {
-          width: 64vw;
+          width: calc(48 * var(--uvw));
         }
       }
       /* mid widths: a slightly tighter label row */
@@ -2487,7 +2486,7 @@
         }
         .h-top {
           gap: 18px;
-          padding-top: clamp(92px, 13svh, 112px);
+          padding-top: clamp(92px, calc(13 * var(--usvh)), 112px);
         }
         .h-top {
           flex-direction: column;
@@ -2514,7 +2513,7 @@
           order: 1;
           transform: none;
           align-self: center;
-          width: min(92vw, 440px, 48svh);
+          width: min(calc(76 * var(--uvw)), 340px, calc(40 * var(--usvh)));
           margin-top: 8px;
         }
         .h-row {
@@ -2525,11 +2524,29 @@
           order: 3;
           margin-top: 32px;
         }
-        .h-stat {
-          display: none;
+        .h-row {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 10px;
         }
-        .h-badges {
-          flex: 1;
+        .h-row > .h-badges,
+        .h-row > .h-stat {
+          flex: none;
+          min-height: 92px;
+        }
+        .h-stat {
+          justify-content: center;
+          gap: 16px;
+          padding: 12px 14px;
+        }
+        .h-num + .h-num {
+          padding-left: 16px;
+        }
+        .h-stat b {
+          font-size: 24px;
+        }
+        .h-stat small {
+          font-size: var(--fs-xs);
         }
         .h-badges li {
           justify-content: center;
@@ -2565,10 +2582,10 @@
           margin-top: 34px;
         }
         .cs {
-          flex-basis: min(320px, 84vw);
+          flex-basis: min(320px, calc(84 * var(--uvw)));
         }
         .q {
-          width: min(340px, 84vw);
+          width: min(340px, calc(84 * var(--uvw)));
           grid-template-columns: 1fr;
           min-height: 0;
         }
@@ -3483,11 +3500,11 @@
           <li><i class="ph-fill ph-shield-check hipaa" aria-hidden="true"></i><span><b>HIPAA</b> Compliant</span></li>
         </ul>
         <div class="h-stat">
-          <b><em>19.4×</em> ROAS</b>
-          <small>best return on ad spend<br />in our case studies</small>
           <div class="h-faces" aria-hidden="true">
             <img class="phx xs" src="assets/img/clients/face-east-village.webp" alt="" width="42" height="42" /><img class="phx xs" src="assets/img/clients/face-northern-lights.webp" alt="" width="42" height="42" /><img class="phx xs" src="assets/img/clients/face-modern-smiles.webp" alt="" width="42" height="42" />
           </div>
+          <div class="h-num"><b><em>5,000+</em></b><small>Consultations attended</small></div>
+          <div class="h-num"><b><em>$10M+</em></b><small>In accepted treatment</small></div>
         </div>
         </div>
         <!-- reviews, right in the hero (nav "Reviews" lands here) -->
@@ -3713,7 +3730,7 @@
 
       <div class="sbreak" aria-hidden="true"></div>
 
-      <!-- ============ 6. THE DMC METHOD (stacking cards, layout from proto's process) ============ -->
+      <!-- ============ 6. THE DMC METHOD (the hero mark on the left, the steps listed on the right) ============ -->
       <section class="meth" id="dmc" aria-labelledby="dmc-title">
         <div class="wrap">
           <div class="sh">
@@ -3722,45 +3739,44 @@
               <span class="sh-l2"><span class="sh-rule" aria-hidden="true"></span><span class="ln-m"><span class="hl">The DMC Method.</span></span></span>
             </h2>
           </div>
-          <!-- Elementor: 4 sticky cards (position: sticky, top offset grows per card); as each next card
-               slides up over the previous one, the previous card scales back a little (see the script) -->
-          <div class="mstack" id="mStack">
-            <article class="mp" style="--i: 0">
-              <span class="mp-n">01</span>
-              <div class="mp-body">
-                <h3>End-to-end management</h3>
-                <p>We manage your patient acquisition end-to-end: ads, screening, follow-up and booking, so you stay focused on treatment.</p>
-                <div class="mp-prog"><span>1 of 4</span><div class="road" aria-hidden="true"><i class="f"></i><i></i><i></i><i></i></div></div>
-              </div>
-              <div class="mp-img"><img class="phx" src="assets/img/services/dmc-management.webp" alt="Clinic receptionist greeting a patient" loading="lazy" /></div>
-            </article>
-            <article class="mp" style="--i: 1">
-              <span class="mp-n">02</span>
-              <div class="mp-body">
-                <h3>Qualified patients only</h3>
-                <p>Every lead is vetted for intent and financial readiness, then books with a deposit. No time wasted on uncommitted inquiries.</p>
-                <div class="mp-prog"><span>2 of 4</span><div class="road" aria-hidden="true"><i class="f"></i><i class="f"></i><i></i><i></i></div></div>
-              </div>
-              <div class="mp-img"><img class="phx" src="assets/img/services/dmc-qualified.webp" alt="Patient smiling in a dental chair" loading="lazy" /></div>
-            </article>
-            <article class="mp" style="--i: 2">
-              <span class="mp-n">03</span>
-              <div class="mp-body">
-                <h3>Original video campaigns</h3>
-                <p>We produce custom content inside your clinic: real people, real cases, built to earn trust before the consult.</p>
-                <div class="mp-prog"><span>3 of 4</span><div class="road" aria-hidden="true"><i class="f"></i><i class="f"></i><i class="f"></i><i></i></div></div>
-              </div>
-              <div class="mp-img"><img class="phx" src="assets/img/services/dmc-video.webp" alt="Presenter filming inside a dental clinic" loading="lazy" /></div>
-            </article>
-            <article class="mp" style="--i: 3">
-              <span class="mp-n">04</span>
-              <div class="mp-body">
-                <h3>The DMC Network</h3>
-                <p>Access a private group of partner clinics sharing what works, from case acceptance to patient communication.</p>
-                <div class="mp-prog"><span>4 of 4</span><div class="road" aria-hidden="true"><i class="f"></i><i class="f"></i><i class="f"></i><i class="f"></i></div></div>
-              </div>
-              <div class="mp-img"><img class="phx" src="assets/img/services/dmc-network.webp" alt="Dental team treating a patient" loading="lazy" /></div>
-            </article>
+          <!-- Elementor: two columns. Left: the hero mark (sticky). Right: the steps as a list (Repeater: title, text) -->
+          <div class="mgrid">
+            <div class="mtooth" aria-hidden="true">
+              <img src="assets/img/v11/mark-hero.webp" alt="" width="1283" height="1323" loading="lazy" decoding="async" />
+            </div>
+            <div class="mcol">
+            <span class="mline" aria-hidden="true"><i></i></span>
+            <ol class="mlist" id="mList">
+              <li class="mstep">
+                <span class="mstep-n">01</span>
+                <div>
+                  <h3>End-to-end management</h3>
+                  <p>We manage your patient acquisition end-to-end: ads, screening, follow-up and booking, so you stay focused on treatment.</p>
+                </div>
+              </li>
+              <li class="mstep">
+                <span class="mstep-n">02</span>
+                <div>
+                  <h3>Qualified patients only</h3>
+                  <p>Every lead is vetted for intent and financial readiness, then books with a deposit. No time wasted on uncommitted inquiries.</p>
+                </div>
+              </li>
+              <li class="mstep">
+                <span class="mstep-n">03</span>
+                <div>
+                  <h3>Original video campaigns</h3>
+                  <p>We produce custom content inside your clinic: real people, real cases, built to earn trust before the consult.</p>
+                </div>
+              </li>
+              <li class="mstep">
+                <span class="mstep-n">04</span>
+                <div>
+                  <h3>The DMC Network</h3>
+                  <p>Access a private group of partner clinics sharing what works, from case acceptance to patient communication.</p>
+                </div>
+              </li>
+            </ol>
+            </div>
           </div>
         </div>
       </section>
@@ -4209,7 +4225,7 @@
               .to(".pre-b", { yPercent: -40, opacity: 0, duration: 0.5, ease: "power2.in" })
               .to(pre, { clipPath: "inset(0 0 100% 0)", duration: 1.1, ease: "expo.inOut" }, 0.2)
               .set("#preEdge", { opacity: 1 }, 0.2)
-              .to("#preEdge", { y: -innerHeight, duration: 1.1, ease: "expo.inOut" }, 0.2)
+              .to("#preEdge", { y: -innerHeight / (parseFloat(getComputedStyle(root).zoom) || 1), duration: 1.1, ease: "expo.inOut" }, 0.2)
               .add(heroIn(), 0.75);
           });
         } else {
@@ -4881,13 +4897,14 @@
         gsap.set(".fq", { opacity: 0, y: 30 });
         ScrollTrigger.batch(".fq", { start: "top 94%", once: true, onEnter: (bt) => gsap.to(bt, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.06 }) });
 
-        // the DMC Method: each card scales back a little as the next one stacks on top of it (proto's process)
+        // the DMC Method: the step crossing the middle of the screen lights up, the line fills, the mark turns slowly
         {
-          const mps = $$(".mp");
-          mps.forEach((m, i) => {
-            if (i === mps.length - 1) return;
-            gsap.to(m, { scale: 0.9 + i * 0.012, ease: "none", scrollTrigger: { trigger: mps[i + 1], start: "top bottom", end: "top 30%", scrub: true } });
-          });
+          const ml = $("#mList");
+          ml.classList.add("live");
+          $$(".mstep", ml).forEach((s) => ScrollTrigger.create({ trigger: s, start: "top 58%", end: "bottom 58%", toggleClass: "on" }));
+          gsap.fromTo(".mline i", { scaleY: 0 }, { scaleY: 1, ease: "none", scrollTrigger: { trigger: ml, start: "top 58%", end: "bottom 58%", scrub: true } });
+          gsap.fromTo(".mtooth img", { rotation: -7, yPercent: 5 }, { rotation: 7, yPercent: -5, ease: "none", scrollTrigger: { trigger: ml, start: "top bottom", end: "bottom top", scrub: true } });
+          gsap.from(".mstep", { y: 40, opacity: 0, duration: 1, ease: "power3.out", stagger: 0.08, scrollTrigger: st(ml, "top 85%"), clearProps: "opacity,transform" });
         }
 
         // case studies: cards slide in from the right, renders settle
