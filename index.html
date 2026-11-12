@@ -773,14 +773,15 @@
         min-width: 164px;
         padding: 0 22px;
         border-radius: var(--r-pill);
-        background: var(--mint-2);
-        color: var(--ink);
+        /* the accent, with ink text, same as the arrow circles */
+        background: var(--acc);
+        color: var(--acc-on);
         font-size: 15px;
         font-weight: 500;
         transition: background-color 0.3s;
       }
       .nav-cta:hover {
-        background: #a6dccd;
+        background: var(--acc-hover);
       }
       .burger {
         display: none;
