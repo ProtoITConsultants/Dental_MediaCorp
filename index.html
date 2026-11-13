@@ -28,10 +28,19 @@
     <link rel="icon" href="assets/dmc-mark.png" type="image/png" />
 
 
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+
+
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+
+
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" />
+
+
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Onest:wght@300;400;500;600;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap"
       rel="stylesheet"
     />
     <link
@@ -232,27 +241,37 @@
         --acc-mid: #f06a9f;
         --acc-ink: #b33a6b;
         --acc-deep: #5c1434;
-        --f: "Onest", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+        /* type pairing: Satoshi (friendly, rounded grotesk) for everything, Instrument Serif italic for the teal accent words */
+        --f: "Satoshi", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+        --f-accent: "Instrument Serif", Georgia, "Times New Roman", serif;
         /* one frame for every section, taken from the hero: a single side gutter (~58px at 1440)
            and content as wide as the hero (which stops at 1920px) */
         --side: clamp(20px, calc(4 * var(--uvw)), 80px);
         --max: calc(1920px - 2 * var(--side));
         /* radius system: cards & panels / things nested inside a card / buttons & chips */
-        --r-card: 18px;
-        --r-inner: 12px;
+        /* corners: cards, and anything nested 6px inside a card (concentric: inner = outer - gap) */
+        --r-card: 28px;
+        --r-inner: calc(var(--r-card) - 6px);
         --r-pill: 999px;
         /* type scale: use these everywhere, never a one-off size */
         --fs-h1: clamp(44px, calc(5.1 * var(--uvw)), 78px); /* hero headline */
-        --fs-h2: clamp(38px, calc(4.8 * var(--uvw)), 70px); /* section headings */
+        --fs-h2: clamp(34px, calc(3.8 * var(--uvw)), 58px); /* section headings: every one of them */
+        --fs-list: clamp(30px, calc(3.6 * var(--uvw)), 52px); /* list titles: service names and the DMC Method steps */
+        /* spacing system: every section, card and round button takes its size from here (phones: see the 899px block) */
+        --sec-y: 112px; /* space above and below every section */
+        --sec-head: 64px; /* section heading to its content */
+        --pad-card: 24px; /* inside cards */
+        --pad-panel: 36px; /* inside big panels (booking) */
+        --btn: 48px; /* round icon buttons */
+        --btn-lg: 62px; /* the big round arrows */
         --fs-h3: clamp(26px, calc(2.3 * var(--uvw)), 34px); /* list titles, big card titles */
         --fs-h4: 24px; /* card titles */
         --fs-h5: 20px; /* names, small titles, numbers */
-        --fs-lead: clamp(17px, calc(1.35 * var(--uvw)), 20px); /* intros under headings */
-        --fs-body: 16px; /* descriptions, quotes, buttons */
-        --fs-small: 14px; /* labels, meta, nav */
-        --fs-xs: 13px; /* tags, legal, captions */
+        --fs-lead: clamp(18px, calc(1.4 * var(--uvw)), 21px); /* intros under headings */
+        --fs-body: max(17px, calc(15px / var(--z))); /* never under 15px on screen, even when the page is scaled down */ /* descriptions, quotes, buttons */
+        --fs-small: max(15px, calc(13.5px / var(--z))); /* labels, meta, nav */
+        --fs-xs: max(14px, calc(12.5px / var(--z))); /* tags, legal, captions */
         --fs-stat: clamp(48px, calc(5 * var(--uvw)), 76px); /* big numbers */
-        --r-card: 14px;
         --ease: cubic-bezier(0.16, 1, 0.3, 1);
       }
       *,
@@ -351,19 +370,16 @@
         padding-inline: var(--side);
       }
 
-      /* ---------- type: Onest; sizes come from the --fs-* scale in :root ---------- */
+      /* ---------- type: Satoshi, with Instrument Serif italic for the accent words; sizes come from the --fs-* scale in :root ---------- */
       .t-h1,
       .t-h2 {
-        font-weight: 600;
-        letter-spacing: -0.04em;
-        line-height: 1;
+        font-weight: 700;
+        letter-spacing: -0.035em;
+        line-height: 1.09;
         font-size: var(--fs-h2);
       }
       .t-h1 {
         font-size: var(--fs-h1);
-      }
-      .t-h2 {
-        font-size: clamp(34px, calc(3.8 * var(--uvw)), 58px);
       }
       .ln {
         display: block;
@@ -377,12 +393,39 @@
       .ln-m > span {
         display: block;
       }
+      /* accent words: Instrument Serif italic, a touch larger so it holds its own next to the bold grotesk */
       .hl {
         color: var(--teal);
+        font-family: var(--f-accent);
+        font-style: italic;
+        font-weight: 400;
+        font-size: 1.1em;
+        letter-spacing: -0.01em;
+        line-height: 0.9;
+        padding-right: 0.04em;
+      }
+      /* a line holding the italic gets room for its descenders inside the reveal mask */
+      .ln-m:has(.hl) {
+        padding-top: 0.08em;
+        margin-top: -0.08em;
+        padding-bottom: 0.16em;
+        margin-bottom: -0.16em;
+      }
+      /* in the hero the italic shares a line with sans words: it adds no height there, so the four lines stay evenly spaced */
+      .t-h1 .hl {
+        line-height: 0;
+      }
+      /* section headings: a little air between the sans line and the italic line under it */
+      .sh-l2:has(.hl) {
+        margin-top: 0.04em;
+      }
+      /* stacked lines: its negative top margin collapses with the line above (which has -0.08em), so take both */
+      .ln-m + .ln-m:has(.hl) {
+        margin-top: -0.16em;
       }
       .t-sub {
         font-size: var(--fs-lead);
-        line-height: 1.35;
+        line-height: 1.45;
         margin-top: 20px;
       }
 
@@ -412,8 +455,8 @@
         display: grid;
         flex: none;
         place-items: center;
-        width: 48px;
-        height: 48px;
+        width: var(--btn);
+        height: var(--btn);
         border-radius: 50%;
         background: var(--acc);
         color: var(--acc-on);
@@ -609,19 +652,19 @@
         justify-self: start;
       }
       .brand img {
-        width: 28px;
+        width: 56px;
         height: auto;
       }
       .brand b {
-        font-size: 19px;
+        font-size: 21px;
         font-weight: 600;
         letter-spacing: -0.03em;
         line-height: 1;
       }
       .brand small {
         display: block;
-        margin-top: 3px;
-        font-size: 8.5px;
+        margin-top: 0;
+        font-size: max(10px, calc(9.5px / var(--z)));
         font-weight: 500;
         letter-spacing: 0.14em;
         text-transform: uppercase;
@@ -639,7 +682,8 @@
       .nav-txt {
         position: relative;
         padding: 6px 0;
-        font-size: 15px;
+        font-size: max(17px, calc(15.5px / var(--z))); /* at least 15.5px on screen */
+        font-weight: 500;
       }
       .menu a::after,
       .nav-txt::after {
@@ -669,7 +713,7 @@
         gap: 6px;
       }
       .dd-t i {
-        font-size: 13px;
+        font-size: 14px;
         transition: transform 0.4s var(--ease);
       }
       .dd:hover .dd-t i,
@@ -741,7 +785,7 @@
         justify-content: space-between;
         gap: 12px;
         padding: 11px 14px;
-        border-radius: var(--r-inner);
+        border-radius: calc(var(--r-card) - 10px); /* the menu card has 10px padding */
         font-size: var(--fs-small);
         color: var(--ink);
         white-space: nowrap;
@@ -775,15 +819,15 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        height: 44px;
-        min-width: 164px;
-        padding: 0 22px;
+        height: 48px;
+        min-width: 172px;
+        padding: 0 24px;
         border-radius: var(--r-pill);
         /* the accent, with ink text, same as the arrow circles */
         background: var(--acc);
         color: var(--acc-on);
-        font-size: 15px;
-        font-weight: 500;
+        font-size: max(17px, calc(15.5px / var(--z)));
+        font-weight: 600;
         transition: background-color 0.3s;
       }
       .nav-cta:hover {
@@ -1053,7 +1097,7 @@
       .h-side p {
         max-width: 340px;
         font-size: var(--fs-lead);
-        line-height: 1.35;
+        line-height: 1.45;
         color: var(--grey);
       }
       .h-side .cta {
@@ -1074,7 +1118,7 @@
         box-sizing: border-box;
       }
       /* faces beside the figure, so the ROAS line is as short as the label row */
-      /* faces, then two figures divided by a hairline */
+      /* two figures divided by a hairline */
       .h-stat {
         display: flex;
         align-items: center;
@@ -1106,20 +1150,6 @@
         line-height: 1.3;
         color: var(--body);
       }
-      .h-faces {
-        display: flex;
-      }
-      .h-faces .phx {
-        width: 42px;
-        height: 42px;
-        border-radius: 50%;
-        object-fit: cover;
-        background: #fff;
-        border: 2px solid var(--bg);
-      }
-      .h-faces .phx + .phx {
-        margin-left: -12px;
-      }
       /* partner / compliance labels: one row, no tiles, hairline dividers */
       /* labels and ROAS sit on the same glass as the sticky nav, so they read over the mark */
       .h-badges,
@@ -1147,7 +1177,7 @@
         justify-content: center;
         gap: 10px;
         padding: 0 24px;
-        font-size: 17px;
+        font-size: var(--fs-body);
         letter-spacing: -0.02em;
         color: var(--body);
         white-space: nowrap;
@@ -1194,7 +1224,7 @@
       /* ---------- 3. services ---------- */
       .svc {
         position: relative;
-        padding: 150px 0 150px;
+        padding: calc(var(--sec-y) + 40px) 0; /* + room for the mint to fade in and out */
         overflow: hidden;
         background: linear-gradient(
           180deg,
@@ -1241,7 +1271,7 @@
       /* the list (Ondule "selected work", DMC theme): big name | kicker + description | features | arrow */
       .sl {
         max-width: var(--max);
-        margin: 72px auto 0;
+        margin: var(--sec-head) auto 0;
         padding: 0;
         list-style: none;
         border-bottom: 1px solid rgba(13, 19, 18, 0.12);
@@ -1266,6 +1296,7 @@
         left: calc(-1 * min(28px, var(--side)));
         right: calc(-1 * min(28px, var(--side)));
         z-index: -1;
+        border-radius: var(--r-card);
         background: var(--teal);
         transform: scaleY(0);
         transform-origin: bottom;
@@ -1276,10 +1307,10 @@
         transition: opacity 0.45s var(--ease);
       }
       .sr-name {
-        font-size: clamp(34px, calc(4.3 * var(--uvw)), 62px);
+        font-size: var(--fs-list);
         font-weight: 600;
-        letter-spacing: -0.045em;
-        line-height: 0.98;
+        letter-spacing: -0.035em;
+        line-height: 1.09;
         transition:
           transform 0.7s var(--ease),
           color 0.4s var(--ease),
@@ -1317,8 +1348,8 @@
         justify-self: end;
         display: grid;
         place-items: center;
-        width: 48px;
-        height: 48px;
+        width: var(--btn);
+        height: var(--btn);
         border-radius: 50%;
         background: var(--acc);
         color: var(--acc-on);
@@ -1334,7 +1365,7 @@
       }
       .sr-arr i + i {
         position: absolute;
-        transform: translate(-48px, 48px);
+        transform: translate(calc(-1 * var(--btn)), var(--btn));
       }
       @media (hover: hover) {
         .sl:hover .srow > * {
@@ -1357,7 +1388,7 @@
           background: var(--acc-hover);
         }
         .srow:hover .sr-arr i:first-child {
-          transform: translate(48px, -48px);
+          transform: translate(var(--btn), calc(-1 * var(--btn)));
         }
         .srow:hover .sr-arr i + i {
           transform: none;
@@ -1410,7 +1441,7 @@
 
       /* ---------- 3. case studies ---------- */
       .cases {
-        padding: 97px 0 0;
+        padding: var(--sec-y) 0;
       }
       .cases-head {
         padding-inline: var(--side);
@@ -1427,7 +1458,7 @@
       .row {
         display: flex;
         gap: 22px;
-        margin-top: 48px;
+        margin-top: var(--sec-head);
         padding: 0 var(--side) 30px;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
@@ -1532,7 +1563,7 @@
         font-size: var(--fs-h4);
         font-weight: 600;
         letter-spacing: -0.035em;
-        line-height: 1.05;
+        line-height: 1.09;
       }
       .cs-meta {
         margin: 6px 12px 0;
@@ -1614,8 +1645,8 @@
       .arw button {
         display: grid;
         place-items: center;
-        width: 62px;
-        height: 62px;
+        width: var(--btn-lg);
+        height: var(--btn-lg);
         border-radius: 50%;
         background: var(--ink);
         color: #fff;
@@ -1651,7 +1682,7 @@
          no overflow clipping on .meth: an overflow:hidden ancestor would stop position: sticky */
       .meth {
         position: relative;
-        padding: 110px 0 110px;
+        padding: var(--sec-y) 0;
       }
       .mgrid {
         display: grid;
@@ -1659,7 +1690,7 @@
         align-items: start;
         gap: clamp(40px, calc(6 * var(--uvw)), 120px);
         max-width: var(--max);
-        margin: 80px auto 0;
+        margin: var(--sec-head) auto 0;
       }
       /* pinned in the middle of the screen while the steps scroll past */
       .mtooth {
@@ -1734,33 +1765,30 @@
         transition: color 0.5s var(--ease);
       }
       .mstep h3 {
-        font-size: clamp(28px, calc(2.6 * var(--uvw)), 42px);
+        font-size: var(--fs-list);
         font-weight: 600;
         letter-spacing: -0.035em;
-        line-height: 1.08;
+        line-height: 1.09;
       }
       .mstep p {
         max-width: 34rem;
         margin-top: 14px;
         font-size: var(--fs-lead);
-        line-height: 1.5;
+        line-height: 1.45;
         color: var(--body);
       }
-      /* with motion on, the step being read is lit and the rest fade back */
-      .mlist.live:has(.mstep.on) .mstep:not(.on) {
-        opacity: 0.38;
-      }
+      /* every step stays fully readable; the one being read gets the pink number */
       .mstep.on .mstep-n {
         color: var(--acc-mid);
       }
       @media (max-width: 899px) {
         .meth {
-          padding: 84px 0 90px;
+          padding: var(--sec-y) 0;
         }
         .mgrid {
           grid-template-columns: minmax(0, 1fr);
           gap: 24px;
-          margin-top: 36px;
+          margin-top: var(--sec-head);
         }
         .mtooth {
           position: relative;
@@ -1774,9 +1802,6 @@
         }
         .mstep-n {
           font-size: 40px;
-        }
-        .mstep h3 {
-          font-size: var(--fs-h4);
         }
       }
 
@@ -1821,7 +1846,7 @@
       .q-body {
         display: flex;
         flex-direction: column;
-        padding: 24px 24px 26px 26px;
+        padding: var(--pad-card);
       }
       .q-top {
         display: flex;
@@ -1856,9 +1881,9 @@
       }
       .q blockquote {
         margin-top: 16px;
-        font-size: 17px;
-        line-height: 1.45;
-        letter-spacing: -0.01em;
+        font-size: var(--fs-body);
+        line-height: 1.6;
+        letter-spacing: 0;
         color: var(--body);
       }
       .q-media {
@@ -1914,8 +1939,8 @@
         z-index: 1;
         display: grid;
         place-items: center;
-        width: 48px;
-        height: 48px;
+        width: var(--btn);
+        height: var(--btn);
         border-radius: 50%;
         background: var(--acc);
         color: var(--acc-on);
@@ -1927,8 +1952,8 @@
         bottom: 12px;
         display: grid;
         place-items: center;
-        width: 46px;
-        height: 46px;
+        width: var(--btn);
+        height: var(--btn);
         border-radius: 50%;
         background: #fff;
         color: var(--ink);
@@ -1948,7 +1973,7 @@
       /* ---------- 2. why DMC: the numbers (right under the hero) ---------- */
       .team {
         position: relative;
-        padding: 110px 0 100px;
+        padding: var(--sec-y) 0;
 
         overflow: hidden;
       }
@@ -1958,7 +1983,7 @@
         grid-template-columns: repeat(4, minmax(0, 1fr));
         gap: 16px;
         max-width: var(--max);
-        margin: 64px auto 0;
+        margin: var(--sec-head) auto 0;
       }
       .rb {
         position: relative;
@@ -1966,7 +1991,7 @@
         flex-direction: column;
         justify-content: space-between;
         aspect-ratio: 1 / 0.9;
-        padding: 20px 22px 16px;
+        padding: var(--pad-card);
         border-radius: var(--r-card);
         border: 1px solid rgba(13, 19, 18, 0.08);
         background: #fff;
@@ -2083,6 +2108,15 @@
       .pz-line {
         stroke-dasharray: 1;
       }
+      /* the pen that draws the line (added by the script) */
+      .pz-pen {
+        fill: var(--teal);
+        stroke: #fff;
+        stroke-width: 1.2;
+      }
+      .pz-halo {
+        fill: rgba(27, 127, 115, 0.22);
+      }
       .pz-l {
         position: relative;
         display: flex;
@@ -2100,7 +2134,7 @@
         border-radius: 50%;
         background: var(--teal);
         color: #fff;
-        font-size: 11px;
+        font-size: max(11px, calc(11px / var(--z)));
       }
       .pz-l i {
         font-size: 18px;
@@ -2110,7 +2144,7 @@
       /* ---------- 7. booking (its own section) ---------- */
       .book {
         position: relative;
-        padding: 110px 0 120px;
+        padding: var(--sec-y) 0;
       }
       .ct {
         position: relative;
@@ -2121,9 +2155,6 @@
         margin: 0 auto;
         text-align: center;
       }
-      .ct-in .t-h2 {
-        font-size: var(--fs-h2);
-      }
       .ct-in .t-sub {
         font-size: var(--fs-lead);
         color: var(--body);
@@ -2131,13 +2162,13 @@
 
       /* ---------- 7. FAQ ---------- */
       .faq {
-        padding: 110px 0 120px;
+        padding: var(--sec-y) 0;
       }
       .fq-list {
         display: grid;
         gap: 12px;
         max-width: var(--max);
-        margin: 64px auto 0;
+        margin: var(--sec-head) auto 0;
       }
       .fq {
         border-radius: var(--r-card);
@@ -2151,13 +2182,17 @@
         border-color: var(--mint-2);
         box-shadow: 0 24px 50px -36px rgba(13, 19, 18, 0.35);
       }
+      .fq h3 {
+        margin: 0;
+        font: inherit;
+      }
       .fq-q {
         display: grid;
-        grid-template-columns: 52px minmax(0, 1fr) 44px;
+        grid-template-columns: 52px minmax(0, 1fr) var(--btn);
         align-items: center;
         gap: 12px;
         width: 100%;
-        padding: 20px 22px;
+        padding: 20px var(--pad-card);
         text-align: left;
         font-size: var(--fs-h5);
         font-weight: 600;
@@ -2173,8 +2208,8 @@
       .fq-i {
         display: grid;
         place-items: center;
-        width: 44px;
-        height: 44px;
+        width: var(--btn);
+        height: var(--btn);
         border-radius: 50%;
         background: var(--mint);
         color: var(--teal);
@@ -2243,7 +2278,7 @@
         display: grid;
         gap: 14px;
         align-content: start;
-        font-size: 15px;
+        font-size: var(--fs-small);
       }
       /* Dental Marketing's treatments: same 14px rhythm as every other footer link */
       .f-sub {
@@ -2331,7 +2366,7 @@
 
       /* ---------- booking card ---------- */
       .ct-body {
-        margin-top: 48px;
+        margin-top: var(--sec-head);
       }
       .ct-body {
         max-width: 1100px;
@@ -2386,6 +2421,35 @@
       .phx.xs .lbl {
         font-size: var(--fs-xs);
         font-weight: 700;
+      }
+
+      /* ---------- Apple-style continuous corners ----------
+         a squircle reads tighter than a circle arc of the same radius, so the radius grows with it */
+      @supports (corner-shape: squircle) {
+        :root {
+          --r-card: 38px;
+        }
+        .dd-fly,
+        .menu .dd-m a,
+        .h-badges,
+        .h-stat,
+        .srow::before,
+        .srow:focus-within,
+        .sr-thumb,
+        .cs-in,
+        .cs-img,
+        .cs-img > .cs-logo,
+        .q,
+        .vbox-f,
+        .rb,
+        .fq,
+        .bk,
+        .bk-logo,
+        .bk-slot button,
+        .field textarea,
+        .bk-s3 .bk-preview {
+          corner-shape: squircle;
+        }
       }
 
       /* ---------- laptop proportions ----------
@@ -2457,7 +2521,7 @@
       @media (min-width: 900px) and (max-width: 1339px) {
         .h-badges li {
           padding: 0 18px;
-          font-size: 15px;
+          font-size: var(--fs-small);
         }
       }
       @media (max-width: 1199px) {
@@ -2478,6 +2542,13 @@
         }
       }
       @media (max-width: 899px) {
+        :root {
+          --sec-y: 72px;
+          --sec-head: 40px;
+          --pad-card: 20px;
+          --pad-panel: 24px;
+          --btn: 44px;
+        }
         .nav-cta {
           min-width: 0;
           height: 40px;
@@ -2562,14 +2633,8 @@
         .h-badges {
           padding: 12px 6px;
         }
-        .svc {
-          padding: 110px 0 110px;
-        }
         .sh-rule {
           width: 44px;
-        }
-        .sl {
-          margin-top: 44px;
         }
         .srow {
           grid-template-columns: minmax(0, 1fr) auto;
@@ -2579,12 +2644,9 @@
         .sr-name {
           grid-column: 1 / -1;
         }
-        .cases {
-          padding-top: 84px;
-        }
         .row {
           gap: 12px;
-          margin-top: 34px;
+          margin-top: var(--sec-head);
         }
         .cs {
           flex-basis: min(320px, calc(84 * var(--uvw)));
@@ -2598,16 +2660,10 @@
           order: -1;
           height: 170px;
         }
-        .q-body {
-          padding: 20px 20px 22px;
-        }
-        .team {
-          padding: 72px 0 90px;
-        }
         .rs {
           grid-template-columns: repeat(2, minmax(0, 1fr));
           gap: 10px;
-          margin-top: 40px;
+          margin-top: var(--sec-head);
         }
         .rs {
           grid-template-areas: "a b" "c d" "e p3" "p1 p2";
@@ -2653,24 +2709,11 @@
         .rb b {
           font-size: 44px;
         }
-        .book {
-          padding: 84px 0 90px;
-        }
-        .faq {
-          padding: 84px 0 90px;
-        }
-        .fq-list {
-          margin-top: 40px;
-        }
         .fq-q {
-          grid-template-columns: 34px minmax(0, 1fr) 40px;
+          grid-template-columns: 34px minmax(0, 1fr) var(--btn);
           gap: 10px;
-          padding: 18px 16px;
+          padding: 18px var(--pad-card);
           font-size: 17px;
-        }
-        .fq-i {
-          width: 40px;
-          height: 40px;
         }
         .fq-in {
           padding: 0 16px 22px;
@@ -2710,8 +2753,8 @@
           font-size: 15px;
         }
         .cta-i {
-          width: 44px;
-          height: 44px;
+          width: var(--btn);
+          height: var(--btn);
         }
         .f-cols {
           flex-wrap: wrap;
@@ -2743,7 +2786,7 @@
           width: 112px;
           height: 62px;
           padding: 8px 10px;
-          border-radius: var(--r-inner);
+          border-radius: calc(var(--r-inner) - 10px); /* sits 10px inside the photo */
           background: #fff;
         }
         .cs-in {
@@ -3253,10 +3296,10 @@
         min-height: 600px;
       }
       .bk-info {
-        padding: 36px 32px;
+        padding: var(--pad-panel);
       }
       .bk-main {
-        padding: 36px 36px 32px;
+        padding: var(--pad-panel);
       }
       .bk-logo {
         border-radius: var(--r-inner);
@@ -3363,11 +3406,20 @@
       }
       @media (max-width: 899px) {
         .bk-info {
-          padding: 26px 22px;
+          padding: var(--pad-panel) var(--pad-card);
         }
         .bk-main {
-          padding: 26px 20px;
+          padding: var(--pad-panel) var(--pad-card);
         }
+      }
+
+      /* type consistency: body copy is 1.6 everywhere, titles 1.09 */
+      .bk-desc {
+        line-height: 1.6;
+      }
+      .bk-title {
+        line-height: 1.09;
+        letter-spacing: -0.035em;
       }
     </style>
   </head>
@@ -3506,9 +3558,6 @@
           <li><i class="ph-fill ph-shield-check hipaa" aria-hidden="true"></i><span><b>HIPAA</b> Compliant</span></li>
         </ul>
         <div class="h-stat">
-          <div class="h-faces" aria-hidden="true">
-            <img class="phx xs" src="assets/img/clients/face-east-village.webp" alt="" width="42" height="42" /><img class="phx xs" src="assets/img/clients/face-northern-lights.webp" alt="" width="42" height="42" /><img class="phx xs" src="assets/img/clients/face-modern-smiles.webp" alt="" width="42" height="42" />
-          </div>
           <div class="h-num"><b><em>5,000+</em></b><small>Consultations attended</small></div>
           <div class="h-num"><b><em>$10M+</em></b><small>In accepted treatment</small></div>
         </div>
@@ -4887,30 +4936,81 @@
         ScrollTrigger.batch(".srow", { start: "top 90%", once: true, onEnter: (b) => gsap.to(b, { opacity: 1, y: 0, duration: 1.1, ease: "expo.out", stagger: 0.1, clearProps: "opacity,transform" }) });
         gsap.set(".rb", { opacity: 0, y: 60 });
         ScrollTrigger.batch(".rb", { start: "top 92%", once: true, onEnter: (b) => gsap.to(b, { opacity: 1, y: 0, duration: 1.1, ease: "expo.out", stagger: 0.1 }) });
-        // the three puzzle pieces fly in, lock together, then one growth line draws through all of them
+        // the three puzzle pieces fly in, lock together, then one growth line draws through all of them.
+        // Quick (about 1.4s) and it starts as soon as the puzzle is on screen, so nobody has to wait for it.
         {
-          const tl = gsap.timeline({ scrollTrigger: st(".rs", "top 72%") });
-          tl.from(".pz-1", { x: -120, y: 80, rotation: -16, opacity: 0, duration: 1.3, ease: "expo.out" }, 0)
-            .from(".pz-2", { x: 90, y: 130, rotation: 14, opacity: 0, duration: 1.3, ease: "expo.out" }, 0.12)
-            .from(".pz-3", { x: 110, y: -110, rotation: 18, opacity: 0, duration: 1.3, ease: "expo.out" }, 0.24)
-            .fromTo(".pz-line", { strokeDashoffset: 1 }, { strokeDashoffset: 0, duration: 1.8, ease: "power2.inOut" }, 1)
-            .from(".pz-area", { opacity: 0, duration: 1.2 }, 1.4)
-            .from(".pz-arrow", { opacity: 0, duration: 0.4 }, 2.6)
-            .from(".pz-l", { y: 12, opacity: 0, duration: 0.6, stagger: 0.25, ease: "power3.out" }, 1.2);
+          const tl = gsap.timeline({ scrollTrigger: st(".rs", "top 88%") });
+          tl.from(".pz-1", { x: -120, y: 80, rotation: -16, opacity: 0, duration: 0.8, ease: "expo.out" }, 0)
+            .from(".pz-2", { x: 90, y: 130, rotation: 14, opacity: 0, duration: 0.8, ease: "expo.out" }, 0.06)
+            .from(".pz-3", { x: 110, y: -110, rotation: 18, opacity: 0, duration: 0.8, ease: "expo.out" }, 0.12)
+            .from(".pz-l", { y: 12, opacity: 0, duration: 0.4, stagger: 0.12, ease: "power3.out" }, 0.5);
+
+          // the line, drawn live. Each piece holds the same chart (offset), so all three are driven by one progress value.
+          const NS = "http://www.w3.org/2000/svg";
+          const charts = $$(".pz-line").map((line, k) => {
+            const g = line.parentNode,
+              area = $(".pz-area", g),
+              arrow = $(".pz-arrow", g),
+              len = line.getTotalLength();
+            // the shaded area is uncovered by a rectangle that follows the pen
+            const cp = document.createElementNS(NS, "clipPath");
+            cp.id = "pzr" + k;
+            const rect = document.createElementNS(NS, "rect");
+            rect.setAttribute("x", "-20");
+            rect.setAttribute("y", "-20");
+            rect.setAttribute("height", "240");
+            rect.setAttribute("width", "0");
+            cp.appendChild(rect);
+            g.appendChild(cp);
+            area.setAttribute("clip-path", "url(#pzr" + k + ")");
+            // the pen: a dot with a soft halo at the tip of the stroke
+            const halo = document.createElementNS(NS, "circle"),
+              pen = document.createElementNS(NS, "circle");
+            halo.setAttribute("class", "pz-halo");
+            pen.setAttribute("class", "pz-pen");
+            halo.setAttribute("r", "7");
+            pen.setAttribute("r", "3");
+            g.appendChild(halo);
+            g.appendChild(pen);
+            arrow.setAttribute("pathLength", "1");
+            return { line, rect, pen, halo, len };
+          });
+          const draw = (p) =>
+            charts.forEach((ch) => {
+              const pt = ch.line.getPointAtLength(p * ch.len);
+              ch.line.style.strokeDashoffset = String(1 - p);
+              ch.rect.setAttribute("width", String(Math.max(0, pt.x + 20)));
+              ch.pen.setAttribute("cx", pt.x);
+              ch.pen.setAttribute("cy", pt.y);
+              ch.halo.setAttribute("cx", pt.x);
+              ch.halo.setAttribute("cy", pt.y);
+            });
+          const pens = charts.flatMap((ch) => [ch.pen, ch.halo]);
+          gsap.set(".pz-arrow", { strokeDasharray: 1, strokeDashoffset: 1 });
+          gsap.set(pens, { opacity: 0 });
+          draw(0);
+          const pr = { p: 0 };
+          tl.set(pens, { opacity: 1 }, 0.38)
+            // a hand-drawn pace: it eases in, speeds up through the steep part, eases out at the top
+            .to(pr, { p: 1, duration: 1.3, ease: "power1.inOut", onUpdate: () => draw(pr.p) }, 0.38)
+            .to(".pz-arrow", { strokeDashoffset: 0, duration: 0.32, ease: "power2.out" }, 1.62)
+            .to(pens, { opacity: 0, duration: 0.35, ease: "power2.in" }, 1.7);
         }
 
         // FAQ rows rise in
         gsap.set(".fq", { opacity: 0, y: 30 });
         ScrollTrigger.batch(".fq", { start: "top 94%", once: true, onEnter: (bt) => gsap.to(bt, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.06 }) });
 
-        // the DMC Method: the step crossing the middle of the screen lights up, the line fills, the mark turns slowly
+        // the DMC Method: every step shows as soon as it scrolls in; the one being read gets the pink number,
+        // the line fills alongside, the mark turns slowly
         {
           const ml = $("#mList");
           ml.classList.add("live");
-          $$(".mstep", ml).forEach((s) => ScrollTrigger.create({ trigger: s, start: "top 58%", end: "bottom 58%", toggleClass: "on" }));
-          gsap.fromTo(".mline i", { scaleY: 0 }, { scaleY: 1, ease: "none", scrollTrigger: { trigger: ml, start: "top 58%", end: "bottom 58%", scrub: true } });
+          $$(".mstep", ml).forEach((s) => ScrollTrigger.create({ trigger: s, start: "top 72%", end: "bottom 72%", toggleClass: "on" }));
+          gsap.fromTo(".mline i", { scaleY: 0 }, { scaleY: 1, ease: "none", scrollTrigger: { trigger: ml, start: "top 72%", end: "bottom 72%", scrub: true } });
           gsap.fromTo(".mtooth img", { rotation: -7, yPercent: 5 }, { rotation: 7, yPercent: -5, ease: "none", scrollTrigger: { trigger: ml, start: "top bottom", end: "bottom top", scrub: true } });
-          gsap.from(".mstep", { y: 40, opacity: 0, duration: 1, ease: "power3.out", stagger: 0.08, scrollTrigger: st(ml, "top 85%"), clearProps: "opacity,transform" });
+          gsap.set(".mstep", { opacity: 0, y: 24 });
+          ScrollTrigger.batch(".mstep", { start: "top 96%", once: true, onEnter: (bt) => gsap.to(bt, { opacity: 1, y: 0, duration: 0.7, ease: "power3.out", stagger: 0.06, clearProps: "opacity,transform" }) });
         }
 
         // case studies: cards slide in from the right, renders settle
