@@ -6,7 +6,7 @@
     <title>Dental Marketing &amp; Patient Acquisition System | Dental Media Corp</title>
     <meta
       name="description"
-      content="We combine high-performing Google and Meta Ads, premium dental video production, and a dedicated human dental call centre to attract, qualify, and book high-value patients."
+      content="We create the ads, film the videos, contact every lead, qualify each patient and book them into your schedule, so your team can focus on the patients who come in."
     />
     <link rel="canonical" href="https://dentalmediacorp.com/" />
     <meta name="robots" content="index, follow, max-image-preview:large" />
@@ -19,7 +19,7 @@
     />
     <meta
       property="og:description"
-      content="The Complete Dental Marketing &amp; Patient Acquisition System. We combine high-performing Google and Meta Ads, premium dental video production, and a dedicated human dental call centre to attract, qualify, and book high-value patients."
+      content="The complete dental marketing team. We create the ads, film the videos, contact every lead, qualify each patient and book them into your schedule, so your team can focus on the patients who come in."
     />
     <meta property="og:url" content="https://dentalmediacorp.com/" />
     <meta property="og:locale" content="en_CA" />
@@ -100,15 +100,15 @@
                 "name": "What makes Dental Media Corp different from other dental marketing companies?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "We don't just generate leads. We attract, qualify, and book high-value dental patients through Google and Meta advertising, premium video production, and our dedicated human dental call centre. Our proprietary Dental Connect dashboard gives you real-time visibility into your patient acquisition pipeline."
+                  "text": "We handle the whole journey for you. We create the ads, film the videos, contact every lead, qualify each patient and book them into your schedule. Your team doesn't chase leads. They focus on the patients who come in, and you can see every booking in our Dental Connect dashboard."
                 }
               },
               {
                 "@type": "Question",
-                "name": "How does your dental call centre qualify and book patients?",
+                "name": "What happens when someone responds to our ads?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Our dental-trained, human appointment setters target new leads within two minutes, screen for treatment readiness, income, ability to pay, and 660+ credit scores for applicable campaigns. We also secure a $50 consultation deposit before booking eligible patients, helping reduce no-shows and improve appointment commitment."
+                  "text": "Our dental-trained team contacts them, answers their questions and makes sure they're a good fit for the treatment they want. Then we book them straight into your schedule, so your front desk never has to chase a lead."
                 }
               },
               {
@@ -121,10 +121,10 @@
               },
               {
                 "@type": "Question",
-                "name": "How do you achieve 80%+ patient show-up rates?",
+                "name": "What does my team need to do?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Through a combination of rapid lead response, strict patient qualification, financial screening, and $50 consultation deposits for applicable campaigns. Our goal isn't just more appointments. It's more qualified patients who show up ready to discuss treatment."
+                  "text": "Very little. We run the ads, film the content, follow up with every lead and book qualified patients for you. Your team focuses on what they do best: welcoming patients and presenting treatment."
                 }
               },
               {
@@ -256,7 +256,7 @@
         /* type scale: use these everywhere, never a one-off size */
         --fs-h1: clamp(44px, calc(5.1 * var(--uvw)), 78px); /* hero headline */
         --fs-h2: clamp(34px, calc(3.8 * var(--uvw)), 58px); /* section headings: every one of them */
-        --fs-list: clamp(30px, calc(3.6 * var(--uvw)), 52px); /* list titles: service names and the DMC Method steps */
+        --fs-list: clamp(30px, calc(3.6 * var(--uvw)), 52px); /* list titles: the DMC Method steps (the services list uses --fs-h3: seven rows in a column) */
         /* spacing system: every section, card and round button takes its size from here (phones: see the 899px block) */
         --sec-y: 112px; /* space above and below every section */
         --sec-head: 64px; /* section heading to its content */
@@ -636,7 +636,7 @@
         display: grid;
         grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
         align-items: center;
-        max-width: 1920px; /* lines up with the hero on ultra-wide screens */
+        max-width: calc(1920px / var(--z)); /* lines up with the hero on ultra-wide screens (1920 screen px, whatever the laptop zoom) */
         margin-inline: auto;
         height: 84px;
         padding: 0 var(--side);
@@ -1000,6 +1000,21 @@
         color: rgba(255, 255, 255, 0.55);
       }
 
+      /* ---------- the page box ----------
+         <main> is the one centred parent of every section: at most 1920 screen px wide (whatever the laptop zoom), so on a
+         wider screen or a zoomed-out browser the CONTENT stays together in the middle. The visuals do not: the section
+         glows and the services carousel break out to the full screen width (see .sbreak and .sx), and the header's glass
+         bar is full width too, so a wide screen never shows a boxed-in page. The body's overflow-x: clip stops any
+         sideways scroll. --bleed is how far the screen edge lies beyond the box on each side (0 up to 1920 screen px). */
+      main {
+        position: relative;
+        max-width: calc(1920px / var(--z));
+        margin-inline: auto;
+      }
+      :root {
+        --bleed: calc((100 * var(--uvw) - min(100 * var(--uvw), 1920px / var(--z))) / 2);
+      }
+
       /* ---------- section breaks: a soft, blurred mint glow straddling each boundary ---------- */
       /* a full-width strip centred on the boundary (takes no space: negative margins), clipped so
          the glow can never widen the page; the glow inside is soft enough that the clip never shows */
@@ -1017,11 +1032,16 @@
         position: absolute;
         left: 50%;
         top: 50%;
-        width: max(600px, calc(85 * var(--uvw)));
+        width: max(600px, 85%); /* of the page box, not the screen, so the glow stays with the content */
         height: calc(var(--sb-h) - 180px);
         transform: translate(-50%, -50%);
         background: radial-gradient(closest-side, rgba(191, 230, 220, 0.55), rgba(221, 242, 236, 0.28) 50%, transparent);
         filter: blur(60px);
+      }
+      /* inside the page box the strip breaks out to the full screen width (the one before the footer sits in the
+         full-width body already, so it must not) */
+      main > .sbreak {
+        margin-inline: calc(-1 * var(--bleed));
       }
       main > .sbreak:nth-of-type(odd)::before {
         left: 36%;
@@ -1037,7 +1057,7 @@
         /* full screen width up to 1920px, then centred, so ultra-wide screens keep the composition
            (100%, not 100vw: 100vw adds the scrollbar width on desktop and clips the right edge) */
         width: 100%;
-        max-width: 1920px;
+        max-width: calc(1920px / var(--z)); /* 1920 screen px: the laptop zoom would otherwise cap it early */
         margin-inline: auto;
         /* the headline runs to four lines, so it is a step smaller than the section headings */
         --fs-h1: clamp(38px, calc(4.2 * var(--uvw)), 68px);
@@ -1221,18 +1241,11 @@
         }
       }
 
-      /* ---------- 3. services ---------- */
+      /* ---------- 3. services: a quiet list on the left, one framed photo on the right that follows the row you're on ----------
+         sits on the page background like every other section (no colour band); no overflow clipping: it would stop the sticky photo */
       .svc {
         position: relative;
-        padding: calc(var(--sec-y) + 40px) 0; /* + room for the mint to fade in and out */
-        overflow: hidden;
-        background: linear-gradient(
-          180deg,
-          rgba(221, 242, 236, 0) 0,
-          var(--mint) 140px,
-          var(--mint) calc(100% - 140px),
-          rgba(221, 242, 236, 0) 100%
-        );
+        padding: var(--sec-y) 0;
       }
       /* section head (reference layout): small label column + heading whose 2nd line is drawn in */
       .sh {
@@ -1268,175 +1281,259 @@
         font-variant-numeric: tabular-nums;
         transition: color 0.3s;
       }
-      /* the list (Ondule "selected work", DMC theme): big name | kicker + description | features | arrow */
-      .sl {
-        max-width: var(--max);
-        margin: var(--sec-head) auto 0;
-        padding: 0;
-        list-style: none;
-        border-bottom: 1px solid rgba(13, 19, 18, 0.12);
+      /* ---------- the services carousel (inspo: "Carousel experimentation", Sacha Jerrems, Dribbble 11431212) ----------
+         one wide active card, the rest narrow strips; on a change every card slides together, the active one shrinks to a
+         strip while the next opens wide. The cursor is the site's normal one. The photos never move or zoom:
+         each is fixed at the open card's size, centred, and the card is a window that opens and closes over it.
+         The inspo's full background colour swap is replaced by the site's soft glow, tinted per service (brand colours only).
+         Sizes all come from one height: the active card is 1.5x as wide as it is tall, a strip 0.55x. */
+      @property --sx-tint {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: rgba(191, 230, 220, 0.55);
       }
-      .srow {
+      .sx {
+        --sx-h: clamp(460px, calc(58 * var(--uvh)), 600px);
+        --sx-big: calc(var(--sx-h) * 1.5);
+        --sx-small: calc(var(--sx-h) * 0.55);
+        --sx-gap: 24px;
+        --sx-pad: 28px;
+        --sx-x0: calc(var(--bleed) + var(--side) + 64px); /* the active card's left edge, in line with the content; the previous strip peeks in before it */
+        --sx-tint: rgba(191, 230, 220, 0.55);
+        --j: 0;
+        --dx: 0px;
         position: relative;
-        isolation: isolate;
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) minmax(0, 360px) 48px;
-        align-items: center;
-        gap: 0 48px;
-        padding: 30px 0;
-        border-top: 1px solid rgba(13, 19, 18, 0.12);
+        /* full screen width (past the page box), so on a wide screen the strips run out to the edge instead of being cut */
+        margin: var(--sec-head) calc(-1 * var(--bleed)) 0;
+        transition: --sx-tint 1.2s var(--ease);
       }
-      /* hover (inspo news-list): a teal fill wipes up from the bottom of the row and the words turn light.
-         The fill reaches a little past the row's sides so the text keeps breathing room; content does not move. */
-      .srow::before {
+      /* the glow behind the active card, tinted per service */
+      .sx::before {
         content: "";
         position: absolute;
-        top: -1px;
-        bottom: 0;
-        left: calc(-1 * min(28px, var(--side)));
-        right: calc(-1 * min(28px, var(--side)));
-        z-index: -1;
+        left: calc(var(--sx-x0) - 10%);
+        top: -12%;
+        width: calc(var(--sx-big) * 1.4);
+        height: 124%;
+        background: radial-gradient(closest-side, var(--sx-tint), transparent);
+        filter: blur(50px);
+        pointer-events: none;
+      }
+      .sx-stage {
+        position: relative;
+        overflow: hidden;
+        padding-block: 30px 50px; /* room for the cards' shadow */
+        margin-block: -30px -50px;
+        touch-action: pan-y;
+      }
+      .sx-track {
+        display: flex;
+        gap: var(--sx-gap);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        transform: translate3d(calc(var(--sx-x0) - var(--j) * (var(--sx-small) + var(--sx-gap)) + var(--dx)), 0, 0);
+        transition: transform 1s var(--ease);
+      }
+      .sx.drag .sx-track {
+        transition: none;
+      }
+      .sx-card {
+        position: relative;
+        flex: none;
+        width: var(--sx-small);
+        height: var(--sx-h);
         border-radius: var(--r-card);
-        background: var(--teal);
-        transform: scaleY(0);
-        transform-origin: bottom;
-        transition: transform 0.55s var(--ease);
+        overflow: hidden;
+        background: var(--soft);
+        box-shadow: 0 34px 60px -40px rgba(13, 19, 18, 0.55);
+        user-select: none;
+        transition: width 1s var(--ease);
       }
-      /* hovering one row quiets the rest (children fade, so GSAP's own reveal of the row is untouched) */
-      .srow > * {
-        transition: opacity 0.45s var(--ease);
+      .sx-card.on {
+        width: var(--sx-big);
       }
-      .sr-name {
-        font-size: var(--fs-list);
-        font-weight: 600;
-        letter-spacing: -0.035em;
-        line-height: 1.09;
-        transition:
-          transform 0.7s var(--ease),
-          color 0.4s var(--ease),
-          opacity 0.45s var(--ease);
+      /* the photo is always the open card's size, centred, so a strip shows its middle and opening a card only reveals
+         more of it: no rescale (object-fit would re-crop as the width changes), no zoom */
+      .sx-card img {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: var(--sx-big);
+        max-width: none;
+        height: 100%;
+        object-fit: cover;
+        transform: translateX(-50%);
+        pointer-events: none;
       }
-      .sr-link::after {
+      /* legibility: a deep teal-ink shade rising from the foot of every card */
+      .sx-card::after {
         content: "";
         position: absolute;
         inset: 0;
-        z-index: 1;
+        background: linear-gradient(to top, rgba(13, 19, 18, 0.78), rgba(13, 19, 18, 0.28) 45%, rgba(13, 19, 18, 0) 70%);
+        pointer-events: none;
       }
-      .sr-link:focus-visible {
+      .sx-tag {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 14px 7px 12px;
+        border-radius: var(--r-pill);
+        /* a dark glass, so the chip reads on bright photos too */
+        background: rgba(13, 19, 18, 0.34);
+        -webkit-backdrop-filter: blur(14px) saturate(160%);
+        backdrop-filter: blur(14px) saturate(160%);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        color: #fff;
+        font-size: var(--fs-xs);
+        font-weight: 600;
+        line-height: 1.2;
+        white-space: nowrap;
+      }
+      .sx-tag b {
+        font-weight: 600;
+        color: var(--acc);
+        font-variant-numeric: tabular-nums;
+      }
+      /* the copy: the name keeps the strip's width in both states (so it never re-wraps while the card grows);
+         the line and the Explore link sit to its right, so a strip simply clips them */
+      .sx-txt {
+        position: absolute;
+        left: var(--sx-pad);
+        bottom: var(--sx-pad);
+        z-index: 1;
+        display: grid;
+        grid-template-columns: calc(var(--sx-small) - 2 * var(--sx-pad)) calc(var(--sx-big) - var(--sx-small) - var(--sx-pad));
+        align-items: end;
+        gap: var(--sx-pad);
+        color: #fff;
+      }
+      .sx-name {
+        font-size: var(--fs-h3);
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1.09;
+      }
+      .sx-link {
+        color: inherit;
+      }
+      /* the active card is one link; the others are buttons in effect (the script turns a click into "go here") */
+      .sx-link::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+      }
+      .sx-link:focus-visible {
         outline: none;
       }
-      .srow:focus-within {
+      .sx-card:has(.sx-link:focus-visible) {
         outline: 2px solid var(--teal);
-        outline-offset: 6px;
-        border-radius: var(--r-card);
+        outline-offset: 4px;
       }
+      /* the "Dental Marketing" treatments link lands a little above the carousel, under the header */
       .sr-anchor {
         position: absolute;
         top: -120px;
       }
-      .sr-p {
-        font-size: var(--fs-lead);
-        line-height: 1.45;
-        color: rgba(13, 19, 18, 0.66);
+      .sx-more {
+        display: grid;
+        gap: 18px;
+        justify-items: start;
+        max-width: 26rem;
+        opacity: 0;
+        transform: translateY(14px);
         transition:
-          color 0.4s var(--ease),
-          opacity 0.45s var(--ease);
+          opacity 0.3s var(--ease),
+          transform 0.5s var(--ease);
       }
-      /* the same lime circle as the arrow in the Book a Strategy Call button */
-      .sr-arr {
-        position: relative;
-        justify-self: end;
+      .sx-card.on .sx-more {
+        opacity: 1;
+        transform: none;
+        transition:
+          opacity 0.6s var(--ease) 0.45s,
+          transform 0.9s var(--ease) 0.45s;
+      }
+      .sx-p {
+        font-size: var(--fs-body);
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.86);
+      }
+      /* Explore: the hero button's pink arrow circle with a label */
+      .sx-go {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: var(--fs-small);
+        font-weight: 600;
+      }
+      .sx-go i {
         display: grid;
         place-items: center;
-        width: var(--btn);
-        height: var(--btn);
+        width: 40px;
+        height: 40px;
         border-radius: 50%;
         background: var(--acc);
         color: var(--acc-on);
-        font-size: 18px;
-        line-height: 1;
-        overflow: hidden;
-        transition:
-          background-color 0.35s,
-          opacity 0.45s var(--ease);
+        font-size: 16px;
       }
-      .sr-arr i {
-        transition: transform 0.45s var(--ease);
+      /* below the carousel: the counter and a progress hairline on the left, the arrows on the right */
+      .sx-ctl {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+        max-width: var(--max);
+        margin: 36px auto 0;
+        padding-inline: var(--side);
+        box-sizing: content-box;
       }
-      .sr-arr i + i {
-        position: absolute;
-        transform: translate(calc(-1 * var(--btn)), var(--btn));
-      }
-      @media (hover: hover) {
-        .sl:hover .srow > * {
-          opacity: 0.3;
-        }
-        .sl .srow:hover > * {
-          opacity: 1;
-        }
-        .srow:hover::before {
-          transform: scaleY(1);
-        }
-        .srow:hover .sr-name {
-          transform: translateX(24px);
-          color: #fff;
-        }
-        .srow:hover .sr-p {
-          color: rgba(255, 255, 255, 0.9);
-        }
-        .srow:hover .sr-arr {
-          background: var(--acc-hover);
-        }
-        .srow:hover .sr-arr i:first-child {
-          transform: translate(var(--btn), calc(-1 * var(--btn)));
-        }
-        .srow:hover .sr-arr i + i {
-          transform: none;
-        }
-      }
-      /* the explore button: touch screens only (a fine pointer gets the row hover instead) */
-      .sr-cta {
-        grid-column: 1 / -1;
-        justify-self: start;
-        margin-top: 22px;
-        height: 52px;
-        gap: 14px;
-        padding: 0 6px 0 24px;
+      .sx-count {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        flex: 1;
+        max-width: 420px;
         font-size: var(--fs-small);
+        color: var(--grey);
+        font-variant-numeric: tabular-nums;
       }
-      .sr-cta .cta-i {
-        width: 40px;
-        height: 40px;
+      .sx-count b {
+        font-weight: 600;
+        color: var(--teal);
       }
-      /* in-row image: touch screens only (no hover there) */
-      .sr-thumb {
-        display: none;
+      .sx-bar {
+        flex: 1;
+        height: 2px;
+        border-radius: 2px;
+        background: rgba(13, 19, 18, 0.1);
+        overflow: hidden;
       }
-      @media (hover: none), (pointer: coarse) {
-        .sr-thumb {
-          display: block;
-          grid-column: 1 / -1;
-          aspect-ratio: 4 / 3;
-          max-height: 300px;
-          width: 100%;
-          margin-bottom: 18px;
-          border-radius: var(--r-card);
-          overflow: hidden;
-          background: var(--soft);
-        }
-        .sr-thumb .phx {
-          width: 100%;
-          height: 100%;
-        }
-        /* touch: the Explore button carries the arrow, so the row circle would be a second one */
-        .sr-arr {
-          display: none;
-        }
+      .sx-bar i {
+        display: block;
+        height: 100%;
+        background: var(--teal);
+        transform-origin: left;
+        transform: scaleX(calc((var(--j) + 1) / 7));
+        transition: transform 1s var(--ease);
       }
-      @media (hover: hover) and (pointer: fine) {
-        .sr-cta {
-          display: none;
-        }
+      .sx-ctl .arw {
+        margin-top: 0;
+      }
+      .sx-ctl .arw button:hover:not(:disabled) i {
+        transform: translateX(4px);
+      }
+      .sx-ctl .arw .sx-prev:hover:not(:disabled) i {
+        transform: translateX(-4px);
+      }
+      /* the normal cursor, as everywhere else on the site: a hand over the cards (each is clickable) */
+      .sx-card {
+        cursor: pointer;
       }
 
       /* ---------- 3. case studies ---------- */
@@ -1823,11 +1920,26 @@
       }
       .q-track {
         display: flex;
-        gap: 16px;
+        gap: calc(16px * var(--qs, 1));
         width: max-content;
       }
-      /* reference layout: text left, video still right */
+      /* reference layout: text left, video still right.
+         On desktops (1200px and up) every card keeps the same share of the screen, whatever the screen or the browser
+         zoom: the design is 540 x 270 at 1920 wide, and the script sets --qs = screen width / 1920 (corrected for the
+         laptop zoom), so the whole card, text included, scales as one picture. Below 1200px --qs is 1.
+         Desktop cards are exactly 540 x 270 and use the 1920 text sizes: the site's laptop text bump (max(17px, 15px/z))
+         would make them taller on laptops and break the fixed proportion; the card's scale already does that job. */
+      @media (min-width: 1200px) {
+        .q {
+          --fs-body: 17px;
+          --fs-small: 15px;
+          --fs-xs: 14px;
+          --fs-h5: 20px;
+          height: 270px;
+        }
+      }
       .q {
+        zoom: var(--qs, 1);
         display: grid;
         grid-template-columns: minmax(0, 1fr) 40%;
         width: 540px;
@@ -1987,6 +2099,7 @@
       }
       .rb {
         position: relative;
+        container-type: inline-size; /* the big word sizes itself to the card (cqw), so "Schedule" fits a narrow card */
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -2017,7 +2130,7 @@
       .rb b {
         position: relative;
         align-self: flex-end;
-        font-size: var(--fs-stat);
+        font-size: min(var(--fs-stat), 16cqw); /* the card's big word: full size when there is room, smaller in a narrow card */
         font-weight: 600;
         letter-spacing: -0.045em;
         line-height: 1;
@@ -2429,13 +2542,11 @@
         :root {
           --r-card: 38px;
         }
+        .sx-card,
         .dd-fly,
         .menu .dd-m a,
         .h-badges,
         .h-stat,
-        .srow::before,
-        .srow:focus-within,
-        .sr-thumb,
         .cs-in,
         .cs-img,
         .cs-img > .cs-logo,
@@ -2475,9 +2586,14 @@
         .h-obj {
           width: min(calc(30 * var(--uvw)), calc(60 * var(--uvh)), 800px);
         }
+        /* the reviews run edge to edge of the screen, past the 1920 hero and page box (no fade at the ends: it read as
+           blur on the first and last card); their first card still lines up with the content */
+        .hero {
+          overflow-x: visible;
+        }
         .q-row {
-          -webkit-mask-image: linear-gradient(90deg, transparent, #000 160px, #000 calc(100% - 160px), transparent);
-          mask-image: linear-gradient(90deg, transparent, #000 160px, #000 calc(100% - 160px), transparent);
+          margin-inline: calc(-1 * var(--bleed));
+          padding-left: calc(var(--bleed) + var(--side));
         }
         .hero {
           --fs-h1: min(calc(3.55 * var(--uvw)), 92px);
@@ -2535,10 +2651,6 @@
         }
         .burger {
           display: grid;
-        }
-        .srow {
-          grid-template-columns: minmax(0, 1fr) minmax(0, 300px) 36px;
-          gap: 0 32px;
         }
       }
       @media (max-width: 899px) {
@@ -2636,13 +2748,24 @@
         .sh-rule {
           width: 44px;
         }
-        .srow {
-          grid-template-columns: minmax(0, 1fr) auto;
-          gap: 14px 20px;
-          padding: 28px 0 32px;
+        /* phones: the active card fills the width less a peek of the next; copy stacks under the name */
+        .sx {
+          --sx-h: 460px;
+          --sx-big: calc(100 * var(--uvw) - 2 * var(--side) - 48px);
+          --sx-small: 120px;
+          --sx-gap: 12px;
+          --sx-pad: 20px;
+          --sx-x0: var(--side);
         }
-        .sr-name {
-          grid-column: 1 / -1;
+        .sx-txt {
+          grid-template-columns: calc(var(--sx-big) - 2 * var(--sx-pad));
+          gap: 14px;
+        }
+        .sx-ctl .arw {
+          display: none;
+        }
+        .sx-count {
+          max-width: none;
         }
         .row {
           gap: 12px;
@@ -2707,7 +2830,7 @@
           gap: 18px;
         }
         .rb b {
-          font-size: 44px;
+          font-size: min(44px, 16cqw);
         }
         .fq-q {
           grid-template-columns: 34px minmax(0, 1fr) var(--btn);
@@ -3540,13 +3663,13 @@
         </div>
         <div class="wrap h-top">
           <h1 class="t-h1" id="hero-title">
-            <span class="ln-m"><span>Dental marketing that</span></span>
-            <span class="ln-m"><span>gets you <span class="hl">more patients</span></span></span>
-            <span class="ln-m"><span>without adding to your</span></span>
-            <span class="ln-m"><span>front desk’s workload.</span></span>
+            <span class="ln-m"><span>We find your patients,</span></span>
+            <span class="ln-m"><span>call them and <span class="hl">book them.</span></span></span>
+            <span class="ln-m"><span>Your team just treats</span></span>
+            <span class="ln-m"><span>the ones who walk in.</span></span>
           </h1>
           <div class="h-side">
-            <p>We attract qualified patients through custom advertising and video production.</p>
+            <p>We create the ads, film the videos, call every lead and book qualified patients into your schedule.</p>
             <a class="cta mag" href="#contact"><span class="cta-t">Book a Strategy Call</span><span class="cta-i"><i class="ph ph-arrow-right" aria-hidden="true"></i><i class="ph ph-arrow-right" aria-hidden="true"></i></span></a>
           </div>
         </div>
@@ -3641,12 +3764,13 @@
               </h2>
             </div>
           </div>
-          <!-- Elementor: HTML widget. Five stat boxes + a 3-piece growth puzzle (Leads > Booked consults > Revenue) -->
+          <!-- Elementor: HTML widget. Four "we do it" boxes (Ads, Videos, Leads, Schedule), the pink "your team" box (Patients),
+               and a 3-piece growth puzzle (Leads > Booked consults > Revenue). The boxes sell the client experience, not our process. -->
           <div class="rs">
-            <div class="rb rb-1"><p>show-up rates with deposit-based booking</p><b data-to="80" data-suf="%+">80%+</b></div>
-            <div class="rb rb-2"><p>speed-to-lead from a human call centre</p><b data-to="2" data-suf=" min">2 min</b></div>
-            <div class="rb rb-3"><p>credit score screening on applicable campaigns</p><b data-to="660" data-suf="+">660+</b></div>
-            <div class="rb rb-4"><p>consultation deposit before booking eligible patients</p><b>$50</b></div>
+            <div class="rb rb-1"><p>We create and run your</p><b>Ads</b></div>
+            <div class="rb rb-2"><p>We film inside your clinic for your</p><b>Videos</b></div>
+            <div class="rb rb-3"><p>We contact and qualify every one of your</p><b>Leads</b></div>
+            <div class="rb rb-4"><p>We book them straight into your</p><b>Schedule</b></div>
             <div class="pz pz-1" aria-hidden="true">
               <svg class="pz-svg" viewBox="0 0 100 90" preserveAspectRatio="none" overflow="visible"><defs><clipPath id="pzc1"><path d="M6,0 H94 Q100,0 100,6 V37 C104,37 104,33 108,33 C114,33 117,39 117,45 C117,51 114,57 108,57 C104,57 104,53 100,53 V84 Q100,90 94,90 H6 Q0,90 0,84 V6 Q0,0 6,0 Z"/></clipPath></defs><path class="pz-shape" d="M6,0 H94 Q100,0 100,6 V37 C104,37 104,33 108,33 C114,33 117,39 117,45 C117,51 114,57 108,57 C104,57 104,53 100,53 V84 Q100,90 94,90 H6 Q0,90 0,84 V6 Q0,0 6,0 Z"/><g clip-path="url(#pzc1)"><svg x="0" y="0" width="100" height="90" viewBox="0 97 100 90" preserveAspectRatio="none" overflow="visible"><g class="pz-grid"><line x1="-20" x2="230" y1="18" y2="18"/><line x1="-20" x2="230" y1="42" y2="42"/><line x1="-20" x2="230" y1="66" y2="66"/><line x1="-20" x2="230" y1="118" y2="118"/><line x1="-20" x2="230" y1="142" y2="142"/><line x1="-20" x2="230" y1="166" y2="166"/></g><path class="pz-area" d="M6,178 C40,174 72,166 100,152 S150,132 158,104 S178,42 196,16 L214,10 L214,190 L6,190 Z"/><path class="pz-line" pathLength="1" d="M6,178 C40,174 72,166 100,152 S150,132 158,104 S178,42 196,16"/><path class="pz-arrow" d="M184,14 L197,14 L197,27"/></svg></g></svg>
               <p class="pz-l"><span>01</span>Leads</p>
@@ -3659,7 +3783,7 @@
               <svg class="pz-svg" viewBox="0 0 100 90" preserveAspectRatio="none" overflow="visible"><defs><clipPath id="pzc3"><path d="M6,0 H94 Q100,0 100,6 V84 Q100,90 94,90 H64 L64,89 C64,84 58,80 50,80 C42,80 36,84 36,89 L36,90 H6 Q0,90 0,84 V6 Q0,0 6,0 Z"/></clipPath></defs><path class="pz-shape" d="M6,0 H94 Q100,0 100,6 V84 Q100,90 94,90 H64 L64,89 C64,84 58,80 50,80 C42,80 36,84 36,89 L36,90 H6 Q0,90 0,84 V6 Q0,0 6,0 Z"/><g clip-path="url(#pzc3)"><svg x="0" y="0" width="100" height="90" viewBox="107 0 100 90" preserveAspectRatio="none" overflow="visible"><g class="pz-grid"><line x1="-20" x2="230" y1="18" y2="18"/><line x1="-20" x2="230" y1="42" y2="42"/><line x1="-20" x2="230" y1="66" y2="66"/><line x1="-20" x2="230" y1="118" y2="118"/><line x1="-20" x2="230" y1="142" y2="142"/><line x1="-20" x2="230" y1="166" y2="166"/></g><path class="pz-area" d="M6,178 C40,174 72,166 100,152 S150,132 158,104 S178,42 196,16 L214,10 L214,190 L6,190 Z"/><path class="pz-line" pathLength="1" d="M6,178 C40,174 72,166 100,152 S150,132 158,104 S178,42 196,16"/><path class="pz-arrow" d="M184,14 L197,14 L197,27"/></svg></g></svg>
               <p class="pz-l"><span>03</span>Revenue <i class="ph ph-trend-up"></i></p>
             </div>
-            <div class="rb rb-5"><p>best return on ad spend in our case studies</p><b>19.4×</b></div>
+            <div class="rb rb-5"><p>Your team just focuses on</p><b>Patients</b></div>
           </div>
         </div>
       </section>
@@ -3677,59 +3801,78 @@
               </h2>
             </div>
           </div>
-          <!-- Elementor: Loop Grid over the "Service" CPT (ACF: number, title, tagline, description, features, render, page link) -->
-          <ol class="sl" id="sList">
-            <li class="srow" id="svc-marketing" data-i="0">
-              <span id="treatments" class="sr-anchor"></span>
-              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-marketing.webp" alt="Smiling woman at a dental clinic" loading="lazy" /></figure>
-              <h3 class="sr-name"><a class="sr-link" href="/dental-marketing/">Dental Marketing</a></h3>
-              <p class="sr-p">Targeted Google and Meta Ads that bring in implant, Invisalign and new patients.</p>
-              <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
-              <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Marketing</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
-            </li>
-            <li class="srow" id="svc-video" data-i="1">
-              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-video.webp" alt="Clinic video reels, including East Village Dental" loading="lazy" /></figure>
-              <h3 class="sr-name"><a class="sr-link" href="/dental-video-marketing/">Dental Video Marketing</a></h3>
-              <p class="sr-p">Premium video, patient testimonials and ad creative, filmed inside your clinic.</p>
-              <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
-              <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Video Marketing</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
-            </li>
-            <li class="srow" id="svc-seo" data-i="2">
-              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-seo.webp" alt="Google search page" loading="lazy" /></figure>
-              <h3 class="sr-name"><a class="sr-link" href="/dental-seo/">Dental SEO &amp; AI SEO</a></h3>
-              <p class="sr-p">Get found on Google Search, Maps and AI search like ChatGPT, Claude and Gemini.</p>
-              <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
-              <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental SEO</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
-            </li>
-            <li class="srow" id="svc-web" data-i="3">
-              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-website.webp" alt="Digital smile design on a tablet" loading="lazy" /></figure>
-              <h3 class="sr-name"><a class="sr-link" href="/dental-website-design/">Dental Website Design</a></h3>
-              <p class="sr-p">Modern, fast, SEO-optimized websites that turn visitors into patient inquiries.</p>
-              <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
-              <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Website Design</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
-            </li>
-            <li class="srow" id="svc-call" data-i="4">
-              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-call.webp" alt="Man taking a phone call at his laptop" loading="lazy" /></figure>
-              <h3 class="sr-name"><a class="sr-link" href="/dental-call-centre/">Dental Call Centre</a></h3>
-              <p class="sr-p">Dental-trained setters qualify every patient and secure a $50 deposit before booking.</p>
-              <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
-              <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Call Centre</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
-            </li>
-            <li class="srow" id="svc-training" data-i="5">
-              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-coordinator.webp" alt="Dental team reviewing a scan on screen" loading="lazy" /></figure>
-              <h3 class="sr-name"><a class="sr-link" href="/treatment-coordinator-training/">Treatment Coordinator Training</a></h3>
-              <p class="sr-p">Better patient communication, presentations and follow-up for higher case acceptance.</p>
-              <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
-              <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Treatment Coordinator Training</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
-            </li>
-            <li class="srow" id="svc-reporting" data-i="6">
-              <figure class="sr-thumb"><img class="phx" src="assets/img/services/svc-dashboard.webp" alt="Reporting dashboard" loading="lazy" /></figure>
-              <h3 class="sr-name"><a class="sr-link" href="/dental-reporting-dashboard/">Dental Reporting Dashboard</a></h3>
-              <p class="sr-p">Every stage of your patient pipeline, live in our Dental Connect dashboard.</p>
-              <span class="sr-arr" aria-hidden="true"><i class="ph ph-arrow-up-right"></i><i class="ph ph-arrow-up-right"></i></span>
-              <span class="cta sr-cta" aria-hidden="true"><span class="cta-t">Explore Dental Connect</span><span class="cta-i"><i class="ph ph-arrow-up-right" aria-hidden="true"></i><i class="ph ph-arrow-up-right" aria-hidden="true"></i></span></span>
-            </li>
-          </ol>
+        </div>
+        <!-- Elementor: Loop Carousel over the "Service" CPT (ACF: stage, title, description, photo, page link), custom skin.
+             The slide comes from the script ("services carousel"). Photos: placeholders from assets/img/v5. -->
+        <div class="sx" id="sx" role="region" aria-roledescription="carousel" aria-label="Our services">
+          <div class="sx-stage">
+            <ol class="sx-track">
+              <li class="sx-card on" id="svc-marketing">
+                <span id="treatments" class="sr-anchor"></span>
+                <img src="assets/img/v5/ads-laptop-phone.webp" alt="Running ads on a laptop and phone" width="1200" height="800" loading="lazy" decoding="async" draggable="false" />
+                <span class="sx-tag"><b>01</b>Attract</span>
+                <div class="sx-txt">
+                  <h3 class="sx-name"><a class="sx-link" href="/dental-marketing/" draggable="false">Dental Marketing</a></h3>
+                  <div class="sx-more"><p class="sx-p">We create and run your Google and Meta ads for implant, Invisalign and new patients.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
+                </div>
+              </li>
+              <li class="sx-card" id="svc-video">
+                <img src="assets/img/v5/film-interview.webp" alt="Filming a video interview" width="1200" height="824" loading="lazy" decoding="async" draggable="false" />
+                <span class="sx-tag"><b>02</b>Attract</span>
+                <div class="sx-txt">
+                  <h3 class="sx-name"><a class="sx-link" href="/dental-video-marketing/" draggable="false">Dental Video Marketing</a></h3>
+                  <div class="sx-more"><p class="sx-p">We film your clinic, your team and your patients, and turn it into ads people trust.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
+                </div>
+              </li>
+              <li class="sx-card" id="svc-seo">
+                <img src="assets/img/v5/seo-console.webp" alt="Google Search Console performance chart" width="1200" height="800" loading="lazy" decoding="async" draggable="false" />
+                <span class="sx-tag"><b>03</b>Attract</span>
+                <div class="sx-txt">
+                  <h3 class="sx-name"><a class="sx-link" href="/dental-seo/" draggable="false">Dental SEO &amp; AI SEO</a></h3>
+                  <div class="sx-more"><p class="sx-p">We get you found on Google Search, Maps and AI search like ChatGPT, Claude and Gemini.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
+                </div>
+              </li>
+              <li class="sx-card" id="svc-web">
+                <img src="assets/img/v5/web-laptop.webp" alt="Building a website on a laptop" width="1200" height="1800" loading="lazy" decoding="async" draggable="false" />
+                <span class="sx-tag"><b>04</b>Attract</span>
+                <div class="sx-txt">
+                  <h3 class="sx-name"><a class="sx-link" href="/dental-website-design/" draggable="false">Dental Website Design</a></h3>
+                  <div class="sx-more"><p class="sx-p">We design and build a fast website that turns visitors into booked patients.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
+                </div>
+              </li>
+              <li class="sx-card" id="svc-call">
+                <img src="assets/img/v5/call-centre.webp" alt="Call centre agent with a headset" width="1200" height="800" loading="lazy" decoding="async" draggable="false" />
+                <span class="sx-tag"><b>05</b>Convert</span>
+                <div class="sx-txt">
+                  <h3 class="sx-name"><a class="sx-link" href="/dental-call-centre/" draggable="false">Dental Call Centre</a></h3>
+                  <div class="sx-more"><p class="sx-p">We call every new lead, qualify them and book them straight into your schedule.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
+                </div>
+              </li>
+              <li class="sx-card" id="svc-training">
+                <img src="assets/img/v5/consult-screen.webp" alt="Treatment coordinator presenting a smile design on screen" width="1200" height="900" loading="lazy" decoding="async" draggable="false" />
+                <span class="sx-tag"><b>06</b>Convert</span>
+                <div class="sx-txt">
+                  <h3 class="sx-name"><a class="sx-link" href="/treatment-coordinator-training/" draggable="false">Treatment Coordinator Training</a></h3>
+                  <div class="sx-more"><p class="sx-p">We coach your team to present treatment with confidence, so more patients say yes.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
+                </div>
+              </li>
+              <li class="sx-card" id="svc-reporting">
+                <img src="assets/img/v5/dashboard.webp" alt="Analytics dashboard on a laptop" width="1200" height="855" loading="lazy" decoding="async" draggable="false" />
+                <span class="sx-tag"><b>07</b>Measure</span>
+                <div class="sx-txt">
+                  <h3 class="sx-name"><a class="sx-link" href="/dental-reporting-dashboard/" draggable="false">Dental Reporting Dashboard</a></h3>
+                  <div class="sx-more"><p class="sx-p">See every lead, call and booking live in your Dental Connect dashboard.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
+                </div>
+              </li>
+            </ol>
+          </div>
+          <div class="sx-ctl">
+            <div class="sx-count"><span><b id="sxNum">01</b> / 07</span><span class="sx-bar" aria-hidden="true"><i></i></span></div>
+            <div class="arw">
+              <button type="button" class="sx-prev" aria-label="Previous service" disabled><i class="ph ph-arrow-left" aria-hidden="true"></i></button>
+              <button type="button" class="sx-next" aria-label="Next service"><i class="ph ph-arrow-right" aria-hidden="true"></i></button>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -3805,29 +3948,29 @@
               <li class="mstep">
                 <span class="mstep-n">01</span>
                 <div>
-                  <h3>End-to-end management</h3>
-                  <p>We manage your patient acquisition end-to-end: ads, screening, follow-up and booking, so you stay focused on treatment.</p>
+                  <h3>We create your campaigns</h3>
+                  <p>We film inside your clinic and turn your team, your cases and your patients into Google and Meta ads that earn trust before anyone calls.</p>
                 </div>
               </li>
               <li class="mstep">
                 <span class="mstep-n">02</span>
                 <div>
-                  <h3>Qualified patients only</h3>
-                  <p>Every lead is vetted for intent and financial readiness, then books with a deposit. No time wasted on uncommitted inquiries.</p>
+                  <h3>We contact every lead</h3>
+                  <p>When someone enquires, our dental-trained team reaches out, answers their questions and finds out what treatment they want.</p>
                 </div>
               </li>
               <li class="mstep">
                 <span class="mstep-n">03</span>
                 <div>
-                  <h3>Original video campaigns</h3>
-                  <p>We produce custom content inside your clinic: real people, real cases, built to earn trust before the consult.</p>
+                  <h3>We book them into your schedule</h3>
+                  <p>Patients who are ready for treatment are booked straight into your calendar. Nobody on your team has to chase them.</p>
                 </div>
               </li>
               <li class="mstep">
                 <span class="mstep-n">04</span>
                 <div>
-                  <h3>The DMC Network</h3>
-                  <p>Access a private group of partner clinics sharing what works, from case acceptance to patient communication.</p>
+                  <h3>Your team sees the patients</h3>
+                  <p>Your front desk stays free and your team focuses on the patients who come in. You can see every booking in your Dental Connect dashboard.</p>
                 </div>
               </li>
             </ol>
@@ -3883,8 +4026,8 @@
               </li>
             </ul>
             <p class="bk-desc">
-              We’ll review your market, treatment offerings, and growth
-              goals to identify your biggest opportunities.
+              We’ll look at your market and the treatments you want more of,
+              then show you how we’d bring in, call and book those patients for you.
             </p>
           </aside>
           <div class="bk-main">
@@ -4053,19 +4196,19 @@
           <div class="fq-list">
             <div class="fq">
               <h3><button class="fq-q" type="button" id="fqq01" aria-expanded="false" aria-controls="fqa01"><span class="fq-n">01</span><span class="fq-t">What makes Dental Media Corp different from other dental marketing companies?</span><span class="fq-i" aria-hidden="true"><i class="ph ph-plus"></i></span></button></h3>
-              <div class="fq-a" id="fqa01" role="region" aria-labelledby="fqq01"><div class="fq-in"><p>We don’t just generate leads. We attract, qualify, and book high-value dental patients through Google and Meta advertising, premium video production, and our dedicated human dental call centre.</p><p>Our proprietary Dental Connect dashboard gives you real-time visibility into your patient acquisition pipeline.</p></div></div>
+              <div class="fq-a" id="fqa01" role="region" aria-labelledby="fqq01"><div class="fq-in"><p>We handle the whole journey for you. We create the ads, film the videos, contact every lead, qualify each patient and book them into your schedule.</p><p>Your team doesn’t chase leads. They focus on the patients who come in, and you can see every booking in our Dental Connect dashboard.</p></div></div>
             </div>
             <div class="fq">
-              <h3><button class="fq-q" type="button" id="fqq02" aria-expanded="false" aria-controls="fqa02"><span class="fq-n">02</span><span class="fq-t">How does your dental call centre qualify and book patients?</span><span class="fq-i" aria-hidden="true"><i class="ph ph-plus"></i></span></button></h3>
-              <div class="fq-a" id="fqa02" role="region" aria-labelledby="fqq02"><div class="fq-in"><p>Our dental-trained, human appointment setters target new leads within two minutes, screen for treatment readiness, income, ability to pay, and 660+ credit scores for applicable campaigns.</p><p>We also secure a $50 consultation deposit before booking eligible patients, helping reduce no-shows and improve appointment commitment.</p></div></div>
+              <h3><button class="fq-q" type="button" id="fqq02" aria-expanded="false" aria-controls="fqa02"><span class="fq-n">02</span><span class="fq-t">What happens when someone responds to our ads?</span><span class="fq-i" aria-hidden="true"><i class="ph ph-plus"></i></span></button></h3>
+              <div class="fq-a" id="fqa02" role="region" aria-labelledby="fqq02"><div class="fq-in"><p>Our dental-trained team contacts them, answers their questions and makes sure they’re a good fit for the treatment they want.</p><p>Then we book them straight into your schedule, so your front desk never has to chase a lead.</p></div></div>
             </div>
             <div class="fq">
               <h3><button class="fq-q" type="button" id="fqq03" aria-expanded="false" aria-controls="fqa03"><span class="fq-n">03</span><span class="fq-t">Can you help us attract more dental implant, full-arch, Invisalign, and new patients?</span><span class="fq-i" aria-hidden="true"><i class="ph ph-plus"></i></span></button></h3>
               <div class="fq-a" id="fqa03" role="region" aria-labelledby="fqq03"><div class="fq-in"><p>Absolutely. We build dental marketing campaigns specifically for dental implants, All-on-X and full-arch treatment, implant-supported dentures, Invisalign, and general dentistry.</p><p>Each campaign is tailored to your clinic’s location, treatment offerings, and growth goals.</p></div></div>
             </div>
             <div class="fq">
-              <h3><button class="fq-q" type="button" id="fqq04" aria-expanded="false" aria-controls="fqa04"><span class="fq-n">04</span><span class="fq-t">How do you achieve 80%+ patient show-up rates?</span><span class="fq-i" aria-hidden="true"><i class="ph ph-plus"></i></span></button></h3>
-              <div class="fq-a" id="fqa04" role="region" aria-labelledby="fqq04"><div class="fq-in"><p>Through a combination of rapid lead response, strict patient qualification, financial screening, and $50 consultation deposits for applicable campaigns.</p><p>Our goal isn’t just more appointments. It’s more qualified patients who show up ready to discuss treatment.</p></div></div>
+              <h3><button class="fq-q" type="button" id="fqq04" aria-expanded="false" aria-controls="fqa04"><span class="fq-n">04</span><span class="fq-t">What does my team need to do?</span><span class="fq-i" aria-hidden="true"><i class="ph ph-plus"></i></span></button></h3>
+              <div class="fq-a" id="fqa04" role="region" aria-labelledby="fqq04"><div class="fq-in"><p>Very little. We run the ads, film the content, follow up with every lead and book qualified patients for you.</p><p>Your team focuses on what they do best: welcoming patients and presenting treatment.</p></div></div>
             </div>
             <div class="fq">
               <h3><button class="fq-q" type="button" id="fqq05" aria-expanded="false" aria-controls="fqa05"><span class="fq-n">05</span><span class="fq-t">Are Google Ads or Facebook Ads better for dental patient acquisition?</span><span class="fq-i" aria-hidden="true"><i class="ph ph-plus"></i></span></button></h3>
@@ -4185,6 +4328,8 @@
           else root.style.overflow = on ? "hidden" : "";
         };
         const goTo = (t) => {
+          const card = t.closest(".sx-card");
+          if (card) card.dispatchEvent(new Event("sx:go"));
           if (hasG) gsap.getTweensOf(t).forEach((tw) => tw.progress(1));
           if (lenis) lenis.scrollTo(t, { duration: 1.4, offset: t.id === "contact" ? -110 : 0 });
           else t.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
@@ -4351,6 +4496,17 @@
           row.addEventListener("click", (e) => moved && e.preventDefault(), true);
         }
 
+        /* ---------- reviews: the cards keep their share of the SCREEN on every desktop and at any browser zoom ----------
+           --qs = screen width / 1920, divided by the laptop zoom so the cards land at the same proportion (the root
+           zoom would shrink them a second time). A browser zoom changes innerWidth, so it is caught by "resize" too.
+           (Measured on the screen, not the page box: the user wants these cards, and only these, to follow the screen.) */
+        const fitQ = () => {
+          const z = parseFloat(getComputedStyle(root).zoom) || 1;
+          root.style.setProperty("--qs", innerWidth >= 1200 ? (innerWidth / 1920 / z).toFixed(4) : "1");
+        };
+        fitQ();
+        addEventListener("resize", fitQ);
+
         /* ---------- testimonials: glass cards drift, drag to scrub ---------- */
         {
           const qRow = $("#qRow"),
@@ -4375,7 +4531,9 @@
             drag = null,
             live = false,
             hold = false;
-          const measure = () => (setW = items.reduce((s, n) => s + n.offsetWidth + 16, 0));
+          // one set's length = where the first copy starts, in the track's own units (offsets ignore the drift transform
+          // and already include the cards' scale and the scaled gap)
+          const measure = () => (setW = track.children[items.length].offsetLeft - items[0].offsetLeft);
           measure();
           addEventListener("resize", measure);
           const wrap = () => {
@@ -4439,7 +4597,7 @@
           });
           qRow.addEventListener("pointermove", (e) => {
             if (!drag) return;
-            x = drag.s + (e.clientX - drag.x);
+            x = drag.s + (e.clientX - drag.x) / (parseFloat(getComputedStyle(root).zoom) || 1); // screen px to track px, so the cards stay under the pointer
             wrap();
             paint();
           });
@@ -4904,6 +5062,84 @@
           ).observe(bk);
         }
 
+        /* ---------- services carousel ----------
+           go(i): the track slides by whole strips (every card left of the active one is a strip), the active card opens wide
+           (CSS width transition), the glow re-tints. Photos stay still (no blur, no zoom); the cursor is the normal one.
+           Arrows, keys, drag / swipe, a click on a strip, or a nav link to a service all call go(). */
+        {
+          const sx = $("#sx");
+          if (sx) {
+            const stage = $(".sx-stage", sx),
+              track = $(".sx-track", sx),
+              cards = $$(".sx-card", sx),
+              num = $("#sxNum"),
+              prev = $(".sx-prev", sx),
+              next = $(".sx-next", sx),
+              tints = ["rgba(191, 230, 220, 0.6)", "rgba(255, 191, 215, 0.45)"],
+              zoom = () => parseFloat(getComputedStyle(root).zoom) || 1;
+            let j = 0;
+            const go = (i) => {
+              i = Math.max(0, Math.min(cards.length - 1, i));
+              if (i === j) return;
+              j = i;
+              sx.style.setProperty("--j", i);
+              sx.style.setProperty("--sx-tint", tints[i % 2]);
+              cards.forEach((c, k) => c.classList.toggle("on", k === i));
+              num.textContent = String(i + 1).padStart(2, "0");
+              prev.disabled = i === 0;
+              next.disabled = i === cards.length - 1;
+            };
+            prev.addEventListener("click", () => go(j - 1));
+            next.addEventListener("click", () => go(j + 1));
+            sx.addEventListener("keydown", (e) => {
+              if (e.key === "ArrowRight") go(j + 1);
+              else if (e.key === "ArrowLeft") go(j - 1);
+              else return;
+              e.preventDefault();
+            });
+            // drag / swipe: the track follows the pointer (a little behind it), a 60px throw changes card
+            let down = null,
+              moved = false;
+            stage.addEventListener("pointerdown", (e) => {
+              if (e.button) return;
+              down = { x: e.clientX, id: e.pointerId };
+              moved = false;
+            });
+            addEventListener("pointermove", (e) => {
+              if (!down || e.pointerId !== down.id) return;
+              const dx = (e.clientX - down.x) / zoom();
+              if (!moved && Math.abs(dx) > 6) {
+                moved = true;
+                sx.classList.add("drag");
+              }
+              if (moved) sx.style.setProperty("--dx", dx * 0.55 + "px");
+            });
+            const up = (e) => {
+              if (!down || e.pointerId !== down.id) return;
+              const dx = (e.clientX - down.x) / zoom();
+              down = null;
+              sx.classList.remove("drag");
+              sx.style.setProperty("--dx", "0px");
+              if (moved && Math.abs(dx) > 60) go(j + (dx < 0 ? 1 : -1));
+            };
+            addEventListener("pointerup", up);
+            addEventListener("pointercancel", up);
+            cards.forEach((c, k) => {
+              // a click on a strip slides to it; only the open card follows its link
+              c.addEventListener("click", (e) => {
+                if (moved || k !== j) {
+                  e.preventDefault();
+                  if (!moved) go(k);
+                }
+              });
+              // keyboard focus opens a card; a pointer's focus must not (it would open the card before the click
+              // arrives, and that click would then follow the link)
+              c.addEventListener("focusin", (e) => e.target.matches(":focus-visible") && go(k));
+              c.addEventListener("sx:go", () => go(k));
+            });
+          }
+        }
+
         /* ---------- magnetic buttons ---------- */
         if (motion && fine)
           $$(".mag").forEach((el) => {
@@ -4932,8 +5168,9 @@
         $$(".sh-rule").forEach((r) => {
           gsap.from(r, { scaleX: 0, duration: 1.4, ease: "expo.inOut", scrollTrigger: st(r, "top 90%") });
         });
-        gsap.set(".srow", { opacity: 0, y: 50 });
-        ScrollTrigger.batch(".srow", { start: "top 90%", once: true, onEnter: (b) => gsap.to(b, { opacity: 1, y: 0, duration: 1.1, ease: "expo.out", stagger: 0.1, clearProps: "opacity,transform" }) });
+        // services carousel: the cards slide in from the right, the photo settles, the controls follow
+        gsap.from(".sx-card", { x: 160, opacity: 0, duration: 1.3, ease: "expo.out", stagger: 0.08, scrollTrigger: st("#sx", "top 85%") });
+        gsap.from(".sx-ctl", { y: 16, opacity: 0, duration: 0.9, ease: "power3.out", delay: 0.4, scrollTrigger: st("#sx", "top 85%") });
         gsap.set(".rb", { opacity: 0, y: 60 });
         ScrollTrigger.batch(".rb", { start: "top 92%", once: true, onEnter: (b) => gsap.to(b, { opacity: 1, y: 0, duration: 1.1, ease: "expo.out", stagger: 0.1 }) });
         // the three puzzle pieces fly in, lock together, then one growth line draws through all of them.
