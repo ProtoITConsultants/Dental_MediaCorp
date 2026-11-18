@@ -1366,6 +1366,50 @@
         transform: translateX(-50%);
         pointer-events: none;
       }
+      /* no photos for now (client, 2026-11-19): the card is a deep teal panel and an SVG glyph (.sx-art) sits where the
+         photo will go. Same window as the photo: the open card's size, centred, so a strip shows the glyph and opening a
+         card reveals the rings around it. Mint line art in the team cards' icon family, one pink dot as the accent. */
+      .sx-card {
+        background:
+          radial-gradient(60% 70% at 50% 34%, rgba(73, 184, 166, 0.34), transparent 70%),
+          linear-gradient(180deg, #1b7f73 0%, var(--deep) 58%, var(--ink) 100%);
+      }
+      .sx-art {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: var(--sx-big);
+        max-width: none;
+        height: 100%;
+        transform: translateX(-50%);
+        pointer-events: none;
+      }
+      .sx-ring {
+        fill: none;
+        stroke: rgba(221, 242, 236, 0.1);
+        stroke-width: 1.5;
+      }
+      .sx-g {
+        fill: none;
+        stroke: var(--mint);
+        stroke-width: 10;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .sx-g .f {
+        fill: rgba(221, 242, 236, 0.08);
+      }
+      .sx-g .d {
+        fill: var(--acc);
+        stroke: none;
+      }
+      .sx-g .m {
+        fill: var(--mint);
+        stroke: none;
+      }
+      .sx-g .t {
+        stroke: var(--acc);
+      }
       /* legibility: a deep ink shade rising from the foot of every card, dense where the text sits and fading by about
          three quarters up, over a light tint on the whole photo, so the white text reads on bright photos too */
       .sx-card::after {
@@ -3863,13 +3907,14 @@
           </div>
         </div>
         <!-- Elementor: Loop Carousel over the "Service" CPT (ACF: stage, title, description, photo, page link), custom skin.
-             The slide comes from the script ("services carousel"). Photos: placeholders from assets/img/v5. -->
+             The slide comes from the script ("services carousel"). No photos for now (client): each card shows an
+             SVG glyph (.sx-art) in the photo's place. To add photos later, put an <img> where the .sx-art is (styles kept). -->
         <div class="sx" id="sx" role="region" aria-roledescription="carousel" aria-label="Our services">
           <div class="sx-stage">
             <ol class="sx-track">
               <li class="sx-card on" id="svc-marketing">
                 <span id="treatments" class="sr-anchor"></span>
-                <img src="assets/img/v5/ads-laptop-phone.webp" alt="Running ads on a laptop and phone" width="1200" height="800" loading="lazy" decoding="async" draggable="false" />
+                <svg class="sx-art" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g class="sx-ring"><circle cx="300" cy="150" r="118"/><circle cx="300" cy="150" r="178"/><circle cx="300" cy="150" r="242"/></g><g class="sx-g" transform="translate(210 60) scale(1.125)"><path class="f" d="M30 70 L30 94 Q30 102 38 102 L54 102 L104 126 L104 38 L54 62 L38 62 Q30 62 30 70 Z"/><path d="M56 104 L64 134"/><path d="M124 66 Q132 82 124 98"/><path d="M140 54 Q154 82 140 110"/></g></svg>
                 <span class="sx-tag"><b>01</b>Attract</span>
                 <div class="sx-txt">
                   <h3 class="sx-name"><a class="sx-link" href="/dental-marketing/" draggable="false">Dental Marketing</a></h3>
@@ -3877,7 +3922,7 @@
                 </div>
               </li>
               <li class="sx-card" id="svc-video">
-                <img src="assets/img/v5/film-interview.webp" alt="Filming a video interview" width="1200" height="824" loading="lazy" decoding="async" draggable="false" />
+                <svg class="sx-art" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g class="sx-ring"><circle cx="300" cy="150" r="118"/><circle cx="300" cy="150" r="178"/><circle cx="300" cy="150" r="242"/></g><g class="sx-g" transform="translate(210 60) scale(1.125)"><rect class="f" x="16" y="34" width="128" height="92" rx="20"/><path d="M68 62 L100 80 L68 98 Z"/><circle class="d" cx="38" cy="54" r="6"/></g></svg>
                 <span class="sx-tag"><b>02</b>Attract</span>
                 <div class="sx-txt">
                   <h3 class="sx-name"><a class="sx-link" href="/dental-video-marketing/" draggable="false">Dental Video Marketing</a></h3>
@@ -3885,7 +3930,7 @@
                 </div>
               </li>
               <li class="sx-card" id="svc-seo">
-                <img src="assets/img/v5/seo-console.webp" alt="Google Search Console performance chart" width="1200" height="800" loading="lazy" decoding="async" draggable="false" />
+                <svg class="sx-art" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g class="sx-ring"><circle cx="300" cy="150" r="118"/><circle cx="300" cy="150" r="178"/><circle cx="300" cy="150" r="242"/></g><g class="sx-g" transform="translate(210 60) scale(1.125)"><circle class="f" cx="66" cy="74" r="42"/><path d="M98 106 L136 144"/><path class="d" d="M126 10 Q130 30 146 34 Q130 38 126 58 Q122 38 106 34 Q122 30 126 10 Z"/></g></svg>
                 <span class="sx-tag"><b>03</b>Attract</span>
                 <div class="sx-txt">
                   <h3 class="sx-name"><a class="sx-link" href="/dental-seo/" draggable="false">Dental SEO &amp; AI SEO</a></h3>
@@ -3893,7 +3938,7 @@
                 </div>
               </li>
               <li class="sx-card" id="svc-web">
-                <img src="assets/img/v5/web-laptop.webp" alt="Building a website on a laptop" width="1200" height="1800" loading="lazy" decoding="async" draggable="false" />
+                <svg class="sx-art" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g class="sx-ring"><circle cx="300" cy="150" r="118"/><circle cx="300" cy="150" r="178"/><circle cx="300" cy="150" r="242"/></g><g class="sx-g" transform="translate(210 60) scale(1.125)"><rect class="f" x="14" y="26" width="132" height="108" rx="20"/><path d="M14 60 H146"/><circle class="d" cx="36" cy="43" r="5.5"/><circle class="m" cx="54" cy="43" r="5.5"/><circle class="m" cx="72" cy="43" r="5.5"/><path d="M38 88 H122"/><path d="M38 110 H90"/></g></svg>
                 <span class="sx-tag"><b>04</b>Attract</span>
                 <div class="sx-txt">
                   <h3 class="sx-name"><a class="sx-link" href="/dental-website-design/" draggable="false">Dental Website Design</a></h3>
@@ -3901,7 +3946,7 @@
                 </div>
               </li>
               <li class="sx-card" id="svc-call">
-                <img src="assets/img/v5/call-centre.webp" alt="Call centre agent with a headset" width="1200" height="800" loading="lazy" decoding="async" draggable="false" />
+                <svg class="sx-art" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g class="sx-ring"><circle cx="300" cy="150" r="118"/><circle cx="300" cy="150" r="178"/><circle cx="300" cy="150" r="242"/></g><g class="sx-g" transform="translate(210 60) scale(1.125)"><path d="M28 96 V80 Q28 26 80 26 Q132 26 132 80 V96"/><rect class="f" x="16" y="84" width="30" height="46" rx="13"/><rect class="f" x="114" y="84" width="30" height="46" rx="13"/><path d="M129 130 Q129 146 104 146 H94"/><circle class="d" cx="86" cy="146" r="7"/></g></svg>
                 <span class="sx-tag"><b>05</b>Convert</span>
                 <div class="sx-txt">
                   <h3 class="sx-name"><a class="sx-link" href="/dental-call-centre/" draggable="false">Dental Call Centre</a></h3>
@@ -3909,7 +3954,7 @@
                 </div>
               </li>
               <li class="sx-card" id="svc-training">
-                <img src="assets/img/v5/consult-screen.webp" alt="Treatment coordinator presenting a smile design on screen" width="1200" height="900" loading="lazy" decoding="async" draggable="false" />
+                <svg class="sx-art" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g class="sx-ring"><circle cx="300" cy="150" r="118"/><circle cx="300" cy="150" r="178"/><circle cx="300" cy="150" r="242"/></g><g class="sx-g" transform="translate(210 60) scale(1.125)"><rect class="f" x="16" y="22" width="128" height="88" rx="18"/><path d="M80 110 V140"/><path d="M56 142 H104"/><path d="M56 66 L74 84 L106 52"/></g></svg>
                 <span class="sx-tag"><b>06</b>Convert</span>
                 <div class="sx-txt">
                   <h3 class="sx-name"><a class="sx-link" href="/treatment-coordinator-training/" draggable="false">Treatment Coordinator Training</a></h3>
@@ -3917,7 +3962,7 @@
                 </div>
               </li>
               <li class="sx-card" id="svc-reporting">
-                <img src="assets/img/v5/dashboard.webp" alt="Analytics dashboard on a laptop" width="1200" height="855" loading="lazy" decoding="async" draggable="false" />
+                <svg class="sx-art" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g class="sx-ring"><circle cx="300" cy="150" r="118"/><circle cx="300" cy="150" r="178"/><circle cx="300" cy="150" r="242"/></g><g class="sx-g" transform="translate(210 60) scale(1.125)"><path d="M18 142 H142"/><path d="M40 118 V100"/><path d="M70 118 V82"/><path d="M100 118 V90"/><path d="M130 118 V58"/><path class="t" d="M34 70 L66 46 L94 58 L132 22"/><circle class="d" cx="132" cy="22" r="7"/></g></svg>
                 <span class="sx-tag"><b>07</b>Measure</span>
                 <div class="sx-txt">
                   <h3 class="sx-name"><a class="sx-link" href="/dental-reporting-dashboard/" draggable="false">Dental Reporting Dashboard</a></h3>
