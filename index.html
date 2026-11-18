@@ -1366,12 +1366,15 @@
         transform: translateX(-50%);
         pointer-events: none;
       }
-      /* legibility: a deep teal-ink shade rising from the foot of every card */
+      /* legibility: a deep ink shade rising from the foot of every card, dense where the text sits and fading by about
+         three quarters up, over a light tint on the whole photo, so the white text reads on bright photos too */
       .sx-card::after {
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(to top, rgba(13, 19, 18, 0.78), rgba(13, 19, 18, 0.28) 45%, rgba(13, 19, 18, 0) 70%);
+        background:
+          linear-gradient(to top, rgba(13, 19, 18, 0.9) 0%, rgba(13, 19, 18, 0.72) 26%, rgba(13, 19, 18, 0.36) 52%, rgba(13, 19, 18, 0) 76%),
+          rgba(13, 19, 18, 0.16);
         pointer-events: none;
       }
       .sx-tag {
@@ -1418,6 +1421,7 @@
         font-weight: 600;
         letter-spacing: -0.035em;
         line-height: 1.09;
+        text-shadow: 0 2px 22px rgba(13, 19, 18, 0.45); /* a soft halo, not a hard drop shadow */
       }
       .sx-link {
         color: inherit;
@@ -1462,7 +1466,8 @@
       .sx-p {
         font-size: var(--fs-body);
         line-height: 1.5;
-        color: rgba(255, 255, 255, 0.86);
+        color: rgba(255, 255, 255, 0.94);
+        text-shadow: 0 1px 16px rgba(13, 19, 18, 0.4);
       }
       /* Explore: the hero button's pink arrow circle with a label */
       .sx-go {
@@ -2135,6 +2140,60 @@
         letter-spacing: -0.045em;
         line-height: 1;
         font-variant-numeric: tabular-nums;
+      }
+      /* each card's glyph (inspo: tone-on-tone category cards): one bold, simple icon per card (megaphone, play frame,
+         chat, calendar, people) in thick rounded strokes, a shade deeper than its card (pale teal on white, deeper pink on
+         the pink card). Upright, large and anchored in the top-right corner, cropped by the card's edge; the big word owns
+         the bottom-right. It draws itself in as the card arrives (script: "the cards' line drawings") and on hover nudges
+         into the card and deepens. */
+      .rb {
+        --rb-ic: rgba(27, 127, 115, 0.13);
+        --rb-fill: rgba(27, 127, 115, 0.045);
+      }
+      .rb-5 {
+        --rb-ic: rgba(240, 106, 159, 0.4);
+        --rb-fill: rgba(255, 255, 255, 0.24);
+      }
+      .rb-art {
+        position: absolute;
+        top: -9%;
+        right: -11%;
+        width: 62%;
+        height: auto;
+        fill: none;
+        stroke: var(--rb-ic);
+        stroke-width: 12;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        pointer-events: none;
+        transition:
+          transform 0.9s var(--ease),
+          stroke 0.6s var(--ease);
+      }
+      .rb-art .f {
+        fill: var(--rb-fill);
+      }
+      .rb-art .d {
+        fill: var(--rb-ic);
+        stroke: none;
+        transition: fill 0.6s var(--ease);
+      }
+      .rb:hover .rb-art {
+        transform: translate(-6px, 6px) scale(1.04);
+      }
+      .rb:not(.rb-5):hover {
+        --rb-ic: rgba(27, 127, 115, 0.2);
+      }
+      .rb-5:hover {
+        --rb-ic: rgba(240, 106, 159, 0.55);
+      }
+      /* narrow cards: a little smaller, so the wrapped label keeps the corner's top line */
+      @media (max-width: 1199px) {
+        .rb-art {
+          width: 58%;
+          top: -6%;
+          right: -12%;
+        }
       }
       .rb-1 {
         grid-area: 1 / 1;
@@ -3765,12 +3824,13 @@
             </div>
           </div>
           <!-- Elementor: HTML widget. Four "we do it" boxes (Ads, Videos, Leads, Schedule), the pink "your team" box (Patients),
-               and a 3-piece growth puzzle (Leads > Booked consults > Revenue). The boxes sell the client experience, not our process. -->
+               and a 3-piece growth puzzle (Leads > Booked consults > Revenue). The boxes sell the client experience, not our process.
+               Each box has a decorative tone-on-tone glyph (.rb-art, inline SVG) in its top-right corner. -->
           <div class="rs">
-            <div class="rb rb-1"><p>We create and run your</p><b>Ads</b></div>
-            <div class="rb rb-2"><p>We film inside your clinic for your</p><b>Videos</b></div>
-            <div class="rb rb-3"><p>We contact and qualify every one of your</p><b>Leads</b></div>
-            <div class="rb rb-4"><p>We book them straight into your</p><b>Schedule</b></div>
+            <div class="rb rb-1"><svg class="rb-art" viewBox="0 0 160 160" aria-hidden="true" focusable="false"><path class="f" d="M30 70 L30 94 Q30 102 38 102 L54 102 L104 126 L104 38 L54 62 L38 62 Q30 62 30 70 Z"/><path d="M56 104 L64 134"/><path d="M124 66 Q132 82 124 98"/><path d="M140 54 Q154 82 140 110"/></svg><p>We create and run your</p><b>Ads</b></div>
+            <div class="rb rb-2"><svg class="rb-art" viewBox="0 0 160 160" aria-hidden="true" focusable="false"><rect class="f" x="16" y="34" width="128" height="92" rx="20"/><path d="M68 62 L100 80 L68 98 Z"/></svg><p>We film inside your clinic for your</p><b>Videos</b></div>
+            <div class="rb rb-3"><svg class="rb-art" viewBox="0 0 160 160" aria-hidden="true" focusable="false"><path class="f" d="M34 30 H126 Q142 30 142 46 V96 Q142 112 126 112 H74 L46 136 V112 H34 Q18 112 18 96 V46 Q18 30 34 30 Z"/><circle class="d" cx="56" cy="71" r="8"/><circle class="d" cx="80" cy="71" r="8"/><circle class="d" cx="104" cy="71" r="8"/></svg><p>We contact and qualify every one of your</p><b>Leads</b></div>
+            <div class="rb rb-4"><svg class="rb-art" viewBox="0 0 160 160" aria-hidden="true" focusable="false"><rect class="f" x="20" y="34" width="120" height="110" rx="20"/><path d="M20 68 H140"/><path d="M52 20 V46"/><path d="M108 20 V46"/><path d="M58 104 L74 120 L104 90"/></svg><p>We book them straight into your</p><b>Schedule</b></div>
             <div class="pz pz-1" aria-hidden="true">
               <svg class="pz-svg" viewBox="0 0 100 90" preserveAspectRatio="none" overflow="visible"><defs><clipPath id="pzc1"><path d="M6,0 H94 Q100,0 100,6 V37 C104,37 104,33 108,33 C114,33 117,39 117,45 C117,51 114,57 108,57 C104,57 104,53 100,53 V84 Q100,90 94,90 H6 Q0,90 0,84 V6 Q0,0 6,0 Z"/></clipPath></defs><path class="pz-shape" d="M6,0 H94 Q100,0 100,6 V37 C104,37 104,33 108,33 C114,33 117,39 117,45 C117,51 114,57 108,57 C104,57 104,53 100,53 V84 Q100,90 94,90 H6 Q0,90 0,84 V6 Q0,0 6,0 Z"/><g clip-path="url(#pzc1)"><svg x="0" y="0" width="100" height="90" viewBox="0 97 100 90" preserveAspectRatio="none" overflow="visible"><g class="pz-grid"><line x1="-20" x2="230" y1="18" y2="18"/><line x1="-20" x2="230" y1="42" y2="42"/><line x1="-20" x2="230" y1="66" y2="66"/><line x1="-20" x2="230" y1="118" y2="118"/><line x1="-20" x2="230" y1="142" y2="142"/><line x1="-20" x2="230" y1="166" y2="166"/></g><path class="pz-area" d="M6,178 C40,174 72,166 100,152 S150,132 158,104 S178,42 196,16 L214,10 L214,190 L6,190 Z"/><path class="pz-line" pathLength="1" d="M6,178 C40,174 72,166 100,152 S150,132 158,104 S178,42 196,16"/><path class="pz-arrow" d="M184,14 L197,14 L197,27"/></svg></g></svg>
               <p class="pz-l"><span>01</span>Leads</p>
@@ -3783,7 +3843,7 @@
               <svg class="pz-svg" viewBox="0 0 100 90" preserveAspectRatio="none" overflow="visible"><defs><clipPath id="pzc3"><path d="M6,0 H94 Q100,0 100,6 V84 Q100,90 94,90 H64 L64,89 C64,84 58,80 50,80 C42,80 36,84 36,89 L36,90 H6 Q0,90 0,84 V6 Q0,0 6,0 Z"/></clipPath></defs><path class="pz-shape" d="M6,0 H94 Q100,0 100,6 V84 Q100,90 94,90 H64 L64,89 C64,84 58,80 50,80 C42,80 36,84 36,89 L36,90 H6 Q0,90 0,84 V6 Q0,0 6,0 Z"/><g clip-path="url(#pzc3)"><svg x="0" y="0" width="100" height="90" viewBox="107 0 100 90" preserveAspectRatio="none" overflow="visible"><g class="pz-grid"><line x1="-20" x2="230" y1="18" y2="18"/><line x1="-20" x2="230" y1="42" y2="42"/><line x1="-20" x2="230" y1="66" y2="66"/><line x1="-20" x2="230" y1="118" y2="118"/><line x1="-20" x2="230" y1="142" y2="142"/><line x1="-20" x2="230" y1="166" y2="166"/></g><path class="pz-area" d="M6,178 C40,174 72,166 100,152 S150,132 158,104 S178,42 196,16 L214,10 L214,190 L6,190 Z"/><path class="pz-line" pathLength="1" d="M6,178 C40,174 72,166 100,152 S150,132 158,104 S178,42 196,16"/><path class="pz-arrow" d="M184,14 L197,14 L197,27"/></svg></g></svg>
               <p class="pz-l"><span>03</span>Revenue <i class="ph ph-trend-up"></i></p>
             </div>
-            <div class="rb rb-5"><p>Your team just focuses on</p><b>Patients</b></div>
+            <div class="rb rb-5"><svg class="rb-art" viewBox="0 0 160 160" aria-hidden="true" focusable="false"><circle cx="110" cy="52" r="18"/><path d="M90 92 Q100 86 110 86 Q142 86 142 122"/><circle class="f" cx="60" cy="62" r="22"/><path class="f" d="M20 140 Q20 104 60 104 Q100 104 100 140"/></svg><p>Your team just focuses on</p><b>Patients</b></div>
           </div>
         </div>
       </section>
@@ -5171,6 +5231,17 @@
         // services carousel: the cards slide in from the right, the photo settles, the controls follow
         gsap.from(".sx-card", { x: 160, opacity: 0, duration: 1.3, ease: "expo.out", stagger: 0.08, scrollTrigger: st("#sx", "top 85%") });
         gsap.from(".sx-ctl", { y: 16, opacity: 0, duration: 0.9, ease: "power3.out", delay: 0.4, scrollTrigger: st("#sx", "top 85%") });
+        // the cards' line drawings: each line draws itself in as its card arrives (the growth line's pen, quieter), then the
+        // fills fade up. Without motion none of this runs and the drawings are simply there.
+        $$(".rb-art").forEach((svg) => {
+          const parts = $$("path, rect, circle", svg);
+          parts.forEach((el) => el.setAttribute("pathLength", "1"));
+          gsap.set(parts, { strokeDasharray: 1, strokeDashoffset: 1, fillOpacity: 0 });
+          gsap
+            .timeline({ scrollTrigger: st(svg.closest(".rb"), "top 88%") })
+            .to(parts, { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut", stagger: 0.04 }, 0.35)
+            .to(parts, { fillOpacity: 1, duration: 0.6, ease: "power2.out", stagger: 0.02 }, 0.95);
+        });
         gsap.set(".rb", { opacity: 0, y: 60 });
         ScrollTrigger.batch(".rb", { start: "top 92%", once: true, onEnter: (b) => gsap.to(b, { opacity: 1, y: 0, duration: 1.1, ease: "expo.out", stagger: 0.1 }) });
         // the three puzzle pieces fly in, lock together, then one growth line draws through all of them.
