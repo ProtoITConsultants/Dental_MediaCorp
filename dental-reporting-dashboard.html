@@ -1,0 +1,4787 @@
+<!doctype html>
+<html lang="en-CA">
+  <!-- new  -->
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dental Connect: Your Live Dental Marketing Dashboard | Dental Media Corp</title>
+    <meta
+      name="description"
+      content="See every lead, call, booking and consultation in one place with your Dental Connect dashboard, updated live. No more waiting for monthly reports."
+    />
+    <link rel="canonical" href="https://dentalmediacorp.com/dental-reporting-dashboard/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#0F1716" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Dental Media Corp" />
+    <meta property="og:title" content="Dental Reporting Dashboard | Dental Media Corp" />
+    <meta property="og:description" content="See every lead, call, booking and consultation in one place with your Dental Connect dashboard, updated live. No more waiting for monthly reports." />
+    <meta property="og:url" content="https://dentalmediacorp.com/dental-reporting-dashboard/" />
+    <meta property="og:locale" content="en_CA" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="assets/dmc-mark.png" type="image/png" />
+
+
+    <link rel="preconnect" href="https://api.fontshare.com" crossorigin />
+
+
+    <link rel="preconnect" href="https://cdn.fontshare.com" crossorigin />
+
+
+    <link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap" />
+
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/fill/style.css"
+    />
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/bold/style.css" />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Service",
+            "name": "Dental Reporting Dashboard",
+            "serviceType": "Dental Reporting Dashboard",
+            "url": "https://dentalmediacorp.com/dental-reporting-dashboard/",
+            "description": "See every lead, call, booking and consultation in one place with your Dental Connect dashboard, updated live. No more waiting for monthly reports.",
+            "provider": {
+              "@type": "ProfessionalService",
+              "name": "Dental Media Corp",
+              "url": "https://dentalmediacorp.com/"
+            },
+            "areaServed": {
+              "@type": "Country",
+              "name": "Canada"
+            }
+          },
+          {
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+              {
+                "@type": "ListItem",
+                "position": 1,
+                "name": "Home",
+                "item": "https://dentalmediacorp.com/"
+              },
+              {
+                "@type": "ListItem",
+                "position": 2,
+                "name": "Services",
+                "item": "https://dentalmediacorp.com/#services"
+              },
+              {
+                "@type": "ListItem",
+                "position": 3,
+                "name": "Dental Reporting Dashboard",
+                "item": "https://dentalmediacorp.com/dental-reporting-dashboard/"
+              }
+            ]
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "What is Dental Connect?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Dental Connect is our reporting dashboard. It shows every lead, call, booking and consultation from your marketing in one place."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is the data live?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Leads, calls and bookings appear as they happen, so you never wait for a monthly report."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Who can see the dashboard?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "You and anyone on your team you give access to. Everyone gets their own secure login."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Can we see which ads bring in patients?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes. Every lead is linked to the campaign it came from, so you can see which ads bring in booked consultations and accepted treatment."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Do we need to set anything up?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No. We connect your campaigns, calls and calendar for you. You just log in."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+    <style>
+      /* =========================================================
+   Dental Media Corp, landing page v10
+   Layout, glass and motion cloned from Behance 256692227
+   ("marketing agency landing page | Webflow", aoora), recoloured
+   from the inspo's pink/plum to DMC teal/mint. Type: Onest.
+   Motion: GSAP + ScrollTrigger + Lenis.
+
+   Elementor mapping
+   - Each <section> = one top-level Container. .wrap = boxed inner Container.
+   - :root colours = Site Settings > Global Colors; Onest = Global Fonts.
+   - The hero render (assets/img/v11/mark-hero.webp) is the DMC mark rebuilt in three.js
+     as stacked contour layers. It and the preloader (mark-pre.webp) are the only 3D objects on the page.
+   - Every photo slot is an "Image N" placeholder SVG (.phx) until real photos arrive.
+   ========================================================= */
+      :root {
+        /* viewport units, corrected for the page zoom below (CSS zoom shrinks vw/vh too; browser zoom does not) */
+        --z: 1;
+        --uvw: calc(1vw / var(--z));
+        --uvh: calc(1vh / var(--z));
+        --usvh: calc(1svh / var(--z));
+        --udvh: calc(1dvh / var(--z));
+        --bg: #f7f7f7;
+        --white: #ffffff;
+        --ink: #0d1312;
+        --body: #56625f;
+        --grey: #8b9693;
+        --mute: #8a9592;
+        --fade: #b8c0bd;
+        --line: #e3e8e5;
+        --sand: #f3f5f2;
+        --soft: #ecefec;
+        --night: #040706;
+        --teal: #1b7f73;
+        --teal-2: #2a9488;
+        --teal-3: #49b8a6;
+        --mint: #ddf2ec;
+        --mint-2: #bfe6dc;
+        --deep: #123b36;
+        --lime: #d8f56b;
+        /* accent: soft pink #ff9fc4, the light partner to the teal / mint; statement pieces only.
+           soft = tint for panels, 2 = pale pink, acc = the accent itself (fills, marks, bars; ink text on it),
+           on = text and arrows on it, hover = its lighter hover state,
+           mid = small icons and lines on white, ink = text on light, deep = labels on the pink card */
+        --acc-soft: #fff0f6;
+        --acc-2: #ffd3e4;
+        --acc: #ff9fc4;
+        --acc-on: #0d1312;
+        --acc-hover: #ffbfd7;
+        --acc-mid: #f06a9f;
+        --acc-ink: #b33a6b;
+        --acc-deep: #5c1434;
+        /* type pairing: Satoshi (friendly, rounded grotesk) for everything, Instrument Serif italic for the teal accent words */
+        --f: "Satoshi", system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+        --f-accent: "Instrument Serif", Georgia, "Times New Roman", serif;
+        /* one frame for every section, taken from the hero: a single side gutter (~58px at 1440)
+           and content as wide as the hero (which stops at 1920px) */
+        --side: clamp(20px, calc(4 * var(--uvw)), 80px);
+        --max: calc(1920px / var(--z) - 2 * var(--side)); /* 1920 SCREEN px less the gutters, so content lines up with the nav at every laptop zoom */
+        /* radius system: cards & panels / things nested inside a card / buttons & chips */
+        /* corners: cards, and anything nested 6px inside a card (concentric: inner = outer - gap) */
+        --r-card: 28px;
+        --r-inner: calc(var(--r-card) - 6px);
+        --r-pill: 999px;
+        /* type scale: use these everywhere, never a one-off size */
+        --fs-h1: clamp(44px, calc(5.1 * var(--uvw)), 78px); /* hero headline */
+        --fs-h2: clamp(34px, calc(3.8 * var(--uvw)), 58px); /* section headings: every one of them */
+        --fs-list: clamp(30px, calc(3.6 * var(--uvw)), 52px); /* list titles: the DMC Method steps (the services list uses --fs-h3: seven rows in a column) */
+        /* spacing system: every section, card and round button takes its size from here (phones: see the 899px block) */
+        --sec-y: 112px; /* space above and below every section */
+        --sec-head: 64px; /* section heading to its content */
+        --pad-card: 24px; /* inside cards */
+        --pad-panel: 36px; /* inside big panels (booking) */
+        --btn: 48px; /* round icon buttons */
+        --btn-lg: 62px; /* the big round arrows */
+        --fs-h3: clamp(26px, calc(2.3 * var(--uvw)), 34px); /* list titles, big card titles */
+        --fs-h4: 24px; /* card titles */
+        --fs-h5: 20px; /* names, small titles, numbers */
+        --fs-lead: clamp(18px, calc(1.4 * var(--uvw)), 21px); /* intros under headings */
+        --fs-body: max(17px, calc(15px / var(--z))); /* never under 15px on screen, even when the page is scaled down */ /* descriptions, quotes, buttons */
+        --fs-small: max(15px, calc(13.5px / var(--z))); /* labels, meta, nav */
+        --fs-xs: max(14px, calc(12.5px / var(--z))); /* tags, legal, captions */
+        --fs-stat: clamp(48px, calc(5 * var(--uvw)), 76px); /* big numbers */
+        --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+      html.lenis,
+      html.lenis body {
+        height: auto;
+      }
+      .lenis.lenis-smooth {
+        scroll-behavior: auto !important;
+      }
+      .lenis.lenis-stopped {
+        overflow: hidden;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font-family: var(--f);
+        font-size: var(--fs-body);
+        line-height: 1.5;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        overflow-x: clip;
+      }
+      img {
+        display: block;
+        max-width: 100%;
+      }
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+      button,
+      input,
+      textarea,
+      select {
+        font: inherit;
+        color: inherit;
+      }
+      button {
+        background: none;
+        border: 0;
+        padding: 0;
+        cursor: pointer;
+      }
+      h1,
+      h2,
+      h3,
+      h4,
+      p,
+      figure,
+      blockquote,
+      ul,
+      ol {
+        margin: 0;
+      }
+      ul,
+      ol {
+        padding: 0;
+        list-style: none;
+      }
+      :focus-visible {
+        outline: 2px solid var(--teal-2);
+        outline-offset: 3px;
+        border-radius: 6px;
+      }
+      .skip {
+        position: absolute;
+        left: 12px;
+        top: -60px;
+        z-index: 200;
+        padding: 10px 16px;
+        border-radius: var(--r-pill);
+        background: var(--ink);
+        color: #fff;
+      }
+      .skip:focus {
+        top: 12px;
+      }
+      .sr {
+        position: absolute;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        clip: rect(0 0 0 0);
+        white-space: nowrap;
+      }
+      .wrap {
+        padding-inline: var(--side);
+      }
+
+      /* ---------- type: Satoshi, with Instrument Serif italic for the accent words; sizes come from the --fs-* scale in :root ---------- */
+      .t-h1,
+      .t-h2 {
+        font-weight: 700;
+        letter-spacing: -0.035em;
+        line-height: 1.09;
+        font-size: var(--fs-h2);
+      }
+      .t-h1 {
+        font-size: var(--fs-h1);
+      }
+      .ln {
+        display: block;
+      }
+      .ln-m {
+        display: block;
+        overflow: hidden;
+        padding-bottom: 0.08em;
+        margin-bottom: -0.08em;
+      }
+      .ln-m > span {
+        display: block;
+      }
+      /* accent words: Instrument Serif italic, a touch larger so it holds its own next to the bold grotesk */
+      .hl {
+        color: var(--teal);
+        font-family: var(--f-accent);
+        font-style: italic;
+        font-weight: 400;
+        font-size: 1.1em;
+        letter-spacing: -0.01em;
+        line-height: 0.9;
+        padding-right: 0.04em;
+      }
+      /* a line holding the italic gets room for its descenders inside the reveal mask */
+      .ln-m:has(.hl) {
+        padding-top: 0.08em;
+        margin-top: -0.08em;
+        padding-bottom: 0.16em;
+        margin-bottom: -0.16em;
+      }
+      /* in the hero the italic shares a line with sans words: it adds no height there, so the four lines stay evenly spaced */
+      .t-h1 .hl {
+        line-height: 0;
+      }
+      /* section headings: a little air between the sans line and the italic line under it */
+      .sh-l2:has(.hl) {
+        margin-top: 0.04em;
+      }
+      /* stacked lines: its negative top margin collapses with the line above (which has -0.08em), so take both */
+      .ln-m + .ln-m:has(.hl) {
+        margin-top: -0.16em;
+      }
+      .t-sub {
+        font-size: var(--fs-lead);
+        line-height: 1.45;
+        margin-top: 20px;
+      }
+
+      /* ---------- buttons ---------- */
+      /* one pill with the arrow inside it, on a teal circle */
+      .cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 18px;
+        height: 62px;
+        padding: 0 7px 0 32px;
+        border-radius: var(--r-pill);
+        background: var(--ink);
+        color: #fff;
+        font-size: var(--fs-body);
+        font-weight: 500;
+        white-space: nowrap;
+        transition: background-color 0.35s;
+      }
+      .cta-t {
+        display: flex;
+        align-items: center;
+        height: 100%;
+      }
+      .cta-i {
+        position: relative;
+        display: grid;
+        flex: none;
+        place-items: center;
+        width: var(--btn);
+        height: var(--btn);
+        border-radius: 50%;
+        background: var(--acc);
+        color: var(--acc-on);
+        overflow: hidden;
+        transition: background-color 0.35s;
+      }
+      .cta-i i {
+        font-size: 18px;
+        transition: transform 0.45s var(--ease);
+      }
+      .cta-i i + i {
+        position: absolute;
+        transform: translateX(-48px);
+      }
+      .cta:hover {
+        background: var(--deep);
+      }
+      .cta:hover .cta-i {
+        background: var(--acc-hover);
+      }
+      .cta:hover .cta-i i:first-child {
+        transform: translateX(48px);
+      }
+      .cta:hover .cta-i i + i {
+        transform: none;
+      }
+      .cta.teal {
+        background: var(--teal);
+      }
+      .cta.teal .cta-i {
+        background: var(--ink);
+      }
+      .cta.teal:hover {
+        background: var(--teal-2);
+      }
+      .cta.light {
+        background: #fff;
+        color: var(--ink);
+      }
+      .cta.light:hover {
+        background: var(--mint);
+      }
+      /* outline pill (inspo "Submit an application ↓" in the dark band) */
+      .opill {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        height: 44px;
+        padding: 0 22px;
+        border-radius: var(--r-pill);
+        border: 1px solid rgba(255, 255, 255, 0.55);
+        color: #fff;
+        font-size: var(--fs-small);
+        white-space: nowrap;
+        transition:
+          background-color 0.3s,
+          color 0.3s;
+      }
+      .opill i {
+        font-size: 13px;
+        transition: transform 0.4s var(--ease);
+      }
+      .opill:hover {
+        background: #fff;
+        color: var(--ink);
+      }
+      .opill:hover i {
+        transform: translateY(3px);
+      }
+      .mag {
+        will-change: transform;
+      }
+
+      /* ---------- preloader: % counter over the dark render ---------- */
+      .pre {
+        position: fixed;
+        inset: 0;
+        z-index: 120;
+        display: none;
+        background:
+          radial-gradient(55% 65% at 72% 42%, rgba(27, 127, 115, 0.38), transparent 70%),
+          radial-gradient(40% 50% at 10% 100%, rgba(42, 148, 136, 0.2), transparent 70%),
+          var(--night);
+        color: #fff;
+        overflow: hidden;
+      }
+      html.is-pre .pre {
+        display: block;
+      }
+      html.is-pre body {
+        overflow: hidden;
+      }
+      .pre-obj {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 68% 50%;
+      }
+      .pre::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(180deg, rgba(4, 7, 6, 0) 40%, rgba(4, 7, 6, 0.7));
+      }
+      .pre-b {
+        position: absolute;
+        right: var(--side);
+        bottom: clamp(30px, calc(5.6 * var(--uvh)), 64px);
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: var(--fs-small);
+        color: rgba(255, 255, 255, 0.75);
+      }
+      .pre-b img {
+        position: static;
+        width: 22px;
+        height: auto;
+      }
+
+      /* the accent line on the wipe: appears as the panel starts to lift and travels with its edge */
+      .pre-edge {
+        position: fixed;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 121;
+        display: none;
+        height: 6px;
+        background: var(--acc);
+        opacity: 0;
+        pointer-events: none;
+      }
+      html.is-pre .pre-edge {
+        display: block;
+      }
+
+      /* ---------- header ---------- */
+      .top {
+        position: fixed;
+        inset: 0 0 auto;
+        z-index: 60;
+        transition:
+          background-color 0.4s,
+          box-shadow 0.4s,
+          color 0.4s;
+      }
+      .top::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: -1;
+        opacity: 0;
+        background: rgba(247, 247, 247, 0.62);
+        backdrop-filter: blur(18px) saturate(160%);
+        -webkit-backdrop-filter: blur(18px) saturate(160%);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+        transition:
+          opacity 0.4s,
+          background-color 0.4s,
+          border-color 0.4s;
+      }
+      .top.is-stuck::before {
+        opacity: 1;
+      }
+      .top.on-dark {
+        color: #fff;
+      }
+      .top.on-dark::before {
+        background: rgba(6, 12, 11, 0.55);
+        border-bottom-color: rgba(255, 255, 255, 0.08);
+      }
+      .nav {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+        align-items: center;
+        max-width: calc(1920px / var(--z)); /* lines up with the hero on ultra-wide screens (1920 screen px, whatever the laptop zoom) */
+        margin-inline: auto;
+        height: 84px;
+        padding: 0 var(--side);
+        transition: height 0.4s var(--ease);
+      }
+      .top.is-stuck .nav {
+        height: 68px;
+      }
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 9px;
+        justify-self: start;
+      }
+      .brand img {
+        width: 56px;
+        height: auto;
+      }
+      .brand b {
+        font-size: 21px;
+        font-weight: 600;
+        letter-spacing: -0.03em;
+        line-height: 1;
+      }
+      .brand small {
+        display: block;
+        margin-top: 0;
+        font-size: max(10px, calc(9.5px / var(--z)));
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--teal);
+      }
+      .on-dark .brand small {
+        color: var(--teal-3);
+      }
+      .menu {
+        display: flex;
+        gap: clamp(28px, calc(4 * var(--uvw)), 56px);
+        font-size: var(--fs-small);
+      }
+      .menu a,
+      .nav-txt {
+        position: relative;
+        padding: 6px 0;
+        font-size: max(17px, calc(15.5px / var(--z))); /* at least 15.5px on screen */
+        font-weight: 500;
+      }
+      .menu a::after,
+      .nav-txt::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 2px;
+        height: 1px;
+        background: currentColor;
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.45s var(--ease);
+      }
+      .menu a:hover::after,
+      .nav-txt:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+      /* services dropdown with a Dental Marketing flyout */
+      .dd {
+        position: relative;
+      }
+      .menu .dd-t {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+      }
+      .dd-t i {
+        font-size: 14px;
+        transition: transform 0.4s var(--ease);
+      }
+      .dd:hover .dd-t i,
+      .dd:focus-within .dd-t i {
+        transform: rotate(180deg);
+      }
+      .dd-m,
+      .dd-fly {
+        position: absolute;
+        display: grid;
+        min-width: 290px;
+        padding: 10px;
+        border-radius: var(--r-card);
+        background: rgba(255, 255, 255, 0.94);
+        backdrop-filter: blur(18px) saturate(160%);
+        -webkit-backdrop-filter: blur(18px) saturate(160%);
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        box-shadow: 0 30px 60px -30px rgba(13, 19, 18, 0.45);
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(8px);
+        transition:
+          opacity 0.3s,
+          transform 0.45s var(--ease),
+          visibility 0.3s;
+      }
+      .dd-m {
+        top: calc(100% + 14px);
+        left: -18px;
+      }
+      .dd-m::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: -16px;
+        height: 16px;
+      }
+      .dd:hover .dd-m,
+      .dd:focus-within .dd-m,
+      .dd-sub:hover .dd-fly,
+      .dd-sub:focus-within .dd-fly {
+        opacity: 1;
+        visibility: visible;
+        transform: none;
+      }
+      .dd-sub {
+        position: relative;
+      }
+      .dd-fly {
+        top: -10px;
+        left: calc(100% + 10px);
+        min-width: 260px;
+        transform: translateX(-8px);
+        /* nested inside the menu panel its blur cannot reach the page, so it is solid */
+        background: #fff;
+      }
+      .dd-fly::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: -12px;
+        width: 12px;
+      }
+      .menu .dd-m a {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 11px 14px;
+        border-radius: calc(var(--r-card) - 10px); /* the menu card has 10px padding */
+        font-size: var(--fs-small);
+        color: var(--ink);
+        white-space: nowrap;
+        transition:
+          background-color 0.25s,
+          color 0.25s;
+      }
+      .menu .dd-m a::after {
+        display: none;
+      }
+      .menu .dd-m a:hover,
+      .dd-sub:hover > a {
+        background: var(--mint);
+        color: var(--deep);
+      }
+      .dd-sub > a i {
+        font-size: 12px;
+        color: var(--teal);
+      }
+      /* the link group sits at the true centre of the bar */
+      .menu {
+        justify-self: center;
+      }
+      .nav-r {
+        justify-self: end;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .nav-cta {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        height: 48px;
+        min-width: 172px;
+        padding: 0 24px;
+        border-radius: var(--r-pill);
+        /* the accent, with ink text, same as the arrow circles */
+        background: var(--acc);
+        color: var(--acc-on);
+        font-size: max(17px, calc(15.5px / var(--z)));
+        font-weight: 600;
+        transition: background-color 0.3s;
+      }
+      .nav-cta:hover {
+        background: var(--acc-hover);
+      }
+      .burger {
+        display: none;
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        background: rgba(13, 19, 18, 0.06);
+        place-items: center;
+      }
+      .on-dark .burger {
+        background: rgba(255, 255, 255, 0.12);
+      }
+      .burger span {
+        display: block;
+        width: 16px;
+        height: 1.5px;
+        background: currentColor;
+        border-radius: 2px;
+      }
+      .burger span + span {
+        margin-top: 4px;
+      }
+      .burger > div {
+        display: grid;
+      }
+
+      /* ---------- mobile menu (inspo: full dark sheet, white circle close) ---------- */
+      .mnav {
+        position: fixed;
+        inset: 0;
+        z-index: 90;
+        display: none;
+        height: calc(100 * var(--uvh));
+        height: calc(100 * var(--udvh)); /* exactly the visible screen, browser bars included */
+        background:
+          radial-gradient(120% 60% at 100% 100%, rgba(27, 127, 115, 0.35), transparent 60%),
+          #050807;
+        color: #fff;
+        overflow: hidden;
+      }
+      .mnav.open {
+        display: block;
+      }
+      .mnav-in {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: clamp(12px, calc(2.4 * var(--udvh)), 18px) 20px clamp(14px, calc(3 * var(--udvh)), 24px);
+        overflow-y: auto; /* only if the treatments are open on a very short phone */
+      }
+      .mnav-hd {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        min-height: 48px;
+      }
+      .mnav-x {
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: 50%;
+        background: #fff;
+        color: var(--ink);
+        font-size: 20px;
+      }
+      .mnav-cap {
+        margin: clamp(12px, calc(3.6 * var(--udvh)), 34px) 0 clamp(2px, calc(0.6 * var(--udvh)), 6px);
+        font-size: var(--fs-small);
+        color: rgba(255, 255, 255, 0.5);
+      }
+      .mnav-list a {
+        display: block;
+        padding: clamp(3px, calc(0.9 * var(--udvh)), 8px) 0;
+        font-size: min(var(--fs-h4), max(17px, calc(3.1 * var(--udvh))));
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+      }
+      /* Dental Marketing: link + a toggle for its four treatments */
+      .mnav-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+      }
+      .mnav-tg {
+        display: grid;
+        flex: none;
+        place-items: center;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        color: #fff;
+        font-size: 16px;
+        transition: background-color 0.3s;
+      }
+      .mnav-tg i {
+        transition: transform 0.4s var(--ease);
+      }
+      .mnav-tg[aria-expanded="true"] {
+        background: rgba(255, 255, 255, 0.1);
+      }
+      .mnav-tg[aria-expanded="true"] i {
+        transform: rotate(180deg);
+      }
+      /* treatments open: the sheet tightens (caption + copyright go, gaps shrink) so it still fits one screen */
+      .mnav-in:has(.mnav-tg[aria-expanded="true"]) .mnav-cap,
+      .mnav-in:has(.mnav-tg[aria-expanded="true"]) .mnav-foot small {
+        display: none;
+      }
+      .mnav-in:has(.mnav-tg[aria-expanded="true"]) .mnav-hd {
+        margin-bottom: clamp(6px, calc(1.6 * var(--udvh)), 30px);
+      }
+      .mnav-in:has(.mnav-tg[aria-expanded="true"]) .mnav-list a {
+        padding-block: clamp(2px, calc(0.6 * var(--udvh)), 8px);
+      }
+      .mnav-in:has(.mnav-tg[aria-expanded="true"]) .mnav-sub a {
+        padding-block: clamp(2px, calc(0.4 * var(--udvh)), 5px);
+      }
+      .mnav-in:has(.mnav-tg[aria-expanded="true"]) .mnav-foot {
+        padding-top: clamp(8px, calc(1.6 * var(--udvh)), 32px);
+      }
+      /* the page links sit two by two */
+      .mnav-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 0 16px;
+      }
+      .mnav-list a:hover {
+        color: var(--teal-3);
+      }
+      .mnav-sub {
+        margin: 2px 0 6px 16px;
+        padding-left: 14px;
+        border-left: 1px solid rgba(255, 255, 255, 0.18);
+      }
+      .mnav-sub a {
+        padding: clamp(3px, calc(0.6 * var(--udvh)), 5px) 0;
+        font-size: var(--fs-body);
+        color: rgba(255, 255, 255, 0.72);
+      }
+      .mnav-rule {
+        height: 1px;
+        margin: clamp(10px, calc(2.2 * var(--udvh)), 20px) 0 clamp(6px, calc(1.6 * var(--udvh)), 16px);
+        background: rgba(255, 255, 255, 0.18);
+      }
+      .mnav-foot {
+        position: relative;
+        margin-top: auto;
+        padding-top: clamp(14px, calc(3 * var(--udvh)), 32px);
+      }
+      .mnav-foot .cta {
+        height: 54px;
+        padding: 0 6px 0 26px;
+      }
+      .mnav-foot .cta-i {
+        width: 42px;
+        height: 42px;
+      }
+      .mnav-foot small {
+        display: block;
+        margin-top: clamp(10px, calc(2 * var(--udvh)), 22px);
+        font-size: var(--fs-xs);
+        color: rgba(255, 255, 255, 0.55);
+      }
+
+      /* ---------- the page box ----------
+         <main> is the one centred parent of every section: at most 1920 screen px wide (whatever the laptop zoom), so on a
+         wider screen or a zoomed-out browser the CONTENT stays together in the middle. The visuals do not: the section
+         glows and the services carousel break out to the full screen width (see .sbreak and .sx), and the header's glass
+         bar is full width too, so a wide screen never shows a boxed-in page. The body's overflow-x: clip stops any
+         sideways scroll. --bleed is how far the screen edge lies beyond the box on each side (0 up to 1920 screen px). */
+      main {
+        position: relative;
+        max-width: calc(1920px / var(--z));
+        margin-inline: auto;
+      }
+      :root {
+        --bleed: calc((100 * var(--uvw) - min(100 * var(--uvw), 1920px / var(--z))) / 2);
+      }
+
+      /* ---------- section breaks: a soft, blurred mint glow straddling each boundary ---------- */
+      /* a full-width strip centred on the boundary (takes no space: negative margins), clipped so
+         the glow can never widen the page; the glow inside is soft enough that the clip never shows */
+      .sbreak {
+        --sb-h: clamp(520px, calc(60 * var(--uvw)), 900px);
+        position: relative;
+        z-index: -1;
+        height: var(--sb-h);
+        margin-block: calc(var(--sb-h) / -2);
+        overflow: hidden;
+        pointer-events: none;
+      }
+      .sbreak::before {
+        content: "";
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        width: max(600px, 85%); /* of the page box, not the screen, so the glow stays with the content */
+        height: calc(var(--sb-h) - 180px);
+        transform: translate(-50%, -50%);
+        background: radial-gradient(closest-side, rgba(191, 230, 220, 0.55), rgba(221, 242, 236, 0.28) 50%, transparent);
+        filter: blur(60px);
+      }
+      /* inside the page box the strip breaks out to the full screen width (the one before the footer sits in the
+         full-width body already, so it must not) */
+      main > .sbreak {
+        margin-inline: calc(-1 * var(--bleed));
+      }
+      main > .sbreak:nth-of-type(odd)::before {
+        left: 36%;
+      }
+      main > .sbreak:nth-of-type(even)::before {
+        left: 64%;
+        background: radial-gradient(closest-side, rgba(255, 191, 215, 0.42), rgba(221, 242, 236, 0.3) 55%, transparent);
+      }
+
+      /* ---------- 1. hero ---------- */
+      .hero {
+        position: relative;
+        /* full screen width up to 1920px, then centred, so ultra-wide screens keep the composition
+           (100%, not 100vw: 100vw adds the scrollbar width on desktop and clips the right edge) */
+        width: 100%;
+        max-width: calc(1920px / var(--z)); /* 1920 screen px: the laptop zoom would otherwise cap it early */
+        margin-inline: auto;
+        /* the headline runs to four lines, so it is a step smaller than the section headings */
+        --fs-h1: clamp(38px, calc(4.2 * var(--uvw)), 68px);
+        /* headline, labels and the reviews carousel: as tall as its content, the cards peek at the fold */
+        padding-bottom: clamp(56px, calc(8 * var(--uvh)), 96px);
+        overflow-x: clip;
+        overflow-y: visible;
+        background:
+          radial-gradient(40% 30% at 16% 58%, rgba(191, 230, 220, 0.55), transparent 70%),
+          radial-gradient(30% 32% at 82% 30%, rgba(255, 191, 215, 0.4), transparent 70%);
+      }
+      /* the DMC mark, sculpted from stacked contour layers */
+      /* the DMC mark: a centred background piece, sized so it still reads as a tooth; headline, labels and reviews sit over it */
+      .h-obj {
+        position: absolute;
+        top: clamp(110px, calc(14 * var(--uvh)), 150px);
+        left: 50%;
+        width: clamp(420px, calc(37 * var(--uvw)), 720px);
+        transform: translateX(-50%);
+        pointer-events: none;
+      }
+      .h-obj img {
+        width: 100%;
+        height: auto;
+        /* the lower part dissolves (eased) behind the labels and the review cards; the fade rides on the image,
+           so floating never slices its top off */
+        -webkit-mask-image: linear-gradient(to top, transparent 0%, transparent 12%, rgba(0, 0, 0, 0.14) 24%, rgba(0, 0, 0, 0.5) 38%, rgba(0, 0, 0, 0.88) 52%, #000 62%);
+        mask-image: linear-gradient(to top, transparent 0%, transparent 12%, rgba(0, 0, 0, 0.14) 24%, rgba(0, 0, 0, 0.5) 38%, rgba(0, 0, 0, 0.88) 52%, #000 62%);
+      }
+      /* soft veil behind the headline and the side copy only, so the words read cleanly over the mark */
+      .hero::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+        background:
+          radial-gradient(40% 32% at 24% 30%, rgba(247, 247, 247, 0.84), rgba(247, 247, 247, 0.5) 55%, transparent 100%),
+          radial-gradient(22% 18% at 84% 24%, rgba(247, 247, 247, 0.7), transparent 100%);
+      }
+      .h-top,
+      .h-row,
+      .h-say {
+        z-index: 1;
+      }
+      .h-top {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+        gap: 40px;
+        padding-top: clamp(118px, calc(16.4 * var(--uvh)), 150px);
+      }
+      /* subline and button on the right, level with the headline */
+      .h-side {
+        width: 340px;
+        padding-top: 16px;
+      }
+      .h-side p {
+        max-width: 340px;
+        font-size: var(--fs-lead);
+        line-height: 1.45;
+        color: var(--grey);
+      }
+      .h-side .cta {
+        margin-top: 26px;
+      }
+      /* the two glass panels are a matched pair: same width, same height (the row stretches them) */
+      .h-row {
+        position: relative;
+        display: flex;
+        align-items: stretch;
+        justify-content: space-between;
+        gap: 32px;
+        margin-top: clamp(80px, calc(13 * var(--uvh)), 140px);
+      }
+      .h-row > .h-badges,
+      .h-row > .h-stat {
+        flex: 0 0 min(540px, calc(50% - 16px));
+        box-sizing: border-box;
+      }
+      /* faces beside the figure, so the ROAS line is as short as the label row */
+      /* two figures divided by a hairline */
+      .h-stat {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 22px;
+        text-align: left;
+      }
+      .h-num + .h-num {
+        padding-left: 22px;
+        border-left: 1px solid rgba(13, 19, 18, 0.14);
+      }
+      .h-stat b {
+        display: block;
+        font-size: var(--fs-h3);
+        font-weight: 600;
+        letter-spacing: -0.04em;
+        line-height: 1;
+      }
+      .h-stat b em {
+        font-style: normal;
+        color: var(--ink);
+        padding: 0 0.1em;
+        background: linear-gradient(180deg, transparent 52%, var(--acc) 52%, var(--acc) 94%, transparent 94%);
+      }
+      .h-stat small {
+        display: block;
+        margin-top: 8px;
+        font-size: var(--fs-small);
+        line-height: 1.3;
+        color: var(--body);
+      }
+      /* partner / compliance labels: one row, no tiles, hairline dividers */
+      /* labels and ROAS sit on the same glass as the sticky nav, so they read over the mark */
+      .h-badges,
+      .h-stat {
+        background: rgba(247, 247, 247, 0.62);
+        -webkit-backdrop-filter: blur(18px) saturate(160%);
+        backdrop-filter: blur(18px) saturate(160%);
+        border: 1px solid rgba(255, 255, 255, 0.7);
+        border-radius: var(--r-card);
+        box-shadow: 0 18px 40px -30px rgba(13, 19, 18, 0.35);
+      }
+      .h-badges {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 16px 6px;
+      }
+      .h-stat {
+        padding: 14px 24px 14px 18px;
+      }
+      .h-badges li {
+        flex: 1 1 auto;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        padding: 0 24px;
+        font-size: var(--fs-body);
+        letter-spacing: -0.02em;
+        color: var(--body);
+        white-space: nowrap;
+      }
+      .h-badges li + li {
+        border-left: 1px solid rgba(13, 19, 18, 0.18);
+      }
+      /* name over role, the logo on the left matches the height of the two lines */
+      .h-badges span {
+        display: flex;
+        flex-direction: column;
+        line-height: 1.15;
+      }
+      .h-badges b {
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .h-badges i {
+        font-size: 2.55em;
+        line-height: 1;
+      }
+      .h-badges svg {
+        flex: none;
+        width: 2.2em;
+        height: 2.2em;
+      }
+      .h-badges .meta {
+        color: #0866ff;
+      }
+      .h-badges .hipaa {
+        color: var(--teal);
+      }
+      @keyframes nudge {
+        0%,
+        60%,
+        100% {
+          transform: none;
+        }
+        30% {
+          transform: translateY(3px);
+        }
+      }
+
+      /* ---------- 3. services: a quiet list on the left, one framed photo on the right that follows the row you're on ----------
+         sits on the page background like every other section (no colour band); no overflow clipping: it would stop the sticky photo */
+      .svc {
+        position: relative;
+        padding: var(--sec-y) 0;
+      }
+      /* section head (reference layout): small label column + heading whose 2nd line is drawn in */
+      .sh {
+        max-width: var(--max);
+        margin: 0 auto;
+        text-align: center;
+      }
+      .sh-l2 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .sh-rule {
+        position: relative;
+        flex: none;
+        width: clamp(48px, calc(7 * var(--uvw)), 110px);
+        height: 4px;
+        margin-right: 0.35em;
+        border-radius: 4px;
+        background: var(--acc);
+        transform-origin: left;
+      }
+      .svc .t-sub {
+        color: rgba(13, 19, 18, 0.78);
+      }
+      /* big teal numbers (case study and DMC Method cards) */
+      .sr-n {
+        font-size: var(--fs-stat);
+        font-weight: 600;
+        letter-spacing: -0.045em;
+        line-height: 0.9;
+        color: var(--teal);
+        font-variant-numeric: tabular-nums;
+        transition: color 0.3s;
+      }
+      /* ---------- the services carousel (inspo: "Carousel experimentation", Sacha Jerrems, Dribbble 11431212) ----------
+         one wide active card, the rest narrow strips; on a change every card slides together, the active one shrinks to a
+         strip while the next opens wide. The cursor is the site's normal one. The photos never move or zoom:
+         each is fixed at the open card's size, centred, and the card is a window that opens and closes over it.
+         The inspo's full background colour swap is replaced by the site's soft glow, tinted per service (brand colours only).
+         Sizes all come from one height: the active card is 1.5x as wide as it is tall, a strip 0.55x. */
+      @property --sx-tint {
+        syntax: "<color>";
+        inherits: true;
+        initial-value: rgba(191, 230, 220, 0.55);
+      }
+      .sx {
+        --sx-h: clamp(460px, calc(58 * var(--uvh)), 600px);
+        --sx-big: calc(var(--sx-h) * 1.5);
+        --sx-small: calc(var(--sx-h) * 0.55);
+        --sx-gap: 24px;
+        --sx-pad: 28px;
+        --sx-x0: calc(var(--bleed) + var(--side) + 64px); /* the active card's left edge, in line with the content; the previous strip peeks in before it */
+        --sx-tint: rgba(191, 230, 220, 0.55);
+        --j: 0;
+        --dx: 0px;
+        position: relative;
+        /* full screen width (past the page box), so on a wide screen the strips run out to the edge instead of being cut */
+        margin: var(--sec-head) calc(-1 * var(--bleed)) 0;
+        transition: --sx-tint 1.2s var(--ease);
+      }
+      /* the glow behind the active card, tinted per service */
+      .sx::before {
+        content: "";
+        position: absolute;
+        left: calc(var(--sx-x0) - 10%);
+        top: -12%;
+        width: calc(var(--sx-big) * 1.4);
+        height: 124%;
+        background: radial-gradient(closest-side, var(--sx-tint), transparent);
+        filter: blur(50px);
+        pointer-events: none;
+      }
+      .sx-stage {
+        position: relative;
+        overflow: hidden;
+        padding-block: 30px 50px; /* room for the cards' shadow */
+        margin-block: -30px -50px;
+        touch-action: pan-y;
+      }
+      .sx-track {
+        display: flex;
+        gap: var(--sx-gap);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        transform: translate3d(calc(var(--sx-x0) - var(--j) * (var(--sx-small) + var(--sx-gap)) + var(--dx)), 0, 0);
+        transition: transform 1s var(--ease);
+      }
+      .sx.drag .sx-track {
+        transition: none;
+      }
+      .sx-card {
+        position: relative;
+        flex: none;
+        width: var(--sx-small);
+        height: var(--sx-h);
+        border-radius: var(--r-card);
+        overflow: hidden;
+        background: var(--soft);
+        box-shadow: 0 34px 60px -40px rgba(13, 19, 18, 0.55);
+        user-select: none;
+        transition: width 1s var(--ease);
+      }
+      .sx-card.on {
+        width: var(--sx-big);
+      }
+      /* the photo is always the open card's size, centred, so a strip shows its middle and opening a card only reveals
+         more of it: no rescale (object-fit would re-crop as the width changes), no zoom */
+      .sx-card img {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: var(--sx-big);
+        max-width: none;
+        height: 100%;
+        object-fit: cover;
+        transform: translateX(-50%);
+        pointer-events: none;
+      }
+      /* no photos for now (client, 2026-11-19): the card is a deep teal panel and an SVG glyph (.sx-art) sits where the
+         photo will go. Same window as the photo: the open card's size, centred, so a strip shows the glyph and opening a
+         card reveals the rings around it. Mint line art in the team cards' icon family, one pink dot as the accent. */
+      .sx-card {
+        background:
+          radial-gradient(60% 70% at 50% 34%, rgba(73, 184, 166, 0.34), transparent 70%),
+          linear-gradient(180deg, #1b7f73 0%, var(--deep) 58%, var(--ink) 100%);
+      }
+      .sx-art {
+        position: absolute;
+        top: 0;
+        left: 50%;
+        width: var(--sx-big);
+        max-width: none;
+        height: 100%;
+        transform: translateX(-50%);
+        pointer-events: none;
+      }
+      .sx-ring {
+        fill: none;
+        stroke: rgba(221, 242, 236, 0.1);
+        stroke-width: 1.5;
+      }
+      .sx-g {
+        fill: none;
+        stroke: var(--mint);
+        stroke-width: 10;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .sx-g .f {
+        fill: rgba(221, 242, 236, 0.08);
+      }
+      .sx-g .d {
+        fill: var(--acc);
+        stroke: none;
+      }
+      .sx-g .m {
+        fill: var(--mint);
+        stroke: none;
+      }
+      .sx-g .t {
+        stroke: var(--acc);
+      }
+      /* legibility: a deep ink shade rising from the foot of every card, dense where the text sits and fading by about
+         three quarters up, over a light tint on the whole photo, so the white text reads on bright photos too */
+      .sx-card::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background:
+          linear-gradient(to top, rgba(13, 19, 18, 0.9) 0%, rgba(13, 19, 18, 0.72) 26%, rgba(13, 19, 18, 0.36) 52%, rgba(13, 19, 18, 0) 76%),
+          rgba(13, 19, 18, 0.16);
+        pointer-events: none;
+      }
+      .sx-tag {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        z-index: 1;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 7px 14px 7px 12px;
+        border-radius: var(--r-pill);
+        /* a dark glass, so the chip reads on bright photos too */
+        background: rgba(13, 19, 18, 0.34);
+        -webkit-backdrop-filter: blur(14px) saturate(160%);
+        backdrop-filter: blur(14px) saturate(160%);
+        border: 1px solid rgba(255, 255, 255, 0.22);
+        color: #fff;
+        font-size: var(--fs-xs);
+        font-weight: 600;
+        line-height: 1.2;
+        white-space: nowrap;
+      }
+      .sx-tag b {
+        font-weight: 600;
+        color: var(--acc);
+        font-variant-numeric: tabular-nums;
+      }
+      /* the copy: the name keeps the strip's width in both states (so it never re-wraps while the card grows);
+         the line and the Explore link sit to its right, so a strip simply clips them */
+      .sx-txt {
+        position: absolute;
+        left: var(--sx-pad);
+        bottom: var(--sx-pad);
+        z-index: 1;
+        display: grid;
+        grid-template-columns: calc(var(--sx-small) - 2 * var(--sx-pad)) calc(var(--sx-big) - var(--sx-small) - var(--sx-pad));
+        align-items: end;
+        gap: var(--sx-pad);
+        color: #fff;
+      }
+      .sx-name {
+        font-size: var(--fs-h3);
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1.09;
+        text-shadow: 0 2px 22px rgba(13, 19, 18, 0.45); /* a soft halo, not a hard drop shadow */
+      }
+      .sx-link {
+        color: inherit;
+      }
+      /* the active card is one link; the others are buttons in effect (the script turns a click into "go here") */
+      .sx-link::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 2;
+      }
+      .sx-link:focus-visible {
+        outline: none;
+      }
+      .sx-card:has(.sx-link:focus-visible) {
+        outline: 2px solid var(--teal);
+        outline-offset: 4px;
+      }
+      /* the "Dental Marketing" treatments link lands a little above the carousel, under the header */
+      .sr-anchor {
+        position: absolute;
+        top: -120px;
+      }
+      .sx-more {
+        display: grid;
+        gap: 18px;
+        justify-items: start;
+        max-width: 26rem;
+        opacity: 0;
+        transform: translateY(14px);
+        transition:
+          opacity 0.3s var(--ease),
+          transform 0.5s var(--ease);
+      }
+      .sx-card.on .sx-more {
+        opacity: 1;
+        transform: none;
+        transition:
+          opacity 0.6s var(--ease) 0.45s,
+          transform 0.9s var(--ease) 0.45s;
+      }
+      .sx-p {
+        font-size: var(--fs-body);
+        line-height: 1.5;
+        color: rgba(255, 255, 255, 0.94);
+        text-shadow: 0 1px 16px rgba(13, 19, 18, 0.4);
+      }
+      /* Explore: the hero button's pink arrow circle with a label */
+      .sx-go {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-size: var(--fs-small);
+        font-weight: 600;
+      }
+      .sx-go i {
+        display: grid;
+        place-items: center;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: var(--acc);
+        color: var(--acc-on);
+        font-size: 16px;
+      }
+      /* below the carousel: the counter and a progress hairline on the left, the arrows on the right */
+      .sx-ctl {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+        max-width: var(--max);
+        margin: 36px auto 0;
+        padding-inline: var(--side);
+        box-sizing: content-box;
+      }
+      .sx-count {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        flex: 1;
+        max-width: 420px;
+        font-size: var(--fs-small);
+        color: var(--grey);
+        font-variant-numeric: tabular-nums;
+      }
+      .sx-count b {
+        font-weight: 600;
+        color: var(--teal);
+      }
+      .sx-bar {
+        flex: 1;
+        height: 2px;
+        border-radius: 2px;
+        background: rgba(13, 19, 18, 0.1);
+        overflow: hidden;
+      }
+      .sx-bar i {
+        display: block;
+        height: 100%;
+        background: var(--teal);
+        transform-origin: left;
+        transform: scaleX(calc((var(--j) + 1) / 7));
+        transition: transform 1s var(--ease);
+      }
+      .sx-ctl .arw {
+        margin-top: 0;
+      }
+      .sx-ctl .arw button:hover:not(:disabled) i {
+        transform: translateX(4px);
+      }
+      .sx-ctl .arw .sx-prev:hover:not(:disabled) i {
+        transform: translateX(-4px);
+      }
+      /* the normal cursor, as everywhere else on the site: a hand over the cards (each is clickable) */
+      .sx-card {
+        cursor: pointer;
+      }
+
+      /* ---------- 3. case studies ---------- */
+      .cases {
+        padding: var(--sec-y) 0;
+      }
+      .cases-head {
+        padding-inline: var(--side);
+        text-align: center;
+      }
+      .cases-head .t-sub {
+        font-size: var(--fs-lead);
+        color: var(--grey);
+      }
+      .cases-head .t-sub b {
+        font-weight: 600;
+        color: var(--teal);
+      }
+      .row {
+        display: flex;
+        gap: 22px;
+        margin-top: var(--sec-head);
+        padding: 0 var(--side) 30px;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scroll-padding-inline: var(--side);
+        scrollbar-width: none;
+        cursor: grab;
+      }
+      .row::-webkit-scrollbar {
+        display: none;
+      }
+      .row.drag {
+        cursor: grabbing;
+        scroll-snap-type: none;
+      }
+      .row.drag * {
+        pointer-events: none;
+      }
+      .cs {
+        flex: 0 0 340px;
+        scroll-snap-align: start;
+      }
+      .cs-in {
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 410px;
+        padding: 6px;
+        border-radius: var(--r-card);
+        background: #fff;
+        box-shadow: 0 1px 0 rgba(13, 19, 18, 0.03);
+        transition:
+          box-shadow 0.5s var(--ease),
+          transform 0.5s var(--ease);
+      }
+      .cs-img {
+        position: relative;
+        flex: 0 0 auto;
+        height: 269px;
+        border-radius: var(--r-inner);
+        overflow: hidden;
+        background: var(--soft);
+        transition: height 0.7s var(--ease);
+        will-change: height;
+      }
+      .cs-img > .phx {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      /* the clinic photo is the cover; on hover it slides up and the logo underneath shows beside the number */
+      .cs-img:has(.cs-logo) {
+        background: #fff;
+      }
+      .cs-img > .cs-logo {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        padding: 12px 20px 12px 112px;
+        object-fit: contain;
+      }
+      .cs-cover {
+        position: absolute;
+        inset: 0;
+        z-index: 1;
+        overflow: hidden;
+        border-radius: inherit;
+        transition: transform 0.7s var(--ease);
+      }
+      .cs-cover::after {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(160deg, rgba(18, 59, 54, 0.62), rgba(18, 59, 54, 0) 46%);
+      }
+      .cs-cover > .phx {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .cs:hover .cs-cover,
+      .cs.on .cs-cover,
+      .cs:focus-within .cs-cover {
+        transform: translateY(-101%);
+      }
+      .cs-img span {
+        position: absolute;
+        top: 13px;
+        z-index: 1;
+        font-size: var(--fs-xs);
+        color: var(--body);
+      }
+      .cs-img .phx > svg {
+        transition: opacity 0.3s;
+      }
+      .cs:hover .cs-img .phx > svg,
+      .cs:focus-within .cs-img .phx > svg {
+        opacity: 0;
+      }
+      .cs h3 {
+        margin: 20px 12px 0;
+        font-size: var(--fs-h4);
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1.09;
+      }
+      .cs-meta {
+        margin: 6px 12px 0;
+        font-size: var(--fs-small);
+        color: var(--body);
+      }
+      .cs-meta b {
+        padding: 1px 7px;
+        border-radius: 6px;
+        font-weight: 600;
+        color: var(--acc-on);
+        background: var(--acc);
+      }
+      .cs-res {
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        bottom: 18px;
+        opacity: 0;
+        transform: translateY(12px);
+        transition:
+          opacity 0.2s ease,
+          transform 0.3s ease;
+        pointer-events: none;
+      }
+      .cs-res p {
+        font-size: var(--fs-small);
+        color: var(--body);
+      }
+      .cs-res ul {
+        margin-top: 10px;
+        display: grid;
+        gap: 6px;
+        font-size: var(--fs-body);
+      }
+      .cs-res li {
+        position: relative;
+        padding-left: 14px;
+      }
+      .cs-res li::before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 0.5em;
+        width: 5px;
+        height: 5px;
+        border-radius: 50%;
+        background: var(--teal-2);
+        box-shadow: 0 0 0 2px var(--mint);
+      }
+      .cs-res b {
+        font-weight: 600;
+      }
+      .cs:hover .cs-in,
+      .cs.on .cs-in,
+      .cs:focus-within .cs-in {
+        box-shadow: 0 24px 50px -26px rgba(13, 19, 18, 0.32);
+      }
+      .cs:hover .cs-img,
+      .cs.on .cs-img,
+      .cs:focus-within .cs-img {
+        height: 106px;
+      }
+      .cs:hover .cs-res,
+      .cs.on .cs-res,
+      .cs:focus-within .cs-res {
+        opacity: 1;
+        transform: none;
+        transition:
+          opacity 0.45s ease 0.2s,
+          transform 0.6s var(--ease) 0.2s;
+      }
+      .arw {
+        display: flex;
+        justify-content: center;
+        gap: 16px;
+        margin-top: 22px;
+      }
+      .arw button {
+        display: grid;
+        place-items: center;
+        width: var(--btn-lg);
+        height: var(--btn-lg);
+        border-radius: 50%;
+        background: var(--ink);
+        color: #fff;
+        font-size: 20px;
+        transition:
+          background-color 0.3s,
+          opacity 0.3s;
+      }
+      .arw button:hover:not(:disabled) {
+        background: var(--deep);
+      }
+      .arw button i {
+        transition: transform 0.45s var(--ease);
+      }
+      #cPrev:hover:not(:disabled) i {
+        transform: translateX(-4px);
+      }
+      #cNext:hover:not(:disabled) i {
+        transform: translateX(4px);
+      }
+      .arw button:disabled {
+        opacity: 0.25;
+        cursor: default;
+      }
+      .note {
+        margin-top: 14px;
+        text-align: center;
+        font-size: var(--fs-xs);
+        color: var(--fade);
+      }
+
+      /* ---------- 6. the DMC Method: the hero mark pinned on the left, the steps listed on the right ----------
+         no overflow clipping on .meth: an overflow:hidden ancestor would stop position: sticky */
+      .meth {
+        position: relative;
+        padding: var(--sec-y) 0;
+      }
+      .mgrid {
+        display: grid;
+        grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+        align-items: start;
+        gap: clamp(40px, calc(6 * var(--uvw)), 120px);
+        max-width: var(--max);
+        margin: var(--sec-head) auto 0;
+      }
+      /* pinned in the middle of the screen while the steps scroll past */
+      .mtooth {
+        position: sticky;
+        top: max(100px, calc(50 * var(--uvh) - 230px));
+        display: grid;
+        place-items: center;
+      }
+      /* a soft mint and pink glow behind the mark */
+      .mtooth::before {
+        content: "";
+        position: absolute;
+        inset: -8%;
+        background:
+          radial-gradient(closest-side at 42% 46%, rgba(191, 230, 220, 0.75), transparent 72%),
+          radial-gradient(closest-side at 70% 70%, rgba(255, 191, 215, 0.45), transparent 70%);
+        pointer-events: none;
+      }
+      .mtooth img {
+        position: relative;
+        width: min(100%, 440px);
+        height: auto;
+      }
+      .mcol {
+        position: relative;
+        padding-left: clamp(28px, calc(3 * var(--uvw)), 48px);
+      }
+      .mlist {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      /* the line down the list: a hairline, filled in teal as you scroll */
+      .mline {
+        position: absolute;
+        left: 0;
+        top: 0;
+        bottom: 0;
+        width: 2px;
+        border-radius: 2px;
+        background: rgba(13, 19, 18, 0.1);
+      }
+      .mline i {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        background: var(--teal);
+        transform-origin: top;
+      }
+      .mstep {
+        display: grid;
+        grid-template-columns: clamp(64px, calc(6 * var(--uvw)), 110px) minmax(0, 1fr);
+        gap: 0 clamp(16px, calc(2 * var(--uvw)), 32px);
+        padding: clamp(40px, calc(7 * var(--uvh)), 72px) 0;
+        border-top: 1px solid rgba(13, 19, 18, 0.1);
+        transition: opacity 0.5s var(--ease);
+      }
+      .mstep:first-of-type {
+        border-top: 0;
+        padding-top: 0;
+      }
+      .mstep:last-of-type {
+        padding-bottom: 0;
+      }
+      .mstep-n {
+        font-size: var(--fs-stat);
+        font-weight: 600;
+        letter-spacing: -0.05em;
+        line-height: 0.85;
+        color: var(--teal);
+        font-variant-numeric: tabular-nums;
+        transition: color 0.5s var(--ease);
+      }
+      .mstep h3 {
+        font-size: var(--fs-list);
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1.09;
+      }
+      .mstep p {
+        max-width: 34rem;
+        margin-top: 14px;
+        font-size: var(--fs-lead);
+        line-height: 1.45;
+        color: var(--body);
+      }
+      /* every step stays fully readable; the one being read gets the pink number */
+      .mstep.on .mstep-n {
+        color: var(--acc-mid);
+      }
+      @media (max-width: 899px) {
+        .meth {
+          padding: var(--sec-y) 0;
+        }
+        .mgrid {
+          grid-template-columns: minmax(0, 1fr);
+          gap: 24px;
+          margin-top: var(--sec-head);
+        }
+        .mtooth {
+          position: relative;
+          top: auto;
+          width: min(70%, 320px);
+          justify-self: center;
+        }
+        .mstep {
+          grid-template-columns: 56px minmax(0, 1fr);
+          padding: 32px 0;
+        }
+        .mstep-n {
+          font-size: 40px;
+        }
+      }
+
+      /* ---------- reviews: glass cards at the foot of the hero ---------- */
+      .h-say {
+        position: relative;
+        margin-top: clamp(36px, calc(5 * var(--uvh)), 56px);
+        scroll-margin-top: 100px;
+      }
+      .q-row {
+        position: relative;
+        padding-left: var(--side);
+        overflow: hidden;
+        cursor: grab;
+        touch-action: pan-y;
+      }
+      .q-row.drag {
+        cursor: grabbing;
+      }
+      .q-track {
+        display: flex;
+        gap: calc(16px * var(--qs, 1));
+        width: max-content;
+      }
+      /* reference layout: text left, video still right.
+         On desktops (1200px and up) every card keeps the same share of the screen, whatever the screen or the browser
+         zoom: the design is 540 x 270 at 1920 wide, and the script sets --qs = screen width / 1920 (corrected for the
+         laptop zoom), so the whole card, text included, scales as one picture. Below 1200px --qs is 1.
+         Desktop cards are exactly 540 x 270 and use the 1920 text sizes: the site's laptop text bump (max(17px, 15px/z))
+         would make them taller on laptops and break the fixed proportion; the card's scale already does that job. */
+      @media (min-width: 1200px) {
+        .q {
+          --fs-body: 17px;
+          --fs-small: 15px;
+          --fs-xs: 14px;
+          --fs-h5: 20px;
+          height: 270px;
+        }
+      }
+      .q {
+        zoom: var(--qs, 1);
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) 40%;
+        width: 540px;
+        min-height: 270px;
+        border-radius: var(--r-card);
+        overflow: hidden;
+        background: rgba(255, 255, 255, 0.5);
+        backdrop-filter: blur(26px) saturate(140%);
+        -webkit-backdrop-filter: blur(26px) saturate(140%);
+        border: 1px solid rgba(255, 255, 255, 0.85);
+        box-shadow:
+          inset 0 1px 0 rgba(255, 255, 255, 0.95),
+          0 22px 50px -36px rgba(13, 19, 18, 0.3);
+        user-select: none;
+      }
+      .q-body {
+        display: flex;
+        flex-direction: column;
+        padding: var(--pad-card);
+      }
+      .q-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      }
+      .q-top > i {
+        font-size: 24px;
+        color: var(--acc-mid);
+      }
+      .q-stars {
+        display: flex;
+        gap: 2px;
+        font-size: 15px;
+        color: var(--acc-mid);
+      }
+      .q-who {
+        margin-top: 16px;
+      }
+      .q-who b {
+        display: block;
+        font-size: var(--fs-h5);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+      }
+      .q-who span {
+        display: block;
+        margin-top: 4px;
+        font-size: var(--fs-small);
+        font-weight: 600;
+        color: var(--deep);
+      }
+      .q blockquote {
+        margin-top: 16px;
+        font-size: var(--fs-body);
+        line-height: 1.6;
+        letter-spacing: 0;
+        color: var(--body);
+      }
+      .q-media {
+        position: relative;
+        min-height: 100%;
+        background: var(--soft);
+      }
+      .q-media > img {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 50% 22%;
+        pointer-events: none;
+      }
+      /* the video lightbox: 16:9, or 9:16 for a Short */
+      .vbox {
+        position: fixed;
+        inset: 0;
+        z-index: 200;
+        display: grid;
+        place-items: center;
+        padding: clamp(16px, calc(4 * var(--uvw)), 48px);
+        background: rgba(18, 59, 54, 0.86);
+        -webkit-backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
+      }
+      .vbox[hidden] {
+        display: none;
+      }
+      .vbox-f {
+        width: min(100%, 1180px, calc((calc(100 * var(--usvh)) - 96px) * 16 / 9));
+        aspect-ratio: 16 / 9;
+        border-radius: var(--r-card);
+        overflow: hidden;
+        background: var(--deep);
+      }
+      .vbox.tall .vbox-f {
+        width: min(100%, 420px, calc((calc(100 * var(--usvh)) - 96px) * 9 / 16));
+        aspect-ratio: 9 / 16;
+      }
+      .vbox iframe {
+        display: block;
+        width: 100%;
+        height: 100%;
+        border: 0;
+      }
+      .vbox-x {
+        position: absolute;
+        top: 16px;
+        right: 16px;
+        z-index: 1;
+        display: grid;
+        place-items: center;
+        width: var(--btn);
+        height: var(--btn);
+        border-radius: 50%;
+        background: var(--acc);
+        color: var(--acc-on);
+        font-size: 20px;
+      }
+      .q-play {
+        position: absolute;
+        right: 12px;
+        bottom: 12px;
+        display: grid;
+        place-items: center;
+        width: var(--btn);
+        height: var(--btn);
+        border-radius: 50%;
+        background: #fff;
+        color: var(--ink);
+        font-size: 17px;
+        box-shadow: 0 10px 24px -10px rgba(13, 19, 18, 0.45);
+        transition:
+          transform 0.4s var(--ease),
+          background-color 0.3s,
+          color 0.3s;
+      }
+      .q-play:hover {
+        transform: scale(1.1);
+        background: var(--ink);
+        color: #fff;
+      }
+
+      /* ---------- 2. why DMC: the numbers (right under the hero) ---------- */
+      .team {
+        position: relative;
+        padding: var(--sec-y) 0;
+
+        overflow: hidden;
+      }
+      /* ---------- 5. why DMC: scattered stat boxes (reference "results" layout) ---------- */
+      .rs {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 16px;
+        max-width: var(--max);
+        margin: var(--sec-head) auto 0;
+      }
+      .rb {
+        position: relative;
+        container-type: inline-size; /* the big word sizes itself to the card (cqw), so "Schedule" fits a narrow card */
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        aspect-ratio: 1 / 0.9;
+        padding: var(--pad-card);
+        border-radius: var(--r-card);
+        border: 1px solid rgba(13, 19, 18, 0.08);
+        background: #fff;
+        overflow: hidden;
+        transition:
+          border-color 0.4s,
+          background-color 0.4s;
+      }
+      .rb:hover {
+        border-color: rgba(27, 127, 115, 0.45);
+        background: #fff;
+      }
+      /* the label in each stat card: lead size, near-ink, so it reads without squinting */
+      .rb p {
+        position: relative;
+        max-width: 250px;
+        font-size: var(--fs-lead);
+        font-weight: 500;
+        line-height: 1.3;
+        letter-spacing: -0.01em;
+        color: rgba(13, 19, 18, 0.78);
+      }
+      .rb b {
+        position: relative;
+        align-self: flex-end;
+        font-size: min(var(--fs-stat), 16cqw); /* the card's big word: full size when there is room, smaller in a narrow card */
+        font-weight: 600;
+        letter-spacing: -0.045em;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+      }
+      /* each card's glyph (inspo: tone-on-tone category cards): one bold, simple icon per card (megaphone, play frame,
+         chat, calendar, people) in thick rounded strokes, a shade deeper than its card (pale teal on white, deeper pink on
+         the pink card). Upright, large and anchored in the top-right corner, cropped by the card's edge; the big word owns
+         the bottom-right. It draws itself in as the card arrives (script: "the cards' line drawings") and on hover nudges
+         into the card and deepens. */
+      .rb {
+        --rb-ic: rgba(27, 127, 115, 0.13);
+        --rb-fill: rgba(27, 127, 115, 0.045);
+      }
+      .rb-5 {
+        --rb-ic: rgba(240, 106, 159, 0.4);
+        --rb-fill: rgba(255, 255, 255, 0.24);
+      }
+      .rb-art {
+        position: absolute;
+        top: -9%;
+        right: -11%;
+        width: 62%;
+        height: auto;
+        fill: none;
+        stroke: var(--rb-ic);
+        stroke-width: 12;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        pointer-events: none;
+        transition:
+          transform 0.9s var(--ease),
+          stroke 0.6s var(--ease);
+      }
+      .rb-art .f {
+        fill: var(--rb-fill);
+      }
+      .rb-art .d {
+        fill: var(--rb-ic);
+        stroke: none;
+        transition: fill 0.6s var(--ease);
+      }
+      .rb:hover .rb-art {
+        transform: translate(-6px, 6px) scale(1.04);
+      }
+      .rb:not(.rb-5):hover {
+        --rb-ic: rgba(27, 127, 115, 0.2);
+      }
+      .rb-5:hover {
+        --rb-ic: rgba(240, 106, 159, 0.55);
+      }
+      /* narrow cards: a little smaller, so the wrapped label keeps the corner's top line */
+      @media (max-width: 1199px) {
+        .rb-art {
+          width: 58%;
+          top: -6%;
+          right: -12%;
+        }
+      }
+      .rb-1 {
+        grid-area: 1 / 1;
+      }
+      .rb-2 {
+        grid-area: 1 / 2;
+      }
+      .rb-3 {
+        grid-area: 1 / 4;
+      }
+      .pz-1 {
+        grid-area: 2 / 2;
+      }
+      .pz-2 {
+        grid-area: 2 / 3;
+      }
+      .pz-3 {
+        grid-area: 1 / 3;
+      }
+      .rb-4 {
+        grid-area: 2 / 1;
+      }
+      .rb-5 {
+        grid-area: 2 / 4;
+        border-color: transparent;
+        background: linear-gradient(160deg, var(--acc-2), var(--acc));
+        color: var(--ink);
+      }
+      .rb-5 p {
+        color: var(--acc-deep);
+      }
+      .rb-5:hover {
+        background: linear-gradient(160deg, var(--acc-2), var(--acc));
+      }
+
+      .pz {
+        position: relative;
+        aspect-ratio: 1 / 0.9;
+        color: var(--ink);
+      }
+      .pz-svg {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+        filter: drop-shadow(0 14px 24px rgba(0, 0, 0, 0.28));
+      }
+      /* each tab sits above the piece it plugs into */
+      .pz-1 {
+        z-index: 3;
+      }
+      .pz-2 {
+        z-index: 2;
+      }
+      .pz-3 {
+        z-index: 1;
+      }
+      .pz-shape {
+        fill: #def3ec;
+      }
+      .pz-2 .pz-shape {
+        fill: #cfeee4;
+      }
+      .pz-3 .pz-shape {
+        fill: #bfe6dc;
+      }
+      .pz-grid line {
+        stroke: rgba(18, 59, 54, 0.1);
+        stroke-width: 1;
+        vector-effect: non-scaling-stroke;
+      }
+      .pz-area {
+        fill: rgba(27, 127, 115, 0.16);
+      }
+      .pz-line,
+      .pz-arrow {
+        fill: none;
+        stroke: var(--teal);
+        stroke-width: 1.4;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .pz-line {
+        stroke-dasharray: 1;
+      }
+      /* the pen that draws the line (added by the script) */
+      .pz-pen {
+        fill: var(--teal);
+        stroke: #fff;
+        stroke-width: 1.2;
+      }
+      .pz-halo {
+        fill: rgba(27, 127, 115, 0.22);
+      }
+      .pz-l {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 14px 16px;
+        font-size: var(--fs-small);
+        font-weight: 600;
+      }
+      .pz-l span {
+        display: grid;
+        place-items: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        background: var(--teal);
+        color: #fff;
+        font-size: max(11px, calc(11px / var(--z)));
+      }
+      .pz-l i {
+        font-size: 18px;
+        color: var(--teal);
+      }
+
+      /* ---------- 7. booking (its own section) ---------- */
+      .book {
+        position: relative;
+        padding: var(--sec-y) 0;
+      }
+      .ct {
+        position: relative;
+      }
+      .ct-in {
+        position: relative;
+        max-width: var(--max);
+        margin: 0 auto;
+        text-align: center;
+      }
+      .ct-in .t-sub {
+        font-size: var(--fs-lead);
+        color: var(--body);
+      }
+
+      /* ---------- 7. FAQ ---------- */
+      .faq {
+        padding: var(--sec-y) 0;
+      }
+      .fq-list {
+        display: grid;
+        gap: 12px;
+        max-width: var(--max);
+        margin: var(--sec-head) auto 0;
+      }
+      .fq {
+        border-radius: var(--r-card);
+        border: 1px solid var(--line);
+        background: #fff;
+        transition:
+          border-color 0.3s,
+          box-shadow 0.4s;
+      }
+      .fq.open {
+        border-color: var(--mint-2);
+        box-shadow: 0 24px 50px -36px rgba(13, 19, 18, 0.35);
+      }
+      .fq h3 {
+        margin: 0;
+        font: inherit;
+      }
+      .fq-q {
+        display: grid;
+        grid-template-columns: 52px minmax(0, 1fr) var(--btn);
+        align-items: center;
+        gap: 12px;
+        width: 100%;
+        padding: 20px var(--pad-card);
+        text-align: left;
+        font-size: var(--fs-h5);
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        line-height: 1.3;
+        color: var(--ink);
+      }
+      .fq-n {
+        font-size: var(--fs-small);
+        color: var(--teal);
+        font-variant-numeric: tabular-nums;
+      }
+      .fq-i {
+        display: grid;
+        place-items: center;
+        width: var(--btn);
+        height: var(--btn);
+        border-radius: 50%;
+        background: var(--mint);
+        color: var(--teal);
+        font-size: 18px;
+        transition:
+          transform 0.5s var(--ease),
+          background-color 0.3s,
+          color 0.3s;
+      }
+      .fq-q:hover .fq-i {
+        background: var(--mint-2);
+      }
+      .fq.open .fq-i {
+        transform: rotate(45deg);
+        background: var(--acc);
+        color: var(--acc-on);
+      }
+      .fq.open .fq-n {
+        color: var(--acc-ink);
+      }
+      .js-fq .fq-a {
+        height: 0;
+        overflow: hidden;
+      }
+      .fq-in {
+        display: grid;
+        gap: 12px;
+        max-width: 780px;
+        padding: 0 22px 26px 86px;
+        font-size: var(--fs-body);
+        line-height: 1.6;
+        color: var(--body);
+      }
+
+      /* ---------- footer ---------- */
+      .foot {
+        position: relative;
+        color: var(--ink);
+        padding-top: 119px;
+      }
+      .f-g {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        max-width: var(--max);
+        margin-inline: auto;
+        padding-inline: var(--side);
+        box-sizing: content-box;
+        gap: 64px 40px;
+      }
+      .f-g .brand b {
+        font-size: 21px;
+      }
+      .f-tag {
+        margin-top: 14px;
+        max-width: 250px;
+        font-size: var(--fs-small);
+        line-height: 1.35;
+        color: var(--teal);
+      }
+      .f-cols {
+        display: flex;
+        gap: clamp(28px, calc(4 * var(--uvw)), 56px);
+        white-space: nowrap;
+      }
+      .f-cols ul {
+        display: grid;
+        gap: 14px;
+        align-content: start;
+        font-size: var(--fs-small);
+      }
+      /* Dental Marketing's treatments: same 14px rhythm as every other footer link */
+      .f-sub {
+        display: grid;
+        gap: 14px;
+        margin: 14px 0 0;
+        padding-left: 14px;
+        border-left: 1px solid rgba(13, 19, 18, 0.16);
+      }
+      .f-sub a {
+        color: rgba(13, 19, 18, 0.62);
+      }
+      .f-cols a {
+        opacity: 0.92;
+        transition: color 0.3s;
+      }
+      .f-cols a:hover {
+        color: var(--acc-ink);
+      }
+      /* contact strip: its own full-width line under the brand + links, so it never collides */
+      .f-big {
+        grid-column: 1 / -1;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 12px 40px;
+        padding-top: 40px;
+        border-top: 1px solid rgba(13, 19, 18, 0.12);
+        font-size: clamp(22px, calc(3.6 * var(--uvw)), 52px);
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1.1;
+      }
+      .f-big span {
+        font-size: var(--fs-h5);
+        font-weight: 400;
+        letter-spacing: -0.01em;
+        color: rgba(13, 19, 18, 0.6);
+      }
+      .f-big a {
+        transition: color 0.3s;
+      }
+      .f-big a:hover {
+        color: var(--acc-ink);
+      }
+      .f-bot {
+        display: flex;
+        justify-content: space-between;
+        gap: 20px;
+        max-width: var(--max);
+        margin: 110px auto 0;
+        padding: 26px var(--side) 60px;
+        box-sizing: content-box;
+        font-size: var(--fs-xs);
+        color: rgba(13, 19, 18, 0.5);
+        background:
+          linear-gradient(90deg, transparent, rgba(13, 19, 18, 0.16) 18%, rgba(13, 19, 18, 0.16) 82%, transparent) top / 100% 1px no-repeat;
+      }
+      .f-bot nav {
+        display: flex;
+        gap: 18px;
+      }
+      .f-bot a:hover {
+        color: var(--ink);
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        height: 50px;
+        padding: 0 26px;
+        border-radius: var(--r-pill);
+        font-size: var(--fs-body);
+        font-weight: 500;
+        background: var(--ink);
+        color: #fff;
+        transition: background-color 0.3s;
+      }
+      .btn:hover {
+        background: var(--teal);
+      }
+
+      /* ---------- booking card ---------- */
+      .ct-body {
+        margin-top: var(--sec-head);
+      }
+      .ct-body {
+        max-width: 1100px;
+        margin-inline: auto;
+      }
+      .ct-body .alt {
+        text-align: center;
+      }
+      /* the old booking styles made this link lime; keep it in the teal family */
+      .ct .ct-body .alt a {
+        color: var(--teal);
+        transition: color 0.3s;
+      }
+      .ct .ct-body .alt a:hover {
+        color: var(--deep);
+      }
+
+      /* ---------- image placeholders (swap for real photos) ---------- */
+      .phx {
+        display: block;
+        width: 100%;
+        height: 100%;
+      }
+      .phx-bg {
+        fill: #e9eeec;
+      }
+      .phx-stripe {
+        stroke: rgba(13, 19, 18, 0.07);
+        stroke-width: 1.5;
+      }
+      .phx .ico {
+        fill: none;
+        stroke: var(--body);
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+      }
+      .phx text {
+        font-family: var(--f);
+        text-anchor: middle;
+        dominant-baseline: middle;
+      }
+      .phx .lbl {
+        font-size: 18px;
+        font-weight: 600;
+        fill: var(--ink);
+      }
+      .phx .hint {
+        font-size: var(--fs-small);
+        fill: var(--body);
+      }
+      .phx.xs .lbl {
+        font-size: var(--fs-xs);
+        font-weight: 700;
+      }
+
+      /* ---------- Apple-style continuous corners ----------
+         a squircle reads tighter than a circle arc of the same radius, so the radius grows with it */
+      @supports (corner-shape: squircle) {
+        :root {
+          --r-card: 38px;
+        }
+        .sx-card,
+        .dd-fly,
+        .menu .dd-m a,
+        .h-badges,
+        .h-stat,
+        .cs-in,
+        .cs-img,
+        .cs-img > .cs-logo,
+        .q,
+        .vbox-f,
+        .rb,
+        .fq,
+        .bk,
+        .bk-logo,
+        .bk-slot button,
+        .field textarea,
+        .bk-s3 .bk-preview {
+          corner-shape: squircle;
+        }
+      }
+
+      /* ---------- laptop proportions ----------
+         the layout is tuned on a 1920px screen; laptops (1280-1680px wide, e.g. 1920x1080 at 125% scaling = 1536px)
+         get the same picture scaled down, like a browser zoom of 80-90% */
+      @media (min-width: 1200px) and (max-width: 1699px) {
+        :root {
+          --z: 0.8;
+          zoom: 0.8;
+        }
+      }
+      @media (min-width: 1700px) and (max-width: 1919px) {
+        :root {
+          --z: 0.9;
+          zoom: 0.9;
+        }
+      }
+
+      /* ---------- responsive ---------- */
+      /* wider than the 1920px hero: the corner glows fade out before its edges, so no seam shows,
+         and the headline keeps growing past its 78px cap (78px at 1920, ~104px at 2560, max 112px) */
+      @media (min-width: 1921px) {
+        .h-obj {
+          width: min(calc(30 * var(--uvw)), calc(60 * var(--uvh)), 800px);
+        }
+        /* the reviews run edge to edge of the screen, past the 1920 hero and page box (no fade at the ends: it read as
+           blur on the first and last card); their first card still lines up with the content */
+        .hero {
+          overflow-x: visible;
+        }
+        .q-row {
+          margin-inline: calc(-1 * var(--bleed));
+          padding-left: calc(var(--bleed) + var(--side));
+        }
+        .hero {
+          --fs-h1: min(calc(3.55 * var(--uvw)), 92px);
+          background:
+            radial-gradient(32% 28% at 24% 58%, rgba(191, 230, 220, 0.55), transparent 70%),
+            radial-gradient(24% 30% at 78% 30%, rgba(255, 191, 215, 0.4), transparent 70%);
+        }
+      }
+      /* wider screens: side copy, button, labels and ROAS scale up in steps with the headline */
+      @media (min-width: 2200px) {
+        .h-side,
+        .h-badges,
+        .h-stat {
+          zoom: 1.15;
+        }
+      }
+      @media (min-width: 2500px) {
+        .h-side,
+        .h-badges,
+        .h-stat {
+          zoom: 1.3;
+        }
+      }
+      @media (min-width: 3200px) {
+        .h-side,
+        .h-badges,
+        .h-stat {
+          zoom: 1.4;
+        }
+      }
+      /* tablet landscape: the subline and button stack, the tooth tucks further into the corner */
+      @media (min-width: 900px) and (max-width: 1199px) {
+        .h-side {
+          width: 300px;
+        }
+        .h-obj {
+          width: calc(48 * var(--uvw));
+        }
+      }
+      /* mid widths: a slightly tighter label row */
+      @media (min-width: 900px) and (max-width: 1339px) {
+        .h-badges li {
+          padding: 0 18px;
+          font-size: var(--fs-small);
+        }
+      }
+      @media (max-width: 1199px) {
+        .menu,
+        .nav-txt {
+          display: none;
+        }
+        .nav {
+          grid-template-columns: 1fr auto;
+          padding: 0 var(--side);
+        }
+        .burger {
+          display: grid;
+        }
+      }
+      @media (max-width: 899px) {
+        :root {
+          --sec-y: 72px;
+          --sec-head: 40px;
+          --pad-card: 20px;
+          --pad-panel: 24px;
+          --btn: 44px;
+        }
+        .nav-cta {
+          min-width: 0;
+          height: 40px;
+        }
+        .hero {
+          display: flex;
+          flex-direction: column;
+        }
+        .h-top {
+          gap: 18px;
+          padding-top: clamp(92px, calc(13 * var(--usvh)), 112px);
+        }
+        .h-top {
+          flex-direction: column;
+        }
+        .h-side {
+          width: auto;
+          padding-top: 0;
+        }
+        .h-side .cta {
+          margin-top: 22px;
+        }
+        .hero::after {
+          display: none;
+        }
+        .hero {
+          background:
+            radial-gradient(60% 16% at 25% 66%, rgba(191, 230, 220, 0.55), transparent 70%),
+            radial-gradient(60% 16% at 70% 44%, rgba(255, 191, 215, 0.35), transparent 70%);
+        }
+        .h-obj {
+          position: relative;
+          top: auto;
+          left: auto;
+          order: 1;
+          transform: none;
+          align-self: center;
+          width: min(calc(76 * var(--uvw)), 340px, calc(40 * var(--usvh)));
+          margin-top: 8px;
+        }
+        .h-row {
+          order: 2;
+          margin-top: -20px;
+        }
+        .h-say {
+          order: 3;
+          margin-top: 32px;
+        }
+        .h-row {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 10px;
+        }
+        .h-row > .h-badges,
+        .h-row > .h-stat {
+          flex: none;
+          min-height: 92px;
+        }
+        .hero {
+          --fs-h1: clamp(30px, 8.2vw, 40px);
+        }
+        .h-stat {
+          justify-content: center;
+          gap: 16px;
+          padding: 12px 14px;
+        }
+        .h-num + .h-num {
+          padding-left: 16px;
+        }
+        .h-stat b {
+          font-size: 24px;
+        }
+        .h-stat small {
+          font-size: var(--fs-xs);
+        }
+        .h-badges li {
+          justify-content: center;
+          gap: 7px;
+          padding: 2px 6px;
+          font-size: var(--fs-xs);
+        }
+        .h-badges {
+          padding: 12px 6px;
+        }
+        .sh-rule {
+          width: 44px;
+        }
+        /* phones: the active card fills the width less a peek of the next; copy stacks under the name */
+        .sx {
+          --sx-h: 460px;
+          --sx-big: calc(100 * var(--uvw) - 2 * var(--side) - 48px);
+          --sx-small: 120px;
+          --sx-gap: 12px;
+          --sx-pad: 20px;
+          --sx-x0: var(--side);
+        }
+        .sx-txt {
+          grid-template-columns: calc(var(--sx-big) - 2 * var(--sx-pad));
+          gap: 14px;
+        }
+        .sx-ctl .arw {
+          display: none;
+        }
+        .sx-count {
+          max-width: none;
+        }
+        .row {
+          gap: 12px;
+          margin-top: var(--sec-head);
+        }
+        .cs {
+          flex-basis: min(320px, calc(84 * var(--uvw)));
+        }
+        .q {
+          width: min(340px, calc(84 * var(--uvw)));
+          grid-template-columns: 1fr;
+          min-height: 0;
+        }
+        .q-media {
+          order: -1;
+          height: 170px;
+        }
+        .rs {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 10px;
+          margin-top: var(--sec-head);
+        }
+        .rs {
+          grid-template-areas: "a b" "c d" "e p3" "p1 p2";
+        }
+        .rb-1 {
+          grid-area: a;
+        }
+        .rb-2 {
+          grid-area: b;
+        }
+        .rb-3 {
+          grid-area: c;
+        }
+        .rb-4 {
+          grid-area: d;
+        }
+        .rb-5 {
+          grid-area: e;
+        }
+        .pz-1 {
+          grid-area: p1;
+          align-self: start;
+        }
+        .pz-2 {
+          grid-area: p2;
+          align-self: start;
+        }
+        .pz-3 {
+          grid-area: p3;
+          align-self: end;
+        }
+        .rb.rb-5 {
+          min-height: 250px;
+        }
+        .rb-5 p {
+          max-width: none;
+        }
+        .rb {
+          aspect-ratio: auto;
+          min-height: 190px;
+          gap: 18px;
+        }
+        .rb b {
+          font-size: min(44px, 16cqw);
+        }
+        .fq-q {
+          grid-template-columns: 34px minmax(0, 1fr) var(--btn);
+          gap: 10px;
+          padding: 18px var(--pad-card);
+          font-size: 17px;
+        }
+        .fq-in {
+          padding: 0 16px 22px;
+        }
+        .foot {
+          padding-top: 80px;
+        }
+        .f-g {
+          grid-template-columns: 1fr;
+          gap: 40px;
+        }
+        .f-big {
+          flex-direction: column;
+          gap: 10px;
+          padding-top: 28px;
+        }
+        .f-bot {
+          flex-direction: column;
+          margin-top: 64px;
+          padding-inline: var(--side);
+        }
+      }
+      /* tablets: the label row lines up with the copy instead of spreading across */
+      @media (min-width: 600px) and (max-width: 899px) {
+        .h-badges li {
+          padding: 2px 22px;
+          font-size: 15px;
+        }
+      }
+      @media (max-width: 599px) {
+        .nav-cta {
+          display: none;
+        }
+        .cta {
+          height: 56px;
+          padding: 0 6px 0 26px;
+          font-size: 15px;
+        }
+        .cta-i {
+          width: var(--btn);
+          height: var(--btn);
+        }
+        .f-cols {
+          flex-wrap: wrap;
+          gap: 28px 44px;
+        }
+      }
+      @media (hover: none) {
+        .cs-img {
+          height: 190px;
+        }
+        .cs-res {
+          opacity: 1;
+          transform: none;
+        }
+        .cs:hover .cs-img,
+        .cs.on .cs-img,
+        .cs:focus-within .cs-img {
+          height: 190px;
+        }
+        /* touch: there is no hover, so the photo stays and the logo sits on it in a white chip */
+        .cs:hover .cs-cover,
+        .cs.on .cs-cover,
+        .cs:focus-within .cs-cover {
+          transform: none;
+        }
+        .cs-img > .cs-logo {
+          inset: auto 10px 10px auto;
+          z-index: 2;
+          width: 112px;
+          height: 62px;
+          padding: 8px 10px;
+          border-radius: calc(var(--r-inner) - 10px); /* sits 10px inside the photo */
+          background: #fff;
+        }
+        .cs-in {
+          height: auto;
+          min-height: 410px;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        *,
+        *::before,
+        *::after {
+          animation: none !important;
+          transition-duration: 0.01s !important;
+        }
+      }
+      @media (prefers-reduced-transparency: reduce) {
+        .q,
+        .top::before {
+          backdrop-filter: none;
+          -webkit-backdrop-filter: none;
+        }
+        .q {
+          background: #fff;
+        }
+      }
+
+      /* ---------- booking widget (kept from v9) ---------- */
+      .field {
+        display: grid;
+        gap: 8px;
+      }
+      .field label {
+        font-size: 0.9375rem;
+        font-weight: 500;
+        color: var(--ink);
+      }
+      .field input,
+      .field textarea {
+        width: 100%;
+        height: 46px;
+        border: 1px solid #dce2df;
+        border-radius: 10px;
+        padding: 0 12px;
+        font-size: 0.9375rem;
+        background: #fff;
+        color: var(--ink);
+        transition:
+          border-color 0.25s,
+          box-shadow 0.25s;
+      }
+      .field textarea {
+        height: 120px;
+        padding: 12px;
+        resize: vertical;
+      }
+      .field input::placeholder,
+      .field textarea::placeholder {
+        color: #76817e;
+      }
+      .field input:focus,
+      .field textarea:focus {
+        outline: none;
+        border-color: var(--teal-2);
+        box-shadow: 0 0 0 3px rgba(42, 148, 136, 0.18);
+      }
+      .field .err {
+        font-size: 0.8125rem;
+        color: #b42318;
+        min-height: 0;
+      }
+      .field.bad input {
+        border-color: #d92d20;
+      }
+      /* J. contact: booking calendar (Calendly-style, live LeadConnector availability) */
+      .ct-body {
+        width: 100%;
+        max-width: 1100px;
+      }
+      .bk {
+        display: grid;
+        grid-template-columns: 340px 1fr;
+        background: #fff;
+        color: var(--ink);
+        border-radius: 28px;
+        overflow: hidden;
+        min-height: 640px;
+        text-align: left;
+        box-shadow: 0 40px 80px -40px rgba(0, 0, 0, 0.6);
+      }
+      .bk-info {
+        padding: 40px 32px;
+        border-right: 1px solid var(--line);
+      }
+      .bk-logo {
+        width: 62px;
+        height: 62px;
+        border-radius: 18px;
+        display: grid;
+        place-items: center;
+        background: linear-gradient(140deg, var(--mint), #fff);
+        border: 1px solid rgba(191, 230, 220, 0.9);
+        box-shadow:
+          inset 0 1px 0 #fff,
+          0 12px 26px -14px rgba(42, 148, 136, 0.6);
+      }
+      .bk-org {
+        display: block;
+        margin-top: 22px;
+        font-size: 0.9375rem;
+        font-weight: 600;
+        color: var(--mute);
+      }
+      .bk-title {
+        margin-top: 6px;
+        font-size: 1.875rem;
+        font-weight: 600;
+        letter-spacing: -0.03em;
+        color: var(--ink);
+      }
+      .bk-meta {
+        margin-top: 24px;
+        display: grid;
+        gap: 14px;
+      }
+      .bk-meta li {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--body);
+      }
+      .bk-meta i {
+        font-size: 1.25rem;
+        color: var(--mute);
+        flex-shrink: 0;
+      }
+      .bk-meta .bk-when {
+        color: var(--teal);
+      }
+      .bk-meta .bk-when i {
+        color: var(--teal);
+      }
+      .bk-desc {
+        margin-top: 26px;
+        font-size: 1rem;
+        line-height: 1.65;
+        color: var(--body);
+      }
+      .bk-main {
+        padding: 40px 40px 32px;
+        min-width: 0;
+      }
+      .bk-h {
+        font-size: 1.375rem;
+        font-weight: 600;
+        letter-spacing: -0.02em;
+        color: var(--ink);
+      }
+      .bk-pick {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr);
+        gap: 28px;
+        margin-top: 22px;
+      }
+      .bk.has-day .bk-pick {
+        grid-template-columns: minmax(0, 1fr) 220px;
+      }
+      .bk-month {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        padding: 0 4px;
+        font-size: 1.0625rem;
+        font-weight: 500;
+        color: var(--ink);
+      }
+      .bk-nav {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-size: 1.125rem;
+        color: var(--teal);
+        background: rgba(221, 242, 236, 0.75);
+        transition:
+          background-color 0.25s,
+          color 0.25s;
+      }
+      .bk-nav:hover:not(:disabled) {
+        background: var(--mint-2);
+      }
+      .bk-nav:disabled {
+        background: none;
+        color: #b8c0bd;
+        cursor: default;
+      }
+      .bk-wk {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        margin-top: 22px;
+        text-align: center;
+        font-size: 0.75rem;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+        color: var(--ink);
+      }
+      .bk-days {
+        display: grid;
+        grid-template-columns: repeat(7, 1fr);
+        gap: 8px 4px;
+        margin-top: 12px;
+      }
+      .bk-days > * {
+        position: relative;
+        width: 100%;
+        max-width: 56px;
+        aspect-ratio: 1;
+        justify-self: center;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        font-size: 1.0625rem;
+        color: #9aa4a1;
+      }
+      .bk-days button {
+        background: var(--mint);
+        color: var(--teal);
+        font-weight: 700;
+        transition:
+          background-color 0.25s,
+          color 0.25s,
+          transform 0.35s var(--ease);
+      }
+      .bk-days button:hover {
+        background: var(--mint-2);
+      }
+      .bk-days button[aria-pressed="true"] {
+        background: var(--teal);
+        color: #fff;
+      }
+      .bk-days .today::after {
+        content: "";
+        position: absolute;
+        bottom: 7px;
+        left: 50%;
+        width: 4px;
+        height: 4px;
+        margin-left: -2px;
+        border-radius: 50%;
+        background: currentColor;
+      }
+      .bk-days .sk {
+        background: linear-gradient(
+            90deg,
+            #eef2f0 25%,
+            #f7f9f8 50%,
+            #eef2f0 75%
+          )
+          0 0/200% 100%;
+        animation: bksk 1.2s linear infinite;
+      }
+      @keyframes bksk {
+        to {
+          background-position: -200% 0;
+        }
+      }
+      .bk-msg {
+        margin-top: 14px;
+        min-height: 1.4em;
+        font-size: 0.875rem;
+        color: var(--body);
+      }
+      .bk-msg button,
+      .bk-msg a {
+        color: var(--teal);
+        font-weight: 600;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+      .bk-tz {
+        margin-top: 18px;
+      }
+      .bk-tz label {
+        display: block;
+        font-size: 1rem;
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .bk-tzsel {
+        position: relative;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-top: 8px;
+        max-width: 380px;
+        color: var(--ink);
+      }
+      .bk-tzsel select {
+        appearance: none;
+        -webkit-appearance: none;
+        width: 100%;
+        border: 0;
+        background: transparent;
+        padding: 8px 28px 8px 0;
+        font: inherit;
+        font-size: 0.9375rem;
+        color: var(--ink);
+        cursor: pointer;
+      }
+      .bk-tzsel .ph-caret-down {
+        position: absolute;
+        right: 4px;
+        color: var(--teal);
+        pointer-events: none;
+      }
+      .bk-times {
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+      }
+      .bk-day {
+        padding-top: 8px;
+        margin-bottom: 16px;
+        font-weight: 500;
+        color: var(--ink);
+      }
+      .bk-slots {
+        display: grid;
+        gap: 10px;
+      }
+      .bk-slot {
+        display: grid;
+        grid-template-columns: 1fr 0fr;
+        gap: 0;
+        transition:
+          grid-template-columns 0.45s var(--ease),
+          gap 0.45s var(--ease);
+      }
+      .bk-slot.sel {
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+      }
+      .bk-slot button {
+        height: 52px;
+        border-radius: 12px;
+        font-size: 1rem;
+        font-weight: 700;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+      .bk-slot .t {
+        border: 1.5px solid var(--teal-2);
+        background: #fff;
+        color: var(--teal);
+        transition:
+          background-color 0.25s,
+          color 0.25s,
+          border-color 0.25s,
+          box-shadow 0.25s;
+      }
+      .bk-slot .t:hover {
+        box-shadow: inset 0 0 0 1px var(--teal-2);
+      }
+      .bk-slot.sel .t {
+        background: #4a5654;
+        border-color: #4a5654;
+        color: #fff;
+        box-shadow: none;
+      }
+      .bk-slot .go {
+        background: rgba(216, 245, 107, 0.95);
+        color: var(--ink);
+        font-weight: 600;
+        border: 1px solid rgba(255, 255, 255, 0.6);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7);
+        opacity: 0;
+        transition: opacity 0.3s;
+      }
+      .bk-slot.sel .go {
+        opacity: 1;
+      }
+      .bk-back {
+        width: 44px;
+        height: 44px;
+        border-radius: 50%;
+        display: grid;
+        place-items: center;
+        margin-bottom: 16px;
+        border: 1px solid var(--line);
+        color: var(--teal);
+        font-size: 1.15rem;
+        transition: background-color 0.25s;
+      }
+      .bk-back:hover {
+        background: var(--mint);
+      }
+      .bk-fields {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 16px;
+        margin-top: 22px;
+      }
+      .bk-fields .full {
+        grid-column: span 2;
+      }
+      .bk-err {
+        margin-top: 14px;
+        min-height: 1.2em;
+        font-size: 0.875rem;
+        color: #b42318;
+      }
+      .bk-submit {
+        margin-top: 6px;
+        height: 52px;
+        padding: 0 32px;
+      }
+      .bk-s3 {
+        min-height: 520px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+      .bk-ok i {
+        font-size: 3.75rem;
+        color: var(--teal-2);
+      }
+      .bk-s3 .bk-h {
+        margin-top: 10px;
+        font-size: 1.75rem;
+      }
+      .bk-s3 p {
+        margin-top: 10px;
+        max-width: 420px;
+        color: var(--body);
+        line-height: 1.6;
+      }
+      .bk-s3 .bk-preview {
+        margin-top: 18px;
+        padding: 8px 14px;
+        border-radius: 10px;
+        background: #fff6db;
+        color: #7a5300;
+        font-size: 0.8125rem;
+      }
+      .bk-step[hidden],
+      .bk-times[hidden],
+      .bk-when[hidden],
+      .bk-preview[hidden] {
+        display: none !important;
+      }
+      .ct-body .alt {
+        margin-top: 18px;
+        text-align: center;
+        font-size: 0.9375rem;
+        color: #c9d2cf;
+      }
+      .ct-body .alt a {
+        color: var(--lime);
+        text-decoration: underline;
+        text-underline-offset: 4px;
+      }
+      @media (max-width: 899px) {
+        .bk {
+          grid-template-columns: 1fr;
+          min-height: 0;
+        }
+        .bk-info {
+          border-right: 0;
+          border-bottom: 1px solid var(--line);
+          padding: 28px 24px;
+        }
+        .bk-desc {
+          display: none;
+        }
+        .bk-main {
+          padding: 28px 18px;
+        }
+        .bk.has-day .bk-pick {
+          grid-template-columns: 1fr;
+        }
+        .bk-fields {
+          grid-template-columns: 1fr;
+        }
+        .bk-fields .full {
+          grid-column: auto;
+        }
+      }
+      @media (prefers-reduced-motion: reduce) {
+        .bk-days .sk {
+          animation: none;
+        }
+        .bk-slot,
+        .bk-slot .go {
+          transition: none;
+        }
+      }
+
+      /* ---------- booking widget on the site system: radius tokens, type scale, hero-style buttons ---------- */
+      .bk {
+        border-radius: var(--r-card);
+        min-height: 600px;
+      }
+      .bk-info {
+        padding: var(--pad-panel);
+      }
+      .bk-main {
+        padding: var(--pad-panel);
+      }
+      .bk-logo {
+        border-radius: var(--r-inner);
+      }
+      .bk-org {
+        font-size: var(--fs-small);
+      }
+      .bk-title {
+        font-size: var(--fs-h4);
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+      }
+      .bk-meta li,
+      .bk-desc {
+        font-size: var(--fs-body);
+      }
+      .bk-meta li {
+        font-weight: 500;
+      }
+      .bk-h {
+        font-size: var(--fs-h5);
+        letter-spacing: -0.02em;
+      }
+      .bk-month {
+        font-size: var(--fs-body);
+        font-weight: 600;
+      }
+      .bk-wk {
+        font-size: var(--fs-xs);
+      }
+      .bk-days > * {
+        font-size: var(--fs-body);
+      }
+      .bk-days button {
+        font-weight: 600;
+        /* colour only: a transform transition here froze the GSAP scale-in part-way (days ended at mixed sizes) */
+        transition:
+          background-color 0.25s,
+          color 0.25s;
+      }
+      .bk-msg,
+      .bk-err,
+      .bk-tz label,
+      .bk-tzsel select,
+      .field label {
+        font-size: var(--fs-small);
+      }
+      .field label {
+        font-weight: 600;
+      }
+      .field input,
+      .field textarea {
+        height: 52px;
+        padding: 0 16px;
+        border-radius: var(--r-inner);
+        font-size: var(--fs-body);
+      }
+      .field textarea {
+        height: 120px;
+        padding: 14px 16px;
+      }
+      .field .err,
+      .bk-s3 .bk-preview {
+        font-size: var(--fs-xs);
+      }
+      .bk-s3 .bk-preview {
+        border-radius: var(--r-inner);
+      }
+      .bk-s3 .bk-h {
+        font-size: var(--fs-h4);
+      }
+      /* time slots and their "Next" are pills, like every other button */
+      .bk-slot button {
+        height: 52px;
+        border-radius: var(--r-pill);
+        font-size: var(--fs-body);
+        font-weight: 600;
+      }
+      .bk-slot.sel .t {
+        background: var(--ink);
+        border-color: var(--ink);
+      }
+      .bk-slot .go {
+        background: var(--teal);
+        color: #fff;
+      }
+      .bk-slot .go:hover {
+        background: var(--deep);
+      }
+      /* submit = the hero's dark pill */
+      .btn.bk-submit {
+        height: 58px;
+        padding: 0 34px;
+        border: 0;
+        border-radius: var(--r-pill);
+        background: var(--ink);
+        color: #fff;
+        box-shadow: none;
+        font-size: var(--fs-body);
+        font-weight: 500;
+      }
+      .btn.bk-submit:hover {
+        background: var(--deep);
+      }
+      @media (max-width: 899px) {
+        .bk-info {
+          padding: var(--pad-panel) var(--pad-card);
+        }
+        .bk-main {
+          padding: var(--pad-panel) var(--pad-card);
+        }
+      }
+
+      /* type consistency: body copy is 1.6 everywhere, titles 1.09 */
+      .bk-desc {
+        line-height: 1.6;
+      }
+      .bk-title {
+        line-height: 1.09;
+        letter-spacing: -0.035em;
+      }
+
+      /* ================= service page (template: dental-marketing.html; the other six reuse it) =================
+         Built only from the home page's vocabulary: section heads, the CTA pill, white cards with mint chips, a hairline
+         list, the services carousel's glyph panel, case studies, the DMC Method and the FAQ. Shared CSS above is a copy of
+         index.html's; page-only rules live here. */
+      .dd-t.is-cur {
+        color: var(--teal);
+      }
+      /* ---------- service hero (inspo: madebyshape.co.uk SEO page, in our light theme) ----------
+         Row 1: a dot label and the H1 on the left, two short paragraphs on the right.
+         Row 2: one wide photo; a small CTA sits in a notch cut out of its top-left corner (a clip-path the script
+         draws, so the notch follows the button's real size), a glass panel holds the numbers.
+         Row 3 (#more): the statement and the CTA on the left, a checklist on the right. */
+      .svh {
+        position: relative;
+        --fs-h1: clamp(38px, calc(4.2 * var(--uvw)), 68px); /* the home hero's size */
+        padding: clamp(118px, calc(16 * var(--uvh)), 150px) 0 var(--sec-y); /* every section ends with --sec-y, as on the home page */
+        background: radial-gradient(30% 26% at 84% 12%, rgba(255, 191, 215, 0.34), transparent 70%);
+      }
+      .svh-in {
+        max-width: var(--max);
+        margin-inline: auto;
+      }
+      .svh-top {
+        display: grid;
+        grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+        gap: 40px clamp(40px, calc(6 * var(--uvw)), 120px);
+        align-items: start;
+      }
+      /* the small label with a pink dot (row 1 and row 3) */
+      .eyb {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: var(--fs-small);
+        font-weight: 500;
+        color: var(--ink);
+      }
+      .eyb::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: var(--acc-mid);
+      }
+      .svh-top .eyb {
+        margin-bottom: 22px;
+      }
+      .svh-txt {
+        padding-top: calc(var(--fs-small) * 1.4 + 22px); /* level with the H1, under the label */
+      }
+      /* the same as the home hero's subline (.h-side p): lead size, 1.45, grey */
+      .svh-txt p {
+        font-size: var(--fs-lead);
+        line-height: 1.45;
+        color: var(--grey);
+      }
+      .svh-txt p + p {
+        margin-top: 18px;
+      }
+      /* row 2: the banner */
+      .svb-w {
+        position: relative;
+        margin-top: clamp(48px, calc(5 * var(--uvw)), 80px);
+      }
+      .svb {
+        position: relative;
+        height: clamp(300px, calc(26 * var(--uvw)), 500px);
+        border-radius: var(--r-card);
+        overflow: hidden;
+        background: var(--soft);
+      }
+      .svb-img {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .svb-img img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 50% 40%;
+      }
+      .svb-tab {
+        position: absolute;
+        top: 0;
+        left: 0;
+        z-index: 2;
+      }
+      /* every button on the page is the home page's CTA as it is: same height, its width follows its text */
+      /* the numbers: the home hero's stats panel (.h-stat: glass, two figures with the pink highlighter, a hairline
+         between them), placed on the photo's quiet side */
+      .svb-stat {
+        position: absolute;
+        left: 24px;
+        bottom: 24px;
+        z-index: 1;
+      }
+      /* row 3 (#more): the statement and its CTA on the left, the checklist on the right (no label: user request) */
+      .svs {
+        display: grid;
+        grid-template-columns: minmax(0, 8fr) minmax(0, 4fr);
+        gap: 48px clamp(40px, calc(6 * var(--uvw)), 120px);
+        align-items: start;
+        padding-top: var(--sec-y);
+      }
+      .svs-q {
+        font-size: var(--fs-h2); /* the home section headings' size */
+        font-weight: 700;
+        letter-spacing: -0.035em;
+        line-height: 1.09;
+      }
+      .svs-q .hl {
+        line-height: 1;
+      }
+      .svs-l .cta {
+        margin-top: 36px;
+      }
+      .ck-cap {
+        font-size: var(--fs-small);
+        color: var(--grey);
+      }
+      .ck {
+        display: grid;
+        gap: 16px;
+        margin: 20px 0 0;
+        padding: 0;
+        list-style: none;
+      }
+      .ck li {
+        display: flex;
+        align-items: center;
+        gap: 14px;
+        font-size: var(--fs-lead); /* the hero text size (user request) */
+        line-height: 1.45;
+        font-weight: 500;
+      }
+      /* the tick circle: the How we help tile's green, a black tick (user request) */
+      .ck i {
+        display: grid;
+        flex: none;
+        place-items: center;
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        background: var(--teal-3);
+        color: var(--ink);
+        font-size: 16px;
+      }
+
+      /* what we handle (inspo: madebyshape.co.uk): a left-aligned head with the dot label and a small CTA on the right,
+         then a 3-column grid; each item has a mint icon tile, a title and one line, and a hairline under it that turns
+         teal on hover (the tile turns pink, like the FAQ icon) */
+      .help {
+        padding: var(--sec-y) 0;
+      }
+      .help-in {
+        max-width: var(--max);
+        margin-inline: auto;
+      }
+      .help-hd {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-between;
+        gap: 32px;
+      }
+      .help-hd .eyb {
+        margin-bottom: 20px;
+      }
+      .hp-g {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        column-gap: clamp(24px, calc(2.4 * var(--uvw)), 48px);
+        margin-top: var(--sec-head);
+      }
+      .hp {
+        position: relative;
+        padding: clamp(40px, calc(7 * var(--uvh)), 64px) 0;
+        border-bottom: 1px solid rgba(13, 19, 18, 0.1);
+      }
+      .hp::after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: -1px;
+        height: 1px;
+        background: var(--teal);
+        transform: scaleX(0);
+        transform-origin: right;
+        transition: transform 0.6s var(--ease);
+      }
+      .hp:hover::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+      /* the DMC Method's sizes (user request): the tile is as tall as a step number (--fs-stat), the title is a step
+         title (--fs-list), the line is the step text (--fs-lead, 1.45, --body). Icons: Phosphor Fill (solid, modern; duotone read as thin outlines on the green tile). */
+      .hp-i {
+        display: grid;
+        flex: none;
+        place-items: center;
+        width: var(--fs-stat);
+        height: var(--fs-stat);
+        border-radius: calc(var(--fs-stat) * 0.38); /* rounder (user request) */
+        background: var(--teal-3);
+        color: var(--ink);
+        font-size: calc(var(--fs-stat) * 0.56);
+      }
+      .hp h3 {
+        display: flex;
+        align-items: center;
+        gap: clamp(14px, calc(1.2 * var(--uvw)), 22px);
+        font-size: var(--fs-list);
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1.09;
+      }
+      .hp p {
+        max-width: 34rem;
+        margin-top: 14px;
+        font-size: var(--fs-lead); /* the same as the hero text (.svh-txt p) */
+        line-height: 1.45;
+        color: var(--grey);
+      }
+
+      /* client video (inspo: madebyshape.co.uk): one wide card on the content width, the still fills it. The quote is set
+         on black label boxes (one per line, box-decoration-break), the name chip under it, the home reviews' white play
+         circle (bigger) bottom-left, and the two buttons in a notch cut from the bottom-right corner (the script draws it,
+         like the hero banner's). Playing swaps the still for the YouTube player and the card opens to 16:9. */
+      .vt {
+        padding: 0 0 var(--sec-y); /* no space of its own on top: it follows How we help directly (user request) */
+      }
+      .vt-in {
+        max-width: var(--max);
+        margin-inline: auto;
+      }
+      .vt-w {
+        position: relative;
+      }
+      .vt-box {
+        position: relative;
+        height: clamp(420px, calc(34 * var(--uvw)), 640px);
+        border-radius: var(--r-card);
+        overflow: hidden;
+        background: var(--ink);
+      }
+      .vt-media {
+        position: absolute;
+        inset: 0;
+        overflow: hidden;
+      }
+      .vt-media img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        object-position: 50% 22%;
+      }
+      .vt-media iframe {
+        position: absolute;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        border: 0;
+        background: var(--ink);
+      }
+      .vt-say {
+        position: absolute;
+        top: 32px;
+        left: 32px;
+        z-index: 1;
+        max-width: min(760px, calc(100% - 64px));
+        margin: 0;
+      }
+      .vt-q {
+        margin: 0;
+        font-size: var(--fs-list);
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1.24;
+      }
+      .vt-q span {
+        padding: 0.06em 0.32em;
+        border-radius: 14px;
+        background: var(--ink);
+        color: #fff;
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
+      }
+      .vt-q i {
+        margin-right: 0.3em;
+        font-size: 0.7em;
+        vertical-align: 0.12em;
+        color: var(--acc);
+      }
+      /* the home reviews' play circle, bigger */
+      .vt-play {
+        position: absolute;
+        left: 32px;
+        bottom: 32px;
+        z-index: 1;
+        display: grid;
+        place-items: center;
+        width: 76px;
+        height: 76px;
+        border-radius: 50%;
+        background: #fff;
+        color: var(--ink);
+        font-size: 24px;
+        box-shadow: 0 14px 30px -12px rgba(13, 19, 18, 0.5);
+        transition:
+          transform 0.4s var(--ease),
+          background-color 0.3s,
+          color 0.3s;
+      }
+      .vt-play:hover {
+        transform: scale(1.1);
+        background: var(--ink);
+        color: #fff;
+      }
+      .vt-say,
+      .vt-play {
+        transition:
+          opacity 0.5s var(--ease),
+          transform 0.4s var(--ease),
+          background-color 0.3s,
+          color 0.3s;
+      }
+      .vt.is-on .vt-say,
+      .vt.is-on .vt-play {
+        opacity: 0;
+        pointer-events: none;
+      }
+      .vt-tab {
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        z-index: 2;
+        display: flex;
+        gap: 10px;
+      }
+      .vt-tab .cta {
+        border: 0;
+        font-family: inherit;
+        cursor: pointer;
+      }
+      /* while the video plays the buttons step out under the card, so the notch never hides the player's controls
+         (the script drops the notch when the tab is not absolute) */
+      .vt.is-on .vt-tab {
+        position: static;
+        justify-content: flex-end;
+        margin-top: 12px;
+      }
+      .vt-tab .cta.light {
+        box-shadow: inset 0 0 0 1px rgba(13, 19, 18, 0.08);
+      }
+
+      /* reviews: the home hero's cards and drift, under a centred section head; the cards sit on a soft glow (they are
+         glass) and the row runs to the screen edge like on the home page */
+      .rvw {
+        position: relative;
+        padding: var(--sec-y) 0;
+      }
+      .rvw-row {
+        margin-top: var(--sec-head);
+      }
+
+      @supports (corner-shape: squircle) {
+        .svb,
+        .vt-box,
+        .hp-i {
+          corner-shape: squircle;
+        }
+      }
+      @media (max-width: 1199px) {
+        .svh-top,
+        .svs {
+          grid-template-columns: 1fr;
+        }
+        .svh-txt {
+          padding-top: 0;
+          max-width: 640px;
+        }
+        .hp-g {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+      }
+      @media (max-width: 899px) {
+        /* phones: the headline keeps its two lines; the statement's label sits above it instead of in its indent */
+        .svh {
+          --fs-h1: clamp(28px, 7.8vw, 38px);
+        }
+        .svb {
+          height: auto;
+          aspect-ratio: 4 / 5;
+        }
+        .svb-img img {
+          object-position: 78% 50%;
+        }
+        .svb-stat {
+          left: 12px;
+          right: 12px;
+          bottom: 12px;
+        }
+        .help-hd {
+          flex-direction: column;
+          align-items: flex-start;
+        }
+        .hp-g {
+          grid-template-columns: 1fr;
+        }
+        /* phones: a taller card, the buttons sit under it (no notch) */
+        .vt-box {
+          height: auto;
+          aspect-ratio: 4 / 5;
+        }
+        .vt-media img {
+          object-position: 50% 30%;
+        }
+        .vt-say {
+          top: 14px;
+          left: 14px;
+          max-width: calc(100% - 28px);
+        }
+        .vt-q {
+          font-size: 22px;
+        }
+        .vt-play {
+          left: 14px;
+          bottom: 14px;
+          width: 60px;
+          height: 60px;
+          font-size: 20px;
+        }
+        .vt-tab {
+          position: static;
+          flex-direction: column;
+          margin-top: 12px;
+        }
+        .vt-tab .cta {
+          width: 100%;
+        }
+        .hp {
+          padding: 32px 0;
+        }
+        .hp-i {
+          width: 52px;
+          height: 52px;
+          border-radius: 20px;
+          font-size: 29px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <svg width="0" height="0" style="position: absolute" aria-hidden="true">
+      <defs>
+        <symbol id="g-logo" viewBox="0 0 48 48">
+          <path fill="#FFC107" d="M43.611 20.083H42V20H24v8h11.303c-1.649 4.657-6.08 8-11.303 8-6.627 0-12-5.373-12-12s5.373-12 12-12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 12.955 4 4 12.955 4 24s8.955 20 20 20 20-8.955 20-20c0-1.341-.138-2.65-.389-3.917z" />
+          <path fill="#FF3D00" d="M6.306 14.691l6.571 4.819C14.655 15.108 18.961 12 24 12c3.059 0 5.842 1.154 7.961 3.039l5.657-5.657C34.046 6.053 29.268 4 24 4 16.318 4 9.656 8.337 6.306 14.691z" />
+          <path fill="#4CAF50" d="M24 44c5.166 0 9.86-1.977 13.409-5.192l-6.19-5.238A11.91 11.91 0 0 1 24 36c-5.202 0-9.619-3.317-11.283-7.946l-6.522 5.025C9.505 39.556 16.227 44 24 44z" />
+          <path fill="#1976D2" d="M43.611 20.083H42V20H24v8h11.303a12.04 12.04 0 0 1-4.087 5.571l.003-.002 6.19 5.238C36.971 39.205 44 34 44 24c0-1.341-.138-2.65-.389-3.917z" />
+        </symbol>
+      </defs>
+    </svg>
+
+    <!-- ============ HEADER (Elementor: Theme Builder > Header, shared with the home page) ============ -->
+    <header class="top" id="top">
+      <nav class="nav" aria-label="Primary">
+        <a class="brand" href="index.html" aria-label="Dental Media Corp home"
+          ><img src="assets/dmc-mark.png" alt="" width="28" height="28" /><span><b>Dental Media Corp</b><small>Dental marketing</small></span></a
+        >
+        <div class="menu">
+          <div class="dd">
+            <a class="dd-t is-cur" href="index.html#services" aria-haspopup="true">Services <i class="ph ph-caret-down" aria-hidden="true"></i></a>
+            <div class="dd-m" aria-label="Services">
+              <div class="dd-sub">
+                <a href="dental-marketing.html">Dental Marketing <i class="ph ph-caret-right" aria-hidden="true"></i></a>
+                <div class="dd-fly">
+                  <a href="dental-marketing.html">Dental Implant Marketing</a>
+                  <a href="dental-marketing.html">Full-Arch Marketing</a>
+                  <a href="dental-marketing.html">Invisalign Marketing</a>
+                  <a href="dental-marketing.html">General Dentistry Marketing</a>
+                </div>
+              </div>
+              <a href="dental-video-marketing.html">Dental Video Marketing</a>
+              <a href="dental-seo.html">Dental SEO &amp; AI SEO</a>
+              <a href="dental-website-design.html">Dental Website Design</a>
+              <a href="dental-call-centre.html">Dental Call Centre</a>
+              <a href="treatment-coordinator-training.html">Treatment Coordinator Training</a>
+              <a href="dental-reporting-dashboard.html">Dental Reporting Dashboard</a>
+            </div>
+          </div>
+          <a href="index.html#results">Case Studies</a>
+          <a href="#testimonials">Reviews</a>
+          <a href="index.html#dmc">DMC Method</a>
+          <a href="#faq">FAQ</a>
+        </div>
+        <div class="nav-r">
+          <a class="nav-txt" href="/blog/">Blog</a>
+          <a class="nav-cta" href="index.html#contact">Book a Call</a>
+          <button class="burger" type="button" aria-controls="mnav" aria-expanded="false" aria-label="Open menu">
+            <div><span></span><span></span><span></span></div>
+          </button>
+        </div>
+      </nav>
+    </header>
+
+    <!-- ============ MOBILE MENU ============ -->
+    <div class="mnav" id="mnav" role="dialog" aria-modal="true" aria-label="Menu" hidden>
+      <div class="mnav-in">
+        <div class="mnav-hd">
+          <a class="brand" href="index.html"><img src="assets/dmc-mark.png" alt="" width="28" height="28" /><span><b>Dental Media Corp</b><small>Dental marketing</small></span></a>
+          <button class="mnav-x" type="button" aria-label="Close menu"><i class="ph ph-x" aria-hidden="true"></i></button>
+        </div>
+        <p class="mnav-cap">Services:</p>
+        <ul class="mnav-list">
+          <li>
+            <div class="mnav-row">
+              <a href="dental-marketing.html">Dental Marketing</a>
+              <button class="mnav-tg" type="button" aria-expanded="false" aria-controls="mnSub" aria-label="Show Dental Marketing treatments"><i class="ph ph-caret-down" aria-hidden="true"></i></button>
+            </div>
+            <ul class="mnav-sub" id="mnSub" hidden>
+              <li><a href="dental-marketing.html">Dental Implant Marketing</a></li>
+              <li><a href="dental-marketing.html">Full-Arch Marketing</a></li>
+              <li><a href="dental-marketing.html">Invisalign Marketing</a></li>
+              <li><a href="dental-marketing.html">General Dentistry Marketing</a></li>
+            </ul>
+          </li>
+          <li><a href="dental-video-marketing.html">Dental Video Marketing</a></li>
+          <li><a href="dental-seo.html">Dental SEO &amp; AI SEO</a></li>
+          <li><a href="dental-website-design.html">Dental Website Design</a></li>
+          <li><a href="dental-call-centre.html">Dental Call Centre</a></li>
+          <li><a href="treatment-coordinator-training.html">Treatment Coordinator Training</a></li>
+          <li><a href="dental-reporting-dashboard.html">Dental Reporting Dashboard</a></li>
+        </ul>
+        <div class="mnav-rule"></div>
+        <ul class="mnav-list mnav-2">
+          <li><a href="index.html#results">Case Studies</a></li>
+          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="index.html#dmc">DMC Method</a></li>
+          <li><a href="#faq">FAQ</a></li>
+          <li><a href="/blog/">Blog</a></li>
+        </ul>
+        <div class="mnav-foot">
+          <a class="cta light" href="index.html#contact"><span class="cta-t">Book a Strategy Call</span><span class="cta-i"><i class="ph ph-arrow-right" aria-hidden="true"></i><i class="ph ph-arrow-right" aria-hidden="true"></i></span></a>
+          <small>© 2026 Dental Media Corp</small>
+        </div>
+      </div>
+    </div>
+
+    <main id="main">
+      <!-- ============ 1. SERVICE HERO (inspo: madebyshape.co.uk, our light theme) ============
+           Elementor: Single "Service" template. Row 1: label, H1 | two paragraphs (ACF: label, headline, intro x2).
+           Row 2: banner (ACF: photo) with the notch button and the glass numbers. Row 3: statement + CTA | checklist (Repeater). -->
+      <section class="svh" aria-labelledby="svc-title">
+        <div class="wrap">
+          <div class="svh-in">
+            <div class="svh-top">
+              <div>
+                <p class="eyb">Dental Reporting Dashboard</p>
+                <h1 class="t-h1" id="svc-title">
+                  <span class="ln-m"><span>See every lead, call</span></span>
+                  <span class="ln-m"><span>and booking, <span class="hl">live.</span></span></span>
+                </h1>
+              </div>
+              <div class="svh-txt">
+                <p>Your Dental Connect dashboard shows every lead, call, booking and consultation in one place, updated as it happens.</p>
+                <p>No more waiting for monthly reports or guessing which ads work. You see exactly where your new patients come from.</p>
+              </div>
+            </div>
+            <div class="svb-w">
+            <div class="svb" id="svb">
+              <div class="svb-img"><img src="assets/img/svc/marketing-hero.webp" alt="A smiling patient against a mint wall" width="2000" height="1000" fetchpriority="high" decoding="async" /></div>
+              <div class="h-stat svb-stat">
+                <div class="h-num"><b><em>5,000+</em></b><small>Consultations attended</small></div>
+                <div class="h-num"><b><em>$10M+</em></b><small>In accepted treatment</small></div>
+              </div>
+            </div>
+              <!-- the button sits outside the clipped banner, in the notch the script cuts for it -->
+            <div class="svb-tab"><a class="cta" href="#more"><span class="cta-t">Tell me more</span><span class="cta-i"><i class="ph ph-arrow-right" aria-hidden="true"></i><i class="ph ph-arrow-right" aria-hidden="true"></i></span></a></div>
+            </div>
+            <div class="svs" id="more">
+              <div class="svs-l">
+                <p class="svs-q">Do you know exactly which of your ads brought in last month’s <span class="hl">new patients?</span></p>
+                <a class="cta mag" href="index.html#contact"><span class="cta-t">Book a Strategy Call</span><span class="cta-i"><i class="ph ph-arrow-right" aria-hidden="true"></i><i class="ph ph-arrow-right" aria-hidden="true"></i></span></a>
+              </div>
+              <div>
+                <p class="ck-cap">What we handle for you</p>
+                <ul class="ck">
+                  <li><i class="ph-bold ph-check" aria-hidden="true"></i>Every lead in one place</li>
+                  <li><i class="ph-bold ph-check" aria-hidden="true"></i>Calls and bookings</li>
+                  <li><i class="ph-bold ph-check" aria-hidden="true"></i>Consultations attended</li>
+                  <li><i class="ph-bold ph-check" aria-hidden="true"></i>Accepted treatment</li>
+                  <li><i class="ph-bold ph-check" aria-hidden="true"></i>Ad spend and results</li>
+                  <li><i class="ph-bold ph-check" aria-hidden="true"></i>Access for your team</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <div class="sbreak" aria-hidden="true"></div>
+
+      <!-- ============ 2. WHAT WE HANDLE (inspo: madebyshape.co.uk "What we can help you with")
+           Elementor: Container. Head: label, H2 | small CTA. Then a Repeater (icon, title, text) in a 3-column grid with hairlines. -->
+      <section class="help" id="help" aria-labelledby="help-title">
+        <div class="wrap">
+          <div class="help-in">
+            <div class="help-hd">
+              <div>
+                <p class="eyb">How we help</p>
+                <h2 class="t-h2" id="help-title">
+                  <span class="ln-m"><span>One complete team,</span></span>
+                  <span class="ln-m"><span>working for <span class="hl">your clinic.</span></span></span>
+                </h2>
+              </div>
+              <a class="cta mag" href="index.html#contact"><span class="cta-t">Book a Strategy Call</span><span class="cta-i"><i class="ph ph-arrow-right" aria-hidden="true"></i><i class="ph ph-arrow-right" aria-hidden="true"></i></span></a>
+            </div>
+            <div class="hp-g">
+            <article class="hp"><h3><span class="hp-i" aria-hidden="true"><i class="ph-fill ph-funnel"></i></span>Every Lead</h3><p>See every enquiry from your ads, your website and your social pages as it comes in.</p></article>
+            <article class="hp"><h3><span class="hp-i" aria-hidden="true"><i class="ph-fill ph-phone-call"></i></span>Calls &amp; Follow-Up</h3><p>Track every call our team makes and what happened next.</p></article>
+            <article class="hp"><h3><span class="hp-i" aria-hidden="true"><i class="ph-fill ph-calendar-check"></i></span>Bookings</h3><p>See every consultation booked into your schedule.</p></article>
+            <article class="hp"><h3><span class="hp-i" aria-hidden="true"><i class="ph-fill ph-user-check"></i></span>Attendance</h3><p>Know which patients came in for their consultation.</p></article>
+            <article class="hp"><h3><span class="hp-i" aria-hidden="true"><i class="ph-fill ph-tooth"></i></span>Case Acceptance</h3><p>Track the treatment patients go ahead with, so you see your real return.</p></article>
+            <article class="hp"><h3><span class="hp-i" aria-hidden="true"><i class="ph-fill ph-chart-pie-slice"></i></span>Campaign Results</h3><p>See which campaigns bring in the patients you want.</p></article>
+            <article class="hp"><h3><span class="hp-i" aria-hidden="true"><i class="ph-fill ph-currency-dollar"></i></span>Ad Spend</h3><p>Your spend and your results side by side, with no spreadsheets.</p></article>
+            <article class="hp"><h3><span class="hp-i" aria-hidden="true"><i class="ph-fill ph-device-mobile"></i></span>On Any Device</h3><p>Check your numbers from your desk or your phone.</p></article>
+            <article class="hp"><h3><span class="hp-i" aria-hidden="true"><i class="ph-fill ph-users-three"></i></span>Team Access</h3><p>Give your team their own logins to see what matters to them.</p></article>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ 3. CLIENT VIDEO (inspo: madebyshape.co.uk testimonial card)
+           Elementor: Container + HTML widget. ACF: video embed URL (data-embed: Google Drive /preview, shared as "anyone
+           with the link"; a YouTube or Vimeo embed URL works the same), cover still, headline.
+           The quote sits on black label boxes top-left, the play circle bottom-left; "Play video" and "View all
+           testimonials" sit in a notch cut out of the bottom-right corner. A click plays the video inside the card. -->
+      <section class="vt" aria-label="Client video">
+        <div class="wrap">
+          <div class="vt-in">
+            <div class="vt-w">
+              <div class="vt-box" id="vtBox" data-embed="https://drive.google.com/file/d/13MqhWz0r0u-TySTFtp3yZwiZIhq83WXe/preview">
+                <div class="vt-media"><img src="assets/img/svc/marketing-video.webp" alt="A Dental Media Corp presenter inside a dental clinic" width="2880" height="1620" loading="lazy" decoding="async" /></div>
+                <div class="vt-say">
+                  <p class="vt-q"><span>See how Dental Connect shows you every lead and booking.</span></p>
+                </div>
+                <button class="vt-play" type="button" aria-label="Play the Dental Reporting Dashboard video"><i class="ph-fill ph-play" aria-hidden="true"></i></button>
+              </div>
+              <div class="vt-tab">
+                <button class="cta vt-go" type="button"><span class="cta-t">Play video</span><span class="cta-i"><i class="ph-fill ph-play" aria-hidden="true"></i><i class="ph-fill ph-play" aria-hidden="true"></i></span></button>
+                <a class="cta light" href="#testimonials"><span class="cta-t">View all testimonials</span><span class="cta-i"><i class="ph ph-arrow-right" aria-hidden="true"></i><i class="ph ph-arrow-right" aria-hidden="true"></i></span></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
+      <div class="sbreak" aria-hidden="true"></div>
+
+      <!-- ============ 5. REVIEWS (the home hero's moving cards: same markup, same script)
+           Elementor: Loop Carousel over the "Testimonial" CPT, as on the home page. -->
+      <section class="rvw" id="testimonials" aria-labelledby="rvw-title">
+        <div class="wrap">
+          <div class="sh">
+            <h2 class="t-h2" id="rvw-title">
+              <span class="ln-m"><span>What dentists say</span></span>
+              <span class="sh-l2"><span class="sh-rule" aria-hidden="true"></span><span class="ln-m"><span class="hl">about working with us.</span></span></span>
+            </h2>
+          </div>
+        </div>
+        <div class="rvw-row">
+        <div class="q-row" id="qRow">
+          <div class="q-track" id="qTrack">
+            <figure class="q">
+              <div class="q-body">
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-who"><b>Dr. Mark Warawa</b><span>Bright Smile Dental</span></div>
+                <blockquote>We’ve opened up another operatory just to deal with the overflow of new patients.</blockquote>
+              </div>
+              <div class="q-media"><img src="assets/img/testimonials/warawa.webp" alt="Dr. Mark Warawa" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="LzVfobN6T40" aria-label="Play Dr. Mark Warawa’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+            </figure>
+            <figure class="q">
+              <div class="q-body">
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-who"><b>Dr. Greg Broyde</b><span>West Grande Prairie Dental &amp; East Village Dental</span></div>
+                <blockquote>For every dollar I spend, DMC makes sure that I get at least $6 to $10 back.</blockquote>
+              </div>
+              <div class="q-media"><img src="assets/img/testimonials/broyde.webp" alt="Dr. Greg Broyde" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="xulePDv7Zt8" aria-label="Play Dr. Greg Broyde’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+            </figure>
+            <figure class="q">
+              <div class="q-body">
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-who"><b>Rae-Lynne D.</b><span>Modern Smiles &amp; Northern Lights</span></div>
+                <blockquote>DMC is the first marketing that’s actually paid off since I opened in 2012.</blockquote>
+              </div>
+              <div class="q-media"><img src="assets/img/testimonials/rae-lynne.webp" alt="Rae-Lynne" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="NgVZUXrVF44" aria-label="Play Rae-Lynne D.’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+            </figure>
+            <figure class="q">
+              <div class="q-body">
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-who"><b>Dr. Albert Voravong</b><span>Dental Media Corp client</span></div>
+                <blockquote>Hear Dr. Voravong talk about working with Dental Media Corp.</blockquote>
+              </div>
+              <div class="q-media"><img src="assets/img/testimonials/voravong.webp" alt="Dr. Albert Voravong" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="1gKTOT7zsbY" aria-label="Play Dr. Albert Voravong’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+            </figure>
+            <figure class="q">
+              <div class="q-body">
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-who"><b>Corey Hyde</b><span>Owner, Centre Street Denture Clinic</span></div>
+                <blockquote>Hear Corey talk about working with Dental Media Corp.</blockquote>
+              </div>
+              <div class="q-media"><img src="assets/img/testimonials/corey.webp" alt="Corey Hyde" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="PZ1iatxqWl8" data-tall aria-label="Play Corey Hyde’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+            </figure>
+            <figure class="q">
+              <div class="q-body">
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-who"><b>Val</b><span>Office Manager, Westgate GP Dental</span></div>
+                <blockquote>Hear Val talk about working with Dental Media Corp.</blockquote>
+              </div>
+              <div class="q-media"><img src="assets/img/testimonials/val.webp" alt="Val" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="GWBPfeuAf4Q" aria-label="Play Val’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+            </figure>
+            <figure class="q">
+              <div class="q-body">
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-who"><b>Brandie</b><span>Treatment Coordinator, Trader Ridge</span></div>
+                <blockquote>Hear Brandie talk about working with Dental Media Corp.</blockquote>
+              </div>
+              <div class="q-media"><img src="assets/img/testimonials/brandie.webp" alt="Brandie" loading="lazy" draggable="false" /><button class="q-play" type="button" data-video="YA7YKZU5grE" aria-label="Play Brandie’s video testimonial"><i class="ph-fill ph-play" aria-hidden="true"></i></button></div>
+            </figure>
+          </div>
+        </div>
+        </div>
+      </section>
+
+      <div class="sbreak" aria-hidden="true"></div>
+
+      <!-- ============ 6. FAQ (keep in sync with the FAQPage JSON-LD in <head>) ============ -->
+      <section class="faq" id="faq" aria-labelledby="faq-title">
+        <div class="wrap">
+          <div class="sh">
+            <h2 class="t-h2" id="faq-title">
+              <span class="ln-m"><span>Dental Connect,</span></span>
+              <span class="sh-l2"><span class="sh-rule" aria-hidden="true"></span><span class="ln-m"><span class="hl">answered.</span></span></span>
+            </h2>
+          </div>
+          <div class="fq-list">
+            <div class="fq">
+              <h3><button class="fq-q" type="button" id="fqq01" aria-expanded="false" aria-controls="fqa01"><span class="fq-n">01</span><span class="fq-t">What is Dental Connect?</span><span class="fq-i" aria-hidden="true"><i class="ph ph-plus"></i></span></button></h3>
+              <div class="fq-a" id="fqa01" role="region" aria-labelledby="fqq01"><div class="fq-in"><p>Dental Connect is our reporting dashboard. It shows every lead, call, booking and consultation from your marketing in one place.</p></div></div>
+            </div>
+            <div class="fq">
+              <h3><button class="fq-q" type="button" id="fqq02" aria-expanded="false" aria-controls="fqa02"><span class="fq-n">02</span><span class="fq-t">Is the data live?</span><span class="fq-i" aria-hidden="true"><i class="ph ph-plus"></i></span></button></h3>
+              <div class="fq-a" id="fqa02" role="region" aria-labelledby="fqq02"><div class="fq-in"><p>Yes. Leads, calls and bookings appear as they happen, so you never wait for a monthly report.</p></div></div>
+            </div>
+            <div class="fq">
+              <h3><button class="fq-q" type="button" id="fqq03" aria-expanded="false" aria-controls="fqa03"><span class="fq-n">03</span><span class="fq-t">Who can see the dashboard?</span><span class="fq-i" aria-hidden="true"><i class="ph ph-plus"></i></span></button></h3>
+              <div class="fq-a" id="fqa03" role="region" aria-labelledby="fqq03"><div class="fq-in"><p>You and anyone on your team you give access to. Everyone gets their own secure login.</p></div></div>
+            </div>
+            <div class="fq">
+              <h3><button class="fq-q" type="button" id="fqq04" aria-expanded="false" aria-controls="fqa04"><span class="fq-n">04</span><span class="fq-t">Can we see which ads bring in patients?</span><span class="fq-i" aria-hidden="true"><i class="ph ph-plus"></i></span></button></h3>
+              <div class="fq-a" id="fqa04" role="region" aria-labelledby="fqq04"><div class="fq-in"><p>Yes. Every lead is linked to the campaign it came from, so you can see which ads bring in booked consultations and accepted treatment.</p></div></div>
+            </div>
+            <div class="fq">
+              <h3><button class="fq-q" type="button" id="fqq05" aria-expanded="false" aria-controls="fqa05"><span class="fq-n">05</span><span class="fq-t">Do we need to set anything up?</span><span class="fq-i" aria-hidden="true"><i class="ph ph-plus"></i></span></button></h3>
+              <div class="fq-a" id="fqa05" role="region" aria-labelledby="fqq05"><div class="fq-in"><p>No. We connect your campaigns, calls and calendar for you. You just log in.</p></div></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+    </main>
+
+    <!-- video lightbox: the review cards' play buttons fill it with a YouTube embed -->
+    <div class="vbox" id="vbox" role="dialog" aria-modal="true" aria-label="Video testimonial" hidden>
+      <button class="vbox-x" type="button" aria-label="Close video"><i class="ph ph-x" aria-hidden="true"></i></button>
+      <div class="vbox-f" id="vboxF"></div>
+    </div>
+
+    <div class="sbreak" aria-hidden="true"></div>
+    <!-- ============ FOOTER (shared with the home page) ============ -->
+    <footer class="foot">
+      <div class="wrap f-g">
+        <div>
+          <a class="brand" href="index.html" aria-label="Dental Media Corp home"><img src="assets/dmc-mark.png" alt="" width="28" height="28" /><span><b>Dental Media Corp</b><small>Dental marketing</small></span></a>
+          <p class="f-tag">The complete dental marketing &amp; patient acquisition system.</p>
+        </div>
+        <div class="f-cols">
+          <nav aria-label="Services"><ul>
+            <li><a href="dental-marketing.html">Dental Marketing</a>
+            <ul class="f-sub">
+              <li><a href="dental-marketing.html">Dental Implant Marketing</a></li>
+              <li><a href="dental-marketing.html">Full-Arch Marketing</a></li>
+              <li><a href="dental-marketing.html">Invisalign Marketing</a></li>
+              <li><a href="dental-marketing.html">General Dentistry Marketing</a></li>
+            </ul>
+          </li>
+            <li><a href="dental-video-marketing.html">Video Marketing</a></li>
+            <li><a href="dental-seo.html">SEO &amp; AI SEO</a></li>
+          </ul></nav>
+          <nav aria-label="More services"><ul>
+            <li><a href="dental-website-design.html">Website Design</a></li>
+            <li><a href="dental-call-centre.html">Call Centre</a></li>
+            <li><a href="treatment-coordinator-training.html">Coordinator Training</a></li>
+          </ul></nav>
+          <nav aria-label="Company"><ul>
+            <li><a href="index.html#results">Case Studies</a></li>
+            <li><a href="index.html#dmc">The DMC Method</a></li>
+            <li><a href="index.html#faq">FAQ</a></li>
+            <li><a href="/blog/">Blog</a></li>
+          </ul></nav>
+        </div>
+        <div class="f-big">
+          <a href="mailto:hello@dentalmediacorp.com">hello@dentalmediacorp.com</a>
+          <span>Calgary, Alberta</span>
+        </div>
+      </div>
+      <div class="f-bot">
+        <span>© 2026 Dental Media Corp</span>
+        <nav aria-label="Legal"><a href="/terms-of-service/">Terms of Use</a><a href="/privacy-policy/">Privacy Policy</a></nav>
+      </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+    <script>
+      (() => {
+        const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
+        const fine = matchMedia("(hover: hover) and (pointer: fine)").matches;
+        const hasG = !!(window.gsap && window.ScrollTrigger);
+        if (hasG) gsap.registerPlugin(ScrollTrigger);
+        const $ = (s, r = document) => r.querySelector(s);
+        const $$ = (s, r = document) => [...r.querySelectorAll(s)];
+        const root = document.documentElement;
+        const motion = hasG && !reduce;
+
+        /* ---------- smooth scroll (same as the home page) ---------- */
+        let lenis = null;
+        if (!reduce && window.Lenis) {
+          lenis = new Lenis({ lerp: 0.08, wheelMultiplier: 0.8 });
+          if (hasG) {
+            lenis.on("scroll", ScrollTrigger.update);
+            gsap.ticker.add((t) => lenis.raf(t * 1000));
+            gsap.ticker.lagSmoothing(0);
+          } else {
+            const raf = (t) => (lenis.raf(t), requestAnimationFrame(raf));
+            requestAnimationFrame(raf);
+          }
+        }
+        const lock = (on) => {
+          if (lenis) on ? lenis.stop() : lenis.start();
+          else root.style.overflow = on ? "hidden" : "";
+        };
+        const goTo = (t) => {
+          if (lenis) lenis.scrollTo(t, { duration: 1.4, offset: -90 });
+          else t.scrollIntoView({ behavior: reduce ? "auto" : "smooth" });
+        };
+        $$('a[href^="#"]').forEach((a) =>
+          a.addEventListener("click", (e) => {
+            const id = a.getAttribute("href");
+            const t = id.length > 1 && $(id);
+            if (!t) return;
+            e.preventDefault();
+            if (document.activeElement) document.activeElement.blur();
+            if (mOpen) closeMnav(() => goTo(t));
+            else goTo(t);
+          }),
+        );
+
+        /* ---------- header ---------- */
+        const top = $("#top");
+        const stuck = () => top.classList.toggle("is-stuck", scrollY > 30);
+        addEventListener("scroll", stuck, { passive: true });
+        stuck();
+
+        /* ---------- mobile menu ---------- */
+        const mnav = $("#mnav"),
+          burger = $(".burger");
+        let mOpen = false;
+        function openMnav() {
+          mOpen = true;
+          mnav.hidden = false;
+          mnav.classList.add("open");
+          burger.setAttribute("aria-expanded", "true");
+          lock(true);
+          if (motion) {
+            gsap.fromTo(mnav, { clipPath: "circle(0% at 92% 5%)" }, { clipPath: "circle(150% at 92% 5%)", duration: 0.9, ease: "expo.inOut" });
+            gsap.from($$(".mnav-cap, .mnav-list li, .mnav-rule, .mnav-foot", mnav), { y: 26, opacity: 0, duration: 0.7, ease: "power3.out", stagger: 0.035, delay: 0.25 });
+          }
+          $(".mnav-x").focus();
+        }
+        function closeMnav(then) {
+          const done = () => {
+            mOpen = false;
+            mnav.hidden = true;
+            mnav.classList.remove("open");
+            burger.setAttribute("aria-expanded", "false");
+            lock(false);
+            if (then) then();
+            else burger.focus();
+          };
+          if (motion) gsap.to(mnav, { clipPath: "circle(0% at 92% 5%)", duration: 0.6, ease: "expo.in", onComplete: done });
+          else done();
+        }
+        burger.addEventListener("click", openMnav);
+        $(".mnav-x").addEventListener("click", () => closeMnav());
+        {
+          const tg = $(".mnav-tg"),
+            sub = $("#mnSub");
+          tg.addEventListener("click", () => {
+            const open = tg.getAttribute("aria-expanded") !== "true";
+            tg.setAttribute("aria-expanded", open);
+            tg.setAttribute("aria-label", (open ? "Hide" : "Show") + " Dental Marketing treatments");
+            sub.hidden = !open;
+          });
+        }
+        addEventListener("keydown", (e) => e.key === "Escape" && mOpen && closeMnav());
+
+        /* ---------- service banner: cut the notch for the button ---------- */
+        {
+          const box = $("#svb"),
+            tab = $(".svb-tab");
+          const cut = () => {
+            const W = box.offsetWidth,
+              H = box.offsetHeight,
+              R = parseFloat(getComputedStyle(box).borderTopLeftRadius) || 28,
+              r = R, // the notch's curves match the card's corners (user request)
+              g = 10,
+              tw = tab.offsetWidth + g,
+              th = tab.offsetHeight + g;
+            box.style.clipPath = `path("M${tw + r},0 H${W - R} A${R},${R} 0 0 1 ${W},${R} V${H - R} A${R},${R} 0 0 1 ${W - R},${H} H${R} A${R},${R} 0 0 1 0,${H - R} V${th + r} A${r},${r} 0 0 1 ${r},${th} H${tw - r} A${r},${r} 0 0 0 ${tw},${th - r} V${r} A${r},${r} 0 0 1 ${tw + r},0 Z")`;
+          };
+          cut();
+          new ResizeObserver(cut).observe(box);
+        }
+
+        /* ---------- client video: the bottom-right notch for the buttons, and play in the card ---------- */
+        {
+          const box = $("#vtBox"),
+            tab = $(".vt-tab"),
+            sec = box.closest(".vt");
+          const cut = () => {
+            if (getComputedStyle(tab).position !== "absolute") return void (box.style.clipPath = "");
+            const W = box.offsetWidth,
+              H = box.offsetHeight,
+              R = parseFloat(getComputedStyle(box).borderTopLeftRadius) || 28,
+              r = R, // the notch's curves match the card's corners (user request)
+              g = 10,
+              tw = tab.offsetWidth + g,
+              th = tab.offsetHeight + g;
+            box.style.clipPath = `path("M${R},0 H${W - R} A${R},${R} 0 0 1 ${W},${R} V${H - th - r} A${r},${r} 0 0 1 ${W - r},${H - th} H${W - tw + r} A${r},${r} 0 0 0 ${W - tw},${H - th + r} V${H - r} A${r},${r} 0 0 1 ${W - tw - r},${H} H${R} A${R},${R} 0 0 1 0,${H - R} V${R} A${R},${R} 0 0 1 ${R},0 Z")`;
+          };
+          cut();
+          new ResizeObserver(cut).observe(box);
+          new ResizeObserver(cut).observe(tab);
+          const go = $(".vt-go"),
+            label = $(".cta-t", go),
+            media = $(".vt-media", box),
+            still = $("img", media);
+          let frame = null;
+          const play = () => {
+            if (frame) return stop();
+            sec.classList.add("is-on");
+            label.textContent = "Close video";
+            go.querySelectorAll(".cta-i i").forEach((i) => (i.className = "ph-bold ph-x"));
+            // 16:9, but never taller than the screen (the root zoom turns screen px into CSS px)
+            const z = parseFloat(getComputedStyle(root).zoom) || 1;
+            const to = Math.max(box.offsetHeight, Math.min((box.offsetWidth * 9) / 16, (innerHeight * 0.86) / z));
+            if (motion) gsap.to(box, { height: to, duration: 0.9, ease: "expo.inOut" });
+            else box.style.height = to + "px";
+            frame = document.createElement("iframe");
+            frame.src = box.dataset.embed;
+            frame.allow = "autoplay; fullscreen; encrypted-media; picture-in-picture";
+            frame.allowFullscreen = true;
+            frame.referrerPolicy = "strict-origin-when-cross-origin";
+            frame.title = "Service video";
+            media.appendChild(frame);
+            still.style.opacity = "0";
+          };
+          const stop = () => {
+            frame.remove();
+            frame = null;
+            still.style.opacity = "";
+            sec.classList.remove("is-on");
+            label.textContent = "Play video";
+            go.querySelectorAll(".cta-i i").forEach((i) => (i.className = "ph-fill ph-play"));
+            // back to the card's own (CSS) height
+            const cur = box.style.height;
+            box.style.height = "";
+            const h = box.offsetHeight;
+            box.style.height = cur;
+            if (motion) gsap.to(box, { height: h, duration: 0.9, ease: "expo.inOut", clearProps: "height" });
+            else box.style.height = "";
+          };
+          $(".vt-play").addEventListener("click", play);
+          go.addEventListener("click", play);
+        }
+
+        /* ---------- reviews: the cards keep their share of the SCREEN on every desktop and at any browser zoom ----------
+           --qs = screen width / 1920, divided by the laptop zoom so the cards land at the same proportion (the root
+           zoom would shrink them a second time). A browser zoom changes innerWidth, so it is caught by "resize" too.
+           (Measured on the screen, not the page box: the user wants these cards, and only these, to follow the screen.) */
+        const fitQ = () => {
+          const z = parseFloat(getComputedStyle(root).zoom) || 1;
+          root.style.setProperty("--qs", innerWidth >= 1200 ? (innerWidth / 1920 / z).toFixed(4) : "1");
+        };
+        fitQ();
+        addEventListener("resize", fitQ);
+
+        /* ---------- testimonials: glass cards drift, drag to scrub ---------- */
+        {
+          const qRow = $("#qRow"),
+            track = $("#qTrack"),
+            items = [...track.children];
+          for (let k = 0; k < 3; k++)
+            items.forEach((n, i) => {
+              const c = n.cloneNode(true);
+              c.setAttribute("aria-hidden", "true");
+              c.querySelectorAll("button").forEach((btn) => (btn.tabIndex = -1));
+              // copies keep their own placeholder pattern ids
+              c.querySelectorAll("pattern[id]").forEach((p) => {
+                const id = p.id + "c" + k + i;
+                c.querySelectorAll('[fill="url(#' + p.id + ')"]').forEach((r) => r.setAttribute("fill", "url(#" + id + ")"));
+                p.id = id;
+              });
+              track.append(c);
+            });
+          let setW = 0,
+            x = 0,
+            hover = false,
+            drag = null,
+            live = false,
+            hold = false;
+          // one set's length = where the first copy starts, in the track's own units (offsets ignore the drift transform
+          // and already include the cards' scale and the scaled gap)
+          const measure = () => (setW = track.children[items.length].offsetLeft - items[0].offsetLeft);
+          measure();
+          addEventListener("resize", measure);
+          const wrap = () => {
+            if (x <= -setW) x += setW;
+            if (x > 0) x -= setW;
+          };
+          const paint = () => (track.style.transform = "translate3d(" + x + "px,0,0)");
+          new IntersectionObserver((es) => (live = es[0].isIntersecting)).observe(qRow);
+          let last = performance.now();
+          const tick = (t) => {
+            const dt = Math.min(64, t - last);
+            last = t;
+            if (live && !drag && !hold && !reduce) {
+              x -= (hover ? 0.008 : 0.032) * dt;
+              wrap();
+              paint();
+            }
+            requestAnimationFrame(tick);
+          };
+          requestAnimationFrame(tick);
+          qRow.addEventListener("mouseenter", () => (hover = true));
+          qRow.addEventListener("mouseleave", () => (hover = false));
+          // play: opens the YouTube video (ID in data-video) in the lightbox and stops the drift
+          const vb = $("#vbox"),
+            vbF = $("#vboxF"),
+            vbX = $(".vbox-x");
+          let vbFrom = null;
+          const closeV = () => {
+            if (vb.hidden) return;
+            vb.hidden = true;
+            vbF.replaceChildren();
+            hold = false;
+            lock(false);
+            if (vbFrom) vbFrom.focus({ preventScroll: true });
+          };
+          qRow.addEventListener("click", (e) => {
+            const btn = e.target.closest(".q-play");
+            if (!btn || !btn.dataset.video) return;
+            const f = document.createElement("iframe");
+            f.src = "https://www.youtube-nocookie.com/embed/" + btn.dataset.video + "?autoplay=1&rel=0&playsinline=1";
+            f.title = btn.getAttribute("aria-label").replace(/^Play /, "");
+            f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
+            f.allowFullscreen = true;
+            f.referrerPolicy = "strict-origin-when-cross-origin";
+            vbF.replaceChildren(f);
+            vb.classList.toggle("tall", "tall" in btn.dataset);
+            vb.hidden = false;
+            vbFrom = btn;
+            hold = true;
+            lock(true);
+            vbX.focus();
+          });
+          vbX.addEventListener("click", closeV);
+          vb.addEventListener("click", (e) => e.target === vb && closeV());
+          addEventListener("keydown", (e) => e.key === "Escape" && closeV());
+          qRow.addEventListener("pointerdown", (e) => {
+            if (e.target.closest(".q-play, video")) return;
+            drag = { x: e.clientX, s: x };
+            qRow.classList.add("drag");
+            qRow.setPointerCapture(e.pointerId);
+          });
+          qRow.addEventListener("pointermove", (e) => {
+            if (!drag) return;
+            x = drag.s + (e.clientX - drag.x) / (parseFloat(getComputedStyle(root).zoom) || 1); // screen px to track px, so the cards stay under the pointer
+            wrap();
+            paint();
+          });
+          const end = () => {
+            drag = null;
+            qRow.classList.remove("drag");
+          };
+          qRow.addEventListener("pointerup", end);
+          qRow.addEventListener("pointercancel", end);
+        }
+
+        /* ---------- FAQ: one answer open at a time ---------- */
+        {
+          root.classList.add("js-fq");
+          const items = $$(".fq");
+          const setOpen = (f, on, now) => {
+            const a = $(".fq-a", f);
+            f.classList.toggle("open", on);
+            $(".fq-q", f).setAttribute("aria-expanded", on);
+            if (motion && !now)
+              gsap.to(a, { height: on ? "auto" : 0, duration: on ? 0.6 : 0.4, ease: on ? "expo.out" : "power3.inOut", overwrite: true, onComplete: () => ScrollTrigger.refresh() });
+            else a.style.height = on ? "auto" : "0px";
+          };
+          items.forEach((f) =>
+            $(".fq-q", f).addEventListener("click", () => {
+              const on = !f.classList.contains("open");
+              items.forEach((x) => x !== f && x.classList.contains("open") && setOpen(x, false));
+              setOpen(f, on);
+            }),
+          );
+          if (items[0]) setOpen(items[0], true, true);
+        }
+
+        /* ---------- magnetic buttons ---------- */
+        if (motion && fine)
+          $$(".mag").forEach((el) => {
+            const xTo = gsap.quickTo(el, "x", { duration: 0.6, ease: "power3" }),
+              yTo = gsap.quickTo(el, "y", { duration: 0.6, ease: "power3" });
+            el.addEventListener("mousemove", (e) => {
+              const r = el.getBoundingClientRect();
+              xTo((e.clientX - r.left - r.width / 2) * 0.22);
+              yTo((e.clientY - r.top - r.height / 2) * 0.35);
+            });
+            el.addEventListener("mouseleave", () => (xTo(0), yTo(0)));
+          });
+
+        /* ---------- choreography (the home page's values) ---------- */
+        if (!motion) return;
+        const st = (trigger, start = "top 82%") => ({ trigger, start, once: true });
+
+        // hero: label and headline rise, the paragraphs follow, the banner opens from the middle and its photo settles
+        gsap
+          .timeline()
+          .from(".nav > *", { y: -16, opacity: 0, duration: 0.9, ease: "power3.out", stagger: 0.07 }, 0)
+          .from(".svh-top .eyb", { y: 14, opacity: 0, duration: 0.9, ease: "power3.out" }, 0.1)
+          .from("#svc-title .ln-m > span", { yPercent: 110, duration: 1.2, ease: "expo.out", stagger: 0.09 }, 0.15)
+          .from(".svh-txt p", { y: 18, opacity: 0, duration: 1, ease: "power3.out", stagger: 0.1 }, 0.4)
+          .from(".svb", { y: 60, opacity: 0, duration: 1.3, ease: "expo.out" }, 0.45)
+          .from(".svb-img img", { scale: 1.25, duration: 1.8, ease: "expo.out" }, 0.45)
+          .from([".svb-tab", ".svb-stat"], { y: 16, opacity: 0, duration: 0.9, ease: "power3.out", stagger: 0.1 }, 1);
+
+        gsap.from([".svs-l > *", ".svs > div:last-child > *"], { y: 30, opacity: 0, duration: 1.1, ease: "expo.out", stagger: 0.08, scrollTrigger: st(".svs", "top 86%") });
+        $$(".t-h2").forEach((h) => gsap.from($$(".ln-m > span", h), { yPercent: 110, duration: 1.2, ease: "expo.out", stagger: 0.09, scrollTrigger: st(h, "top 86%") }));
+        $$(".sh-rule").forEach((r) => gsap.from(r, { scaleX: 0, duration: 1.4, ease: "expo.inOut", scrollTrigger: st(r, "top 90%") }));
+
+        gsap.from([".help-hd .eyb", ".help-hd .cta"], { y: 16, opacity: 0, duration: 0.9, ease: "power3.out", stagger: 0.1, scrollTrigger: st(".help-hd", "top 88%") });
+        gsap.set(".hp", { opacity: 0, y: 50 });
+        ScrollTrigger.batch(".hp", { start: "top 94%", once: true, onEnter: (b) => gsap.to(b, { opacity: 1, y: 0, duration: 1.1, ease: "expo.out", stagger: 0.08, clearProps: "opacity,transform" }) });
+
+        // client video: the card rises, the still settles, the quote and buttons follow
+        gsap.from(".vt-box", { y: 60, opacity: 0, duration: 1.3, ease: "expo.out", scrollTrigger: st(".vt", "top 85%") });
+        gsap.from(".vt-media img", { scale: 1.25, duration: 1.8, ease: "expo.out", scrollTrigger: st(".vt", "top 85%") });
+        gsap.from([".vt-say", ".vt-play", ".vt-tab"], { y: 20, opacity: 0, duration: 1, ease: "power3.out", stagger: 0.1, delay: 0.4, scrollTrigger: st(".vt", "top 85%"), clearProps: "opacity,transform" });
+
+        gsap.from(".q-track > .q:nth-child(-n+6)", { x: 260, opacity: 0, duration: 1.4, ease: "expo.out", stagger: 0.07, scrollTrigger: st(".rvw-row", "top 88%") });
+        gsap.set(".fq", { opacity: 0, y: 30 });
+        ScrollTrigger.batch(".fq", { start: "top 94%", once: true, onEnter: (bt) => gsap.to(bt, { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.06 }) });
+        gsap.from(".f-g > *", { y: 30, opacity: 0, duration: 1.1, ease: "power3.out", stagger: 0.1, scrollTrigger: st(".foot", "top 85%") });
+
+        addEventListener("load", () => ScrollTrigger.refresh());
+      })();
+    </script>
+  </body>
+</html>

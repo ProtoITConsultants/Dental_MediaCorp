@@ -247,7 +247,7 @@
         /* one frame for every section, taken from the hero: a single side gutter (~58px at 1440)
            and content as wide as the hero (which stops at 1920px) */
         --side: clamp(20px, calc(4 * var(--uvw)), 80px);
-        --max: calc(1920px - 2 * var(--side));
+        --max: calc(1920px / var(--z) - 2 * var(--side)); /* 1920 SCREEN px less the gutters, so content lines up with the nav at every laptop zoom */
         /* radius system: cards & panels / things nested inside a card / buttons & chips */
         /* corners: cards, and anything nested 6px inside a card (concentric: inner = outer - gap) */
         --r-card: 28px;
@@ -3684,20 +3684,20 @@
             <a class="dd-t" href="#services" aria-haspopup="true">Services <i class="ph ph-caret-down" aria-hidden="true"></i></a>
             <div class="dd-m" aria-label="Services">
               <div class="dd-sub">
-                <a href="#svc-marketing">Dental Marketing <i class="ph ph-caret-right" aria-hidden="true"></i></a>
+                <a href="dental-marketing.html">Dental Marketing <i class="ph ph-caret-right" aria-hidden="true"></i></a>
                 <div class="dd-fly">
-                  <a href="#treatments">Dental Implant Marketing</a>
-                  <a href="#treatments">Full-Arch Marketing</a>
-                  <a href="#treatments">Invisalign Marketing</a>
-                  <a href="#treatments">General Dentistry Marketing</a>
+                  <a href="dental-marketing.html">Dental Implant Marketing</a>
+                  <a href="dental-marketing.html">Full-Arch Marketing</a>
+                  <a href="dental-marketing.html">Invisalign Marketing</a>
+                  <a href="dental-marketing.html">General Dentistry Marketing</a>
                 </div>
               </div>
-              <a href="#svc-video">Dental Video Marketing</a>
-              <a href="#svc-seo">Dental SEO &amp; AI SEO</a>
-              <a href="#svc-web">Dental Website Design</a>
-              <a href="#svc-call">Dental Call Centre</a>
-              <a href="#svc-training">Treatment Coordinator Training</a>
-              <a href="#svc-reporting">Dental Reporting Dashboard</a>
+              <a href="dental-video-marketing.html">Dental Video Marketing</a>
+              <a href="dental-seo.html">Dental SEO &amp; AI SEO</a>
+              <a href="dental-website-design.html">Dental Website Design</a>
+              <a href="dental-call-centre.html">Dental Call Centre</a>
+              <a href="treatment-coordinator-training.html">Treatment Coordinator Training</a>
+              <a href="dental-reporting-dashboard.html">Dental Reporting Dashboard</a>
             </div>
           </div>
           <a href="#results">Case Studies</a>
@@ -3726,22 +3726,22 @@
         <ul class="mnav-list">
           <li>
             <div class="mnav-row">
-              <a href="#svc-marketing">Dental Marketing</a>
+              <a href="dental-marketing.html">Dental Marketing</a>
               <button class="mnav-tg" type="button" aria-expanded="false" aria-controls="mnSub" aria-label="Show Dental Marketing treatments"><i class="ph ph-caret-down" aria-hidden="true"></i></button>
             </div>
             <ul class="mnav-sub" id="mnSub" hidden>
-              <li><a href="#treatments">Dental Implant Marketing</a></li>
-              <li><a href="#treatments">Full-Arch Marketing</a></li>
-              <li><a href="#treatments">Invisalign Marketing</a></li>
-              <li><a href="#treatments">General Dentistry Marketing</a></li>
+              <li><a href="dental-marketing.html">Dental Implant Marketing</a></li>
+              <li><a href="dental-marketing.html">Full-Arch Marketing</a></li>
+              <li><a href="dental-marketing.html">Invisalign Marketing</a></li>
+              <li><a href="dental-marketing.html">General Dentistry Marketing</a></li>
             </ul>
           </li>
-          <li><a href="#svc-video">Dental Video Marketing</a></li>
-          <li><a href="#svc-seo">Dental SEO &amp; AI SEO</a></li>
-          <li><a href="#svc-web">Dental Website Design</a></li>
-          <li><a href="#svc-call">Dental Call Centre</a></li>
-          <li><a href="#svc-training">Treatment Coordinator Training</a></li>
-          <li><a href="#svc-reporting">Dental Reporting Dashboard</a></li>
+          <li><a href="dental-video-marketing.html">Dental Video Marketing</a></li>
+          <li><a href="dental-seo.html">Dental SEO &amp; AI SEO</a></li>
+          <li><a href="dental-website-design.html">Dental Website Design</a></li>
+          <li><a href="dental-call-centre.html">Dental Call Centre</a></li>
+          <li><a href="treatment-coordinator-training.html">Treatment Coordinator Training</a></li>
+          <li><a href="dental-reporting-dashboard.html">Dental Reporting Dashboard</a></li>
         </ul>
         <div class="mnav-rule"></div>
         <ul class="mnav-list mnav-2">
@@ -3917,7 +3917,7 @@
                 <svg class="sx-art" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g class="sx-ring"><circle cx="300" cy="150" r="118"/><circle cx="300" cy="150" r="178"/><circle cx="300" cy="150" r="242"/></g><g class="sx-g" transform="translate(210 60) scale(1.125)"><path class="f" d="M30 70 L30 94 Q30 102 38 102 L54 102 L104 126 L104 38 L54 62 L38 62 Q30 62 30 70 Z"/><path d="M56 104 L64 134"/><path d="M124 66 Q132 82 124 98"/><path d="M140 54 Q154 82 140 110"/></g></svg>
                 <span class="sx-tag"><b>01</b>Attract</span>
                 <div class="sx-txt">
-                  <h3 class="sx-name"><a class="sx-link" href="/dental-marketing/" draggable="false">Dental Marketing</a></h3>
+                  <h3 class="sx-name"><a class="sx-link" href="dental-marketing.html" draggable="false">Dental Marketing</a></h3>
                   <div class="sx-more"><p class="sx-p">We create and run your Google and Meta ads for implant, Invisalign and new patients.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
                 </div>
               </li>
@@ -3925,7 +3925,7 @@
                 <svg class="sx-art" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g class="sx-ring"><circle cx="300" cy="150" r="118"/><circle cx="300" cy="150" r="178"/><circle cx="300" cy="150" r="242"/></g><g class="sx-g" transform="translate(210 60) scale(1.125)"><rect class="f" x="16" y="34" width="128" height="92" rx="20"/><path d="M68 62 L100 80 L68 98 Z"/><circle class="d" cx="38" cy="54" r="6"/></g></svg>
                 <span class="sx-tag"><b>02</b>Attract</span>
                 <div class="sx-txt">
-                  <h3 class="sx-name"><a class="sx-link" href="/dental-video-marketing/" draggable="false">Dental Video Marketing</a></h3>
+                  <h3 class="sx-name"><a class="sx-link" href="dental-video-marketing.html" draggable="false">Dental Video Marketing</a></h3>
                   <div class="sx-more"><p class="sx-p">We film your clinic, your team and your patients, and turn it into ads people trust.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
                 </div>
               </li>
@@ -3933,7 +3933,7 @@
                 <svg class="sx-art" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g class="sx-ring"><circle cx="300" cy="150" r="118"/><circle cx="300" cy="150" r="178"/><circle cx="300" cy="150" r="242"/></g><g class="sx-g" transform="translate(210 60) scale(1.125)"><circle class="f" cx="66" cy="74" r="42"/><path d="M98 106 L136 144"/><path class="d" d="M126 10 Q130 30 146 34 Q130 38 126 58 Q122 38 106 34 Q122 30 126 10 Z"/></g></svg>
                 <span class="sx-tag"><b>03</b>Attract</span>
                 <div class="sx-txt">
-                  <h3 class="sx-name"><a class="sx-link" href="/dental-seo/" draggable="false">Dental SEO &amp; AI SEO</a></h3>
+                  <h3 class="sx-name"><a class="sx-link" href="dental-seo.html" draggable="false">Dental SEO &amp; AI SEO</a></h3>
                   <div class="sx-more"><p class="sx-p">We get you found on Google Search, Maps and AI search like ChatGPT, Claude and Gemini.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
                 </div>
               </li>
@@ -3941,7 +3941,7 @@
                 <svg class="sx-art" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g class="sx-ring"><circle cx="300" cy="150" r="118"/><circle cx="300" cy="150" r="178"/><circle cx="300" cy="150" r="242"/></g><g class="sx-g" transform="translate(210 60) scale(1.125)"><rect class="f" x="14" y="26" width="132" height="108" rx="20"/><path d="M14 60 H146"/><circle class="d" cx="36" cy="43" r="5.5"/><circle class="m" cx="54" cy="43" r="5.5"/><circle class="m" cx="72" cy="43" r="5.5"/><path d="M38 88 H122"/><path d="M38 110 H90"/></g></svg>
                 <span class="sx-tag"><b>04</b>Attract</span>
                 <div class="sx-txt">
-                  <h3 class="sx-name"><a class="sx-link" href="/dental-website-design/" draggable="false">Dental Website Design</a></h3>
+                  <h3 class="sx-name"><a class="sx-link" href="dental-website-design.html" draggable="false">Dental Website Design</a></h3>
                   <div class="sx-more"><p class="sx-p">We design and build a fast website that turns visitors into booked patients.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
                 </div>
               </li>
@@ -3949,7 +3949,7 @@
                 <svg class="sx-art" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g class="sx-ring"><circle cx="300" cy="150" r="118"/><circle cx="300" cy="150" r="178"/><circle cx="300" cy="150" r="242"/></g><g class="sx-g" transform="translate(210 60) scale(1.125)"><path d="M28 96 V80 Q28 26 80 26 Q132 26 132 80 V96"/><rect class="f" x="16" y="84" width="30" height="46" rx="13"/><rect class="f" x="114" y="84" width="30" height="46" rx="13"/><path d="M129 130 Q129 146 104 146 H94"/><circle class="d" cx="86" cy="146" r="7"/></g></svg>
                 <span class="sx-tag"><b>05</b>Convert</span>
                 <div class="sx-txt">
-                  <h3 class="sx-name"><a class="sx-link" href="/dental-call-centre/" draggable="false">Dental Call Centre</a></h3>
+                  <h3 class="sx-name"><a class="sx-link" href="dental-call-centre.html" draggable="false">Dental Call Centre</a></h3>
                   <div class="sx-more"><p class="sx-p">We call every new lead, qualify them and book them straight into your schedule.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
                 </div>
               </li>
@@ -3957,7 +3957,7 @@
                 <svg class="sx-art" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g class="sx-ring"><circle cx="300" cy="150" r="118"/><circle cx="300" cy="150" r="178"/><circle cx="300" cy="150" r="242"/></g><g class="sx-g" transform="translate(210 60) scale(1.125)"><rect class="f" x="16" y="22" width="128" height="88" rx="18"/><path d="M80 110 V140"/><path d="M56 142 H104"/><path d="M56 66 L74 84 L106 52"/></g></svg>
                 <span class="sx-tag"><b>06</b>Convert</span>
                 <div class="sx-txt">
-                  <h3 class="sx-name"><a class="sx-link" href="/treatment-coordinator-training/" draggable="false">Treatment Coordinator Training</a></h3>
+                  <h3 class="sx-name"><a class="sx-link" href="treatment-coordinator-training.html" draggable="false">Treatment Coordinator Training</a></h3>
                   <div class="sx-more"><p class="sx-p">We coach your team to present treatment with confidence, so more patients say yes.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
                 </div>
               </li>
@@ -3965,7 +3965,7 @@
                 <svg class="sx-art" viewBox="0 0 600 400" preserveAspectRatio="xMidYMid slice" aria-hidden="true" focusable="false"><g class="sx-ring"><circle cx="300" cy="150" r="118"/><circle cx="300" cy="150" r="178"/><circle cx="300" cy="150" r="242"/></g><g class="sx-g" transform="translate(210 60) scale(1.125)"><path d="M18 142 H142"/><path d="M40 118 V100"/><path d="M70 118 V82"/><path d="M100 118 V90"/><path d="M130 118 V58"/><path class="t" d="M34 70 L66 46 L94 58 L132 22"/><circle class="d" cx="132" cy="22" r="7"/></g></svg>
                 <span class="sx-tag"><b>07</b>Measure</span>
                 <div class="sx-txt">
-                  <h3 class="sx-name"><a class="sx-link" href="/dental-reporting-dashboard/" draggable="false">Dental Reporting Dashboard</a></h3>
+                  <h3 class="sx-name"><a class="sx-link" href="dental-reporting-dashboard.html" draggable="false">Dental Reporting Dashboard</a></h3>
                   <div class="sx-more"><p class="sx-p">See every lead, call and booking live in your Dental Connect dashboard.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
                 </div>
               </li>
@@ -4364,7 +4364,7 @@
         </div>
         <div class="f-cols">
           <nav aria-label="Services"><ul>
-            <li><a href="#svc-marketing">Dental Marketing</a>
+            <li><a href="dental-marketing.html">Dental Marketing</a>
             <ul class="f-sub">
               <li><a href="#treatments">Dental Implant Marketing</a></li>
               <li><a href="#treatments">Full-Arch Marketing</a></li>
@@ -4372,13 +4372,13 @@
               <li><a href="#treatments">General Dentistry Marketing</a></li>
             </ul>
           </li>
-            <li><a href="#svc-video">Video Marketing</a></li>
-            <li><a href="#svc-seo">SEO &amp; AI SEO</a></li>
+            <li><a href="dental-video-marketing.html">Video Marketing</a></li>
+            <li><a href="dental-seo.html">SEO &amp; AI SEO</a></li>
           </ul></nav>
           <nav aria-label="More services"><ul>
-            <li><a href="#svc-web">Website Design</a></li>
-            <li><a href="#svc-call">Call Centre</a></li>
-            <li><a href="#svc-training">Coordinator Training</a></li>
+            <li><a href="dental-website-design.html">Website Design</a></li>
+            <li><a href="dental-call-centre.html">Call Centre</a></li>
+            <li><a href="treatment-coordinator-training.html">Coordinator Training</a></li>
           </ul></nav>
           <nav aria-label="Company"><ul>
             <li><a href="#results">Case Studies</a></li>
@@ -5235,6 +5235,12 @@
                 if (moved || k !== j) {
                   e.preventDefault();
                   if (!moved) go(k);
+                } else if (!e.target.closest("a")) {
+                  // the open card: a click anywhere on it opens its page (the link's stretched ::after only covers
+                  // the text block, because .sx-txt is the positioned box it stretches to)
+                  const a = $(".sx-link", c);
+                  if (e.ctrlKey || e.metaKey) open(a.href, "_blank");
+                  else location.href = a.href;
                 }
               });
               // keyboard focus opens a card; a pointer's focus must not (it would open the card before the click
