@@ -3,7 +3,8 @@
 # layout, photos, video, fonts, sizes and spacing are identical on every page: only what is written here changes.
 # Copy voice (dmc-design skill, 2b): sell the experience ("we do it for you, your team just sees patients"); never
 # show mechanics (speed-to-lead times, deposits, credit scores, show-up rates). h1b, statement: may hold <span class="hl">.
-# Each entry: file, slug (live URL), name (HTML), title, desc, h1a, h1b, p1, p2, statement, checklist (6),
+# Each entry: file, slug (live URL), photo (assets/img/svc/, 3840px), photo_alt, photo_pos / photo_pos_m (focus point
+# on the wide desktop banner / the tall phone banner), name (HTML), title, desc, h1a, h1b, p1, p2, statement, checklist (6),
 # help (9 x (Phosphor icon, title, line)), video (headline on the video card), faq_head, faq (5 x (q, [paragraphs])).
 
 HL = '<span class="hl">{}</span>'
@@ -11,6 +12,7 @@ HL = '<span class="hl">{}</span>'
 SERVICES = [
     {
         "file": "dental-marketing.html", "slug": "dental-marketing", "svc": "svc-marketing",
+        "photo": "dental-marketing-hero.webp", "photo_alt": "A bright, modern dental surgery", "photo_pos": "50% 55%", "photo_pos_m": "62% 50%",  # Pexels 6812453 (free Pexels licence), 3840px
         "name": "Dental Marketing",
         "title": "Dental Marketing for Implants, Invisalign &amp; New Patients | Dental Media Corp",
         "desc": "We create and run your Google and Meta ads, contact every lead and book qualified patients into your schedule. Your team just sees the patients who come in.",
@@ -52,6 +54,7 @@ SERVICES = [
     },
     {
         "file": "dental-video-marketing.html", "slug": "dental-video-marketing", "svc": "svc-video",
+        "photo": "dental-video-marketing-hero.webp", "photo_alt": "A professional video camera on a tripod in a studio", "photo_pos": "50% 45%", "photo_pos_m": "60% 50%",  # Pexels 13710029 (free Pexels licence), 3840px
         "name": "Dental Video Marketing",
         "title": "Dental Video Marketing: Clinic Videos &amp; Video Ads | Dental Media Corp",
         "desc": "We film your dentists, your team and your patients, and turn it into ads and videos people trust. You just show up as yourselves; we handle the rest.",
@@ -91,6 +94,7 @@ SERVICES = [
     },
     {
         "file": "dental-seo.html", "slug": "dental-seo", "svc": "svc-seo",
+        "photo": "dental-seo-hero.webp", "photo_alt": "Colourful push pins marking places on a map", "photo_pos": "50% 40%", "photo_pos_m": "45% 45%",  # Pexels 8828584 (free Pexels licence), 3840px
         "name": "Dental SEO &amp; AI SEO",
         "title": "Dental SEO &amp; AI SEO: Get Found on Google, Maps &amp; AI Search | Dental Media Corp",
         "desc": "We get your clinic found on Google Search, Google Maps and AI search like ChatGPT, Claude and Gemini, so more patients near you choose your clinic.",
@@ -128,6 +132,7 @@ SERVICES = [
     },
     {
         "file": "dental-website-design.html", "slug": "dental-website-design", "svc": "svc-web",
+        "photo": "dental-website-design-hero.webp", "photo_alt": "A bright, minimal desk with a laptop", "photo_pos": "50% 55%", "photo_pos_m": "50% 55%",  # Pexels 8960464 (free Pexels licence), 3840px
         "name": "Dental Website Design",
         "title": "Dental Website Design: Fast Websites That Book Patients | Dental Media Corp",
         "desc": "We design and build a fast, modern website for your clinic that turns visitors into booked patients. We write it, build it and look after it for you.",
@@ -164,6 +169,7 @@ SERVICES = [
     },
     {
         "file": "dental-call-centre.html", "slug": "dental-call-centre", "svc": "svc-call",
+        "photo": "dental-call-centre-hero.webp", "photo_alt": "A smiling call centre agent with a headset in a bright office", "photo_pos": "50% 22%", "photo_pos_m": "68% 40%",  # Pexels 8204396 (free Pexels licence), 3840px; a person on purpose (user request 2026-11-21)
         "name": "Dental Call Centre",
         "title": "Dental Call Centre: Every Lead Called &amp; Booked | Dental Media Corp",
         "desc": "Our dental-trained team calls every new lead, answers their questions and books qualified patients straight into your schedule. Your front desk stays free.",
@@ -200,6 +206,7 @@ SERVICES = [
     },
     {
         "file": "treatment-coordinator-training.html", "slug": "treatment-coordinator-training", "svc": "svc-training",
+        "photo": "treatment-coordinator-training-hero.webp", "photo_alt": "A tablet showing a dental X-ray in a bright clinic", "photo_pos": "50% 40%", "photo_pos_m": "45% 45%",  # Pexels 4266945 (free Pexels licence), 3840px
         "name": "Treatment Coordinator Training",
         "title": "Treatment Coordinator Training: More Patients Saying Yes | Dental Media Corp",
         "desc": "We coach your treatment coordinators and team to present treatment with confidence, so more of the patients you see go ahead with care.",
@@ -236,6 +243,7 @@ SERVICES = [
     },
     {
         "file": "dental-reporting-dashboard.html", "slug": "dental-reporting-dashboard", "svc": "svc-reporting",
+        "photo": "dental-reporting-dashboard-hero.webp", "photo_alt": "A tablet showing a rising green chart beside paper and a pen", "photo_pos": "50% 45%", "photo_pos_m": "45% 50%",  # Pexels 187041 (free Pexels licence), 3840px
         "name": "Dental Reporting Dashboard",
         "title": "Dental Connect: Your Live Dental Marketing Dashboard | Dental Media Corp",
         "desc": "See every lead, call, booking and consultation in one place with your Dental Connect dashboard, updated live. No more waiting for monthly reports.",

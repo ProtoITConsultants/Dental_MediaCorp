@@ -3672,11 +3672,14 @@
         inset: 0;
         overflow: hidden;
       }
+      .svb-img picture {
+        display: contents; /* the img inside lays out exactly as a plain img does */
+      }
       .svb-img img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        object-position: 50% 40%;
+        object-position: var(--pos, 50% 40%); /* each page's focus point (services_content.py: photo_pos) */
       }
       .svb-tab {
         position: absolute;
@@ -3837,6 +3840,7 @@
       }
       .vt-box {
         position: relative;
+        scroll-margin-top: 96px; /* when the video starts, the card scrolls to just under the header */
         height: clamp(420px, calc(34 * var(--uvw)), 640px);
         border-radius: var(--r-card);
         overflow: hidden;
@@ -3941,12 +3945,47 @@
         font-family: inherit;
         cursor: pointer;
       }
-      /* while the video plays the buttons step out under the card, so the notch never hides the player's controls
-         (the script drops the notch when the tab is not absolute) */
+      /* while the video plays it is just the video (user request): the buttons and the notch go away (the script
+         drops the clip), and a small white circle with an x, the play circle's style, closes it from the top-left */
       .vt.is-on .vt-tab {
-        position: static;
-        justify-content: flex-end;
-        margin-top: 12px;
+        display: none;
+      }
+      .vt-x {
+        position: absolute;
+        top: 20px;
+        left: 20px; /* top-left: the Drive player keeps its own button in the top-right corner */
+        z-index: 3;
+        display: grid;
+        place-items: center;
+        width: 52px;
+        height: 52px;
+        border: 0;
+        border-radius: 50%;
+        background: #fff;
+        color: var(--ink);
+        font-size: 20px;
+        cursor: pointer;
+        box-shadow: 0 14px 30px -12px rgba(13, 19, 18, 0.5);
+        opacity: 0;
+        pointer-events: none;
+        transform: scale(0.8);
+        transition:
+          opacity 0.4s var(--ease),
+          transform 0.4s var(--ease),
+          background-color 0.3s,
+          color 0.3s;
+      }
+      .vt.is-on .vt-x {
+        opacity: 1;
+        pointer-events: auto;
+        transform: none;
+        transition-delay: 0.5s, 0.5s, 0s, 0s; /* after the card has opened */
+      }
+      .vt.is-on .vt-x:hover {
+        transform: scale(1.1);
+        background: var(--ink);
+        color: #fff;
+        transition-delay: 0s;
       }
       .vt-tab .cta.light {
         box-shadow: inset 0 0 0 1px rgba(13, 19, 18, 0.08);
@@ -3992,7 +4031,7 @@
           aspect-ratio: 4 / 5;
         }
         .svb-img img {
-          object-position: 78% 50%;
+          object-position: var(--pos-m, 50% 50%);
         }
         .svb-stat {
           left: 12px;
@@ -4022,6 +4061,13 @@
         .vt-q {
           font-size: 22px;
         }
+        .vt-x {
+          top: 12px;
+          left: 12px;
+          width: 44px;
+          height: 44px;
+          font-size: 18px;
+        }
         .vt-play {
           left: 14px;
           bottom: 14px;
@@ -4036,6 +4082,7 @@
         }
         .vt-tab .cta {
           width: 100%;
+          justify-content: space-between; /* full-width buttons on phones: the circle sits at the end */
         }
         .hp {
           padding: 32px 0;
@@ -4169,7 +4216,7 @@
             </div>
             <div class="svb-w">
             <div class="svb" id="svb">
-              <div class="svb-img"><img src="assets/img/svc/marketing-hero.webp" alt="A smiling patient against a mint wall" width="2000" height="1000" fetchpriority="high" decoding="async" /></div>
+              <div class="svb-img"><img src="assets/img/svc/dental-video-marketing-hero.webp" alt="A professional video camera on a tripod in a studio" width="3840" height="2560" style="--pos: 50% 45%; --pos-m: 60% 50%" fetchpriority="high" decoding="async" /></div>
               <div class="h-stat svb-stat">
                 <div class="h-num"><b><em>5,000+</em></b><small>Consultations attended</small></div>
                 <div class="h-num"><b><em>$10M+</em></b><small>In accepted treatment</small></div>
@@ -4246,6 +4293,7 @@
                   <p class="vt-q"><span>See how we film your clinic and turn it into ads people trust.</span></p>
                 </div>
                 <button class="vt-play" type="button" aria-label="Play the Dental Video Marketing video"><i class="ph-fill ph-play" aria-hidden="true"></i></button>
+                <button class="vt-x" type="button" aria-label="Close the video" tabindex="-1"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
               </div>
               <div class="vt-tab">
                 <button class="cta vt-go" type="button"><span class="cta-t">Play video</span><span class="cta-i"><i class="ph-fill ph-play" aria-hidden="true"></i><i class="ph-fill ph-play" aria-hidden="true"></i></span></button>
@@ -4542,7 +4590,8 @@
             tab = $(".vt-tab"),
             sec = box.closest(".vt");
           const cut = () => {
-            if (getComputedStyle(tab).position !== "absolute") return void (box.style.clipPath = "");
+            // no notch while the video plays (just the video) or when the buttons sit under the card (phones)
+            if (sec.classList.contains("is-on") || getComputedStyle(tab).position !== "absolute") return void (box.style.clipPath = "");
             const W = box.offsetWidth,
               H = box.offsetHeight,
               R = parseFloat(getComputedStyle(box).borderTopLeftRadius) || 28,
@@ -4558,11 +4607,14 @@
           const go = $(".vt-go"),
             label = $(".cta-t", go),
             media = $(".vt-media", box),
-            still = $("img", media);
+            still = $("img", media),
+            x = $(".vt-x", box);
           let frame = null;
           const play = () => {
             if (frame) return stop();
             sec.classList.add("is-on");
+            cut();
+            x.tabIndex = 0;
             label.textContent = "Close video";
             go.querySelectorAll(".cta-i i").forEach((i) => (i.className = "ph-bold ph-x"));
             // 16:9, but never taller than the screen (the root zoom turns screen px into CSS px)
@@ -4578,12 +4630,17 @@
             frame.title = "Service video";
             media.appendChild(frame);
             still.style.opacity = "0";
+            x.focus({ preventScroll: true });
+            // bring the whole card into view, just under the header (the header would hide the close button)
+            if (lenis) lenis.scrollTo(box, { offset: -96, duration: 1.1 });
+            else box.scrollIntoView({ behavior: reduce ? "auto" : "smooth", block: "start" });
           };
           const stop = () => {
             frame.remove();
             frame = null;
             still.style.opacity = "";
             sec.classList.remove("is-on");
+            x.tabIndex = -1;
             label.textContent = "Play video";
             go.querySelectorAll(".cta-i i").forEach((i) => (i.className = "ph-fill ph-play"));
             // back to the card's own (CSS) height
@@ -4591,11 +4648,15 @@
             box.style.height = "";
             const h = box.offsetHeight;
             box.style.height = cur;
-            if (motion) gsap.to(box, { height: h, duration: 0.9, ease: "expo.inOut", clearProps: "height" });
+            if (motion) gsap.to(box, { height: h, duration: 0.9, ease: "expo.inOut", clearProps: "height", onComplete: cut });
             else box.style.height = "";
+            cut();
+            go.focus({ preventScroll: true });
           };
           $(".vt-play").addEventListener("click", play);
           go.addEventListener("click", play);
+          x.addEventListener("click", stop);
+          addEventListener("keydown", (e) => e.key === "Escape" && frame && stop());
         }
 
         /* ---------- reviews: the cards keep their share of the SCREEN on every desktop and at any browser zoom ----------
