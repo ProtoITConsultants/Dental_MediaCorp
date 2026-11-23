@@ -1612,6 +1612,13 @@
         scrollbar-width: none;
         cursor: grab;
       }
+      /* each clinic card opens its case study on the Case Studies page (user); a drag still scrolls the row */
+      .cs[data-href] {
+        cursor: pointer;
+      }
+      .row.drag .cs[data-href] {
+        cursor: inherit;
+      }
       .row::-webkit-scrollbar {
         display: none;
       }
@@ -3706,7 +3713,7 @@
           <a href="#faq">FAQ</a>
         </div>
         <div class="nav-r">
-          <a class="nav-txt" href="/blog/">Blog</a>
+          <a class="nav-txt" href="blog.html">Blog</a>
           <a class="nav-cta" href="#contact">Book a Call</a>
           <button class="burger" type="button" aria-controls="mnav" aria-expanded="false" aria-label="Open menu">
             <div><span></span><span></span><span></span></div>
@@ -3749,7 +3756,7 @@
           <li><a href="#testimonials">Reviews</a></li>
           <li><a href="#dmc">DMC Method</a></li>
           <li><a href="#faq">FAQ</a></li>
-          <li><a href="/blog/">Blog</a></li>
+          <li><a href="blog.html">Blog</a></li>
         </ul>
         <div class="mnav-foot">
           <a class="cta light" href="#contact"><span class="cta-t">Book a Strategy Call</span><span class="cta-i"><i class="ph ph-arrow-right" aria-hidden="true"></i><i class="ph ph-arrow-right" aria-hidden="true"></i></span></a>
@@ -3993,31 +4000,31 @@
         </div>
         <!-- Elementor: Loop Carousel over the "Case Study" CPT (ACF: render, logo, revenue, ad_spend, roas) -->
         <div class="row" id="cRow" tabindex="0" aria-label="Clinic results. Scroll sideways or use the arrows.">
-          <article class="cs"><div class="cs-in">
+          <article class="cs" data-href="case-west-grande-prairie-dental.html" role="link" tabindex="0" aria-label="West Grande Prairie Dental: view the case study"><div class="cs-in">
             <div class="cs-img"><img class="cs-logo" src="assets/img/clients/case-wgp.webp" alt="West Grande Prairie Dental logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/wgp-photo.jpg" alt="West Grande Prairie Dental storefront" loading="lazy" /></div></div>
             <h3>West Grande Prairie Dental</h3>
             <p class="cs-meta">return on ad spend: <b>19.4×</b></p>
             <div class="cs-res"><p>Campaign results:</p><ul><li><b>$97,000</b> revenue</li><li>from <b>$5,000</b> ad spend</li></ul></div>
           </div></article>
-          <article class="cs"><div class="cs-in">
+          <article class="cs" data-href="case-riverbend-denture-implant.html" role="link" tabindex="0" aria-label="Riverbend Denture &amp; Implant: view the case study"><div class="cs-in">
             <div class="cs-img"><img class="cs-logo" src="assets/img/clients/riverbend.png" alt="Riverbend Denture &amp; Implant logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/riverbend-photo.webp" alt="Riverbend Denture &amp; Implant Clinic reception" loading="lazy" /></div></div>
             <h3>Riverbend Denture &amp; Implant</h3>
             <p class="cs-meta">return on ad spend: <b>13.4×</b></p>
             <div class="cs-res"><p>Campaign results:</p><ul><li><b>$255,000</b> revenue</li><li>from <b>$19,000</b> ad spend</li></ul></div>
           </div></article>
-          <article class="cs"><div class="cs-in">
+          <article class="cs" data-href="case-smile-now.html" role="link" tabindex="0" aria-label="Smile Now: view the case study"><div class="cs-in">
             <div class="cs-img"><img class="cs-logo" src="assets/img/clients/case-smilenow.webp" alt="Smile Now logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/smilenow-photo.webp" alt="Calgary skyline and the Peace Bridge" loading="lazy" /></div></div>
             <h3>Smile Now</h3>
             <p class="cs-meta">return on ad spend: <b>12.4×</b></p>
             <div class="cs-res"><p>Campaign results:</p><ul><li><b>$161,000</b> revenue</li><li>from <b>$13,000</b> ad spend</li></ul></div>
           </div></article>
-          <article class="cs"><div class="cs-in">
+          <article class="cs" data-href="case-wye-dental.html" role="link" tabindex="0" aria-label="Wye Dental: view the case study"><div class="cs-in">
             <div class="cs-img"><img class="cs-logo" src="assets/img/clients/case-wye.webp" alt="Wye Dental logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/wye-photo.webp" alt="The Wye Dental team" loading="lazy" /></div></div>
             <h3>Wye Dental</h3>
             <p class="cs-meta">return on ad spend: <b>15.3×</b></p>
             <div class="cs-res"><p>Campaign results:</p><ul><li><b>$92,000</b> revenue</li><li>from <b>$6,000</b> ad spend</li></ul></div>
           </div></article>
-          <article class="cs"><div class="cs-in">
+          <article class="cs" data-href="case-modern-smiles.html" role="link" tabindex="0" aria-label="Modern Smiles: view the case study"><div class="cs-in">
             <div class="cs-img"><img class="cs-logo" src="assets/img/clients/case-modern-smiles.webp" alt="Modern Smiles logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/modern-smiles-photo.webp" alt="A denture being made at Modern Smiles" loading="lazy" /></div></div>
             <h3>Modern Smiles</h3>
             <p class="cs-meta">return on ad spend: <b>12×</b></p>
@@ -4384,7 +4391,7 @@
             <li><a href="#results">Case Studies</a></li>
             <li><a href="#dmc">The DMC Method</a></li>
             <li><a href="#faq">FAQ</a></li>
-            <li><a href="/blog/">Blog</a></li>
+            <li><a href="blog.html">Blog</a></li>
           </ul></nav>
         </div>
         <div class="f-big">
@@ -4599,6 +4606,12 @@
             }
           });
           row.addEventListener("click", (e) => moved && e.preventDefault(), true);
+          // a click (not a drag) or Enter on a clinic card opens its case study on the Case Studies page
+          const openCase = (c, e) => (e.ctrlKey || e.metaKey ? open(c.dataset.href, "_blank") : (location.href = c.dataset.href));
+          $$(".cs[data-href]", row).forEach((c) => {
+            c.addEventListener("click", (e) => !moved && !e.defaultPrevented && openCase(c, e));
+            c.addEventListener("keydown", (e) => e.key === "Enter" && openCase(c, e));
+          });
         }
 
         /* ---------- reviews: the cards keep their share of the SCREEN on every desktop and at any browser zoom ----------

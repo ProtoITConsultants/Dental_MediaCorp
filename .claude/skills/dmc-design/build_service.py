@@ -307,7 +307,7 @@ PAGE_CSS = """
         place-items: center;
         width: var(--fs-stat);
         height: var(--fs-stat);
-        border-radius: calc(var(--fs-stat) * 0.38); /* rounder (user request) */
+        border-radius: calc(var(--fs-stat) * 0.24); /* crisp rounded square (user: 38% was too round) */
         background: var(--teal-3);
         color: var(--ink);
         font-size: calc(var(--fs-stat) * 0.56);
@@ -595,7 +595,7 @@ PAGE_CSS = """
         .hp-i {
           width: 52px;
           height: 52px;
-          border-radius: 20px;
+          border-radius: 12px; /* 24%, as on desktop */
           font-size: 29px;
         }
       }
@@ -1053,7 +1053,8 @@ def render(sv):
   </body>
 </html>
 '''
-for sv in SERVICES:
-    page = render(sv)
-    open(sv['file'], 'wb').write(page.replace('\n', '\r\n').encode('utf-8'))
-    print('ok', sv['file'], len(page.splitlines()))
+if __name__ == '__main__':  # build_case.py imports this file for its parts; only a direct run writes the pages
+    for sv in SERVICES:
+        page = render(sv)
+        open(sv['file'], 'wb').write(page.replace('\n', '\r\n').encode('utf-8'))
+        print('ok', sv['file'], len(page.splitlines()))

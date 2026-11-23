@@ -1560,6 +1560,13 @@
         scrollbar-width: none;
         cursor: grab;
       }
+      /* each clinic card opens its case study on the Case Studies page (user); a drag still scrolls the row */
+      .cs[data-href] {
+        cursor: pointer;
+      }
+      .row.drag .cs[data-href] {
+        cursor: inherit;
+      }
       .row::-webkit-scrollbar {
         display: none;
       }
@@ -3802,7 +3809,7 @@
         place-items: center;
         width: var(--fs-stat);
         height: var(--fs-stat);
-        border-radius: calc(var(--fs-stat) * 0.38); /* rounder (user request) */
+        border-radius: calc(var(--fs-stat) * 0.24); /* crisp rounded square (user: 38% was too round) */
         background: var(--teal-3);
         color: var(--ink);
         font-size: calc(var(--fs-stat) * 0.56);
@@ -4090,7 +4097,7 @@
         .hp-i {
           width: 52px;
           height: 52px;
-          border-radius: 20px;
+          border-radius: 12px; /* 24%, as on desktop */
           font-size: 29px;
         }
       }
@@ -4142,7 +4149,7 @@
           <a href="#faq">FAQ</a>
         </div>
         <div class="nav-r">
-          <a class="nav-txt" href="/blog/">Blog</a>
+          <a class="nav-txt" href="blog.html">Blog</a>
           <a class="nav-cta" href="index.html#contact">Book a Call</a>
           <button class="burger" type="button" aria-controls="mnav" aria-expanded="false" aria-label="Open menu">
             <div><span></span><span></span><span></span></div>
@@ -4185,7 +4192,7 @@
           <li><a href="#testimonials">Reviews</a></li>
           <li><a href="index.html#dmc">DMC Method</a></li>
           <li><a href="#faq">FAQ</a></li>
-          <li><a href="/blog/">Blog</a></li>
+          <li><a href="blog.html">Blog</a></li>
         </ul>
         <div class="mnav-foot">
           <a class="cta light" href="index.html#contact"><span class="cta-t">Book a Strategy Call</span><span class="cta-i"><i class="ph ph-arrow-right" aria-hidden="true"></i><i class="ph ph-arrow-right" aria-hidden="true"></i></span></a>
@@ -4456,7 +4463,7 @@
             <li><a href="index.html#results">Case Studies</a></li>
             <li><a href="index.html#dmc">The DMC Method</a></li>
             <li><a href="index.html#faq">FAQ</a></li>
-            <li><a href="/blog/">Blog</a></li>
+            <li><a href="blog.html">Blog</a></li>
           </ul></nav>
         </div>
         <div class="f-big">
