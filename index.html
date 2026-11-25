@@ -250,7 +250,7 @@
         --max: calc(1920px / var(--z) - 2 * var(--side)); /* 1920 SCREEN px less the gutters, so content lines up with the nav at every laptop zoom */
         /* radius system: cards & panels / things nested inside a card / buttons & chips */
         /* corners: cards, and anything nested 6px inside a card (concentric: inner = outer - gap) */
-        --r-card: 28px;
+        --r-card: 38px; /* one round corner for every card on the site (user: consistent; no squircles) */
         --r-inner: calc(var(--r-card) - 6px);
         --r-pill: 999px;
         /* type scale: use these everywhere, never a one-off size */
@@ -1637,8 +1637,9 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        padding: 6px 6px 26px; /* ends under the text, like the blog card (the photo no longer gives way to a results list) */
+        padding: 6px 6px 30px; /* ends under the text, like the blog card (the photo no longer gives way to a results list) */
         border-radius: var(--r-card);
+        overflow: hidden; /* clips the results notch to the card's corner */
         background: #fff;
         box-shadow: 0 1px 0 rgba(13, 19, 18, 0.03);
         transition:
@@ -1651,7 +1652,7 @@
         height: 269px;
         border-radius: var(--r-inner);
         overflow: hidden;
-        background: var(--soft);
+        background: #fff; /* the card's white: nothing grey can show at the corners (user) */
       }
       .cs-img > .phx {
         width: 100%;
@@ -1667,12 +1668,6 @@
         overflow: hidden;
         border-radius: inherit;
       }
-      .cs-cover::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(160deg, rgba(18, 59, 54, 0.62), rgba(18, 59, 54, 0) 46%);
-      }
       .cs-cover > .phx {
         width: 100%;
         height: 100%;
@@ -1681,10 +1676,11 @@
       .cs-tab {
         --r: 22px;
         position: absolute;
-        top: -1px;
-        right: -1px;
+        top: 0; /* a child of the card, not the photo: its outer edges are the card's own (clipped by its squircle), so no
+                   seam or hairline shows at any zoom (user) */
+        right: 0;
         z-index: 2;
-        padding: 1px 1px 14px 16px;
+        padding: 10px 20px 14px 22px; /* the card's 6px + the old inset; clear of the rounded corner (user) */
         border-bottom-left-radius: var(--r);
         background: #fff;
         font-size: var(--fs-h4);
@@ -1708,25 +1704,41 @@
         background: radial-gradient(circle at 0 100%, transparent calc(var(--r) - 0.5px), #fff calc(var(--r) + 0.5px));
       }
       .cs-tab::before {
-        top: 0;
+        top: 6px; /* the photo's top edge (the card's 6px padding) */
         right: calc(100% - 1px);
         width: calc(var(--r) + 1px);
       }
       .cs-tab::after {
         top: calc(100% - 1px);
-        right: 0;
+        right: 6px; /* the photo's right edge */
         height: calc(var(--r) + 1px);
       }
+      /* the name starts large (user); on hover it shrinks as one block (scale from its top-left corner) and the return
+         line rises into the room it leaves. Scaling, not font-size: the words keep their lines and never jump (user).
+         The name's box keeps two large lines, so the card never changes height. */
       .cs h3 {
+        min-height: calc(2 * 1.09 * var(--fs-h3));
         margin: 20px 12px 0;
-        font-size: var(--fs-h4);
+        font-size: var(--fs-h3);
         font-weight: 600;
         letter-spacing: -0.035em;
         line-height: 1.09;
+        transform-origin: 0 0;
+        transition: transform 0.6s var(--ease);
+      }
+      .cs:hover h3,
+      .cs.on h3,
+      .cs:focus-within h3 {
+        transform: scale(0.72);
       }
       /* the return line waits below and rises in on hover (user) */
       .cs-meta {
-        margin: 6px 12px 0;
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        /* just under the shrunk name: --nm is the name's height at 0.72, measured per card (one line or two) */
+        top: calc(6px + 269px + 20px + var(--nm, 30px) + 8px);
+        margin: 0;
         font-size: var(--fs-small);
         color: var(--body);
         opacity: 0;
@@ -1992,6 +2004,13 @@
         font-size: 24px;
         color: var(--acc-mid);
       }
+      /* the Google "G" in its own colours before the stars: the reviews are Google reviews (user) */
+      .q-g {
+        flex: none;
+        width: 18px;
+        height: 18px;
+        margin: 0 8px 0 auto;
+      }
       .q-stars {
         display: flex;
         gap: 2px;
@@ -2141,10 +2160,6 @@
         border: 1px solid rgba(13, 19, 18, 0.08);
         background: #fff;
         clip-path: var(--cut, none);
-        transition: border-color 0.4s;
-      }
-      .rb:hover::before {
-        border-color: rgba(27, 127, 115, 0.45);
       }
       /* the label in each stat card: lead size, near-ink, so it reads without squinting */
       .rb p {
@@ -2231,8 +2246,7 @@
       .rb-5 p {
         color: var(--acc-deep);
       }
-      .rb-5::before,
-      .rb-5:hover::before {
+      .rb-5::before {
         border-color: transparent;
         background: linear-gradient(160deg, var(--acc-2), var(--acc));
       }
@@ -2331,16 +2345,16 @@
         position: relative;
       }
       .fl-track {
-        height: calc((7 * 70 + 100) * var(--uvh));
+        height: calc((7 * 42 + 100) * var(--uvh)); /* a shorter scroll per card: they come quickly (user) */
       }
       .fl-pin {
         position: sticky;
-        overflow: clip; /* the cards and rows still waiting below stay out of sight */
+        /* no clip: the last cards may run past the bottom of the screen; the section keeps room for them below (script) */
         top: 0;
         display: flex;
-        align-items: center;
+        align-items: flex-start; /* from the top: the tall stack must not push the heading up (it slides up only when the rows need it) */
         height: calc(100 * var(--uvh));
-        padding-top: 70px; /* clear of the header */
+        padding-top: 76px; /* the heading sits just under the header (user) */
       }
       .fl-pin > .wrap {
         width: 100%;
@@ -2352,98 +2366,71 @@
       .fl-in > .t-h2 {
         text-align: center; /* the site's section heading: centred, the rule before the italic line (user) */
       }
-      .fl-g {
+      /* the deck: one slide per service = its line, number, name and words on the left + its photo card on the right.
+         Both halves rise together from where the next slide waits (40px under the front one), but they stack at their
+         own step: on the left every earlier title stays listed under its own line (one title row apart), on the right
+         every earlier card keeps a --gap strip of photo. Nothing is painted behind them (user): an earlier slide's words
+         fade out as the next slide comes over them; its title stays. The line spans the text column only (user). */
+      .fl-deck {
+        --gap: 22px; /* what shows of a card once the next one sits on it (user: 20 to 25px) */
+        --sh: clamp(260px, calc(46 * var(--uvh)), 440px); /* a card's height: the last ones may run past the screen (user) */
+        position: relative;
+        height: calc(6 * var(--gap) + var(--sh)); /* the script sets the real height (the title list can be taller) */
+        margin-top: clamp(28px, calc(4 * var(--uvh)), 48px);
+      }
+      .fl-s {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .fl-l {
+        position: absolute;
+        top: 0;
+        left: 0;
         display: grid;
-        grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); /* the list leads; the cards are the smaller side */
-        gap: 40px clamp(40px, calc(6 * var(--uvw)), 120px);
-        align-items: start;
-        margin-top: clamp(20px, calc(3 * var(--uvh)), 36px);
-      }
-      /* the list: each row has its own hairline on top. A row waits a screen below and rises with its card (the script
-         moves both by the same eased amount), then stops under the row before it, as the card stops on the card before. */
-      .fl-list {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-      }
-      .fl-row {
-        border-top: 1px solid rgba(13, 19, 18, 0.12);
-      }
-      .fl-btn {
-        display: grid;
-        grid-template-columns: 52px minmax(0, 1fr);
+        grid-template-columns: 80px minmax(0, 1fr);
         align-items: baseline;
-        width: 100%;
-        padding: clamp(10px, calc(1.6 * var(--uvh)), 18px) 0;
-        border: 0;
-        background: none;
-        font: inherit;
-        color: inherit;
-        text-align: left;
-        cursor: pointer;
+        width: 54%;
+        padding-top: 16px;
+        border-top: 1px solid rgba(13, 19, 18, 0.12); /* the line the slide comes up with: the text column only */
+        pointer-events: auto;
       }
       .fl-n {
-        font-size: var(--fs-small);
+        font-size: var(--fs-h3); /* larger again (user) */
         font-weight: 600;
-        color: var(--grey);
+        color: var(--acc-mid);
         font-variant-numeric: tabular-nums;
-        transition: color 0.5s var(--ease);
       }
       .fl-t {
-        font-size: var(--fs-list); /* the DMC Method step titles' size ("We create your campaigns"), user */
+        margin: 0;
+        font-size: var(--fs-list); /* the DMC Method step titles' size (user) */
         font-weight: 600;
         letter-spacing: -0.035em;
         line-height: 1.1;
       }
-      .fl-row.on .fl-n {
-        color: var(--acc-mid);
+      .fl-t a {
+        color: inherit;
       }
-      .fl-d {
-        display: grid;
-        grid-template-rows: 0fr;
-        transition: grid-template-rows 0.6s var(--ease);
-      }
-      .fl-d > div {
-        overflow: hidden;
-      }
-      .fl-d p {
+      .fl-p {
         max-width: 28rem;
-        padding: 0 0 clamp(14px, calc(2 * var(--uvh)), 22px) 52px;
+        margin-top: 14px;
         font-size: var(--fs-lead);
         line-height: 1.45;
         color: var(--grey);
-        opacity: 0;
-        transition: opacity 0.3s ease;
+        /* opacity from the script: the words stay until the next title is about to reach them (user) */
       }
-      .fl-row.on .fl-d {
-        grid-template-rows: 1fr;
-      }
-      .fl-row.on .fl-d p {
-        opacity: 1;
-        transition: opacity 0.5s ease 0.1s;
-      }
-
-      /* the stack: card k rests k headers down; a card that has not arrived waits below the screen */
-      .fl-stack {
-        --hd: 66px; /* what shows of a card once the next one sits on it: a strip of its photo */
-        --ch: clamp(250px, calc(100 * var(--uvh) - 6 * var(--hd) - 290px), 380px); /* a card's height */
-        position: relative;
-        width: 100%;
-        max-width: 470px;
-        height: calc((7 - 1) * var(--hd) + var(--ch));
-        margin-left: auto;
-      }
-      /* a card is its photo, edge to edge, with one notch cut into it bottom-left for the team cards' icon tile. No name
-         notch (user): the list on the left names it. */
+      /* the photo card: edge to edge, its top on the slide's line, one notch cut bottom-left for the icon tile */
       .fl-c {
         position: absolute;
-        inset: 0 0 auto;
+        top: 0;
+        right: 0;
         display: block;
-        height: var(--ch);
+        width: min(470px, 40%);
+        height: var(--sh);
+        pointer-events: auto;
         border-radius: var(--r-card);
         color: var(--ink);
         filter: drop-shadow(0 22px 24px rgba(13, 19, 18, 0.16)); /* follows the cut, a box-shadow would not */
-        /* no will-change: seven full-card photos as permanent layers left some unpainted */
       }
       .fl-m {
         position: absolute;
@@ -2458,9 +2445,6 @@
         height: 100%;
         object-fit: cover;
       }
-      /* the notch is a real cut in the photo (the team cards' clip-path, from the script), so the page shows through it:
-         nothing painted, no colour to mismatch the glow (user). The front card is always the lowest, so the cut never
-         shows the card behind (--hd is wider than the notch is tall). */
       .fl-ic {
         position: absolute;
         bottom: 0;
@@ -2481,29 +2465,22 @@
         outline: 2px solid var(--teal);
         outline-offset: 4px;
       }
-      @supports (corner-shape: squircle) {
-        .fl-c {
-          corner-shape: squircle;
-        }
-      }
       @media (max-width: 1199px) {
-        .fl-g {
-          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-          gap: 32px;
+        .fl-l {
+          width: 52%;
         }
       }
-      /* phones: the heading and the stack (each card names its service); the list steps aside */
+      /* phones: the cards only (each names its service for screen readers), full width */
       @media (max-width: 899px) {
-        .fl-g {
-          grid-template-columns: 1fr;
+        .fl-deck {
+          --gap: 24px;
+          --sh: clamp(300px, calc(100 * var(--uvh) - 6 * var(--gap) - 230px), 460px);
         }
-        .fl-list {
+        .fl-l {
           display: none;
         }
-        .fl-stack {
-          --hd: 58px;
-          --ch: clamp(240px, calc(100 * var(--uvh) - 6 * var(--hd) - 200px), 400px);
-          max-width: none;
+        .fl-c {
+          width: 100%;
         }
         .fl-ic i {
           width: 42px;
@@ -2794,30 +2771,6 @@
         font-weight: 700;
       }
 
-      /* ---------- Apple-style continuous corners ----------
-         a squircle reads tighter than a circle arc of the same radius, so the radius grows with it */
-      @supports (corner-shape: squircle) {
-        :root {
-          --r-card: 38px;
-        }
-        .sx-card,
-        .dd-fly,
-        .menu .dd-m a,
-        .h-badges,
-        .h-stat,
-        .cs-in,
-        .cs-img,
-        .q,
-        .vbox-f,
-        .fq,
-        .bk,
-        .bk-logo,
-        .bk-slot button,
-        .field textarea,
-        .bk-s3 .bk-preview {
-          corner-shape: squircle;
-        }
-      }
 
       /* ---------- laptop proportions ----------
          the layout is tuned on a 1920px screen; laptops (1280-1680px wide, e.g. 1920x1080 at 125% scaling = 1536px)
@@ -3146,6 +3099,9 @@
           opacity: 1;
           transform: none;
         }
+        .cs h3 {
+          transform: scale(0.72);
+        }
       }
       @media (prefers-reduced-motion: reduce) {
         *,
@@ -3223,7 +3179,7 @@
         grid-template-columns: 340px 1fr;
         background: #fff;
         color: var(--ink);
-        border-radius: 28px;
+        border-radius: var(--r-card);
         overflow: hidden;
         min-height: 640px;
         text-align: left;
@@ -3778,6 +3734,13 @@
   </head>
   <body>
     <script>
+      // every visit starts at the top (user): the browser does not restore the old scroll position, and a page brought
+      // back from the back/forward cache jumps to the top too. A link to a section (#hash) still lands on that section.
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      if (!location.hash) scrollTo(0, 0);
+      addEventListener("pageshow", (e) => {
+        if (e.persisted && !location.hash) scrollTo(0, 0);
+      });
       // preloader only runs when the motion stack is going to run it
       if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("is-pre");
       // it waits for every image on the page (the lazy ones load now too), at most 8s; the ones in view are also decoded
@@ -3844,7 +3807,7 @@
             </div>
           </div>
           <a href="case-studies.html">Case Studies</a>
-          <a href="#testimonials">Reviews</a>
+          <a href="reviews.html">Reviews</a>
           <a href="#dmc">DMC Method</a>
           <a href="#faq">FAQ</a>
         </div>
@@ -3889,7 +3852,7 @@
         <div class="mnav-rule"></div>
         <ul class="mnav-list mnav-2">
           <li><a href="case-studies.html">Case Studies</a></li>
-          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
           <li><a href="#dmc">DMC Method</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="blog.html">Blog</a></li>
@@ -3938,7 +3901,7 @@
           <div class="q-track" id="qTrack">
             <figure class="q">
               <div class="q-body">
-                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><svg class="q-g" viewBox="0 0 48 48" role="img" aria-label="Google review"><use href="#g-logo" /></svg><span class="q-stars" role="img" aria-label="Rated 5 out of 5 on Google"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
                 <div class="q-who"><b>Dr. Mark Warawa</b><span>Bright Smile Dental</span></div>
                 <blockquote>We’ve opened up another operatory just to deal with the overflow of new patients.</blockquote>
               </div>
@@ -3946,7 +3909,7 @@
             </figure>
             <figure class="q">
               <div class="q-body">
-                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><svg class="q-g" viewBox="0 0 48 48" role="img" aria-label="Google review"><use href="#g-logo" /></svg><span class="q-stars" role="img" aria-label="Rated 5 out of 5 on Google"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
                 <div class="q-who"><b>Dr. Greg Broyde</b><span>West Grande Prairie Dental &amp; East Village Dental</span></div>
                 <blockquote>For every dollar I spend, DMC makes sure that I get at least $6 to $10 back.</blockquote>
               </div>
@@ -3954,7 +3917,7 @@
             </figure>
             <figure class="q">
               <div class="q-body">
-                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><svg class="q-g" viewBox="0 0 48 48" role="img" aria-label="Google review"><use href="#g-logo" /></svg><span class="q-stars" role="img" aria-label="Rated 5 out of 5 on Google"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
                 <div class="q-who"><b>Rae-Lynne D.</b><span>Modern Smiles &amp; Northern Lights</span></div>
                 <blockquote>DMC is the first marketing that’s actually paid off since I opened in 2012.</blockquote>
               </div>
@@ -3962,7 +3925,7 @@
             </figure>
             <figure class="q">
               <div class="q-body">
-                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><svg class="q-g" viewBox="0 0 48 48" role="img" aria-label="Google review"><use href="#g-logo" /></svg><span class="q-stars" role="img" aria-label="Rated 5 out of 5 on Google"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
                 <div class="q-who"><b>Dr. Albert Voravong</b><span>Dental Media Corp client</span></div>
                 <blockquote>Hear Dr. Voravong talk about working with Dental Media Corp.</blockquote>
               </div>
@@ -3970,7 +3933,7 @@
             </figure>
             <figure class="q">
               <div class="q-body">
-                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><svg class="q-g" viewBox="0 0 48 48" role="img" aria-label="Google review"><use href="#g-logo" /></svg><span class="q-stars" role="img" aria-label="Rated 5 out of 5 on Google"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
                 <div class="q-who"><b>Corey Hyde</b><span>Owner, Centre Street Denture Clinic</span></div>
                 <blockquote>Hear Corey talk about working with Dental Media Corp.</blockquote>
               </div>
@@ -3978,7 +3941,7 @@
             </figure>
             <figure class="q">
               <div class="q-body">
-                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><svg class="q-g" viewBox="0 0 48 48" role="img" aria-label="Google review"><use href="#g-logo" /></svg><span class="q-stars" role="img" aria-label="Rated 5 out of 5 on Google"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
                 <div class="q-who"><b>Val</b><span>Office Manager, Westgate GP Dental</span></div>
                 <blockquote>Hear Val talk about working with Dental Media Corp.</blockquote>
               </div>
@@ -3986,7 +3949,7 @@
             </figure>
             <figure class="q">
               <div class="q-body">
-                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><svg class="q-g" viewBox="0 0 48 48" role="img" aria-label="Google review"><use href="#g-logo" /></svg><span class="q-stars" role="img" aria-label="Rated 5 out of 5 on Google"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
                 <div class="q-who"><b>Brandie</b><span>Treatment Coordinator, Trader Ridge</span></div>
                 <blockquote>Hear Brandie talk about working with Dental Media Corp.</blockquote>
               </div>
@@ -4051,67 +4014,98 @@
                   <span class="ln-m"><span>Full-service dental</span></span>
                   <span class="sh-l2"><span class="sh-rule" aria-hidden="true"></span><span class="ln-m"><span class="hl">marketing</span></span></span>
                 </h2>
-                <div class="fl-g">
-                  <ol class="fl-list" id="flList">
-                    <li class="fl-row on"><div>
-                      <button class="fl-btn" type="button"><span class="fl-n">01</span><span class="fl-t">Dental Marketing</span></button>
-                      <div class="fl-d"><div><p>We create and run your Google and Meta ads for implant, Invisalign and new patients.</p></div></div>
-                    </div></li>
-                    <li class="fl-row"><div>
-                      <button class="fl-btn" type="button"><span class="fl-n">02</span><span class="fl-t">Dental Video Marketing</span></button>
-                      <div class="fl-d"><div><p>We film your clinic, your team and your patients, and turn it into ads people trust.</p></div></div>
-                    </div></li>
-                    <li class="fl-row"><div>
-                      <button class="fl-btn" type="button"><span class="fl-n">03</span><span class="fl-t">Dental SEO &amp; AI SEO</span></button>
-                      <div class="fl-d"><div><p>We get you found on Google Search, Maps and AI search like ChatGPT, Claude and Gemini.</p></div></div>
-                    </div></li>
-                    <li class="fl-row"><div>
-                      <button class="fl-btn" type="button"><span class="fl-n">04</span><span class="fl-t">Dental Website Design</span></button>
-                      <div class="fl-d"><div><p>We design and build a fast website that turns visitors into booked patients.</p></div></div>
-                    </div></li>
-                    <li class="fl-row"><div>
-                      <button class="fl-btn" type="button"><span class="fl-n">05</span><span class="fl-t">Dental Call Centre</span></button>
-                      <div class="fl-d"><div><p>We call every new lead, qualify them and book them straight into your schedule.</p></div></div>
-                    </div></li>
-                    <li class="fl-row"><div>
-                      <button class="fl-btn" type="button"><span class="fl-n">06</span><span class="fl-t">Treatment Coordinator Training</span></button>
-                      <div class="fl-d"><div><p>We coach your team to present treatment with confidence, so more patients say yes.</p></div></div>
-                    </div></li>
-                    <li class="fl-row"><div>
-                      <button class="fl-btn" type="button"><span class="fl-n">07</span><span class="fl-t">Dental Reporting Dashboard</span></button>
-                      <div class="fl-d"><div><p>See every lead, call and booking live in your Dental Connect dashboard.</p></div></div>
-                    </div></li>
-                  </ol>
-                  <div class="fl-stack" id="flStack">
-                  <a class="fl-c t1" href="dental-marketing.html" style="z-index: 1" aria-label="Dental Marketing">
-                    <span class="fl-m"><img src="assets/img/svc/dental-marketing-card.webp" alt="" width="1920" height="1282" loading="lazy" decoding="async" /></span>
-                    <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-megaphone"></i></span>
-                  </a>
-                  <a class="fl-c t2" href="dental-video-marketing.html" style="z-index: 2" aria-label="Dental Video Marketing">
-                    <span class="fl-m"><img src="assets/img/svc/dental-video-marketing-card.webp" alt="" width="1920" height="1280" loading="lazy" decoding="async" /></span>
-                    <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-video-camera"></i></span>
-                  </a>
-                  <a class="fl-c t3" href="dental-seo.html" style="z-index: 3" aria-label="Dental SEO &amp; AI SEO">
-                    <span class="fl-m"><img src="assets/img/svc/dental-seo-card.webp" alt="" width="1920" height="1280" loading="lazy" decoding="async" /></span>
-                    <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-magnifying-glass"></i></span>
-                  </a>
-                  <a class="fl-c t1" href="dental-website-design.html" style="z-index: 4" aria-label="Dental Website Design">
-                    <span class="fl-m"><img src="assets/img/svc/dental-website-design-card.webp" alt="" width="1920" height="1280" loading="lazy" decoding="async" /></span>
-                    <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-browser"></i></span>
-                  </a>
-                  <a class="fl-c t2" href="dental-call-centre.html" style="z-index: 5" aria-label="Dental Call Centre">
-                    <span class="fl-m"><img src="assets/img/svc/dental-call-centre-card.webp" alt="" width="1920" height="1282" loading="lazy" decoding="async" /></span>
-                    <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-phone-call"></i></span>
-                  </a>
-                  <a class="fl-c t3" href="treatment-coordinator-training.html" style="z-index: 6" aria-label="Treatment Coordinator Training">
-                    <span class="fl-m"><img src="assets/img/svc/treatment-coordinator-training-card.webp" alt="" width="1920" height="1280" loading="lazy" decoding="async" /></span>
-                    <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-chalkboard-teacher"></i></span>
-                  </a>
-                  <a class="fl-c t1" href="dental-reporting-dashboard.html" style="z-index: 7" aria-label="Dental Reporting Dashboard">
-                    <span class="fl-m"><img src="assets/img/svc/dental-reporting-dashboard-card.webp" alt="" width="1920" height="1440" loading="lazy" decoding="async" /></span>
-                    <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-chart-line-up"></i></span>
-                  </a>
-                  </div>
+                <div class="fl-deck" id="flDeck">
+                  <article class="fl-s" style="z-index: 1">
+                    <div class="fl-l">
+                      <span class="fl-n">01</span>
+                      <div>
+                        <h3 class="fl-t"><a href="dental-marketing.html">Dental Marketing</a></h3>
+                        <p class="fl-p">We create and run your Google and Meta ads for implant, Invisalign and new patients.</p>
+                      </div>
+                    </div>
+                    <a class="fl-c" href="dental-marketing.html" aria-label="Dental Marketing" tabindex="-1">
+                      <span class="fl-m"><img src="assets/img/svc/dental-marketing-card.webp" alt="" width="1920" height="1282" loading="lazy" decoding="async" /></span>
+                      <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-megaphone"></i></span>
+                    </a>
+                  </article>
+                  <article class="fl-s" style="z-index: 2">
+                    <div class="fl-l">
+                      <span class="fl-n">02</span>
+                      <div>
+                        <h3 class="fl-t"><a href="dental-video-marketing.html">Dental Video Marketing</a></h3>
+                        <p class="fl-p">We film your clinic, your team and your patients, and turn it into ads people trust.</p>
+                      </div>
+                    </div>
+                    <a class="fl-c" href="dental-video-marketing.html" aria-label="Dental Video Marketing" tabindex="-1">
+                      <span class="fl-m"><img src="assets/img/svc/dental-video-marketing-card.webp" alt="" width="1920" height="1280" loading="lazy" decoding="async" /></span>
+                      <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-video-camera"></i></span>
+                    </a>
+                  </article>
+                  <article class="fl-s" style="z-index: 3">
+                    <div class="fl-l">
+                      <span class="fl-n">03</span>
+                      <div>
+                        <h3 class="fl-t"><a href="dental-seo.html">Dental SEO &amp; AI SEO</a></h3>
+                        <p class="fl-p">We get you found on Google Search, Maps and AI search like ChatGPT, Claude and Gemini.</p>
+                      </div>
+                    </div>
+                    <a class="fl-c" href="dental-seo.html" aria-label="Dental SEO &amp; AI SEO" tabindex="-1">
+                      <span class="fl-m"><img src="assets/img/svc/dental-seo-card.webp" alt="" width="1920" height="1280" loading="lazy" decoding="async" /></span>
+                      <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-magnifying-glass"></i></span>
+                    </a>
+                  </article>
+                  <article class="fl-s" style="z-index: 4">
+                    <div class="fl-l">
+                      <span class="fl-n">04</span>
+                      <div>
+                        <h3 class="fl-t"><a href="dental-website-design.html">Dental Website Design</a></h3>
+                        <p class="fl-p">We design and build a fast website that turns visitors into booked patients.</p>
+                      </div>
+                    </div>
+                    <a class="fl-c" href="dental-website-design.html" aria-label="Dental Website Design" tabindex="-1">
+                      <span class="fl-m"><img src="assets/img/svc/dental-website-design-card.webp" alt="" width="1920" height="1280" loading="lazy" decoding="async" /></span>
+                      <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-browser"></i></span>
+                    </a>
+                  </article>
+                  <article class="fl-s" style="z-index: 5">
+                    <div class="fl-l">
+                      <span class="fl-n">05</span>
+                      <div>
+                        <h3 class="fl-t"><a href="dental-call-centre.html">Dental Call Centre</a></h3>
+                        <p class="fl-p">We call every new lead, qualify them and book them straight into your schedule.</p>
+                      </div>
+                    </div>
+                    <a class="fl-c" href="dental-call-centre.html" aria-label="Dental Call Centre" tabindex="-1">
+                      <span class="fl-m"><img src="assets/img/svc/dental-call-centre-card.webp" alt="" width="1920" height="1282" loading="lazy" decoding="async" /></span>
+                      <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-phone-call"></i></span>
+                    </a>
+                  </article>
+                  <article class="fl-s" style="z-index: 6">
+                    <div class="fl-l">
+                      <span class="fl-n">06</span>
+                      <div>
+                        <h3 class="fl-t"><a href="treatment-coordinator-training.html">Treatment Coordinator Training</a></h3>
+                        <p class="fl-p">We coach your team to present treatment with confidence, so more patients say yes.</p>
+                      </div>
+                    </div>
+                    <a class="fl-c" href="treatment-coordinator-training.html" aria-label="Treatment Coordinator Training" tabindex="-1">
+                      <span class="fl-m"><img src="assets/img/svc/treatment-coordinator-training-card.webp" alt="" width="1920" height="1280" loading="lazy" decoding="async" /></span>
+                      <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-chalkboard-teacher"></i></span>
+                    </a>
+                  </article>
+                  <article class="fl-s" style="z-index: 7">
+                    <div class="fl-l">
+                      <span class="fl-n">07</span>
+                      <div>
+                        <h3 class="fl-t"><a href="dental-reporting-dashboard.html">Dental Reporting Dashboard</a></h3>
+                        <p class="fl-p">See every lead, call and booking live in your Dental Connect dashboard.</p>
+                      </div>
+                    </div>
+                    <a class="fl-c" href="dental-reporting-dashboard.html" aria-label="Dental Reporting Dashboard" tabindex="-1">
+                      <span class="fl-m"><img src="assets/img/svc/dental-reporting-dashboard-card.webp" alt="" width="1920" height="1440" loading="lazy" decoding="async" /></span>
+                      <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-chart-line-up"></i></span>
+                    </a>
+                  </article>
                 </div>
               </div>
             </div>
@@ -4132,31 +4126,31 @@
         <!-- Elementor: Loop Carousel over the "Case Study" CPT (ACF: render, revenue, ad_spend, roas). Hover: the results slide into a notch in the photo's top-right corner. -->
         <div class="row" id="cRow" tabindex="0" aria-label="Clinic results. Scroll sideways or use the arrows.">
           <article class="cs" data-href="case-west-grande-prairie-dental.html" role="link" tabindex="0" aria-label="West Grande Prairie Dental: $97,000 in revenue from a $5,000 ad spend. View the case study"><div class="cs-in">
-            <div class="cs-img"><div class="cs-cover"><img class="phx" src="assets/img/clients/wgp-photo.jpg" alt="West Grande Prairie Dental storefront" loading="lazy" /></div><p class="cs-tab" aria-hidden="true"><em>$97,000</em> in revenue<br />from a <span class="hl">$5,000 ad spend.</span></p></div>
+            <p class="cs-tab" aria-hidden="true"><em>$97k</em> from a<br /><span class="hl">$5k ad spend.</span></p><div class="cs-img"><div class="cs-cover"><img class="phx" src="assets/img/clients/wgp-photo.jpg" alt="West Grande Prairie Dental storefront" loading="lazy" /></div></div>
             <h3>West Grande Prairie Dental</h3>
             <p class="cs-meta">return on ad spend: <b>19.4×</b></p>
             
           </div></article>
           <article class="cs" data-href="case-riverbend-denture-implant.html" role="link" tabindex="0" aria-label="Riverbend Denture &amp; Implant: $255,000 in revenue from a $19,000 ad spend. View the case study"><div class="cs-in">
-            <div class="cs-img"><div class="cs-cover"><img class="phx" src="assets/img/clients/riverbend-photo.webp" alt="Riverbend Denture &amp; Implant Clinic reception" loading="lazy" /></div><p class="cs-tab" aria-hidden="true"><em>$255,000</em> in revenue<br />from a <span class="hl">$19,000 ad spend.</span></p></div>
+            <p class="cs-tab" aria-hidden="true"><em>$255k</em> from a<br /><span class="hl">$19k ad spend.</span></p><div class="cs-img"><div class="cs-cover"><img class="phx" src="assets/img/clients/riverbend-photo.webp" alt="Riverbend Denture &amp; Implant Clinic reception" loading="lazy" /></div></div>
             <h3>Riverbend Denture &amp; Implant</h3>
             <p class="cs-meta">return on ad spend: <b>13.4×</b></p>
             
           </div></article>
           <article class="cs" data-href="case-smile-now.html" role="link" tabindex="0" aria-label="Smile Now: $161,000 in revenue from a $13,000 ad spend. View the case study"><div class="cs-in">
-            <div class="cs-img"><div class="cs-cover"><img class="phx" src="assets/img/clients/smilenow-photo.webp" alt="Calgary skyline and the Peace Bridge" loading="lazy" /></div><p class="cs-tab" aria-hidden="true"><em>$161,000</em> in revenue<br />from a <span class="hl">$13,000 ad spend.</span></p></div>
+            <p class="cs-tab" aria-hidden="true"><em>$161k</em> from a<br /><span class="hl">$13k ad spend.</span></p><div class="cs-img"><div class="cs-cover"><img class="phx" src="assets/img/clients/smilenow-photo.webp" alt="Calgary skyline and the Peace Bridge" loading="lazy" /></div></div>
             <h3>Smile Now</h3>
             <p class="cs-meta">return on ad spend: <b>12.4×</b></p>
             
           </div></article>
           <article class="cs" data-href="case-wye-dental.html" role="link" tabindex="0" aria-label="Wye Dental: $92,000 in revenue from a $6,000 ad spend. View the case study"><div class="cs-in">
-            <div class="cs-img"><div class="cs-cover"><img class="phx" src="assets/img/clients/wye-photo.webp" alt="The Wye Dental team" loading="lazy" /></div><p class="cs-tab" aria-hidden="true"><em>$92,000</em> in revenue<br />from a <span class="hl">$6,000 ad spend.</span></p></div>
+            <p class="cs-tab" aria-hidden="true"><em>$92k</em> from a<br /><span class="hl">$6k ad spend.</span></p><div class="cs-img"><div class="cs-cover"><img class="phx" src="assets/img/clients/wye-photo.webp" alt="The Wye Dental team" loading="lazy" /></div></div>
             <h3>Wye Dental</h3>
             <p class="cs-meta">return on ad spend: <b>15.3×</b></p>
             
           </div></article>
           <article class="cs" data-href="case-modern-smiles.html" role="link" tabindex="0" aria-label="Modern Smiles: $72,000 in revenue from a $6,000 ad spend. View the case study"><div class="cs-in">
-            <div class="cs-img"><div class="cs-cover"><img class="phx" src="assets/img/clients/modern-smiles-photo.webp" alt="A denture being made at Modern Smiles" loading="lazy" /></div><p class="cs-tab" aria-hidden="true"><em>$72,000</em> in revenue<br />from a <span class="hl">$6,000 ad spend.</span></p></div>
+            <p class="cs-tab" aria-hidden="true"><em>$72k</em> from a<br /><span class="hl">$6k ad spend.</span></p><div class="cs-img"><div class="cs-cover"><img class="phx" src="assets/img/clients/modern-smiles-photo.webp" alt="A denture being made at Modern Smiles" loading="lazy" /></div></div>
             <h3>Modern Smiles</h3>
             <p class="cs-meta">return on ad spend: <b>12×</b></p>
             
@@ -4591,6 +4585,52 @@
 
         /* ---------- the team cards: cut each card's bottom-left corner around its icon tile (a real notch) ----------
            The tile + a 10px gap; the curves = the card's radius, like the other notches. Redrawn on resize. */
+        // the puzzle pieces' corners match the white cards' radius in px. The SVG is stretched (viewBox 100 x 90, no
+        // aspect), so each corner is an elliptical arc in viewBox units that draws as a true circle on screen.
+        {
+          const paths = $$(".pz-svg path").filter((p) => /Q100,0 100,6|Q0,0 6,0/.test(p.getAttribute("d")));
+          paths.forEach((p) => (p.dataset.d = p.getAttribute("d")));
+          const round = () => {
+            const card = $(".rb");
+            if (!card || !paths.length) return;
+            const R = parseFloat(getComputedStyle(card).borderTopLeftRadius) || 28;
+            paths.forEach((p) => {
+              const box = p.closest(".pz"),
+                W = box.offsetWidth || 1,
+                H = box.offsetHeight || 1,
+                x = +((R / W) * 100).toFixed(2),
+                y = +((R / H) * 90).toFixed(2),
+                A = `A${x},${y} 0 0 1`;
+              p.setAttribute(
+                "d",
+                p.dataset.d
+                  .replace("M6,0 H", `M${x},0 H`)
+                  .replace("H94 Q100,0 100,6", `H${100 - x} ${A} 100,${y}`)
+                  .replace("V84 Q100,90 94,90", `V${90 - y} ${A} ${100 - x},90`)
+                  .replace("H6 Q0,90 0,84", `H${x} ${A} 0,${90 - y}`)
+                  .replace("V6 Q0,0 6,0", `V${y} ${A} ${x},0`),
+              );
+            });
+          };
+          round();
+          if (window.ResizeObserver) new ResizeObserver(round).observe($(".rs") || document.body);
+        }
+        // "Real clinics": each card's return line sits just under its name at hover size (one line or two)
+        {
+          const fit = () =>
+            $$(".cs").forEach((c) => {
+              const h = $("h3", c);
+              if (!h) return;
+              const rg = document.createRange();
+              rg.selectNodeContents(h);
+              const tops = new Set([...rg.getClientRects()].map((r) => Math.round(r.top)));
+              const lh = parseFloat(getComputedStyle(h).lineHeight) || 30;
+              c.style.setProperty("--nm", (Math.max(1, tops.size) * lh * 0.72).toFixed(1) + "px");
+            });
+          fit();
+          addEventListener("resize", fit);
+          document.fonts && document.fonts.ready.then(fit);
+        }
         $$(".rb").forEach((card) => {
           const tile = $(".rb-i", card);
           if (!tile) return;
@@ -5430,41 +5470,82 @@
           });
 
         /* ---------- the seven services, stacked on scroll ----------
-           p runs 0 → n-1 through the tall track. Card k rests at k headers down; over p = k-1 → k it rises (eased) from
-           below the screen into that place, and row k rises with it by the same amount. The row that is rising is open. */
+           p runs 0 → n-1 through the tall track. Slide k (line, words and photo together) rests k gaps down; over
+           p = k-1 → k it rises (eased) from where it waits, 40px under the front slide, into that place. Only the next
+           slide waits in view; it fades in there once the one ahead of it starts up. */
         {
           const track = $("#flTrack"),
             pin = $(".fl-pin", track),
-            stack = $("#flStack"),
-            cards = $$(".fl-c", stack),
-            rows = $$(".fl-row"),
-            n = cards.length;
-          let on = -2;
+            deck = $("#flDeck"),
+            sec = track.closest(".fl"),
+            slides = $$(".fl-s", deck),
+            n = slides.length;
           const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
           const ease = (t) => 1 - Math.pow(1 - t, 3); // the rise slows into place
           const draw = () => {
             const r = track.getBoundingClientRect(),
               total = r.height - pin.getBoundingClientRect().height,
-              p = clamp(-r.top / (total || 1), 0, 1) * (n - 1),
-              hd = parseFloat(getComputedStyle(stack).getPropertyValue("--hd")) || 58,
-              z = parseFloat(getComputedStyle(root).zoom) || 1,
-              below = innerHeight / z; // a screen down: out of sight until it rises
-            cards.forEach((c, k) => {
-              const rise = k === 0 ? 1 : ease(clamp(p - (k - 1), 0, 1));
-              c.style.transform = `translate3d(0, ${(k * hd + (1 - rise) * below).toFixed(1)}px, 0)`;
-              c.tabIndex = k === Math.round(p) ? 0 : -1;
-              // its row rises with it, by the same amount, from the same screen below
-              rows[k].style.transform = rise === 1 ? "" : `translate3d(0, ${((1 - rise) * below).toFixed(1)}px, 0)`;
+              // p runs on a little before the pin (to -1), so the next card is already waiting when the section arrives
+              p = clamp((-r.top / (total || 1)) * (n - 1), -1, n - 1),
+              gap = parseFloat(getComputedStyle(deck).getPropertyValue("--gap")) || 30;
+            // the step: one title row (its line, the title, a little air), so every earlier title stays listed
+            const l0 = $(".fl-l", slides[0]),
+              t0 = $(".fl-t", l0),
+              listed = getComputedStyle(l0).display !== "none",
+              step = listed ? t0.offsetTop + t0.offsetHeight + 18 : gap;
+            const cardStep = listed ? step : gap; // a card sits on its own title's line (user), so cards step with the titles
+            // where the deck starts in the pinned screen
+            let top = 0;
+            for (let el = deck; el && el !== pin; el = el.offsetParent) top += el.offsetTop;
+            const sh = $(".fl-c", slides[0]).offsetHeight,
+              rowH = Math.max(sh, listed ? l0.offsetHeight : 0);
+            deck.style.height = 6 * cardStep + rowH + "px";
+            // the heading and all seven titles stay in view; the last cards may run past the screen's bottom (user), so
+            // the section keeps that much room after the pin and nothing lands on the next section
+            const H = pin.offsetHeight,
+              shift = 0,
+              over = Math.max(0, top + 6 * cardStep + rowH - H);
+            if (sec.style.paddingBottom !== Math.round(over + 40) + "px") sec.style.paddingBottom = Math.round(over + 40) + "px";
+            // where the screen ends, in the deck's own px: a row starts just below it (user: from below the screen)
+            const start = H - top + shift + 12,
+              peek = H * 0.84 - top + shift; // the second row waits with its top at 84% of the screen (user)
+            const yc = [],
+              yl = [],
+              risen = [];
+            slides.forEach((sl, k) => {
+              const t = k === 0 ? 1 : p - (k - 1), // 0 → 1 while it rises; scrolling back runs it in reverse
+                rise = clamp(t, 0, 1), // steady: no slow-down at the end (user)
+                from = k === 1 ? peek : start; // only the second row waits in view (at 84%); the rest come from below
+              yc[k] = from + (k * cardStep - from) * rise;
+              yl[k] = yc[k]; // the card's top stays on its title's line
+              risen[k] = t > 0;
             });
-            // the rising row opens its line as soon as it starts up; the row before folds to its title
-            const k = Math.min(n - 1, Math.floor(p + 0.85));
-            if (k !== on) {
-              on = k;
-              rows.forEach((row, i) => row.classList.toggle("on", i === k));
-            }
+            const R = parseFloat(getComputedStyle($(".fl-c", slides[0])).borderTopLeftRadius) || 28;
+            slides.forEach((sl, k) => {
+              const card = $(".fl-c", sl);
+              card.style.transform = `translate3d(0, ${yc[k].toFixed(1)}px, 0)`;
+              // a covered card is trimmed to what shows above the next one (plus that card's rounded corner), so the
+              // front card's notch never shows an earlier card's photo or tile through it
+              const vis = k < n - 1 && risen[k + 1] ? yc[k + 1] - yc[k] + R : sh;
+              card.style.clipPath = vis < sh ? `inset(0 0 ${Math.max(0, sh - vis).toFixed(1)}px 0)` : "";
+              $(".fl-l", sl).style.transform = `translate3d(0, ${yl[k].toFixed(1)}px, 0)`;
+              const tk = k === 0 ? 1 : p - (k - 1);
+              const shown = k <= 1 || tk > 0; // row 2 waits in view; the others are below the screen until they start
+              card.style.visibility = shown ? "" : "hidden";
+              $(".fl-l", sl).style.visibility = shown ? "" : "hidden";
+              const link = $(".fl-t a", sl);
+              if (link) link.tabIndex = k === 0 || risen[k] ? 0 : -1;
+              // its words stay until the next title actually reaches them, then fade over the last 40px
+              const words = $(".fl-p", sl);
+              if (k < n - 1 && risen[k + 1] && listed) {
+                const room = yl[k + 1] - (yl[k] + $(".fl-l", sl).offsetHeight);
+                const o = clamp(room / 40, 0, 1);
+                words.style.opacity = o === 1 ? "" : o.toFixed(3);
+              } else words.style.opacity = "";
+            });
           };
           // each photo gets a bottom-left notch for its icon tile (the team cards' path: 8px gap, concave corners)
-          cards.forEach((card) => {
+          $$(".fl-c", deck).forEach((card) => {
             const m = $(".fl-m", card),
               tile = $(".fl-ic i", card);
             const cut = () => {
@@ -5483,16 +5564,6 @@
           addEventListener("resize", draw);
           if (window.ResizeObserver) new ResizeObserver(draw).observe(track);
           draw();
-          // a row scrolls to its card
-          rows.forEach((row, k) =>
-            $(".fl-btn", row).addEventListener("click", () => {
-              const top = track.getBoundingClientRect().top + scrollY,
-                total = track.offsetHeight - pin.offsetHeight,
-                y = top + (total * k) / (n - 1) + 2;
-              if (lenis) lenis.scrollTo(y, { duration: 1.2 });
-              else scrollTo({ top: y, behavior: reduce ? "auto" : "smooth" });
-            }),
-          );
         }
 
         /* ---------- scroll choreography ---------- */

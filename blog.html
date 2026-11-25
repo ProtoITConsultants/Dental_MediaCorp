@@ -103,7 +103,7 @@
         --max: calc(1920px / var(--z) - 2 * var(--side)); /* 1920 SCREEN px less the gutters, so content lines up with the nav at every laptop zoom */
         /* radius system: cards & panels / things nested inside a card / buttons & chips */
         /* corners: cards, and anything nested 6px inside a card (concentric: inner = outer - gap) */
-        --r-card: 28px;
+        --r-card: 38px; /* one round corner for every card on the site (user: consistent; no squircles) */
         --r-inner: calc(var(--r-card) - 6px);
         --r-pill: 999px;
         /* type scale: use these everywhere, never a one-off size */
@@ -1490,8 +1490,9 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        padding: 6px 6px 26px; /* ends under the text, like the blog card (the photo no longer gives way to a results list) */
+        padding: 6px 6px 30px; /* ends under the text, like the blog card (the photo no longer gives way to a results list) */
         border-radius: var(--r-card);
+        overflow: hidden; /* clips the results notch to the card's corner */
         background: #fff;
         box-shadow: 0 1px 0 rgba(13, 19, 18, 0.03);
         transition:
@@ -1504,7 +1505,7 @@
         height: 269px;
         border-radius: var(--r-inner);
         overflow: hidden;
-        background: var(--soft);
+        background: #fff; /* the card's white: nothing grey can show at the corners (user) */
       }
       .cs-img > .phx {
         width: 100%;
@@ -1520,12 +1521,6 @@
         overflow: hidden;
         border-radius: inherit;
       }
-      .cs-cover::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(160deg, rgba(18, 59, 54, 0.62), rgba(18, 59, 54, 0) 46%);
-      }
       .cs-cover > .phx {
         width: 100%;
         height: 100%;
@@ -1534,10 +1529,11 @@
       .cs-tab {
         --r: 22px;
         position: absolute;
-        top: -1px;
-        right: -1px;
+        top: 0; /* a child of the card, not the photo: its outer edges are the card's own (clipped by its squircle), so no
+                   seam or hairline shows at any zoom (user) */
+        right: 0;
         z-index: 2;
-        padding: 1px 1px 14px 16px;
+        padding: 10px 20px 14px 22px; /* the card's 6px + the old inset; clear of the rounded corner (user) */
         border-bottom-left-radius: var(--r);
         background: #fff;
         font-size: var(--fs-h4);
@@ -1561,25 +1557,41 @@
         background: radial-gradient(circle at 0 100%, transparent calc(var(--r) - 0.5px), #fff calc(var(--r) + 0.5px));
       }
       .cs-tab::before {
-        top: 0;
+        top: 6px; /* the photo's top edge (the card's 6px padding) */
         right: calc(100% - 1px);
         width: calc(var(--r) + 1px);
       }
       .cs-tab::after {
         top: calc(100% - 1px);
-        right: 0;
+        right: 6px; /* the photo's right edge */
         height: calc(var(--r) + 1px);
       }
+      /* the name starts large (user); on hover it shrinks as one block (scale from its top-left corner) and the return
+         line rises into the room it leaves. Scaling, not font-size: the words keep their lines and never jump (user).
+         The name's box keeps two large lines, so the card never changes height. */
       .cs h3 {
+        min-height: calc(2 * 1.09 * var(--fs-h3));
         margin: 20px 12px 0;
-        font-size: var(--fs-h4);
+        font-size: var(--fs-h3);
         font-weight: 600;
         letter-spacing: -0.035em;
         line-height: 1.09;
+        transform-origin: 0 0;
+        transition: transform 0.6s var(--ease);
+      }
+      .cs:hover h3,
+      .cs.on h3,
+      .cs:focus-within h3 {
+        transform: scale(0.72);
       }
       /* the return line waits below and rises in on hover (user) */
       .cs-meta {
-        margin: 6px 12px 0;
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        /* just under the shrunk name: --nm is the name's height at 0.72, measured per card (one line or two) */
+        top: calc(6px + 269px + 20px + var(--nm, 30px) + 8px);
+        margin: 0;
         font-size: var(--fs-small);
         color: var(--body);
         opacity: 0;
@@ -1845,6 +1857,13 @@
         font-size: 24px;
         color: var(--acc-mid);
       }
+      /* the Google "G" in its own colours before the stars: the reviews are Google reviews (user) */
+      .q-g {
+        flex: none;
+        width: 18px;
+        height: 18px;
+        margin: 0 8px 0 auto;
+      }
       .q-stars {
         display: flex;
         gap: 2px;
@@ -1994,10 +2013,6 @@
         border: 1px solid rgba(13, 19, 18, 0.08);
         background: #fff;
         clip-path: var(--cut, none);
-        transition: border-color 0.4s;
-      }
-      .rb:hover::before {
-        border-color: rgba(27, 127, 115, 0.45);
       }
       /* the label in each stat card: lead size, near-ink, so it reads without squinting */
       .rb p {
@@ -2084,8 +2099,7 @@
       .rb-5 p {
         color: var(--acc-deep);
       }
-      .rb-5::before,
-      .rb-5:hover::before {
+      .rb-5::before {
         border-color: transparent;
         background: linear-gradient(160deg, var(--acc-2), var(--acc));
       }
@@ -2184,16 +2198,16 @@
         position: relative;
       }
       .fl-track {
-        height: calc((7 * 70 + 100) * var(--uvh));
+        height: calc((7 * 42 + 100) * var(--uvh)); /* a shorter scroll per card: they come quickly (user) */
       }
       .fl-pin {
         position: sticky;
-        overflow: clip; /* the cards and rows still waiting below stay out of sight */
+        /* no clip: the last cards may run past the bottom of the screen; the section keeps room for them below (script) */
         top: 0;
         display: flex;
-        align-items: center;
+        align-items: flex-start; /* from the top: the tall stack must not push the heading up (it slides up only when the rows need it) */
         height: calc(100 * var(--uvh));
-        padding-top: 70px; /* clear of the header */
+        padding-top: 76px; /* the heading sits just under the header (user) */
       }
       .fl-pin > .wrap {
         width: 100%;
@@ -2205,98 +2219,71 @@
       .fl-in > .t-h2 {
         text-align: center; /* the site's section heading: centred, the rule before the italic line (user) */
       }
-      .fl-g {
+      /* the deck: one slide per service = its line, number, name and words on the left + its photo card on the right.
+         Both halves rise together from where the next slide waits (40px under the front one), but they stack at their
+         own step: on the left every earlier title stays listed under its own line (one title row apart), on the right
+         every earlier card keeps a --gap strip of photo. Nothing is painted behind them (user): an earlier slide's words
+         fade out as the next slide comes over them; its title stays. The line spans the text column only (user). */
+      .fl-deck {
+        --gap: 22px; /* what shows of a card once the next one sits on it (user: 20 to 25px) */
+        --sh: clamp(260px, calc(46 * var(--uvh)), 440px); /* a card's height: the last ones may run past the screen (user) */
+        position: relative;
+        height: calc(6 * var(--gap) + var(--sh)); /* the script sets the real height (the title list can be taller) */
+        margin-top: clamp(28px, calc(4 * var(--uvh)), 48px);
+      }
+      .fl-s {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .fl-l {
+        position: absolute;
+        top: 0;
+        left: 0;
         display: grid;
-        grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); /* the list leads; the cards are the smaller side */
-        gap: 40px clamp(40px, calc(6 * var(--uvw)), 120px);
-        align-items: start;
-        margin-top: clamp(20px, calc(3 * var(--uvh)), 36px);
-      }
-      /* the list: each row has its own hairline on top. A row waits a screen below and rises with its card (the script
-         moves both by the same eased amount), then stops under the row before it, as the card stops on the card before. */
-      .fl-list {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-      }
-      .fl-row {
-        border-top: 1px solid rgba(13, 19, 18, 0.12);
-      }
-      .fl-btn {
-        display: grid;
-        grid-template-columns: 52px minmax(0, 1fr);
+        grid-template-columns: 80px minmax(0, 1fr);
         align-items: baseline;
-        width: 100%;
-        padding: clamp(10px, calc(1.6 * var(--uvh)), 18px) 0;
-        border: 0;
-        background: none;
-        font: inherit;
-        color: inherit;
-        text-align: left;
-        cursor: pointer;
+        width: 54%;
+        padding-top: 16px;
+        border-top: 1px solid rgba(13, 19, 18, 0.12); /* the line the slide comes up with: the text column only */
+        pointer-events: auto;
       }
       .fl-n {
-        font-size: var(--fs-small);
+        font-size: var(--fs-h3); /* larger again (user) */
         font-weight: 600;
-        color: var(--grey);
+        color: var(--acc-mid);
         font-variant-numeric: tabular-nums;
-        transition: color 0.5s var(--ease);
       }
       .fl-t {
-        font-size: var(--fs-list); /* the DMC Method step titles' size ("We create your campaigns"), user */
+        margin: 0;
+        font-size: var(--fs-list); /* the DMC Method step titles' size (user) */
         font-weight: 600;
         letter-spacing: -0.035em;
         line-height: 1.1;
       }
-      .fl-row.on .fl-n {
-        color: var(--acc-mid);
+      .fl-t a {
+        color: inherit;
       }
-      .fl-d {
-        display: grid;
-        grid-template-rows: 0fr;
-        transition: grid-template-rows 0.6s var(--ease);
-      }
-      .fl-d > div {
-        overflow: hidden;
-      }
-      .fl-d p {
+      .fl-p {
         max-width: 28rem;
-        padding: 0 0 clamp(14px, calc(2 * var(--uvh)), 22px) 52px;
+        margin-top: 14px;
         font-size: var(--fs-lead);
         line-height: 1.45;
         color: var(--grey);
-        opacity: 0;
-        transition: opacity 0.3s ease;
+        /* opacity from the script: the words stay until the next title is about to reach them (user) */
       }
-      .fl-row.on .fl-d {
-        grid-template-rows: 1fr;
-      }
-      .fl-row.on .fl-d p {
-        opacity: 1;
-        transition: opacity 0.5s ease 0.1s;
-      }
-
-      /* the stack: card k rests k headers down; a card that has not arrived waits below the screen */
-      .fl-stack {
-        --hd: 66px; /* what shows of a card once the next one sits on it: a strip of its photo */
-        --ch: clamp(250px, calc(100 * var(--uvh) - 6 * var(--hd) - 290px), 380px); /* a card's height */
-        position: relative;
-        width: 100%;
-        max-width: 470px;
-        height: calc((7 - 1) * var(--hd) + var(--ch));
-        margin-left: auto;
-      }
-      /* a card is its photo, edge to edge, with one notch cut into it bottom-left for the team cards' icon tile. No name
-         notch (user): the list on the left names it. */
+      /* the photo card: edge to edge, its top on the slide's line, one notch cut bottom-left for the icon tile */
       .fl-c {
         position: absolute;
-        inset: 0 0 auto;
+        top: 0;
+        right: 0;
         display: block;
-        height: var(--ch);
+        width: min(470px, 40%);
+        height: var(--sh);
+        pointer-events: auto;
         border-radius: var(--r-card);
         color: var(--ink);
         filter: drop-shadow(0 22px 24px rgba(13, 19, 18, 0.16)); /* follows the cut, a box-shadow would not */
-        /* no will-change: seven full-card photos as permanent layers left some unpainted */
       }
       .fl-m {
         position: absolute;
@@ -2311,9 +2298,6 @@
         height: 100%;
         object-fit: cover;
       }
-      /* the notch is a real cut in the photo (the team cards' clip-path, from the script), so the page shows through it:
-         nothing painted, no colour to mismatch the glow (user). The front card is always the lowest, so the cut never
-         shows the card behind (--hd is wider than the notch is tall). */
       .fl-ic {
         position: absolute;
         bottom: 0;
@@ -2334,29 +2318,22 @@
         outline: 2px solid var(--teal);
         outline-offset: 4px;
       }
-      @supports (corner-shape: squircle) {
-        .fl-c {
-          corner-shape: squircle;
-        }
-      }
       @media (max-width: 1199px) {
-        .fl-g {
-          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-          gap: 32px;
+        .fl-l {
+          width: 52%;
         }
       }
-      /* phones: the heading and the stack (each card names its service); the list steps aside */
+      /* phones: the cards only (each names its service for screen readers), full width */
       @media (max-width: 899px) {
-        .fl-g {
-          grid-template-columns: 1fr;
+        .fl-deck {
+          --gap: 24px;
+          --sh: clamp(300px, calc(100 * var(--uvh) - 6 * var(--gap) - 230px), 460px);
         }
-        .fl-list {
+        .fl-l {
           display: none;
         }
-        .fl-stack {
-          --hd: 58px;
-          --ch: clamp(240px, calc(100 * var(--uvh) - 6 * var(--hd) - 200px), 400px);
-          max-width: none;
+        .fl-c {
+          width: 100%;
         }
         .fl-ic i {
           width: 42px;
@@ -2647,30 +2624,6 @@
         font-weight: 700;
       }
 
-      /* ---------- Apple-style continuous corners ----------
-         a squircle reads tighter than a circle arc of the same radius, so the radius grows with it */
-      @supports (corner-shape: squircle) {
-        :root {
-          --r-card: 38px;
-        }
-        .sx-card,
-        .dd-fly,
-        .menu .dd-m a,
-        .h-badges,
-        .h-stat,
-        .cs-in,
-        .cs-img,
-        .q,
-        .vbox-f,
-        .fq,
-        .bk,
-        .bk-logo,
-        .bk-slot button,
-        .field textarea,
-        .bk-s3 .bk-preview {
-          corner-shape: squircle;
-        }
-      }
 
       /* ---------- laptop proportions ----------
          the layout is tuned on a 1920px screen; laptops (1280-1680px wide, e.g. 1920x1080 at 125% scaling = 1536px)
@@ -2999,6 +2952,9 @@
           opacity: 1;
           transform: none;
         }
+        .cs h3 {
+          transform: scale(0.72);
+        }
       }
       @media (prefers-reduced-motion: reduce) {
         *,
@@ -3076,7 +3032,7 @@
         grid-template-columns: 340px 1fr;
         background: #fff;
         color: var(--ink);
-        border-radius: 28px;
+        border-radius: var(--r-card);
         overflow: hidden;
         min-height: 640px;
         text-align: left;
@@ -3788,22 +3744,41 @@
         position: absolute;
         /* at rest: out past the photo's bottom-left corner (curves included). It slides by left/bottom, not transform,
            so every frame sits on whole pixels and the icon is 100% sharp throughout (no soft-then-sharp) */
-        left: -110px;
-        bottom: -110px;
+        left: -130px;
+        bottom: -130px;
         z-index: 1;
-        padding: 11px 10px 1px 1px;
-        border-top-right-radius: var(--r);
+        /* the tile sits 6px in from the photo's edges (12px from the card's edge with the card's 6px), so the photo's big
+           rounded corner never clips the tile's own corner, and 12px from the photo above and beside it: even all round
+           (user). The tab's corner follows the tile's: tile radius + the 12px gap (concentric). */
+        padding: 12px 12px 8px 8px; /* 12px under / beside the photo; 6px from its edges + the 2px the box reaches past them */
+        border-top-right-radius: calc(72px * 0.24 + 12px);
+        border-bottom-left-radius: calc(var(--r-card) - 4px); /* 4px in from the card's corner: concentric with it */
         background: #fff;
         transition:
           left 0.35s var(--ease),
           bottom 0.35s var(--ease); /* quick (user) */
       }
-      /* on hover it slides in on the diagonal and lands 1px past the photo's edges (the photo clips that pixel, so no
-         sliver of photo shows along them) */
+      /* the notch travels in its own square box, not inside the photo's rounded clip: in the photo's clip the white tab
+         and the photo shared one anti-aliased curve, which left a grey hairline round the corner (user). The box reaches
+         2px past the photo's left and bottom edges (into the card's white padding), so the tab covers the photo's edge
+         pixels fully. */
+      .bc-fig {
+        position: relative;
+      }
+      .bc-nt {
+        position: absolute;
+        left: -2px;
+        bottom: -2px;
+        z-index: 1;
+        width: 160px;
+        height: 160px;
+        overflow: hidden;
+        pointer-events: none;
+      }
       .bc-in:hover .bc-by,
       .bc-in:focus-visible .bc-by {
-        left: -1px;
-        bottom: -1px;
+        left: 0;
+        bottom: 0;
       }
       .bc-by::before,
       .bc-by::after {
@@ -3817,13 +3792,13 @@
       /* the two curved corners overlap the tab by 1px, so there is no seam for the photo to show through as a dark
          line while the notch moves (the extra pixel is plain white, under the curve) */
       .bc-by::before {
-        left: 0;
+        left: 2px; /* the photo's left edge (the box starts 2px outside it) */
         bottom: calc(100% - 1px);
         height: calc(var(--r) + 1px);
       }
       .bc-by::after {
         left: calc(100% - 1px);
-        bottom: 0;
+        bottom: 2px; /* the photo's bottom edge */
         width: calc(var(--r) + 1px);
       }
       /* the "How we help" tile: solid brand green, black filled icon, radius 24% (service pages, .hp-i) */
@@ -3873,12 +3848,6 @@
         font-size: var(--fs-lead);
         color: var(--grey);
       }
-      @supports (corner-shape: squircle) {
-        .bc-in,
-        .bc-media {
-          corner-shape: squircle;
-        }
-      }
       @media (max-width: 1199px) {
         .blg-top {
           grid-template-columns: 1fr;
@@ -3916,6 +3885,13 @@
   </head>
   <body>
     <script>
+      // every visit starts at the top (user): the browser does not restore the old scroll position, and a page brought
+      // back from the back/forward cache jumps to the top too. A link to a section (#hash) still lands on that section.
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      if (!location.hash) scrollTo(0, 0);
+      addEventListener("pageshow", (e) => {
+        if (e.persisted && !location.hash) scrollTo(0, 0);
+      });
       // preloader only runs when the motion stack is going to run it
       if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("is-pre");
       // it waits for every image on the page (the lazy ones load now too), at most 8s; the ones in view are also decoded
@@ -3972,7 +3948,7 @@
             </div>
           </div>
           <a href="case-studies.html">Case Studies</a>
-          <a href="index.html#testimonials">Reviews</a>
+          <a href="reviews.html">Reviews</a>
           <a href="index.html#dmc">DMC Method</a>
           <a href="index.html#faq">FAQ</a>
         </div>
@@ -4017,7 +3993,7 @@
         <div class="mnav-rule"></div>
         <ul class="mnav-list mnav-2">
           <li><a href="case-studies.html">Case Studies</a></li>
-          <li><a href="index.html#testimonials">Reviews</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
           <li><a href="index.html#dmc">DMC Method</a></li>
           <li><a href="index.html#faq">FAQ</a></li>
           <li><a href="blog.html">Blog</a></li>
@@ -4061,9 +4037,9 @@
             <div class="bgrid">
             <article class="bc" data-topic="patient-acquisition">
               <a class="bc-in" href="#attract-implant-patients" aria-label="How to attract more dental implant patients this year (6 min read)">
-                <div class="bc-media">
-                  <img src="assets/img/svc/dental-marketing-card.webp" alt="A bright, modern dental surgery" loading="lazy" decoding="async" />
-                  <span class="bc-by" aria-hidden="true"><span class="bc-i"><i class="ph-fill ph-crosshair"></i></span></span>
+                <div class="bc-fig">
+                  <div class="bc-media"><img src="assets/img/svc/dental-marketing-card.webp" alt="A bright, modern dental surgery" loading="lazy" decoding="async" /></div>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-crosshair"></i></span></span></span>
                 </div>
                 <p class="bc-meta"><span>Patient Acquisition</span><span>6 min read</span></p>
                 <h3>How to attract more dental implant patients this year</h3>
@@ -4071,9 +4047,9 @@
             </article>
             <article class="bc" data-topic="video">
               <a class="bc-in" href="#clinic-video-builds-trust" aria-label="Why videos filmed in your own clinic build more trust than stock footage (4 min read)">
-                <div class="bc-media">
-                  <img src="assets/img/svc/dental-video-marketing-card.webp" alt="A professional video camera in a studio" loading="lazy" decoding="async" />
-                  <span class="bc-by" aria-hidden="true"><span class="bc-i"><i class="ph-fill ph-film-slate"></i></span></span>
+                <div class="bc-fig">
+                  <div class="bc-media"><img src="assets/img/svc/dental-video-marketing-card.webp" alt="A professional video camera in a studio" loading="lazy" decoding="async" /></div>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-film-slate"></i></span></span></span>
                 </div>
                 <p class="bc-meta"><span>Video</span><span>4 min read</span></p>
                 <h3>Why videos filmed in your own clinic build more trust than stock footage</h3>
@@ -4081,9 +4057,9 @@
             </article>
             <article class="bc" data-topic="seo-ai-search">
               <a class="bc-in" href="#found-on-maps-and-ai" aria-label="How patients find a dentist on Google Maps and in ChatGPT (5 min read)">
-                <div class="bc-media">
-                  <img src="assets/img/svc/dental-seo-card.webp" alt="Push pins marking places on a map" loading="lazy" decoding="async" />
-                  <span class="bc-by" aria-hidden="true"><span class="bc-i"><i class="ph-fill ph-map-pin"></i></span></span>
+                <div class="bc-fig">
+                  <div class="bc-media"><img src="assets/img/svc/dental-seo-card.webp" alt="Push pins marking places on a map" loading="lazy" decoding="async" /></div>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-map-pin"></i></span></span></span>
                 </div>
                 <p class="bc-meta"><span>SEO & AI Search</span><span>5 min read</span></p>
                 <h3>How patients find a dentist on Google Maps and in ChatGPT</h3>
@@ -4091,9 +4067,9 @@
             </article>
             <article class="bc" data-topic="websites">
               <a class="bc-in" href="#website-that-books" aria-label="Five things every dental website needs to turn visitors into bookings (4 min read)">
-                <div class="bc-media">
-                  <img src="assets/img/svc/dental-website-design-card.webp" alt="A bright, minimal desk with a laptop" loading="lazy" decoding="async" />
-                  <span class="bc-by" aria-hidden="true"><span class="bc-i"><i class="ph-fill ph-layout"></i></span></span>
+                <div class="bc-fig">
+                  <div class="bc-media"><img src="assets/img/svc/dental-website-design-card.webp" alt="A bright, minimal desk with a laptop" loading="lazy" decoding="async" /></div>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-layout"></i></span></span></span>
                 </div>
                 <p class="bc-meta"><span>Websites</span><span>4 min read</span></p>
                 <h3>Five things every dental website needs to turn visitors into bookings</h3>
@@ -4101,9 +4077,9 @@
             </article>
             <article class="bc" data-topic="your-team">
               <a class="bc-in" href="#every-lead-called" aria-label="What changes when every new lead gets a call back (3 min read)">
-                <div class="bc-media">
-                  <img src="assets/img/svc/dental-call-centre-card.webp" alt="A smiling call centre agent with a headset" loading="lazy" decoding="async" />
-                  <span class="bc-by" aria-hidden="true"><span class="bc-i"><i class="ph-fill ph-headset"></i></span></span>
+                <div class="bc-fig">
+                  <div class="bc-media"><img src="assets/img/svc/dental-call-centre-card.webp" alt="A smiling call centre agent with a headset" loading="lazy" decoding="async" /></div>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-headset"></i></span></span></span>
                 </div>
                 <p class="bc-meta"><span>Your Team</span><span>3 min read</span></p>
                 <h3>What changes when every new lead gets a call back</h3>
@@ -4111,9 +4087,9 @@
             </article>
             <article class="bc" data-topic="your-team">
               <a class="bc-in" href="#presenting-treatment" aria-label="Presenting treatment with confidence: a guide for coordinators (5 min read)">
-                <div class="bc-media">
-                  <img src="assets/img/svc/treatment-coordinator-training-card.webp" alt="A tablet showing a dental X-ray" loading="lazy" decoding="async" />
-                  <span class="bc-by" aria-hidden="true"><span class="bc-i"><i class="ph-fill ph-headset"></i></span></span>
+                <div class="bc-fig">
+                  <div class="bc-media"><img src="assets/img/svc/treatment-coordinator-training-card.webp" alt="A tablet showing a dental X-ray" loading="lazy" decoding="async" /></div>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-headset"></i></span></span></span>
                 </div>
                 <p class="bc-meta"><span>Your Team</span><span>5 min read</span></p>
                 <h3>Presenting treatment with confidence: a guide for coordinators</h3>
@@ -4121,9 +4097,9 @@
             </article>
             <article class="bc" data-topic="results">
               <a class="bc-in" href="#read-your-results" aria-label="Which ads bring in patients? Reading your marketing results (4 min read)">
-                <div class="bc-media">
-                  <img src="assets/img/svc/dental-reporting-dashboard-card.webp" alt="A tablet showing a rising chart" loading="lazy" decoding="async" />
-                  <span class="bc-by" aria-hidden="true"><span class="bc-i"><i class="ph-fill ph-presentation-chart"></i></span></span>
+                <div class="bc-fig">
+                  <div class="bc-media"><img src="assets/img/svc/dental-reporting-dashboard-card.webp" alt="A tablet showing a rising chart" loading="lazy" decoding="async" /></div>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-presentation-chart"></i></span></span></span>
                 </div>
                 <p class="bc-meta"><span>Results</span><span>4 min read</span></p>
                 <h3>Which ads bring in patients? Reading your marketing results</h3>
@@ -4131,9 +4107,9 @@
             </article>
             <article class="bc" data-topic="patient-acquisition">
               <a class="bc-in" href="#invisalign-marketing" aria-label="Invisalign marketing that reaches the right patients (4 min read)">
-                <div class="bc-media">
-                  <img src="assets/img/v5/patient-laugh.webp" alt="A patient laughing in the dental chair" loading="lazy" decoding="async" />
-                  <span class="bc-by" aria-hidden="true"><span class="bc-i"><i class="ph-fill ph-crosshair"></i></span></span>
+                <div class="bc-fig">
+                  <div class="bc-media"><img src="assets/img/v5/patient-laugh.webp" alt="A patient laughing in the dental chair" loading="lazy" decoding="async" /></div>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-crosshair"></i></span></span></span>
                 </div>
                 <p class="bc-meta"><span>Patient Acquisition</span><span>4 min read</span></p>
                 <h3>Invisalign marketing that reaches the right patients</h3>
@@ -4141,9 +4117,9 @@
             </article>
             <article class="bc" data-topic="patient-acquisition">
               <a class="bc-in" href="#full-arch-decisions" aria-label="Full-arch implants: helping patients through a big decision (6 min read)">
-                <div class="bc-media">
-                  <img src="assets/img/clients/riverbend-photo.webp" alt="A calm, modern clinic reception" loading="lazy" decoding="async" />
-                  <span class="bc-by" aria-hidden="true"><span class="bc-i"><i class="ph-fill ph-crosshair"></i></span></span>
+                <div class="bc-fig">
+                  <div class="bc-media"><img src="assets/img/clients/riverbend-photo.webp" alt="A calm, modern clinic reception" loading="lazy" decoding="async" /></div>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-crosshair"></i></span></span></span>
                 </div>
                 <p class="bc-meta"><span>Patient Acquisition</span><span>6 min read</span></p>
                 <h3>Full-arch implants: helping patients through a big decision</h3>

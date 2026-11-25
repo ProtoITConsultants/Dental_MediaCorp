@@ -103,7 +103,7 @@
         --max: calc(1920px / var(--z) - 2 * var(--side)); /* 1920 SCREEN px less the gutters, so content lines up with the nav at every laptop zoom */
         /* radius system: cards & panels / things nested inside a card / buttons & chips */
         /* corners: cards, and anything nested 6px inside a card (concentric: inner = outer - gap) */
-        --r-card: 28px;
+        --r-card: 38px; /* one round corner for every card on the site (user: consistent; no squircles) */
         --r-inner: calc(var(--r-card) - 6px);
         --r-pill: 999px;
         /* type scale: use these everywhere, never a one-off size */
@@ -1490,8 +1490,9 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        padding: 6px 6px 26px; /* ends under the text, like the blog card (the photo no longer gives way to a results list) */
+        padding: 6px 6px 30px; /* ends under the text, like the blog card (the photo no longer gives way to a results list) */
         border-radius: var(--r-card);
+        overflow: hidden; /* clips the results notch to the card's corner */
         background: #fff;
         box-shadow: 0 1px 0 rgba(13, 19, 18, 0.03);
         transition:
@@ -1504,7 +1505,7 @@
         height: 269px;
         border-radius: var(--r-inner);
         overflow: hidden;
-        background: var(--soft);
+        background: #fff; /* the card's white: nothing grey can show at the corners (user) */
       }
       .cs-img > .phx {
         width: 100%;
@@ -1520,12 +1521,6 @@
         overflow: hidden;
         border-radius: inherit;
       }
-      .cs-cover::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(160deg, rgba(18, 59, 54, 0.62), rgba(18, 59, 54, 0) 46%);
-      }
       .cs-cover > .phx {
         width: 100%;
         height: 100%;
@@ -1534,10 +1529,11 @@
       .cs-tab {
         --r: 22px;
         position: absolute;
-        top: -1px;
-        right: -1px;
+        top: 0; /* a child of the card, not the photo: its outer edges are the card's own (clipped by its squircle), so no
+                   seam or hairline shows at any zoom (user) */
+        right: 0;
         z-index: 2;
-        padding: 1px 1px 14px 16px;
+        padding: 10px 20px 14px 22px; /* the card's 6px + the old inset; clear of the rounded corner (user) */
         border-bottom-left-radius: var(--r);
         background: #fff;
         font-size: var(--fs-h4);
@@ -1561,25 +1557,41 @@
         background: radial-gradient(circle at 0 100%, transparent calc(var(--r) - 0.5px), #fff calc(var(--r) + 0.5px));
       }
       .cs-tab::before {
-        top: 0;
+        top: 6px; /* the photo's top edge (the card's 6px padding) */
         right: calc(100% - 1px);
         width: calc(var(--r) + 1px);
       }
       .cs-tab::after {
         top: calc(100% - 1px);
-        right: 0;
+        right: 6px; /* the photo's right edge */
         height: calc(var(--r) + 1px);
       }
+      /* the name starts large (user); on hover it shrinks as one block (scale from its top-left corner) and the return
+         line rises into the room it leaves. Scaling, not font-size: the words keep their lines and never jump (user).
+         The name's box keeps two large lines, so the card never changes height. */
       .cs h3 {
+        min-height: calc(2 * 1.09 * var(--fs-h3));
         margin: 20px 12px 0;
-        font-size: var(--fs-h4);
+        font-size: var(--fs-h3);
         font-weight: 600;
         letter-spacing: -0.035em;
         line-height: 1.09;
+        transform-origin: 0 0;
+        transition: transform 0.6s var(--ease);
+      }
+      .cs:hover h3,
+      .cs.on h3,
+      .cs:focus-within h3 {
+        transform: scale(0.72);
       }
       /* the return line waits below and rises in on hover (user) */
       .cs-meta {
-        margin: 6px 12px 0;
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        /* just under the shrunk name: --nm is the name's height at 0.72, measured per card (one line or two) */
+        top: calc(6px + 269px + 20px + var(--nm, 30px) + 8px);
+        margin: 0;
         font-size: var(--fs-small);
         color: var(--body);
         opacity: 0;
@@ -1845,6 +1857,13 @@
         font-size: 24px;
         color: var(--acc-mid);
       }
+      /* the Google "G" in its own colours before the stars: the reviews are Google reviews (user) */
+      .q-g {
+        flex: none;
+        width: 18px;
+        height: 18px;
+        margin: 0 8px 0 auto;
+      }
       .q-stars {
         display: flex;
         gap: 2px;
@@ -1994,10 +2013,6 @@
         border: 1px solid rgba(13, 19, 18, 0.08);
         background: #fff;
         clip-path: var(--cut, none);
-        transition: border-color 0.4s;
-      }
-      .rb:hover::before {
-        border-color: rgba(27, 127, 115, 0.45);
       }
       /* the label in each stat card: lead size, near-ink, so it reads without squinting */
       .rb p {
@@ -2084,8 +2099,7 @@
       .rb-5 p {
         color: var(--acc-deep);
       }
-      .rb-5::before,
-      .rb-5:hover::before {
+      .rb-5::before {
         border-color: transparent;
         background: linear-gradient(160deg, var(--acc-2), var(--acc));
       }
@@ -2184,16 +2198,16 @@
         position: relative;
       }
       .fl-track {
-        height: calc((7 * 70 + 100) * var(--uvh));
+        height: calc((7 * 42 + 100) * var(--uvh)); /* a shorter scroll per card: they come quickly (user) */
       }
       .fl-pin {
         position: sticky;
-        overflow: clip; /* the cards and rows still waiting below stay out of sight */
+        /* no clip: the last cards may run past the bottom of the screen; the section keeps room for them below (script) */
         top: 0;
         display: flex;
-        align-items: center;
+        align-items: flex-start; /* from the top: the tall stack must not push the heading up (it slides up only when the rows need it) */
         height: calc(100 * var(--uvh));
-        padding-top: 70px; /* clear of the header */
+        padding-top: 76px; /* the heading sits just under the header (user) */
       }
       .fl-pin > .wrap {
         width: 100%;
@@ -2205,98 +2219,71 @@
       .fl-in > .t-h2 {
         text-align: center; /* the site's section heading: centred, the rule before the italic line (user) */
       }
-      .fl-g {
+      /* the deck: one slide per service = its line, number, name and words on the left + its photo card on the right.
+         Both halves rise together from where the next slide waits (40px under the front one), but they stack at their
+         own step: on the left every earlier title stays listed under its own line (one title row apart), on the right
+         every earlier card keeps a --gap strip of photo. Nothing is painted behind them (user): an earlier slide's words
+         fade out as the next slide comes over them; its title stays. The line spans the text column only (user). */
+      .fl-deck {
+        --gap: 22px; /* what shows of a card once the next one sits on it (user: 20 to 25px) */
+        --sh: clamp(260px, calc(46 * var(--uvh)), 440px); /* a card's height: the last ones may run past the screen (user) */
+        position: relative;
+        height: calc(6 * var(--gap) + var(--sh)); /* the script sets the real height (the title list can be taller) */
+        margin-top: clamp(28px, calc(4 * var(--uvh)), 48px);
+      }
+      .fl-s {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .fl-l {
+        position: absolute;
+        top: 0;
+        left: 0;
         display: grid;
-        grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); /* the list leads; the cards are the smaller side */
-        gap: 40px clamp(40px, calc(6 * var(--uvw)), 120px);
-        align-items: start;
-        margin-top: clamp(20px, calc(3 * var(--uvh)), 36px);
-      }
-      /* the list: each row has its own hairline on top. A row waits a screen below and rises with its card (the script
-         moves both by the same eased amount), then stops under the row before it, as the card stops on the card before. */
-      .fl-list {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-      }
-      .fl-row {
-        border-top: 1px solid rgba(13, 19, 18, 0.12);
-      }
-      .fl-btn {
-        display: grid;
-        grid-template-columns: 52px minmax(0, 1fr);
+        grid-template-columns: 80px minmax(0, 1fr);
         align-items: baseline;
-        width: 100%;
-        padding: clamp(10px, calc(1.6 * var(--uvh)), 18px) 0;
-        border: 0;
-        background: none;
-        font: inherit;
-        color: inherit;
-        text-align: left;
-        cursor: pointer;
+        width: 54%;
+        padding-top: 16px;
+        border-top: 1px solid rgba(13, 19, 18, 0.12); /* the line the slide comes up with: the text column only */
+        pointer-events: auto;
       }
       .fl-n {
-        font-size: var(--fs-small);
+        font-size: var(--fs-h3); /* larger again (user) */
         font-weight: 600;
-        color: var(--grey);
+        color: var(--acc-mid);
         font-variant-numeric: tabular-nums;
-        transition: color 0.5s var(--ease);
       }
       .fl-t {
-        font-size: var(--fs-list); /* the DMC Method step titles' size ("We create your campaigns"), user */
+        margin: 0;
+        font-size: var(--fs-list); /* the DMC Method step titles' size (user) */
         font-weight: 600;
         letter-spacing: -0.035em;
         line-height: 1.1;
       }
-      .fl-row.on .fl-n {
-        color: var(--acc-mid);
+      .fl-t a {
+        color: inherit;
       }
-      .fl-d {
-        display: grid;
-        grid-template-rows: 0fr;
-        transition: grid-template-rows 0.6s var(--ease);
-      }
-      .fl-d > div {
-        overflow: hidden;
-      }
-      .fl-d p {
+      .fl-p {
         max-width: 28rem;
-        padding: 0 0 clamp(14px, calc(2 * var(--uvh)), 22px) 52px;
+        margin-top: 14px;
         font-size: var(--fs-lead);
         line-height: 1.45;
         color: var(--grey);
-        opacity: 0;
-        transition: opacity 0.3s ease;
+        /* opacity from the script: the words stay until the next title is about to reach them (user) */
       }
-      .fl-row.on .fl-d {
-        grid-template-rows: 1fr;
-      }
-      .fl-row.on .fl-d p {
-        opacity: 1;
-        transition: opacity 0.5s ease 0.1s;
-      }
-
-      /* the stack: card k rests k headers down; a card that has not arrived waits below the screen */
-      .fl-stack {
-        --hd: 66px; /* what shows of a card once the next one sits on it: a strip of its photo */
-        --ch: clamp(250px, calc(100 * var(--uvh) - 6 * var(--hd) - 290px), 380px); /* a card's height */
-        position: relative;
-        width: 100%;
-        max-width: 470px;
-        height: calc((7 - 1) * var(--hd) + var(--ch));
-        margin-left: auto;
-      }
-      /* a card is its photo, edge to edge, with one notch cut into it bottom-left for the team cards' icon tile. No name
-         notch (user): the list on the left names it. */
+      /* the photo card: edge to edge, its top on the slide's line, one notch cut bottom-left for the icon tile */
       .fl-c {
         position: absolute;
-        inset: 0 0 auto;
+        top: 0;
+        right: 0;
         display: block;
-        height: var(--ch);
+        width: min(470px, 40%);
+        height: var(--sh);
+        pointer-events: auto;
         border-radius: var(--r-card);
         color: var(--ink);
         filter: drop-shadow(0 22px 24px rgba(13, 19, 18, 0.16)); /* follows the cut, a box-shadow would not */
-        /* no will-change: seven full-card photos as permanent layers left some unpainted */
       }
       .fl-m {
         position: absolute;
@@ -2311,9 +2298,6 @@
         height: 100%;
         object-fit: cover;
       }
-      /* the notch is a real cut in the photo (the team cards' clip-path, from the script), so the page shows through it:
-         nothing painted, no colour to mismatch the glow (user). The front card is always the lowest, so the cut never
-         shows the card behind (--hd is wider than the notch is tall). */
       .fl-ic {
         position: absolute;
         bottom: 0;
@@ -2334,29 +2318,22 @@
         outline: 2px solid var(--teal);
         outline-offset: 4px;
       }
-      @supports (corner-shape: squircle) {
-        .fl-c {
-          corner-shape: squircle;
-        }
-      }
       @media (max-width: 1199px) {
-        .fl-g {
-          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-          gap: 32px;
+        .fl-l {
+          width: 52%;
         }
       }
-      /* phones: the heading and the stack (each card names its service); the list steps aside */
+      /* phones: the cards only (each names its service for screen readers), full width */
       @media (max-width: 899px) {
-        .fl-g {
-          grid-template-columns: 1fr;
+        .fl-deck {
+          --gap: 24px;
+          --sh: clamp(300px, calc(100 * var(--uvh) - 6 * var(--gap) - 230px), 460px);
         }
-        .fl-list {
+        .fl-l {
           display: none;
         }
-        .fl-stack {
-          --hd: 58px;
-          --ch: clamp(240px, calc(100 * var(--uvh) - 6 * var(--hd) - 200px), 400px);
-          max-width: none;
+        .fl-c {
+          width: 100%;
         }
         .fl-ic i {
           width: 42px;
@@ -2647,30 +2624,6 @@
         font-weight: 700;
       }
 
-      /* ---------- Apple-style continuous corners ----------
-         a squircle reads tighter than a circle arc of the same radius, so the radius grows with it */
-      @supports (corner-shape: squircle) {
-        :root {
-          --r-card: 38px;
-        }
-        .sx-card,
-        .dd-fly,
-        .menu .dd-m a,
-        .h-badges,
-        .h-stat,
-        .cs-in,
-        .cs-img,
-        .q,
-        .vbox-f,
-        .fq,
-        .bk,
-        .bk-logo,
-        .bk-slot button,
-        .field textarea,
-        .bk-s3 .bk-preview {
-          corner-shape: squircle;
-        }
-      }
 
       /* ---------- laptop proportions ----------
          the layout is tuned on a 1920px screen; laptops (1280-1680px wide, e.g. 1920x1080 at 125% scaling = 1536px)
@@ -2999,6 +2952,9 @@
           opacity: 1;
           transform: none;
         }
+        .cs h3 {
+          transform: scale(0.72);
+        }
       }
       @media (prefers-reduced-motion: reduce) {
         *,
@@ -3076,7 +3032,7 @@
         grid-template-columns: 340px 1fr;
         background: #fff;
         color: var(--ink);
-        border-radius: 28px;
+        border-radius: var(--r-card);
         overflow: hidden;
         min-height: 640px;
         text-align: left;
@@ -3628,27 +3584,25 @@
         letter-spacing: -0.035em;
       }
 
-      /* ================= case studies (case-studies.html; built by build_cases.py) =================
-         Head: the blog / service hero row 1. Then two columns, the right one starting lower, so the cards step diagonally
-         (after madebyshape.co.uk/work), with client quotes and a video card in the flow. Cards = the home "Real clinics" /
-         blog white card (6px inset photo, --r-card / --r-inner). Hover: the photo drifts up by `top`, the tag chips (the
-         services carousel's dark-glass chip) and the home CTA ("Tell me more" size) slide in, the shadow deepens. All of
-         it moves by real position (whole pixels: sharp, no blur). Pointer cursor on the cards (user). */
-      .header-cur,
-      .menu a.is-cur {
+      /* ================= blog listing (blog.html; built by build_blog.py) =================
+         Head: the service hero's row 1 (dot label + H1 | intro). Then topic tabs (pills), then a 3-column grid of the home
+         page's "Real clinics" white cards (6px inset photo, --r-card / --r-inner, --fs-h4 title, --fs-small meta). On
+         hover the author avatar notch grows out of the photo's bottom-left corner (the photo is whole at rest) and the card's
+         shadow deepens; no arrow circle, the normal cursor. Nothing slides or changes height. */
+      .nav-txt.is-cur {
         color: var(--teal);
       }
-      .wks {
+      .blg {
         position: relative;
         padding: clamp(118px, calc(16 * var(--uvh)), 150px) 0 var(--sec-y);
         background: radial-gradient(30% 26% at 84% 10%, rgba(255, 191, 215, 0.34), transparent 70%);
       }
-      .wks-in {
+      .blg-in {
         max-width: var(--max);
         margin-inline: auto;
       }
-      .wks-top {
-        --fs-h1: clamp(38px, calc(4.2 * var(--uvw)), 68px);
+      .blg-top {
+        --fs-h1: clamp(38px, calc(4.2 * var(--uvw)), 68px); /* the home hero's size */
         display: grid;
         grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
         gap: 40px clamp(40px, calc(6 * var(--uvw)), 120px);
@@ -3669,275 +3623,400 @@
         border-radius: 50%;
         background: var(--acc-mid);
       }
-      .wks-top .eyb {
+      .blg-top .eyb {
         margin-bottom: 22px;
       }
-      .wks-txt {
+      .blg-txt {
         padding-top: calc(var(--fs-small) * 1.4 + 22px);
       }
-      .wks-txt p {
+      .blg-txt p {
         font-size: var(--fs-lead);
         line-height: 1.45;
         color: var(--grey);
       }
-      /* the diagonal: two columns, the right one starts lower */
-      .wgrid {
-        display: grid;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 0 clamp(22px, calc(2.4 * var(--uvw)), 40px);
-        margin-top: var(--sec-head);
+      /* topic tabs: pills, the active one ink (the nav's dark pill vocabulary) */
+      .btabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        margin-top: clamp(48px, calc(5 * var(--uvw)), 72px);
       }
-      .wcol {
+      .bt {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        height: 46px;
+        padding: 0 18px 0 20px;
+        border: 1px solid rgba(13, 19, 18, 0.1);
+        border-radius: var(--r-pill);
+        background: #fff;
+        color: var(--ink);
+        font: inherit;
+        font-size: var(--fs-small);
+        font-weight: 500;
+        cursor: pointer;
+        transition:
+          background-color 0.3s,
+          color 0.3s,
+          border-color 0.3s;
+      }
+      .bt span {
+        font-size: var(--fs-xs);
+        color: var(--grey);
+        font-variant-numeric: tabular-nums;
+        transition: color 0.3s;
+      }
+      .bt:hover {
+        border-color: rgba(27, 127, 115, 0.45);
+      }
+      .bt.on {
+        background: var(--ink);
+        border-color: var(--ink);
+        color: #fff;
+      }
+      .bt.on span {
+        color: var(--acc);
+      }
+      .bt:focus-visible {
+        outline: 2px solid var(--teal);
+        outline-offset: 3px;
+      }
+      /* the grid */
+      .bgrid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+        margin-top: 28px;
+      }
+      .bc[hidden] {
+        display: none;
+      }
+      .bc-in {
+        position: relative;
         display: flex;
         flex-direction: column;
-        gap: clamp(56px, calc(6 * var(--uvw)), 104px);
-      }
-      .wcol + .wcol {
-        padding-top: clamp(120px, calc(14 * var(--uvw)), 260px);
-      }
-      /* the case: no card around it (user). The image stands alone with the card radius; the text sits under it on the
-         page background. The whole case is one link; the pointer cursor. */
-      .wk-in {
-        display: block;
-        width: 100%;
-        padding: 0;
-        border: 0;
-        background: none;
-        color: inherit;
-        font: inherit;
-        text-align: left;
-        cursor: pointer; /* the whole case card is a link (user) */
-      }
-      .wk-in:focus-visible {
-        outline: 2px solid var(--teal);
-        outline-offset: 6px;
+        height: 100%;
+        padding: 6px 6px 26px;
         border-radius: var(--r-card);
+        background: #fff;
+        box-shadow: 0 1px 0 rgba(13, 19, 18, 0.03);
+        color: inherit;
+        cursor: default; /* the normal arrow cursor (user request) */
+        transition: box-shadow 0.5s var(--ease);
       }
-      .wk {
-        scroll-margin-top: 110px; /* case-studies.html#<slug> (from the home clinic cards) lands under the header */
+      .bc-in:hover,
+      .bc-in:focus-visible {
+        box-shadow: 0 24px 50px -26px rgba(13, 19, 18, 0.32);
       }
-      .wk-fig {
+      .bc-in:focus-visible {
+        outline: 2px solid var(--teal);
+        outline-offset: 4px;
+      }
+      .bc-media {
         position: relative;
-      }
-      /* plain circular corners (28px, the card radius without squircle): the hover notch is drawn with circular arcs,
-         so the image must use the same corner at rest, or its corners would change shape when the notch opens */
-      .wk-media {
-        position: relative;
-        aspect-ratio: 4 / 3;
-        border-radius: 28px;
+        aspect-ratio: 16 / 11;
+        border-radius: var(--r-inner);
         overflow: hidden;
         background: var(--soft);
       }
-      /* the photo drifts up a little on hover (by `top`: whole pixels, sharp) */
-      .wk-media > img {
+      /* on hover the photo drifts up a little inside its frame (no zoom). It moves by `top`, not transform: the browser
+         snaps a real position to whole pixels every frame, so the photo stays sharp while it moves (a transform lands on
+         fractional pixels and is blended, i.e. soft, until it stops) */
+      .bc-media > img {
         position: relative;
         top: 0;
         width: 100%;
         height: calc(100% + 28px);
         object-fit: cover;
-        transition: top 0.45s var(--ease); /* in sync with the notches (0.45s, the same curve) */
+        transition: top 0.6s var(--ease); /* quicker (user) */
       }
-      .wk-in:hover .wk-media > img,
-      .wk-in:focus-visible .wk-media > img {
+      .bc-in:hover .bc-media > img,
+      .bc-in:focus-visible .bc-media > img {
         top: -28px;
       }
-      /* the tag pills sit in a notch the script cuts into the image's top-right corner on hover (the service banner's
-         notch: curves = the image radius). They are on the page background there, so they are the blog tabs' white pill. */
-      .wk-chips {
+      /* the topic tile in a notch: a white tab in the photo's bottom-left corner with two concave corners, so the photo
+         appears to curve around it (the card is white, so the tab simply matches it). It is always full size: at rest it
+         waits just past the photo's bottom-left corner (the photo clips it, so the photo is whole), and on hover it slides
+         in on the diagonal into place. Moving it never re-sizes or re-draws it, so the motion is smooth and the edges stay sharp (growing it
+         by scale blurred the curves; growing it by real size stepped frame to frame). */
+      .bc-by {
+        --r: 22px;
         position: absolute;
-        top: 0;
-        right: 0;
+        /* at rest: out past the photo's bottom-left corner (curves included). It slides by left/bottom, not transform,
+           so every frame sits on whole pixels and the icon is 100% sharp throughout (no soft-then-sharp) */
+        left: -130px;
+        bottom: -130px;
         z-index: 1;
-        display: flex;
-        gap: 10px;
+        /* the tile sits 6px in from the photo's edges (12px from the card's edge with the card's 6px), so the photo's big
+           rounded corner never clips the tile's own corner, and 12px from the photo above and beside it: even all round
+           (user). The tab's corner follows the tile's: tile radius + the 12px gap (concentric). */
+        padding: 12px 12px 8px 8px; /* 12px under / beside the photo; 6px from its edges + the 2px the box reaches past them */
+        border-top-right-radius: calc(72px * 0.24 + 12px);
+        border-bottom-left-radius: calc(var(--r-card) - 4px); /* 4px in from the card's corner: concentric with it */
+        background: #fff;
+        transition:
+          left 0.35s var(--ease),
+          bottom 0.35s var(--ease); /* quick (user) */
+      }
+      /* the notch travels in its own square box, not inside the photo's rounded clip: in the photo's clip the white tab
+         and the photo shared one anti-aliased curve, which left a grey hairline round the corner (user). The box reaches
+         2px past the photo's left and bottom edges (into the card's white padding), so the tab covers the photo's edge
+         pixels fully. */
+      .bc-fig {
+        position: relative;
+      }
+      .bc-nt {
+        position: absolute;
+        left: -2px;
+        bottom: -2px;
+        z-index: 1;
+        width: 160px;
+        height: 160px;
+        overflow: hidden;
         pointer-events: none;
       }
-      /* the tag pills: the CTA's pill (user): 62px, ink, white text, the button's type size */
-      .wk-chip {
-        display: inline-flex;
-        align-items: center;
-        height: 62px;
-        padding: 0 28px;
-        border-radius: var(--r-pill);
-        background: var(--ink);
-        color: #fff;
-        font-size: var(--fs-body);
-        font-weight: 500;
-        white-space: nowrap;
-      }
-      /* the home CTA ("Tell me more", 62px, the pink circle with the arrow swap) in its own notch at the image's
-         bottom-left (the script cuts it with the top-right one), so it sits on the page background, like "Tell me more" on
-         the service banner; it fades in as the notch opens */
-      .wk-cta {
-        position: absolute;
+      .bc-in:hover .bc-by,
+      .bc-in:focus-visible .bc-by {
         left: 0;
         bottom: 0;
-        z-index: 1;
-        transition: background-color 0.35s;
       }
-      .wk-in:hover .wk-cta .cta-i {
-        background: var(--acc-hover);
-      }
-      .wk-in:hover .wk-cta .cta-i i:first-child {
-        transform: translateX(48px);
-      }
-      .wk-in:hover .wk-cta .cta-i i + i {
-        transform: none;
-      }
-      /* video card: the home reviews' white play circle, always visible */
-      .wk-play {
+      .bc-by::before,
+      .bc-by::after {
+        content: "";
         position: absolute;
-        left: 50%;
-        top: 50%;
-        z-index: 1;
+        width: var(--r);
+        height: var(--r);
+        /* the concave corner: a hard edge with a 1px blend, smooth but sharp */
+        background: radial-gradient(circle at 100% 0, transparent calc(var(--r) - 0.5px), #fff calc(var(--r) + 0.5px));
+      }
+      /* the two curved corners overlap the tab by 1px, so there is no seam for the photo to show through as a dark
+         line while the notch moves (the extra pixel is plain white, under the curve) */
+      .bc-by::before {
+        left: 2px; /* the photo's left edge (the box starts 2px outside it) */
+        bottom: calc(100% - 1px);
+        height: calc(var(--r) + 1px);
+      }
+      .bc-by::after {
+        left: calc(100% - 1px);
+        bottom: 2px; /* the photo's bottom edge */
+        width: calc(var(--r) + 1px);
+      }
+      /* the "How we help" tile: solid brand green, black filled icon, radius 24% (service pages, .hp-i) */
+      .bc-i {
         display: grid;
         place-items: center;
-        width: 76px;
-        height: 76px;
-        margin: -38px 0 0 -38px;
-        border-radius: 50%;
-        background: #fff;
+        width: 72px;
+        height: 72px;
+        border-radius: calc(72px * 0.24);
+        background: var(--teal-3);
         color: var(--ink);
-        font-size: 24px;
-        box-shadow: 0 14px 30px -12px rgba(13, 19, 18, 0.5);
-        transition:
-          background-color 0.3s,
-          color 0.3s;
+        font-size: 40px;
       }
-      .wk-in:hover .wk-play {
-        background: var(--ink);
-        color: #fff;
-      }
-      .wk-video .wk-in {
-        cursor: pointer;
-      }
-      .wk-meta {
+      .bc-meta {
         display: flex;
         flex-wrap: wrap;
-        align-items: center;
         gap: 6px 14px;
-        margin: 22px 0 0;
+        margin: 22px 14px 0;
         font-size: var(--fs-small);
         color: var(--grey);
       }
-      .wk-meta span {
+      .bc-meta span {
         display: inline-flex;
         align-items: center;
         gap: 8px;
       }
-      .wk-meta span:first-child {
+      .bc-meta span:first-child {
         color: var(--teal);
         font-weight: 600;
       }
-      .wk-meta span + span::before {
+      .bc-meta span + span::before {
         content: "";
         width: 5px;
         height: 5px;
         border-radius: 50%;
         background: var(--acc-mid);
       }
-      .wk-meta b {
-        padding: 1px 7px;
-        border-radius: 6px;
-        font-weight: 600;
-        color: var(--acc-on);
-        background: var(--acc);
-      }
-      .wk-t {
-        margin: 10px 0 0;
-        font-size: var(--fs-h3);
+      .bc h3 {
+        margin: 10px 14px 0;
+        font-size: var(--fs-h4);
         font-weight: 600;
         letter-spacing: -0.035em;
-        line-height: 1.12;
+        line-height: 1.18;
       }
-      /* client quote in the flow: the video card's quote style (pink quote mark, --fs-list), the "How we help" tile */
-      .wq {
-        margin: 0;
-      }
-      .wq blockquote {
-        margin: 0;
-        font-size: var(--fs-list);
-        font-weight: 600;
-        letter-spacing: -0.035em;
-        line-height: 1.12;
-      }
-      .wq blockquote i {
-        margin-right: 0.3em;
-        font-size: 0.7em;
-        vertical-align: 0.12em;
-        color: var(--acc-mid);
-      }
-      .wq figcaption {
-        display: flex;
-        align-items: center;
-        gap: 14px;
-        margin-top: 26px;
-      }
-      .wq-i {
-        display: grid;
-        flex: none;
-        place-items: center;
-        width: 52px;
-        height: 52px;
-        border-radius: 12px;
-        background: var(--teal-3);
-        color: var(--ink);
-        font-size: 22px;
-        font-weight: 700;
-      }
-      .wq b {
-        display: block;
-        font-size: var(--fs-body);
-        font-weight: 600;
-      }
-      .wq small {
-        display: block;
-        font-size: var(--fs-small);
+      .bempty {
+        margin-top: 40px;
+        font-size: var(--fs-lead);
         color: var(--grey);
       }
       @media (max-width: 1199px) {
-        .wks-top {
+        .blg-top {
           grid-template-columns: 1fr;
         }
-        .wks-txt {
+        .blg-txt {
           padding-top: 0;
           max-width: 640px;
         }
+        .bgrid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
       }
-      /* phones: one column in reading order (--o), no stagger; chips and CTA shown (no hover) */
       @media (max-width: 899px) {
-        .wks-top {
+        .blg-top {
           --fs-h1: clamp(28px, 7.8vw, 38px);
         }
-        .wgrid {
-          display: flex;
-          flex-direction: column;
-          gap: 48px;
+        .btabs {
+          flex-wrap: nowrap;
+          overflow-x: auto;
+          margin-inline: calc(-1 * var(--side));
+          padding-inline: var(--side);
+          scrollbar-width: none;
         }
-        .wcol {
-          display: contents;
-        }
-        .wcol > * {
-          order: var(--o);
-        }
-        .wk-chips {
-          top: 12px;
-          right: 12px;
-          gap: 6px;
-        }
-        .wk-chip {
-          height: 40px;
-          padding: 0 16px;
-          font-size: var(--fs-xs);
-        }
-        .wk-cta {
+        .btabs::-webkit-scrollbar {
           display: none;
         }
+        .bt {
+          flex: none;
+        }
+        .bgrid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      /* case studies (built by build_cases.py on the blog grid): the whole card is a link, so the pointer cursor (user) */
+      .wks-list .bc-in {
+        cursor: pointer;
+      }
+      .menu a.is-cur {
+        color: var(--teal);
+      }
+      .wks-list .note {
+        margin-top: 40px;
+      }
+      /* the results block under the photo: a tag row, the clinic, the return in a mint box beside the revenue, two chips
+         and the link (inspo: theimplantengine.com case cards; our type, colours and radii) */
+      .cc {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        padding: 20px 14px 0;
+      }
+      .cc-tags {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: var(--fs-xs);
+      }
+      .cc-tag {
+        padding: 4px 12px;
+        border-radius: var(--r-pill);
+        background: var(--mint);
+        color: var(--deep);
+        font-weight: 600;
+      }
+      .cc-live {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--teal);
+        font-weight: 600;
+      }
+      .cc-live::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--teal-3);
+        box-shadow: 0 0 0 3px rgba(73, 184, 166, 0.25);
+      }
+      .cc h3 {
+        margin: 0;
+        font-size: var(--fs-h4);
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1.15;
+      }
+      .cc-st {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        align-items: center;
+      }
+      .cc-st p {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .cc-roas {
+        padding: 16px 18px;
+        border-radius: 18px;
+        background: var(--mint);
+      }
+      .cc-rev {
+        padding: 16px 4px;
+      }
+      .cc-st b {
+        font-size: var(--fs-h3);
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+      }
+      .cc-roas b {
+        color: var(--teal);
+      }
+      .cc-st small {
+        font-size: var(--fs-xs);
+        color: var(--body);
+      }
+      .cc-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .cc-chips li {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        border: 1px solid rgba(13, 19, 18, 0.12);
+        border-radius: var(--r-pill);
+        font-size: var(--fs-xs);
+        color: var(--body);
+      }
+      .cc-chips i {
+        font-size: 16px;
+        color: var(--teal);
+      }
+      .cc-go {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 4px;
+        font-size: var(--fs-body);
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .cc-go i {
+        transition: transform 0.45s var(--ease);
+      }
+      .bc-in:hover .cc-go i,
+      .bc-in:focus-visible .cc-go i {
+        transform: translateX(5px);
       }
     </style>
   </head>
   <body>
     <script>
+      // every visit starts at the top (user): the browser does not restore the old scroll position, and a page brought
+      // back from the back/forward cache jumps to the top too. A link to a section (#hash) still lands on that section.
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      if (!location.hash) scrollTo(0, 0);
+      addEventListener("pageshow", (e) => {
+        if (e.persisted && !location.hash) scrollTo(0, 0);
+      });
       // preloader only runs when the motion stack is going to run it
       if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("is-pre");
       // it waits for every image on the page (the lazy ones load now too), at most 8s; the ones in view are also decoded
@@ -3994,7 +4073,7 @@
             </div>
           </div>
           <a class="is-cur" href="case-studies.html">Case Studies</a>
-          <a href="index.html#testimonials">Reviews</a>
+          <a href="reviews.html">Reviews</a>
           <a href="index.html#dmc">DMC Method</a>
           <a href="index.html#faq">FAQ</a>
         </div>
@@ -4039,7 +4118,7 @@
         <div class="mnav-rule"></div>
         <ul class="mnav-list mnav-2">
           <li><a href="case-studies.html">Case Studies</a></li>
-          <li><a href="index.html#testimonials">Reviews</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
           <li><a href="index.html#dmc">DMC Method</a></li>
           <li><a href="index.html#faq">FAQ</a></li>
           <li><a href="blog.html">Blog</a></li>
@@ -4052,14 +4131,13 @@
     </div>
 
     <main id="main">
-      <!-- ============ CASE STUDIES
-           Elementor: Archive template for the "Case Study" CPT. Head (label, H1 | intro), then two columns (the right one
-           offset down) of Loop items: case cards (ACF: photo, clinic, return, headline, tags, page link), client quotes and a
-           video card (YouTube ID). Case cards link to their case study pages (placeholders until those exist). -->
-      <section class="wks" aria-labelledby="work-title">
+      <!-- ============ CASE STUDIES (the blog listing's layout, user)
+           Elementor: Archive template for the "Case Study" CPT. Head (label, H1 | intro), then a Loop Grid, 3 columns, card
+           skin = the blog card (ACF: photo, clinic, return, revenue, ad spend, page link). -->
+      <section class="blg wks-list" aria-labelledby="work-title">
         <div class="wrap">
-          <div class="wks-in">
-            <div class="wks-top">
+          <div class="blg-in">
+            <div class="blg-top">
               <div>
                 <p class="eyb">Case Studies</p>
                 <h1 class="t-h1" id="work-title">
@@ -4067,107 +4145,122 @@
                   <span class="ln-m"><span>real <span class="hl">results.</span></span></span>
                 </h1>
               </div>
-              <div class="wks-txt">
+              <div class="blg-txt">
                 <p>Dental clinics across Canada that handed us their marketing. We ran the ads, called the leads and booked the patients. Here is what came back.</p>
               </div>
             </div>
-            <div class="wgrid">
-              <div class="wcol">
-            <article class="wk" id="west-grande-prairie-dental" style="--o: 1">
-              <a class="wk-in" href="case-west-grande-prairie-dental.html" aria-label="West Grande Prairie Dental: $97,000 in revenue from a $5,000 ad spend">
-                <div class="wk-fig">
-                  <div class="wk-media">
-                    <img src="assets/img/clients/wgp-photo.jpg" alt="West Grande Prairie Dental storefront" width="1619" height="1080" loading="lazy" decoding="async" />
-                  </div>
-                  <span class="cta wk-cta" aria-hidden="true"><span class="cta-t">View case study</span><span class="cta-i"><i class="ph ph-arrow-right"></i><i class="ph ph-arrow-right"></i></span></span>
+            <div class="bgrid">
+            <article class="bc">
+              <a class="bc-in" href="case-west-grande-prairie-dental.html" aria-label="West Grande Prairie Dental: $97,000 in revenue from a $5,000 ad spend. View the case study">
+                <div class="bc-fig">
+                  <div class="bc-media"><img src="assets/img/clients/wgp-photo.jpg" alt="West Grande Prairie Dental storefront" width="1619" height="1080" loading="lazy" decoding="async" /></div>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-chart-line-up"></i></span></span></span>
                 </div>
-                <p class="wk-meta"><span>West Grande Prairie Dental</span><span>Return on ad spend <b>19.4×</b></span></p>
-                <h2 class="wk-t">$97,000 in revenue from a $5,000 ad spend</h2>
+                <div class="cc">
+                  <p class="cc-tags"><span class="cc-tag">Dental Marketing</span><span class="cc-live">Case study</span></p>
+                  <h3>West Grande Prairie Dental</h3>
+                  <div class="cc-st">
+                    <p class="cc-roas"><b>19.4×</b><small>Return on ad spend</small></p>
+                    <p class="cc-rev"><b>$97k</b><small>Revenue from ads</small></p>
+                  </div>
+                  <ul class="cc-chips">
+                    <li><i class="ph ph-wallet" aria-hidden="true"></i>$5k ad spend</li>
+                    <li><i class="ph ph-calendar-check" aria-hidden="true"></i>Booked into the schedule</li>
+                  </ul>
+                  <span class="cc-go">View full case study <i class="ph ph-arrow-right" aria-hidden="true"></i></span>
+                </div>
               </a>
             </article>
-            <figure class="wq" style="--o: 4">
-              <blockquote><i class="ph-fill ph-quotes" aria-hidden="true"></i>DMC is the first marketing that’s actually paid off since I opened in 2012.</blockquote>
-              <figcaption><span class="wq-i" aria-hidden="true">R</span><span><b>Rae-Lynne D.</b><small>Modern Smiles &amp; Northern Lights</small></span></figcaption>
-            </figure>
-            <article class="wk" id="smile-now" style="--o: 5">
-              <a class="wk-in" href="case-smile-now.html" aria-label="Smile Now: $161,000 in revenue from a $13,000 ad spend">
-                <div class="wk-fig">
-                  <div class="wk-media">
-                    <img src="assets/img/clients/smilenow-photo.webp" alt="Calgary skyline and the Peace Bridge" width="1600" height="900" loading="lazy" decoding="async" />
-                  </div>
-                  <span class="cta wk-cta" aria-hidden="true"><span class="cta-t">View case study</span><span class="cta-i"><i class="ph ph-arrow-right"></i><i class="ph ph-arrow-right"></i></span></span>
+            <article class="bc">
+              <a class="bc-in" href="case-riverbend-denture-implant.html" aria-label="Riverbend Denture &amp; Implant: $255,000 in revenue from a $19,000 ad spend. View the case study">
+                <div class="bc-fig">
+                  <div class="bc-media"><img src="assets/img/clients/riverbend-photo.webp" alt="Riverbend Denture &amp; Implant Clinic reception" width="1500" height="1000" loading="lazy" decoding="async" /></div>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-chart-line-up"></i></span></span></span>
                 </div>
-                <p class="wk-meta"><span>Smile Now</span><span>Return on ad spend <b>12.4×</b></span></p>
-                <h2 class="wk-t">$161,000 in revenue from a $13,000 ad spend</h2>
+                <div class="cc">
+                  <p class="cc-tags"><span class="cc-tag">Dental Marketing</span><span class="cc-live">Case study</span></p>
+                  <h3>Riverbend Denture &amp; Implant</h3>
+                  <div class="cc-st">
+                    <p class="cc-roas"><b>13.4×</b><small>Return on ad spend</small></p>
+                    <p class="cc-rev"><b>$255k</b><small>Revenue from ads</small></p>
+                  </div>
+                  <ul class="cc-chips">
+                    <li><i class="ph ph-wallet" aria-hidden="true"></i>$19k ad spend</li>
+                    <li><i class="ph ph-calendar-check" aria-hidden="true"></i>Booked into the schedule</li>
+                  </ul>
+                  <span class="cc-go">View full case study <i class="ph ph-arrow-right" aria-hidden="true"></i></span>
+                </div>
               </a>
             </article>
-            <article class="wk" id="modern-smiles" style="--o: 8">
-              <a class="wk-in" href="case-modern-smiles.html" aria-label="Modern Smiles: $72,000 in revenue from a $6,000 ad spend">
-                <div class="wk-fig">
-                  <div class="wk-media">
-                    <img src="assets/img/clients/modern-smiles-photo.webp" alt="A denture being made at Modern Smiles" width="1024" height="554" loading="lazy" decoding="async" />
-                  </div>
-                  <span class="cta wk-cta" aria-hidden="true"><span class="cta-t">View case study</span><span class="cta-i"><i class="ph ph-arrow-right"></i><i class="ph ph-arrow-right"></i></span></span>
+            <article class="bc">
+              <a class="bc-in" href="case-smile-now.html" aria-label="Smile Now: $161,000 in revenue from a $13,000 ad spend. View the case study">
+                <div class="bc-fig">
+                  <div class="bc-media"><img src="assets/img/clients/smilenow-photo.webp" alt="Calgary skyline and the Peace Bridge" width="1600" height="900" loading="lazy" decoding="async" /></div>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-chart-line-up"></i></span></span></span>
                 </div>
-                <p class="wk-meta"><span>Modern Smiles</span><span>Return on ad spend <b>12×</b></span></p>
-                <h2 class="wk-t">$72,000 in revenue from a $6,000 ad spend</h2>
+                <div class="cc">
+                  <p class="cc-tags"><span class="cc-tag">Dental Marketing</span><span class="cc-live">Case study</span></p>
+                  <h3>Smile Now</h3>
+                  <div class="cc-st">
+                    <p class="cc-roas"><b>12.4×</b><small>Return on ad spend</small></p>
+                    <p class="cc-rev"><b>$161k</b><small>Revenue from ads</small></p>
+                  </div>
+                  <ul class="cc-chips">
+                    <li><i class="ph ph-wallet" aria-hidden="true"></i>$13k ad spend</li>
+                    <li><i class="ph ph-calendar-check" aria-hidden="true"></i>Booked into the schedule</li>
+                  </ul>
+                  <span class="cc-go">View full case study <i class="ph ph-arrow-right" aria-hidden="true"></i></span>
+                </div>
               </a>
             </article>
-              </div>
-              <div class="wcol">
-            <figure class="wq" style="--o: 2">
-              <blockquote><i class="ph-fill ph-quotes" aria-hidden="true"></i>We’ve opened up another operatory just to deal with the overflow of new patients.</blockquote>
-              <figcaption><span class="wq-i" aria-hidden="true">M</span><span><b>Dr. Mark Warawa</b><small>Bright Smile Dental</small></span></figcaption>
-            </figure>
-            <article class="wk" id="riverbend-denture-implant" style="--o: 3">
-              <a class="wk-in" href="case-riverbend-denture-implant.html" aria-label="Riverbend Denture &amp; Implant: $255,000 in revenue from a $19,000 ad spend">
-                <div class="wk-fig">
-                  <div class="wk-media">
-                    <img src="assets/img/clients/riverbend-photo.webp" alt="Riverbend Denture &amp; Implant Clinic reception" width="1500" height="1000" loading="lazy" decoding="async" />
-                  </div>
-                  <span class="cta wk-cta" aria-hidden="true"><span class="cta-t">View case study</span><span class="cta-i"><i class="ph ph-arrow-right"></i><i class="ph ph-arrow-right"></i></span></span>
+            <article class="bc">
+              <a class="bc-in" href="case-wye-dental.html" aria-label="Wye Dental: $92,000 in revenue from a $6,000 ad spend. View the case study">
+                <div class="bc-fig">
+                  <div class="bc-media"><img src="assets/img/clients/wye-photo.webp" alt="The Wye Dental team" width="2048" height="1066" loading="lazy" decoding="async" /></div>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-chart-line-up"></i></span></span></span>
                 </div>
-                <p class="wk-meta"><span>Riverbend Denture &amp; Implant</span><span>Return on ad spend <b>13.4×</b></span></p>
-                <h2 class="wk-t">$255,000 in revenue from a $19,000 ad spend</h2>
+                <div class="cc">
+                  <p class="cc-tags"><span class="cc-tag">Dental Marketing</span><span class="cc-live">Case study</span></p>
+                  <h3>Wye Dental</h3>
+                  <div class="cc-st">
+                    <p class="cc-roas"><b>15.3×</b><small>Return on ad spend</small></p>
+                    <p class="cc-rev"><b>$92k</b><small>Revenue from ads</small></p>
+                  </div>
+                  <ul class="cc-chips">
+                    <li><i class="ph ph-wallet" aria-hidden="true"></i>$6k ad spend</li>
+                    <li><i class="ph ph-calendar-check" aria-hidden="true"></i>Booked into the schedule</li>
+                  </ul>
+                  <span class="cc-go">View full case study <i class="ph ph-arrow-right" aria-hidden="true"></i></span>
+                </div>
               </a>
             </article>
-            <article class="wk wk-video" style="--o: 6">
-              <button class="wk-in" type="button" data-video="xulePDv7Zt8" aria-label="Play Dr. Greg Broyde’s video testimonial">
-                <div class="wk-fig">
-                  <div class="wk-media">
-                    <img src="assets/img/svc/broyde-video.webp" alt="" width="1280" height="628" loading="lazy" decoding="async" />
-                    <span class="wk-play" aria-hidden="true"><i class="ph-fill ph-play"></i></span>
-                  </div>
+            <article class="bc">
+              <a class="bc-in" href="case-modern-smiles.html" aria-label="Modern Smiles: $72,000 in revenue from a $6,000 ad spend. View the case study">
+                <div class="bc-fig">
+                  <div class="bc-media"><img src="assets/img/clients/modern-smiles-photo.webp" alt="A denture being made at Modern Smiles" width="1024" height="554" loading="lazy" decoding="async" /></div>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-chart-line-up"></i></span></span></span>
                 </div>
-                <p class="wk-meta"><span>Dr. Greg Broyde</span><span>West Grande Prairie Dental &amp; East Village Dental</span></p>
-                <h2 class="wk-t">“For every dollar I spend, DMC makes sure I get at least $6 to $10 back.”</h2>
-              </button>
-            </article>
-            <article class="wk" id="wye-dental" style="--o: 7">
-              <a class="wk-in" href="case-wye-dental.html" aria-label="Wye Dental: $92,000 in revenue from a $6,000 ad spend">
-                <div class="wk-fig">
-                  <div class="wk-media">
-                    <img src="assets/img/clients/wye-photo.webp" alt="The Wye Dental team" width="2048" height="1066" loading="lazy" decoding="async" />
+                <div class="cc">
+                  <p class="cc-tags"><span class="cc-tag">Dental Marketing</span><span class="cc-live">Case study</span></p>
+                  <h3>Modern Smiles</h3>
+                  <div class="cc-st">
+                    <p class="cc-roas"><b>12×</b><small>Return on ad spend</small></p>
+                    <p class="cc-rev"><b>$72k</b><small>Revenue from ads</small></p>
                   </div>
-                  <span class="cta wk-cta" aria-hidden="true"><span class="cta-t">View case study</span><span class="cta-i"><i class="ph ph-arrow-right"></i><i class="ph ph-arrow-right"></i></span></span>
+                  <ul class="cc-chips">
+                    <li><i class="ph ph-wallet" aria-hidden="true"></i>$6k ad spend</li>
+                    <li><i class="ph ph-calendar-check" aria-hidden="true"></i>Booked into the schedule</li>
+                  </ul>
+                  <span class="cc-go">View full case study <i class="ph ph-arrow-right" aria-hidden="true"></i></span>
                 </div>
-                <p class="wk-meta"><span>Wye Dental</span><span>Return on ad spend <b>15.3×</b></span></p>
-                <h2 class="wk-t">$92,000 in revenue from a $6,000 ad spend</h2>
               </a>
             </article>
-              </div>
             </div>
             <p class="note">Individual campaign examples. Results vary by clinic, market, and treatment offering.</p>
           </div>
         </div>
       </section>
     </main>
-
-    <!-- video lightbox (shared with the home page) -->
-    <div class="vbox" id="vbox" role="dialog" aria-modal="true" aria-label="Video testimonial" hidden>
-      <button class="vbox-x" type="button" aria-label="Close video"><i class="ph ph-x" aria-hidden="true"></i></button>
-      <div class="vbox-f" id="vboxF"></div>
-    </div>
 
     <div class="sbreak" aria-hidden="true"></div>
     <!-- ============ FOOTER (shared with the home page) ============ -->
@@ -4269,6 +4362,7 @@
         const root = document.documentElement;
         const motion = hasG && !reduce;
 
+        /* ---------- smooth scroll (as on the home page) ---------- */
         let lenis = null;
         if (!reduce && window.Lenis) {
           lenis = new Lenis({ lerp: 0.08, wheelMultiplier: 0.8 });
@@ -4286,11 +4380,13 @@
           else root.style.overflow = on ? "hidden" : "";
         };
 
+        /* ---------- header ---------- */
         const top = $("#top");
         const stuck = () => top.classList.toggle("is-stuck", scrollY > 30);
         addEventListener("scroll", stuck, { passive: true });
         stuck();
 
+        /* ---------- mobile menu ---------- */
         const mnav = $("#mnav"),
           burger = $(".burger");
         let mOpen = false;
@@ -4329,113 +4425,44 @@
             sub.hidden = !open;
           });
         }
+        addEventListener("keydown", (e) => e.key === "Escape" && mOpen && closeMnav());
 
-        /* ---------- the notches: the image's top-right corner is cut around the tag pills, its bottom-left around the CTA ----------
-           Always open (the resting look; user). Drawn as one clip-path outline with the curves = the image's own radius, like
-           the service banner's notch; re-drawn on resize. 900px and wider (phones: the pills sit on the image). */
+        /* ---------- topic tabs: show the posts of one topic (cards fade back in) ---------- */
         {
-          const wide = matchMedia("(min-width: 900px)");
-          const cut = (media, chips, cta) => {
-            if (!wide.matches) return void (media.style.clipPath = "");
-            const W = media.offsetWidth,
-              H = media.offsetHeight,
-              R = parseFloat(getComputedStyle(media).borderTopLeftRadius) || 28,
-              r = R,
-              g = Math.round(12 / (parseFloat(getComputedStyle(document.documentElement).zoom) || 1)), // 12px on screen at any laptop zoom (user)
-              tw = chips ? chips.offsetWidth + g : 0, // top-right notch: the pills (the cards have none now)
-              th = chips ? chips.offsetHeight + g : 0,
-              bw = cta ? cta.offsetWidth + g : 0, // bottom-left notch: the CTA (the video card has none)
-              bh = cta ? cta.offsetHeight + g : 0,
-              p = cta ? Math.min(cta.offsetHeight / 2 + g, bh - r) : r; // concentric with the pill: the gap stays g all the way round
-            if (!chips && !cta) return void (media.style.clipPath = "");
-            const top = chips
-              ? `H${W - tw - r} A${r},${r} 0 0 1 ${W - tw},${r} V${th - r} A${r},${r} 0 0 0 ${W - tw + r},${th} H${W - R} A${R},${R} 0 0 1 ${W},${th + R}`
-              : `H${W - R} A${R},${R} 0 0 1 ${W},${R}`;
-            const bottom = cta
-              ? `H${bw + r} A${r},${r} 0 0 1 ${bw},${H - r} V${H - bh + p} A${p},${p} 0 0 0 ${bw - p},${H - bh} H${R} A${R},${R} 0 0 1 0,${H - bh - R}`
-              : `H${R} A${R},${R} 0 0 1 0,${H - R}`;
-            media.style.clipPath = `path("M${R},0 ${top} V${H - R} A${R},${R} 0 0 1 ${W - R},${H} ${bottom} V${R} A${R},${R} 0 0 1 ${R},0 Z")`;
-          };
-          const all = $$(".wk-in").map((card) => [$(".wk-media", card), $(".wk-chips", card), $(".wk-cta", card)]);
-          const drawAll = () => all.forEach((a) => cut(...a));
-          drawAll();
-          addEventListener("resize", drawAll);
-          wide.addEventListener("change", drawAll);
-          document.fonts && document.fonts.ready.then(drawAll); // the pills' width depends on the font
-        }
-
-        /* ---------- the video card opens the home page's lightbox (YouTube) ---------- */
-        {
-          const vb = $("#vbox"),
-            vbF = $("#vboxF"),
-            vbX = $(".vbox-x");
-          let from = null;
-          const close = () => {
-            if (vb.hidden) return;
-            vb.hidden = true;
-            vbF.replaceChildren();
-            lock(false);
-            if (from) from.focus({ preventScroll: true });
-          };
-          $$("[data-video]").forEach((btn) =>
-            btn.addEventListener("click", () => {
-              const f = document.createElement("iframe");
-              f.src = "https://www.youtube-nocookie.com/embed/" + btn.dataset.video + "?autoplay=1&rel=0&playsinline=1";
-              f.title = btn.getAttribute("aria-label").replace(/^Play /, "");
-              f.allow = "autoplay; encrypted-media; picture-in-picture; fullscreen";
-              f.allowFullscreen = true;
-              f.referrerPolicy = "strict-origin-when-cross-origin";
-              vbF.replaceChildren(f);
-              vb.hidden = false;
-              from = btn;
-              lock(true);
-              vbX.focus();
+          const tabs = $$(".bt"),
+            cards = $$(".bc"),
+            empty = $(".bempty");
+          tabs.forEach((t) =>
+            t.addEventListener("click", () => {
+              const topic = t.dataset.topic;
+              tabs.forEach((x) => {
+                x.classList.toggle("on", x === t);
+                x.setAttribute("aria-pressed", x === t);
+              });
+              const shown = cards.filter((c) => {
+                const on = topic === "all" || c.dataset.topic === topic;
+                c.hidden = !on;
+                return on;
+              });
+              empty.hidden = shown.length > 0;
+              if (motion) gsap.fromTo(shown, { y: 24, opacity: 0 }, { y: 0, opacity: 1, duration: 0.7, ease: "expo.out", stagger: 0.05, clearProps: "opacity,transform" });
+              if (hasG) ScrollTrigger.refresh();
             }),
           );
-          vbX.addEventListener("click", close);
-          vb.addEventListener("click", (e) => e.target === vb && close());
-          addEventListener("keydown", (e) => {
-            if (e.key !== "Escape") return;
-            if (!vb.hidden) close();
-            else if (mOpen) closeMnav();
-          });
         }
 
-        /* ---------- arriving from a home clinic card (case-studies.html#<slug>): land on that case under the header ----------
-           The browser jumps before the photos above have loaded (and they shift the case down), so align again once the
-           page has loaded. Measured without the card's entrance offset (GSAP y), 110px under the top (the header). */
-        {
-          const t = location.hash.length > 1 && document.getElementById(decodeURIComponent(location.hash.slice(1)));
-          if (t) {
-            const land = () => {
-              const y = t.getBoundingClientRect().top + scrollY - (hasG ? gsap.getProperty(t, "y") : 0) - 110;
-              if (lenis) lenis.scrollTo(y, { immediate: true, force: true });
-              else scrollTo(0, y);
-            };
-            land();
-            addEventListener("load", () => requestAnimationFrame(land));
-          }
-        }
-
+        /* ---------- choreography (the home page's values) ---------- */
         if (!motion) return;
         const st = (trigger, start = "top 82%") => ({ trigger, start, once: true });
         gsap
           .timeline()
           .from(".nav > *", { y: -16, opacity: 0, duration: 0.9, ease: "power3.out", stagger: 0.07 }, 0)
-          .from(".wks-top .eyb", { y: 14, opacity: 0, duration: 0.9, ease: "power3.out" }, 0.1)
+          .from(".blg-top .eyb", { y: 14, opacity: 0, duration: 0.9, ease: "power3.out" }, 0.1)
           .from("#work-title .ln-m > span", { yPercent: 110, duration: 1.2, ease: "expo.out", stagger: 0.09 }, 0.15)
-          .from(".wks-txt p", { y: 18, opacity: 0, duration: 1, ease: "power3.out" }, 0.4);
-        gsap.set(".wk, .wq", { opacity: 0, y: 60 });
-        gsap.set(".wk-cta", { opacity: 0, y: 16 }); // the notch's button fades in after its photo (the service banner's order)
-        ScrollTrigger.batch(".wk, .wq", {
-          start: "top 72%", // a good part of the card is on screen first, so its photo and notch are seen arriving (user)
-          once: true,
-          onEnter: (b) => {
-            gsap.to(b, { opacity: 1, y: 0, duration: 1.3, ease: "expo.out", stagger: 0.1, clearProps: "opacity,transform" });
-            gsap.from(b.flatMap((c) => $$(".wk-media > img", c)), { scale: 1.25, duration: 1.8, ease: "expo.out", stagger: 0.1 });
-            gsap.to(b.flatMap((c) => $$(".wk-cta", c)), { opacity: 1, y: 0, duration: 0.9, ease: "power3.out", stagger: 0.1, delay: 0.55, clearProps: "opacity,transform" });
-          },
-        });
+          .from(".blg-txt p", { y: 18, opacity: 0, duration: 1, ease: "power3.out" }, 0.4)
+          ;
+        gsap.set(".bc", { opacity: 0, y: 60 });
+        ScrollTrigger.batch(".bc", { start: "top 94%", once: true, onEnter: (b) => gsap.to(b, { opacity: 1, y: 0, duration: 1.1, ease: "expo.out", stagger: 0.1, clearProps: "opacity,transform" }) });
         gsap.from(".f-g > *", { y: 30, opacity: 0, duration: 1.1, ease: "power3.out", stagger: 0.1, scrollTrigger: st(".foot", "top 85%") });
         addEventListener("load", () => ScrollTrigger.refresh());
       })();

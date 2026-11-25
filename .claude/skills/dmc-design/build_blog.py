@@ -56,9 +56,9 @@ def cards():
         t = html.escape(title, quote=False)
         out.append(f'''            <article class="bc" data-topic="{slugify(topic)}">
               <a class="bc-in" href="#{slug}" aria-label="{html.escape(title)} ({mins} min read)">
-                <div class="bc-media">
-                  <img src="assets/img/{img}" alt="{alt}" loading="lazy" decoding="async" />
-                  <span class="bc-by" aria-hidden="true"><span class="bc-i"><i class="ph-fill {TOPIC_ICON[topic]}"></i></span></span>
+                <div class="bc-fig">
+                  <div class="bc-media"><img src="assets/img/{img}" alt="{alt}" loading="lazy" decoding="async" /></div>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill {TOPIC_ICON[topic]}"></i></span></span></span>
                 </div>
                 <p class="bc-meta"><span>{topic}</span><span>{mins} min read</span></p>
                 <h3>{t}</h3>
@@ -234,22 +234,41 @@ PAGE_CSS = """
         position: absolute;
         /* at rest: out past the photo's bottom-left corner (curves included). It slides by left/bottom, not transform,
            so every frame sits on whole pixels and the icon is 100% sharp throughout (no soft-then-sharp) */
-        left: -110px;
-        bottom: -110px;
+        left: -130px;
+        bottom: -130px;
         z-index: 1;
-        padding: 11px 10px 1px 1px;
-        border-top-right-radius: var(--r);
+        /* the tile sits 6px in from the photo's edges (12px from the card's edge with the card's 6px), so the photo's big
+           rounded corner never clips the tile's own corner, and 12px from the photo above and beside it: even all round
+           (user). The tab's corner follows the tile's: tile radius + the 12px gap (concentric). */
+        padding: 12px 12px 8px 8px; /* 12px under / beside the photo; 6px from its edges + the 2px the box reaches past them */
+        border-top-right-radius: calc(72px * 0.24 + 12px);
+        border-bottom-left-radius: calc(var(--r-card) - 4px); /* 4px in from the card's corner: concentric with it */
         background: #fff;
         transition:
           left 0.35s var(--ease),
           bottom 0.35s var(--ease); /* quick (user) */
       }
-      /* on hover it slides in on the diagonal and lands 1px past the photo's edges (the photo clips that pixel, so no
-         sliver of photo shows along them) */
+      /* the notch travels in its own square box, not inside the photo's rounded clip: in the photo's clip the white tab
+         and the photo shared one anti-aliased curve, which left a grey hairline round the corner (user). The box reaches
+         2px past the photo's left and bottom edges (into the card's white padding), so the tab covers the photo's edge
+         pixels fully. */
+      .bc-fig {
+        position: relative;
+      }
+      .bc-nt {
+        position: absolute;
+        left: -2px;
+        bottom: -2px;
+        z-index: 1;
+        width: 160px;
+        height: 160px;
+        overflow: hidden;
+        pointer-events: none;
+      }
       .bc-in:hover .bc-by,
       .bc-in:focus-visible .bc-by {
-        left: -1px;
-        bottom: -1px;
+        left: 0;
+        bottom: 0;
       }
       .bc-by::before,
       .bc-by::after {
@@ -263,13 +282,13 @@ PAGE_CSS = """
       /* the two curved corners overlap the tab by 1px, so there is no seam for the photo to show through as a dark
          line while the notch moves (the extra pixel is plain white, under the curve) */
       .bc-by::before {
-        left: 0;
+        left: 2px; /* the photo's left edge (the box starts 2px outside it) */
         bottom: calc(100% - 1px);
         height: calc(var(--r) + 1px);
       }
       .bc-by::after {
         left: calc(100% - 1px);
-        bottom: 0;
+        bottom: 2px; /* the photo's bottom edge */
         width: calc(var(--r) + 1px);
       }
       /* the "How we help" tile: solid brand green, black filled icon, radius 24% (service pages, .hp-i) */
@@ -318,12 +337,6 @@ PAGE_CSS = """
         margin-top: 40px;
         font-size: var(--fs-lead);
         color: var(--grey);
-      }
-      @supports (corner-shape: squircle) {
-        .bc-in,
-        .bc-media {
-          corner-shape: squircle;
-        }
       }
       @media (max-width: 1199px) {
         .blg-top {
@@ -549,6 +562,7 @@ page = f'''<!doctype html>
   </body>
 </html>
 '''
-page = preloader.inject(page)
-open('blog.html', 'wb').write(page.replace('\n', '\r\n').encode('utf-8'))
-print('ok blog.html', len(page.splitlines()))
+if __name__ == '__main__':  # build_cases.py imports this file for the card grid (CSS + script)
+    page = preloader.inject(page)
+    open('blog.html', 'wb').write(page.replace('\n', '\r\n').encode('utf-8'))
+    print('ok blog.html', len(page.splitlines()))

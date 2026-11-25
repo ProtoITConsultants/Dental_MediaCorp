@@ -307,17 +307,6 @@ CASE_CSS = """
       .cst-i:nth-of-type(4) .cst-m {
         aspect-ratio: 1 / 1;
       }
-      @supports (corner-shape: squircle) {
-        .cst-m {
-          corner-shape: squircle;
-        }
-        .csv .vt-box {
-          corner-shape: round; /* notched: circular corners match the notch's curves */
-        }
-        .csb {
-          corner-shape: round; /* notched: plain circular corners, so they match the notch's circular curves */
-        }
-      }
       @media (max-width: 1199px) {
         /* tablets and phones: the head on its own row, the photos in one row below, all one shape, no offsets */
         .cst-g {

@@ -12,6 +12,13 @@
 # wipe, the moment the home page starts its hero build.
 
 BODY = '''    <script>
+      // every visit starts at the top (user): the browser does not restore the old scroll position, and a page brought
+      // back from the back/forward cache jumps to the top too. A link to a section (#hash) still lands on that section.
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      if (!location.hash) scrollTo(0, 0);
+      addEventListener("pageshow", (e) => {
+        if (e.persisted && !location.hash) scrollTo(0, 0);
+      });
       // preloader only runs when the motion stack is going to run it
       if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("is-pre");
       // it waits for every image on the page (the lazy ones load now too), at most 8s; the ones in view are also decoded

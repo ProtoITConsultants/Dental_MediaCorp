@@ -191,7 +191,7 @@ PAGE_CSS = """
       .wk-media {
         position: relative;
         aspect-ratio: 4 / 3;
-        border-radius: 28px;
+        border-radius: var(--r-card); /* the site's one round card corner */
         overflow: hidden;
         background: var(--soft);
       }
@@ -508,6 +508,13 @@ JS = r"""
           addEventListener("resize", drawAll);
           wide.addEventListener("change", drawAll);
           document.fonts && document.fonts.ready.then(drawAll); // the pills' width depends on the font
+          addEventListener("load", drawAll);
+          // re-cut a card whenever its photo or button changes size (images and fonts settle after the first cut;
+          // a window resize alone missed it on large screens until the user zoomed, user)
+          if (window.ResizeObserver) {
+            const ro = new ResizeObserver((es) => es.forEach((e) => { const a = all.find((x) => x[0] === e.target || x[2] === e.target); if (a) cut(...a); }));
+            all.forEach(([media, , cta]) => { ro.observe(media); if (cta) ro.observe(cta); });
+          }
         }
 
         /* ---------- the video card opens the home page's lightbox (YouTube) ---------- */
@@ -670,6 +677,232 @@ if __name__ == '__main__':
     sys.dont_write_bytecode = True
     sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
     import preloader
-    out = preloader.inject(page)
+    import build_blog as bb
+    # 2026-11-26 (user: "too massive, like the blog page"): the page is now the blog listing's layout. The same head
+    # (label, H1 | intro) and the same 3-column grid of white cards (.bc: 6px-inset photo, icon notch on hover, meta,
+    # title), one card per case. The two-column diagonal page above (LEFT / RIGHT) is no longer written.
+    def case_card(c):
+        slug, clinic, ret, title, img, alt, w, h, tags = c
+        rev, spend = title.split(' in revenue from a ')
+        k = lambda v: '$' + str(int(v.replace('$', '').replace(',', '')) // 1000) + 'k'
+        return f'''            <article class="bc">
+              <a class="bc-in" href="case-{slug}.html" aria-label="{html.escape(clinic)}: {html.escape(title)}. View the case study">
+                <div class="bc-fig">
+                  <div class="bc-media"><img src="assets/img/{img}" alt="{html.escape(alt)}" width="{w}" height="{h}" loading="lazy" decoding="async" /></div>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-chart-line-up"></i></span></span></span>
+                </div>
+                <div class="cc">
+                  <p class="cc-tags"><span class="cc-tag">Dental Marketing</span><span class="cc-live">Case study</span></p>
+                  <h3>{html.escape(clinic)}</h3>
+                  <div class="cc-st">
+                    <p class="cc-roas"><b>{ret}</b><small>Return on ad spend</small></p>
+                    <p class="cc-rev"><b>{k(rev)}</b><small>Revenue from ads</small></p>
+                  </div>
+                  <ul class="cc-chips">
+                    <li><i class="ph ph-wallet" aria-hidden="true"></i>{k(spend.replace(' ad spend', ''))} ad spend</li>
+                    <li><i class="ph ph-calendar-check" aria-hidden="true"></i>Booked into the schedule</li>
+                  </ul>
+                  <span class="cc-go">View full case study <i class="ph ph-arrow-right" aria-hidden="true"></i></span>
+                </div>
+              </a>
+            </article>'''
+    css = bb.PAGE_CSS + """
+      /* case studies (built by build_cases.py on the blog grid): the whole card is a link, so the pointer cursor (user) */
+      .wks-list .bc-in {
+        cursor: pointer;
+      }
+      .menu a.is-cur {
+        color: var(--teal);
+      }
+      .wks-list .note {
+        margin-top: 40px;
+      }
+      /* the results block under the photo: a tag row, the clinic, the return in a mint box beside the revenue, two chips
+         and the link (inspo: theimplantengine.com case cards; our type, colours and radii) */
+      .cc {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        padding: 20px 14px 0;
+      }
+      .cc-tags {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: var(--fs-xs);
+      }
+      .cc-tag {
+        padding: 4px 12px;
+        border-radius: var(--r-pill);
+        background: var(--mint);
+        color: var(--deep);
+        font-weight: 600;
+      }
+      .cc-live {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--teal);
+        font-weight: 600;
+      }
+      .cc-live::before {
+        content: "";
+        width: 7px;
+        height: 7px;
+        border-radius: 50%;
+        background: var(--teal-3);
+        box-shadow: 0 0 0 3px rgba(73, 184, 166, 0.25);
+      }
+      .cc h3 {
+        margin: 0;
+        font-size: var(--fs-h4);
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1.15;
+      }
+      .cc-st {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+        align-items: center;
+      }
+      .cc-st p {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+      .cc-roas {
+        padding: 16px 18px;
+        border-radius: 18px;
+        background: var(--mint);
+      }
+      .cc-rev {
+        padding: 16px 4px;
+      }
+      .cc-st b {
+        font-size: var(--fs-h3);
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1;
+        font-variant-numeric: tabular-nums;
+      }
+      .cc-roas b {
+        color: var(--teal);
+      }
+      .cc-st small {
+        font-size: var(--fs-xs);
+        color: var(--body);
+      }
+      .cc-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .cc-chips li {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 6px 12px;
+        border: 1px solid rgba(13, 19, 18, 0.12);
+        border-radius: var(--r-pill);
+        font-size: var(--fs-xs);
+        color: var(--body);
+      }
+      .cc-chips i {
+        font-size: 16px;
+        color: var(--teal);
+      }
+      .cc-go {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        margin-top: 4px;
+        font-size: var(--fs-body);
+        font-weight: 600;
+        color: var(--ink);
+      }
+      .cc-go i {
+        transition: transform 0.45s var(--ease);
+      }
+      .bc-in:hover .cc-go i,
+      .bc-in:focus-visible .cc-go i {
+        transform: translateX(5px);
+      }
+"""
+    js = bb.JS.replace('#blog-title', '#work-title').replace('.blg-top .eyb', '.blg-top .eyb').replace(
+        '          .from(".bt", { y: 16, opacity: 0, duration: 0.8, ease: "power3.out", stagger: 0.04 }, 0.5);', '          ;')
+    assert '#work-title' in js
+    cards_html = '\n'.join(case_card(c) for c in CASES)
+    page2 = f'''<!doctype html>
+<html lang="en-CA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Dental Marketing Case Studies | Dental Media Corp</title>
+    <meta
+      name="description"
+      content="Real clinics, real results: dental clinics across Canada that turned their marketing into booked patients and accepted treatment with Dental Media Corp."
+    />
+    <link rel="canonical" href="https://dentalmediacorp.com/case-studies/" />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta name="theme-color" content="#0F1716" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Dental Media Corp" />
+    <meta property="og:title" content="Dental Marketing Case Studies | Dental Media Corp" />
+    <meta property="og:url" content="https://dentalmediacorp.com/case-studies/" />
+    <meta property="og:locale" content="en_CA" />
+{head_links}
+{style.replace('    </style>', css + '    </style>')}
+  </head>
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+
+    <!-- ============ HEADER (shared with the home page) ============ -->
+{header}
+
+    <!-- ============ MOBILE MENU ============ -->
+{mnav}
+    <main id="main">
+      <!-- ============ CASE STUDIES (the blog listing's layout, user)
+           Elementor: Archive template for the "Case Study" CPT. Head (label, H1 | intro), then a Loop Grid, 3 columns, card
+           skin = the blog card (ACF: photo, clinic, return, revenue, ad spend, page link). -->
+      <section class="blg wks-list" aria-labelledby="work-title">
+        <div class="wrap">
+          <div class="blg-in">
+            <div class="blg-top">
+              <div>
+                <p class="eyb">Case Studies</p>
+                <h1 class="t-h1" id="work-title">
+                  <span class="ln-m"><span>Real clinics,</span></span>
+                  <span class="ln-m"><span>real <span class="hl">results.</span></span></span>
+                </h1>
+              </div>
+              <div class="blg-txt">
+                <p>Dental clinics across Canada that handed us their marketing. We ran the ads, called the leads and booked the patients. Here is what came back.</p>
+              </div>
+            </div>
+            <div class="bgrid">
+{cards_html}
+            </div>
+            <p class="note">Individual campaign examples. Results vary by clinic, market, and treatment offering.</p>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <div class="sbreak" aria-hidden="true"></div>
+    <!-- ============ FOOTER (shared with the home page) ============ -->
+{footer}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>{js}
+  </body>
+</html>
+'''
+    out = preloader.inject(page2)
     open('case-studies.html', 'wb').write(out.replace(chr(10), chr(13) + chr(10)).encode('utf-8'))
     print('ok case-studies.html', len(out.splitlines()))

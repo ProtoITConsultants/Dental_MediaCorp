@@ -510,13 +510,6 @@ PAGE_CSS = """
         margin-top: var(--sec-head);
       }
 
-      @supports (corner-shape: squircle) {
-        .svb,
-        .vt-box,
-        .hp-i {
-          corner-shape: squircle;
-        }
-      }
       @media (max-width: 1199px) {
         .svh-top,
         .svs {

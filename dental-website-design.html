@@ -198,7 +198,7 @@
         --max: calc(1920px / var(--z) - 2 * var(--side)); /* 1920 SCREEN px less the gutters, so content lines up with the nav at every laptop zoom */
         /* radius system: cards & panels / things nested inside a card / buttons & chips */
         /* corners: cards, and anything nested 6px inside a card (concentric: inner = outer - gap) */
-        --r-card: 28px;
+        --r-card: 38px; /* one round corner for every card on the site (user: consistent; no squircles) */
         --r-inner: calc(var(--r-card) - 6px);
         --r-pill: 999px;
         /* type scale: use these everywhere, never a one-off size */
@@ -1585,8 +1585,9 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        padding: 6px 6px 26px; /* ends under the text, like the blog card (the photo no longer gives way to a results list) */
+        padding: 6px 6px 30px; /* ends under the text, like the blog card (the photo no longer gives way to a results list) */
         border-radius: var(--r-card);
+        overflow: hidden; /* clips the results notch to the card's corner */
         background: #fff;
         box-shadow: 0 1px 0 rgba(13, 19, 18, 0.03);
         transition:
@@ -1599,7 +1600,7 @@
         height: 269px;
         border-radius: var(--r-inner);
         overflow: hidden;
-        background: var(--soft);
+        background: #fff; /* the card's white: nothing grey can show at the corners (user) */
       }
       .cs-img > .phx {
         width: 100%;
@@ -1615,12 +1616,6 @@
         overflow: hidden;
         border-radius: inherit;
       }
-      .cs-cover::after {
-        content: "";
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(160deg, rgba(18, 59, 54, 0.62), rgba(18, 59, 54, 0) 46%);
-      }
       .cs-cover > .phx {
         width: 100%;
         height: 100%;
@@ -1629,10 +1624,11 @@
       .cs-tab {
         --r: 22px;
         position: absolute;
-        top: -1px;
-        right: -1px;
+        top: 0; /* a child of the card, not the photo: its outer edges are the card's own (clipped by its squircle), so no
+                   seam or hairline shows at any zoom (user) */
+        right: 0;
         z-index: 2;
-        padding: 1px 1px 14px 16px;
+        padding: 10px 20px 14px 22px; /* the card's 6px + the old inset; clear of the rounded corner (user) */
         border-bottom-left-radius: var(--r);
         background: #fff;
         font-size: var(--fs-h4);
@@ -1656,25 +1652,41 @@
         background: radial-gradient(circle at 0 100%, transparent calc(var(--r) - 0.5px), #fff calc(var(--r) + 0.5px));
       }
       .cs-tab::before {
-        top: 0;
+        top: 6px; /* the photo's top edge (the card's 6px padding) */
         right: calc(100% - 1px);
         width: calc(var(--r) + 1px);
       }
       .cs-tab::after {
         top: calc(100% - 1px);
-        right: 0;
+        right: 6px; /* the photo's right edge */
         height: calc(var(--r) + 1px);
       }
+      /* the name starts large (user); on hover it shrinks as one block (scale from its top-left corner) and the return
+         line rises into the room it leaves. Scaling, not font-size: the words keep their lines and never jump (user).
+         The name's box keeps two large lines, so the card never changes height. */
       .cs h3 {
+        min-height: calc(2 * 1.09 * var(--fs-h3));
         margin: 20px 12px 0;
-        font-size: var(--fs-h4);
+        font-size: var(--fs-h3);
         font-weight: 600;
         letter-spacing: -0.035em;
         line-height: 1.09;
+        transform-origin: 0 0;
+        transition: transform 0.6s var(--ease);
+      }
+      .cs:hover h3,
+      .cs.on h3,
+      .cs:focus-within h3 {
+        transform: scale(0.72);
       }
       /* the return line waits below and rises in on hover (user) */
       .cs-meta {
-        margin: 6px 12px 0;
+        position: absolute;
+        left: 18px;
+        right: 18px;
+        /* just under the shrunk name: --nm is the name's height at 0.72, measured per card (one line or two) */
+        top: calc(6px + 269px + 20px + var(--nm, 30px) + 8px);
+        margin: 0;
         font-size: var(--fs-small);
         color: var(--body);
         opacity: 0;
@@ -1940,6 +1952,13 @@
         font-size: 24px;
         color: var(--acc-mid);
       }
+      /* the Google "G" in its own colours before the stars: the reviews are Google reviews (user) */
+      .q-g {
+        flex: none;
+        width: 18px;
+        height: 18px;
+        margin: 0 8px 0 auto;
+      }
       .q-stars {
         display: flex;
         gap: 2px;
@@ -2089,10 +2108,6 @@
         border: 1px solid rgba(13, 19, 18, 0.08);
         background: #fff;
         clip-path: var(--cut, none);
-        transition: border-color 0.4s;
-      }
-      .rb:hover::before {
-        border-color: rgba(27, 127, 115, 0.45);
       }
       /* the label in each stat card: lead size, near-ink, so it reads without squinting */
       .rb p {
@@ -2179,8 +2194,7 @@
       .rb-5 p {
         color: var(--acc-deep);
       }
-      .rb-5::before,
-      .rb-5:hover::before {
+      .rb-5::before {
         border-color: transparent;
         background: linear-gradient(160deg, var(--acc-2), var(--acc));
       }
@@ -2279,16 +2293,16 @@
         position: relative;
       }
       .fl-track {
-        height: calc((7 * 70 + 100) * var(--uvh));
+        height: calc((7 * 42 + 100) * var(--uvh)); /* a shorter scroll per card: they come quickly (user) */
       }
       .fl-pin {
         position: sticky;
-        overflow: clip; /* the cards and rows still waiting below stay out of sight */
+        /* no clip: the last cards may run past the bottom of the screen; the section keeps room for them below (script) */
         top: 0;
         display: flex;
-        align-items: center;
+        align-items: flex-start; /* from the top: the tall stack must not push the heading up (it slides up only when the rows need it) */
         height: calc(100 * var(--uvh));
-        padding-top: 70px; /* clear of the header */
+        padding-top: 76px; /* the heading sits just under the header (user) */
       }
       .fl-pin > .wrap {
         width: 100%;
@@ -2300,98 +2314,71 @@
       .fl-in > .t-h2 {
         text-align: center; /* the site's section heading: centred, the rule before the italic line (user) */
       }
-      .fl-g {
+      /* the deck: one slide per service = its line, number, name and words on the left + its photo card on the right.
+         Both halves rise together from where the next slide waits (40px under the front one), but they stack at their
+         own step: on the left every earlier title stays listed under its own line (one title row apart), on the right
+         every earlier card keeps a --gap strip of photo. Nothing is painted behind them (user): an earlier slide's words
+         fade out as the next slide comes over them; its title stays. The line spans the text column only (user). */
+      .fl-deck {
+        --gap: 22px; /* what shows of a card once the next one sits on it (user: 20 to 25px) */
+        --sh: clamp(260px, calc(46 * var(--uvh)), 440px); /* a card's height: the last ones may run past the screen (user) */
+        position: relative;
+        height: calc(6 * var(--gap) + var(--sh)); /* the script sets the real height (the title list can be taller) */
+        margin-top: clamp(28px, calc(4 * var(--uvh)), 48px);
+      }
+      .fl-s {
+        position: absolute;
+        inset: 0;
+        pointer-events: none;
+      }
+      .fl-l {
+        position: absolute;
+        top: 0;
+        left: 0;
         display: grid;
-        grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); /* the list leads; the cards are the smaller side */
-        gap: 40px clamp(40px, calc(6 * var(--uvw)), 120px);
-        align-items: start;
-        margin-top: clamp(20px, calc(3 * var(--uvh)), 36px);
-      }
-      /* the list: each row has its own hairline on top. A row waits a screen below and rises with its card (the script
-         moves both by the same eased amount), then stops under the row before it, as the card stops on the card before. */
-      .fl-list {
-        margin: 0;
-        padding: 0;
-        list-style: none;
-      }
-      .fl-row {
-        border-top: 1px solid rgba(13, 19, 18, 0.12);
-      }
-      .fl-btn {
-        display: grid;
-        grid-template-columns: 52px minmax(0, 1fr);
+        grid-template-columns: 80px minmax(0, 1fr);
         align-items: baseline;
-        width: 100%;
-        padding: clamp(10px, calc(1.6 * var(--uvh)), 18px) 0;
-        border: 0;
-        background: none;
-        font: inherit;
-        color: inherit;
-        text-align: left;
-        cursor: pointer;
+        width: 54%;
+        padding-top: 16px;
+        border-top: 1px solid rgba(13, 19, 18, 0.12); /* the line the slide comes up with: the text column only */
+        pointer-events: auto;
       }
       .fl-n {
-        font-size: var(--fs-small);
+        font-size: var(--fs-h3); /* larger again (user) */
         font-weight: 600;
-        color: var(--grey);
+        color: var(--acc-mid);
         font-variant-numeric: tabular-nums;
-        transition: color 0.5s var(--ease);
       }
       .fl-t {
-        font-size: var(--fs-list); /* the DMC Method step titles' size ("We create your campaigns"), user */
+        margin: 0;
+        font-size: var(--fs-list); /* the DMC Method step titles' size (user) */
         font-weight: 600;
         letter-spacing: -0.035em;
         line-height: 1.1;
       }
-      .fl-row.on .fl-n {
-        color: var(--acc-mid);
+      .fl-t a {
+        color: inherit;
       }
-      .fl-d {
-        display: grid;
-        grid-template-rows: 0fr;
-        transition: grid-template-rows 0.6s var(--ease);
-      }
-      .fl-d > div {
-        overflow: hidden;
-      }
-      .fl-d p {
+      .fl-p {
         max-width: 28rem;
-        padding: 0 0 clamp(14px, calc(2 * var(--uvh)), 22px) 52px;
+        margin-top: 14px;
         font-size: var(--fs-lead);
         line-height: 1.45;
         color: var(--grey);
-        opacity: 0;
-        transition: opacity 0.3s ease;
+        /* opacity from the script: the words stay until the next title is about to reach them (user) */
       }
-      .fl-row.on .fl-d {
-        grid-template-rows: 1fr;
-      }
-      .fl-row.on .fl-d p {
-        opacity: 1;
-        transition: opacity 0.5s ease 0.1s;
-      }
-
-      /* the stack: card k rests k headers down; a card that has not arrived waits below the screen */
-      .fl-stack {
-        --hd: 66px; /* what shows of a card once the next one sits on it: a strip of its photo */
-        --ch: clamp(250px, calc(100 * var(--uvh) - 6 * var(--hd) - 290px), 380px); /* a card's height */
-        position: relative;
-        width: 100%;
-        max-width: 470px;
-        height: calc((7 - 1) * var(--hd) + var(--ch));
-        margin-left: auto;
-      }
-      /* a card is its photo, edge to edge, with one notch cut into it bottom-left for the team cards' icon tile. No name
-         notch (user): the list on the left names it. */
+      /* the photo card: edge to edge, its top on the slide's line, one notch cut bottom-left for the icon tile */
       .fl-c {
         position: absolute;
-        inset: 0 0 auto;
+        top: 0;
+        right: 0;
         display: block;
-        height: var(--ch);
+        width: min(470px, 40%);
+        height: var(--sh);
+        pointer-events: auto;
         border-radius: var(--r-card);
         color: var(--ink);
         filter: drop-shadow(0 22px 24px rgba(13, 19, 18, 0.16)); /* follows the cut, a box-shadow would not */
-        /* no will-change: seven full-card photos as permanent layers left some unpainted */
       }
       .fl-m {
         position: absolute;
@@ -2406,9 +2393,6 @@
         height: 100%;
         object-fit: cover;
       }
-      /* the notch is a real cut in the photo (the team cards' clip-path, from the script), so the page shows through it:
-         nothing painted, no colour to mismatch the glow (user). The front card is always the lowest, so the cut never
-         shows the card behind (--hd is wider than the notch is tall). */
       .fl-ic {
         position: absolute;
         bottom: 0;
@@ -2429,29 +2413,22 @@
         outline: 2px solid var(--teal);
         outline-offset: 4px;
       }
-      @supports (corner-shape: squircle) {
-        .fl-c {
-          corner-shape: squircle;
-        }
-      }
       @media (max-width: 1199px) {
-        .fl-g {
-          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-          gap: 32px;
+        .fl-l {
+          width: 52%;
         }
       }
-      /* phones: the heading and the stack (each card names its service); the list steps aside */
+      /* phones: the cards only (each names its service for screen readers), full width */
       @media (max-width: 899px) {
-        .fl-g {
-          grid-template-columns: 1fr;
+        .fl-deck {
+          --gap: 24px;
+          --sh: clamp(300px, calc(100 * var(--uvh) - 6 * var(--gap) - 230px), 460px);
         }
-        .fl-list {
+        .fl-l {
           display: none;
         }
-        .fl-stack {
-          --hd: 58px;
-          --ch: clamp(240px, calc(100 * var(--uvh) - 6 * var(--hd) - 200px), 400px);
-          max-width: none;
+        .fl-c {
+          width: 100%;
         }
         .fl-ic i {
           width: 42px;
@@ -2742,30 +2719,6 @@
         font-weight: 700;
       }
 
-      /* ---------- Apple-style continuous corners ----------
-         a squircle reads tighter than a circle arc of the same radius, so the radius grows with it */
-      @supports (corner-shape: squircle) {
-        :root {
-          --r-card: 38px;
-        }
-        .sx-card,
-        .dd-fly,
-        .menu .dd-m a,
-        .h-badges,
-        .h-stat,
-        .cs-in,
-        .cs-img,
-        .q,
-        .vbox-f,
-        .fq,
-        .bk,
-        .bk-logo,
-        .bk-slot button,
-        .field textarea,
-        .bk-s3 .bk-preview {
-          corner-shape: squircle;
-        }
-      }
 
       /* ---------- laptop proportions ----------
          the layout is tuned on a 1920px screen; laptops (1280-1680px wide, e.g. 1920x1080 at 125% scaling = 1536px)
@@ -3094,6 +3047,9 @@
           opacity: 1;
           transform: none;
         }
+        .cs h3 {
+          transform: scale(0.72);
+        }
       }
       @media (prefers-reduced-motion: reduce) {
         *,
@@ -3171,7 +3127,7 @@
         grid-template-columns: 340px 1fr;
         background: #fff;
         color: var(--ink);
-        border-radius: 28px;
+        border-radius: var(--r-card);
         overflow: hidden;
         min-height: 640px;
         text-align: left;
@@ -4128,13 +4084,6 @@
         margin-top: var(--sec-head);
       }
 
-      @supports (corner-shape: squircle) {
-        .svb,
-        .vt-box,
-        .hp-i {
-          corner-shape: squircle;
-        }
-      }
       @media (max-width: 1199px) {
         .svh-top,
         .svs {
@@ -4225,6 +4174,13 @@
   </head>
   <body>
     <script>
+      // every visit starts at the top (user): the browser does not restore the old scroll position, and a page brought
+      // back from the back/forward cache jumps to the top too. A link to a section (#hash) still lands on that section.
+      if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+      if (!location.hash) scrollTo(0, 0);
+      addEventListener("pageshow", (e) => {
+        if (e.persisted && !location.hash) scrollTo(0, 0);
+      });
       // preloader only runs when the motion stack is going to run it
       if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("is-pre");
       // it waits for every image on the page (the lazy ones load now too), at most 8s; the ones in view are also decoded
@@ -4291,7 +4247,7 @@
             </div>
           </div>
           <a href="case-studies.html">Case Studies</a>
-          <a href="#testimonials">Reviews</a>
+          <a href="reviews.html">Reviews</a>
           <a href="index.html#dmc">DMC Method</a>
           <a href="#faq">FAQ</a>
         </div>
@@ -4336,7 +4292,7 @@
         <div class="mnav-rule"></div>
         <ul class="mnav-list mnav-2">
           <li><a href="case-studies.html">Case Studies</a></li>
-          <li><a href="#testimonials">Reviews</a></li>
+          <li><a href="reviews.html">Reviews</a></li>
           <li><a href="index.html#dmc">DMC Method</a></li>
           <li><a href="#faq">FAQ</a></li>
           <li><a href="blog.html">Blog</a></li>
@@ -4477,7 +4433,7 @@
           <div class="q-track" id="qTrack">
             <figure class="q">
               <div class="q-body">
-                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><svg class="q-g" viewBox="0 0 48 48" role="img" aria-label="Google review"><use href="#g-logo" /></svg><span class="q-stars" role="img" aria-label="Rated 5 out of 5 on Google"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
                 <div class="q-who"><b>Dr. Mark Warawa</b><span>Bright Smile Dental</span></div>
                 <blockquote>We’ve opened up another operatory just to deal with the overflow of new patients.</blockquote>
               </div>
@@ -4485,7 +4441,7 @@
             </figure>
             <figure class="q">
               <div class="q-body">
-                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><svg class="q-g" viewBox="0 0 48 48" role="img" aria-label="Google review"><use href="#g-logo" /></svg><span class="q-stars" role="img" aria-label="Rated 5 out of 5 on Google"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
                 <div class="q-who"><b>Dr. Greg Broyde</b><span>West Grande Prairie Dental &amp; East Village Dental</span></div>
                 <blockquote>For every dollar I spend, DMC makes sure that I get at least $6 to $10 back.</blockquote>
               </div>
@@ -4493,7 +4449,7 @@
             </figure>
             <figure class="q">
               <div class="q-body">
-                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><svg class="q-g" viewBox="0 0 48 48" role="img" aria-label="Google review"><use href="#g-logo" /></svg><span class="q-stars" role="img" aria-label="Rated 5 out of 5 on Google"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
                 <div class="q-who"><b>Rae-Lynne D.</b><span>Modern Smiles &amp; Northern Lights</span></div>
                 <blockquote>DMC is the first marketing that’s actually paid off since I opened in 2012.</blockquote>
               </div>
@@ -4501,7 +4457,7 @@
             </figure>
             <figure class="q">
               <div class="q-body">
-                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><svg class="q-g" viewBox="0 0 48 48" role="img" aria-label="Google review"><use href="#g-logo" /></svg><span class="q-stars" role="img" aria-label="Rated 5 out of 5 on Google"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
                 <div class="q-who"><b>Dr. Albert Voravong</b><span>Dental Media Corp client</span></div>
                 <blockquote>Hear Dr. Voravong talk about working with Dental Media Corp.</blockquote>
               </div>
@@ -4509,7 +4465,7 @@
             </figure>
             <figure class="q">
               <div class="q-body">
-                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><svg class="q-g" viewBox="0 0 48 48" role="img" aria-label="Google review"><use href="#g-logo" /></svg><span class="q-stars" role="img" aria-label="Rated 5 out of 5 on Google"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
                 <div class="q-who"><b>Corey Hyde</b><span>Owner, Centre Street Denture Clinic</span></div>
                 <blockquote>Hear Corey talk about working with Dental Media Corp.</blockquote>
               </div>
@@ -4517,7 +4473,7 @@
             </figure>
             <figure class="q">
               <div class="q-body">
-                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><svg class="q-g" viewBox="0 0 48 48" role="img" aria-label="Google review"><use href="#g-logo" /></svg><span class="q-stars" role="img" aria-label="Rated 5 out of 5 on Google"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
                 <div class="q-who"><b>Val</b><span>Office Manager, Westgate GP Dental</span></div>
                 <blockquote>Hear Val talk about working with Dental Media Corp.</blockquote>
               </div>
@@ -4525,7 +4481,7 @@
             </figure>
             <figure class="q">
               <div class="q-body">
-                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><span class="q-stars" role="img" aria-label="Rated 5 out of 5"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
+                <div class="q-top"><i class="ph-fill ph-quotes" aria-hidden="true"></i><svg class="q-g" viewBox="0 0 48 48" role="img" aria-label="Google review"><use href="#g-logo" /></svg><span class="q-stars" role="img" aria-label="Rated 5 out of 5 on Google"><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i><i class="ph-fill ph-star" aria-hidden="true"></i></span></div>
                 <div class="q-who"><b>Brandie</b><span>Treatment Coordinator, Trader Ridge</span></div>
                 <blockquote>Hear Brandie talk about working with Dental Media Corp.</blockquote>
               </div>
