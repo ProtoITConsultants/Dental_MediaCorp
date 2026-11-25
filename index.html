@@ -1637,8 +1637,7 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        height: 410px;
-        padding: 6px;
+        padding: 6px 6px 26px; /* ends under the text, like the blog card (the photo no longer gives way to a results list) */
         border-radius: var(--r-card);
         background: #fff;
         box-shadow: 0 1px 0 rgba(13, 19, 18, 0.03);
@@ -1653,33 +1652,20 @@
         border-radius: var(--r-inner);
         overflow: hidden;
         background: var(--soft);
-        transition: height 0.7s var(--ease);
-        will-change: height;
       }
       .cs-img > .phx {
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
-      /* the clinic photo is the cover; on hover it slides up and the logo underneath shows beside the number */
-      .cs-img:has(.cs-logo) {
-        background: #fff;
-      }
-      .cs-img > .cs-logo {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        padding: 12px 20px 12px 112px;
-        object-fit: contain;
-      }
+      /* the clinic photo stays put (user). The results always sit in a notch in its top-right corner, the case page
+         hero's notch in small: a white tab (the card's own white) with two concave corners, so the photo curves around it.
+         Only the return line under the name moves, on hover (user). */
       .cs-cover {
         position: absolute;
         inset: 0;
-        z-index: 1;
         overflow: hidden;
         border-radius: inherit;
-        transition: transform 0.7s var(--ease);
       }
       .cs-cover::after {
         content: "";
@@ -1692,24 +1678,44 @@
         height: 100%;
         object-fit: cover;
       }
-      .cs:hover .cs-cover,
-      .cs.on .cs-cover,
-      .cs:focus-within .cs-cover {
-        transform: translateY(-101%);
-      }
-      .cs-img span {
+      .cs-tab {
+        --r: 22px;
         position: absolute;
-        top: 13px;
-        z-index: 1;
-        font-size: var(--fs-xs);
-        color: var(--body);
+        top: -1px;
+        right: -1px;
+        z-index: 2;
+        padding: 1px 1px 14px 16px;
+        border-bottom-left-radius: var(--r);
+        background: #fff;
+        font-size: var(--fs-h4);
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1.12;
+        white-space: nowrap;
       }
-      .cs-img .phx > svg {
-        transition: opacity 0.3s;
+      /* the revenue figure carries the hero stats' pink highlighter (the lower half of the line) */
+      .cs-tab em {
+        font-style: normal;
+        padding: 0 0.1em;
+        background: linear-gradient(180deg, transparent 52%, var(--acc) 52%, var(--acc) 94%, transparent 94%);
       }
-      .cs:hover .cs-img .phx > svg,
-      .cs:focus-within .cs-img .phx > svg {
-        opacity: 0;
+      .cs-tab::before,
+      .cs-tab::after {
+        content: "";
+        position: absolute;
+        width: var(--r);
+        height: var(--r);
+        background: radial-gradient(circle at 0 100%, transparent calc(var(--r) - 0.5px), #fff calc(var(--r) + 0.5px));
+      }
+      .cs-tab::before {
+        top: 0;
+        right: calc(100% - 1px);
+        width: calc(var(--r) + 1px);
+      }
+      .cs-tab::after {
+        top: calc(100% - 1px);
+        right: 0;
+        height: calc(var(--r) + 1px);
       }
       .cs h3 {
         margin: 20px 12px 0;
@@ -1718,10 +1724,25 @@
         letter-spacing: -0.035em;
         line-height: 1.09;
       }
+      /* the return line waits below and rises in on hover (user) */
       .cs-meta {
         margin: 6px 12px 0;
         font-size: var(--fs-small);
         color: var(--body);
+        opacity: 0;
+        transform: translateY(14px);
+        transition:
+          opacity 0.3s ease,
+          transform 0.4s var(--ease);
+      }
+      .cs:hover .cs-meta,
+      .cs.on .cs-meta,
+      .cs:focus-within .cs-meta {
+        opacity: 1;
+        transform: none;
+        transition:
+          opacity 0.5s ease 0.15s,
+          transform 0.7s var(--ease) 0.15s;
       }
       .cs-meta b {
         padding: 1px 7px;
@@ -1730,64 +1751,10 @@
         color: var(--acc-on);
         background: var(--acc);
       }
-      .cs-res {
-        position: absolute;
-        left: 18px;
-        right: 18px;
-        bottom: 18px;
-        opacity: 0;
-        transform: translateY(12px);
-        transition:
-          opacity 0.2s ease,
-          transform 0.3s ease;
-        pointer-events: none;
-      }
-      .cs-res p {
-        font-size: var(--fs-small);
-        color: var(--body);
-      }
-      .cs-res ul {
-        margin-top: 10px;
-        display: grid;
-        gap: 6px;
-        font-size: var(--fs-body);
-      }
-      .cs-res li {
-        position: relative;
-        padding-left: 14px;
-      }
-      .cs-res li::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0.5em;
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        background: var(--teal-2);
-        box-shadow: 0 0 0 2px var(--mint);
-      }
-      .cs-res b {
-        font-weight: 600;
-      }
       .cs:hover .cs-in,
       .cs.on .cs-in,
       .cs:focus-within .cs-in {
         box-shadow: 0 24px 50px -26px rgba(13, 19, 18, 0.32);
-      }
-      .cs:hover .cs-img,
-      .cs.on .cs-img,
-      .cs:focus-within .cs-img {
-        height: 106px;
-      }
-      .cs:hover .cs-res,
-      .cs.on .cs-res,
-      .cs:focus-within .cs-res {
-        opacity: 1;
-        transform: none;
-        transition:
-          opacity 0.45s ease 0.2s,
-          transform 0.6s var(--ease) 0.2s;
       }
       .arw {
         display: flex;
@@ -2148,7 +2115,8 @@
       /* ---------- 5. why DMC: scattered stat boxes (reference "results" layout) ---------- */
       .rs {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 340px)); /* the "Real clinics" card width (user), square cards */
+        justify-content: center;
         gap: 16px;
         max-width: var(--max);
         margin: var(--sec-head) auto 0;
@@ -2159,19 +2127,24 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        aspect-ratio: 1 / 0.9;
+        aspect-ratio: 1 / 1;
         padding: var(--pad-card);
         border-radius: var(--r-card);
+      }
+      /* the card's surface: its own layer, so the script can cut the notch out of it (clip-path: var(--cut)) while the
+         tile in the notch stays whole. Nothing is painted in the notch: the section's own background shows through. */
+      .rb::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
         border: 1px solid rgba(13, 19, 18, 0.08);
         background: #fff;
-        overflow: hidden;
-        transition:
-          border-color 0.4s,
-          background-color 0.4s;
+        clip-path: var(--cut, none);
+        transition: border-color 0.4s;
       }
-      .rb:hover {
+      .rb:hover::before {
         border-color: rgba(27, 127, 115, 0.45);
-        background: #fff;
       }
       /* the label in each stat card: lead size, near-ink, so it reads without squinting */
       .rb p {
@@ -2192,58 +2165,42 @@
         line-height: 1;
         font-variant-numeric: tabular-nums;
       }
-      /* each card's glyph (inspo: tone-on-tone category cards): one bold, simple icon per card (megaphone, play frame,
-         chat, calendar, people) in thick rounded strokes, a shade deeper than its card (pale teal on white, deeper pink on
-         the pink card). Upright, large and anchored in the top-right corner, cropped by the card's edge; the big word owns
-         the bottom-right. It draws itself in as the card arrives (script: "the cards' line drawings") and on hover nudges
-         into the card and deepens. */
-      .rb {
-        --rb-ic: rgba(27, 127, 115, 0.13);
-        --rb-fill: rgba(27, 127, 115, 0.045);
-      }
-      .rb-5 {
-        --rb-ic: rgba(240, 106, 159, 0.4);
-        --rb-fill: rgba(255, 255, 255, 0.24);
-      }
-      .rb-art {
+      /* each card's icon: the blog card's topic tile in a notch (user, 2026-11-24; replaces the background line drawings).
+         The card is cut around its bottom-left corner (as on the blog card), so it curves around the tile; the cut is
+         real (the script clips the card's surface), nothing is painted in it; the tile is the "How we help" tile (solid brand green, ink filled icon, radius 24%). The pink card's
+         tile is white. The tab sits 1px past the card's edges so it covers the border there too. */
+      .rb-t {
         position: absolute;
-        top: -9%;
-        right: -11%;
-        width: 62%;
-        height: auto;
-        fill: none;
-        stroke: var(--rb-ic);
-        stroke-width: 12;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        pointer-events: none;
-        transition:
-          transform 0.9s var(--ease),
-          stroke 0.6s var(--ease);
+        bottom: 0;
+        left: 0;
+        z-index: 1;
       }
-      .rb-art .f {
-        fill: var(--rb-fill);
+      .rb-i {
+        display: grid;
+        place-items: center;
+        width: 60px;
+        height: 60px;
+        border-radius: calc(60px * 0.24);
+        background: var(--teal-3);
+        color: var(--ink);
+        font-size: 32px;
       }
-      .rb-art .d {
-        fill: var(--rb-ic);
-        stroke: none;
-        transition: fill 0.6s var(--ease);
+      .rb-5 .rb-i {
+        background: #fff;
       }
-      .rb:hover .rb-art {
-        transform: translate(-6px, 6px) scale(1.04);
-      }
-      .rb:not(.rb-5):hover {
-        --rb-ic: rgba(27, 127, 115, 0.2);
-      }
-      .rb-5:hover {
-        --rb-ic: rgba(240, 106, 159, 0.55);
-      }
-      /* narrow cards: a little smaller, so the wrapped label keeps the corner's top line */
+      /* tablets and phones: a smaller tile, the word above it */
       @media (max-width: 1199px) {
-        .rb-art {
-          width: 58%;
-          top: -6%;
-          right: -12%;
+        .rb-i {
+          width: 44px;
+          height: 44px;
+          border-radius: calc(44px * 0.24);
+          font-size: 24px;
+        }
+        .rb p {
+          max-width: none;
+        }
+        .rb b {
+          margin-bottom: 54px; /* the word sits above the tile: a narrow card has no room beside it */
         }
       }
       .rb-1 {
@@ -2269,20 +2226,20 @@
       }
       .rb-5 {
         grid-area: 2 / 4;
-        border-color: transparent;
-        background: linear-gradient(160deg, var(--acc-2), var(--acc));
         color: var(--ink);
       }
       .rb-5 p {
         color: var(--acc-deep);
       }
-      .rb-5:hover {
+      .rb-5::before,
+      .rb-5:hover::before {
+        border-color: transparent;
         background: linear-gradient(160deg, var(--acc-2), var(--acc));
       }
 
       .pz {
         position: relative;
-        aspect-ratio: 1 / 0.9;
+        aspect-ratio: 1 / 1;
         color: var(--ink);
       }
       .pz-svg {
@@ -2362,6 +2319,197 @@
       .pz-l i {
         font-size: 18px;
         color: var(--teal);
+      }
+
+      /* ---------- 3b. the seven services, stacked on scroll (inspo: clairvo.io "Every call starts prepared"; our type,
+         colours, photos) ----------
+         A tall track with a pinned (sticky) screen. The first service's card is there; each scroll step brings the next
+         card up from below the screen until it stops one header lower than the last, so every earlier card keeps its
+         header strip (number, icon, name) showing above it: nothing is hidden or shrunk. The list on the left grows with
+         it: a service's row appears as its card arrives, its line opens, and the earlier rows fold back to their title. */
+      .fl {
+        position: relative;
+      }
+      .fl-track {
+        height: calc((7 * 70 + 100) * var(--uvh));
+      }
+      .fl-pin {
+        position: sticky;
+        overflow: clip; /* the cards and rows still waiting below stay out of sight */
+        top: 0;
+        display: flex;
+        align-items: center;
+        height: calc(100 * var(--uvh));
+        padding-top: 70px; /* clear of the header */
+      }
+      .fl-pin > .wrap {
+        width: 100%;
+      }
+      .fl-in {
+        max-width: var(--max);
+        margin-inline: auto;
+      }
+      .fl-in > .t-h2 {
+        text-align: center; /* the site's section heading: centred, the rule before the italic line (user) */
+      }
+      .fl-g {
+        display: grid;
+        grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); /* the list leads; the cards are the smaller side */
+        gap: 40px clamp(40px, calc(6 * var(--uvw)), 120px);
+        align-items: start;
+        margin-top: clamp(20px, calc(3 * var(--uvh)), 36px);
+      }
+      /* the list: each row has its own hairline on top. A row waits a screen below and rises with its card (the script
+         moves both by the same eased amount), then stops under the row before it, as the card stops on the card before. */
+      .fl-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .fl-row {
+        border-top: 1px solid rgba(13, 19, 18, 0.12);
+      }
+      .fl-btn {
+        display: grid;
+        grid-template-columns: 52px minmax(0, 1fr);
+        align-items: baseline;
+        width: 100%;
+        padding: clamp(10px, calc(1.6 * var(--uvh)), 18px) 0;
+        border: 0;
+        background: none;
+        font: inherit;
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+      }
+      .fl-n {
+        font-size: var(--fs-small);
+        font-weight: 600;
+        color: var(--grey);
+        font-variant-numeric: tabular-nums;
+        transition: color 0.5s var(--ease);
+      }
+      .fl-t {
+        font-size: var(--fs-list); /* the DMC Method step titles' size ("We create your campaigns"), user */
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1.1;
+      }
+      .fl-row.on .fl-n {
+        color: var(--acc-mid);
+      }
+      .fl-d {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.6s var(--ease);
+      }
+      .fl-d > div {
+        overflow: hidden;
+      }
+      .fl-d p {
+        max-width: 28rem;
+        padding: 0 0 clamp(14px, calc(2 * var(--uvh)), 22px) 52px;
+        font-size: var(--fs-lead);
+        line-height: 1.45;
+        color: var(--grey);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .fl-row.on .fl-d {
+        grid-template-rows: 1fr;
+      }
+      .fl-row.on .fl-d p {
+        opacity: 1;
+        transition: opacity 0.5s ease 0.1s;
+      }
+
+      /* the stack: card k rests k headers down; a card that has not arrived waits below the screen */
+      .fl-stack {
+        --hd: 66px; /* what shows of a card once the next one sits on it: a strip of its photo */
+        --ch: clamp(250px, calc(100 * var(--uvh) - 6 * var(--hd) - 290px), 380px); /* a card's height */
+        position: relative;
+        width: 100%;
+        max-width: 470px;
+        height: calc((7 - 1) * var(--hd) + var(--ch));
+        margin-left: auto;
+      }
+      /* a card is its photo, edge to edge, with one notch cut into it bottom-left for the team cards' icon tile. No name
+         notch (user): the list on the left names it. */
+      .fl-c {
+        position: absolute;
+        inset: 0 0 auto;
+        display: block;
+        height: var(--ch);
+        border-radius: var(--r-card);
+        color: var(--ink);
+        filter: drop-shadow(0 22px 24px rgba(13, 19, 18, 0.16)); /* follows the cut, a box-shadow would not */
+        /* no will-change: seven full-card photos as permanent layers left some unpainted */
+      }
+      .fl-m {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        overflow: hidden;
+        background: var(--soft);
+        clip-path: var(--cut, none);
+      }
+      .fl-m img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      /* the notch is a real cut in the photo (the team cards' clip-path, from the script), so the page shows through it:
+         nothing painted, no colour to mismatch the glow (user). The front card is always the lowest, so the cut never
+         shows the card behind (--hd is wider than the notch is tall). */
+      .fl-ic {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+      }
+      .fl-ic i {
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: calc(48px * 0.24);
+        background: var(--teal-3);
+        color: var(--ink);
+        font-size: 26px;
+      }
+      .fl-c:focus-visible {
+        outline: 2px solid var(--teal);
+        outline-offset: 4px;
+      }
+      @supports (corner-shape: squircle) {
+        .fl-c {
+          corner-shape: squircle;
+        }
+      }
+      @media (max-width: 1199px) {
+        .fl-g {
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          gap: 32px;
+        }
+      }
+      /* phones: the heading and the stack (each card names its service); the list steps aside */
+      @media (max-width: 899px) {
+        .fl-g {
+          grid-template-columns: 1fr;
+        }
+        .fl-list {
+          display: none;
+        }
+        .fl-stack {
+          --hd: 58px;
+          --ch: clamp(240px, calc(100 * var(--uvh) - 6 * var(--hd) - 200px), 400px);
+          max-width: none;
+        }
+        .fl-ic i {
+          width: 42px;
+          height: 42px;
+          font-size: 22px;
+        }
       }
 
       /* ---------- 7. booking (its own section) ---------- */
@@ -2659,10 +2807,8 @@
         .h-stat,
         .cs-in,
         .cs-img,
-        .cs-img > .cs-logo,
         .q,
         .vbox-f,
-        .rb,
         .fq,
         .bk,
         .bk-logo,
@@ -2995,36 +3141,10 @@
         }
       }
       @media (hover: none) {
-        .cs-img {
-          height: 190px;
-        }
-        .cs-res {
+        /* touch: there is no hover, so the results always sit in the photo's notch */
+        .cs .cs-meta {
           opacity: 1;
           transform: none;
-        }
-        .cs:hover .cs-img,
-        .cs.on .cs-img,
-        .cs:focus-within .cs-img {
-          height: 190px;
-        }
-        /* touch: there is no hover, so the photo stays and the logo sits on it in a white chip */
-        .cs:hover .cs-cover,
-        .cs.on .cs-cover,
-        .cs:focus-within .cs-cover {
-          transform: none;
-        }
-        .cs-img > .cs-logo {
-          inset: auto 10px 10px auto;
-          z-index: 2;
-          width: 112px;
-          height: 62px;
-          padding: 8px 10px;
-          border-radius: calc(var(--r-inner) - 10px); /* sits 10px inside the photo */
-          background: #fff;
-        }
-        .cs-in {
-          height: auto;
-          min-height: 410px;
         }
       }
       @media (prefers-reduced-motion: reduce) {
@@ -3660,6 +3780,22 @@
     <script>
       // preloader only runs when the motion stack is going to run it
       if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("is-pre");
+      // it waits for every image on the page (the lazy ones load now too), at most 8s; the ones in view are also decoded
+      window.__preWait = () => {
+        const imgs = [...document.images];
+        const one = (i) => {
+          if (i.loading === "lazy") i.loading = "eager";
+          if (i.complete && i.naturalWidth) return Promise.resolve();
+          return new Promise((r) => {
+            i.addEventListener("load", r, { once: true });
+            i.addEventListener("error", r, { once: true });
+            if (i.complete) r();
+          });
+        };
+        const inView = () => imgs.filter((i) => i.getBoundingClientRect().top < innerHeight).map((i) => (i.decode ? i.decode().catch(() => {}) : 0));
+        const all = Promise.all(imgs.map(one)).then(() => Promise.all(inView()));
+        return Promise.race([all, new Promise((r) => setTimeout(r, 8000))]);
+      };
     </script>
     <a class="skip" href="#main">Skip to content</a>
     <svg width="0" height="0" style="position: absolute" aria-hidden="true">
@@ -3707,7 +3843,7 @@
               <a href="dental-reporting-dashboard.html">Dental Reporting Dashboard</a>
             </div>
           </div>
-          <a href="#results">Case Studies</a>
+          <a href="case-studies.html">Case Studies</a>
           <a href="#testimonials">Reviews</a>
           <a href="#dmc">DMC Method</a>
           <a href="#faq">FAQ</a>
@@ -3752,7 +3888,7 @@
         </ul>
         <div class="mnav-rule"></div>
         <ul class="mnav-list mnav-2">
-          <li><a href="#results">Case Studies</a></li>
+          <li><a href="case-studies.html">Case Studies</a></li>
           <li><a href="#testimonials">Reviews</a></li>
           <li><a href="#dmc">DMC Method</a></li>
           <li><a href="#faq">FAQ</a></li>
@@ -3876,12 +4012,12 @@
           </div>
           <!-- Elementor: HTML widget. Four "we do it" boxes (Ads, Videos, Leads, Schedule), the pink "your team" box (Patients),
                and a 3-piece growth puzzle (Leads > Booked consults > Revenue). The boxes sell the client experience, not our process.
-               Each box has a decorative tone-on-tone glyph (.rb-art, inline SVG) in its top-right corner. -->
+               Each box has its icon tile in a notch in the top-right corner (the blog card's topic tile). -->
           <div class="rs">
-            <div class="rb rb-1"><svg class="rb-art" viewBox="0 0 160 160" aria-hidden="true" focusable="false"><path class="f" d="M30 70 L30 94 Q30 102 38 102 L54 102 L104 126 L104 38 L54 62 L38 62 Q30 62 30 70 Z"/><path d="M56 104 L64 134"/><path d="M124 66 Q132 82 124 98"/><path d="M140 54 Q154 82 140 110"/></svg><p>We create and run your</p><b>Ads</b></div>
-            <div class="rb rb-2"><svg class="rb-art" viewBox="0 0 160 160" aria-hidden="true" focusable="false"><rect class="f" x="16" y="34" width="128" height="92" rx="20"/><path d="M68 62 L100 80 L68 98 Z"/></svg><p>We film inside your clinic for your</p><b>Videos</b></div>
-            <div class="rb rb-3"><svg class="rb-art" viewBox="0 0 160 160" aria-hidden="true" focusable="false"><path class="f" d="M34 30 H126 Q142 30 142 46 V96 Q142 112 126 112 H74 L46 136 V112 H34 Q18 112 18 96 V46 Q18 30 34 30 Z"/><circle class="d" cx="56" cy="71" r="8"/><circle class="d" cx="80" cy="71" r="8"/><circle class="d" cx="104" cy="71" r="8"/></svg><p>We contact and qualify every one of your</p><b>Leads</b></div>
-            <div class="rb rb-4"><svg class="rb-art" viewBox="0 0 160 160" aria-hidden="true" focusable="false"><rect class="f" x="20" y="34" width="120" height="110" rx="20"/><path d="M20 68 H140"/><path d="M52 20 V46"/><path d="M108 20 V46"/><path d="M58 104 L74 120 L104 90"/></svg><p>We book them straight into your</p><b>Schedule</b></div>
+            <div class="rb rb-1"><span class="rb-t" aria-hidden="true"><span class="rb-i"><i class="ph-fill ph-megaphone"></i></span></span><p>We create and run your</p><b>Ads</b></div>
+            <div class="rb rb-2"><span class="rb-t" aria-hidden="true"><span class="rb-i"><i class="ph-fill ph-video-camera"></i></span></span><p>We film inside your clinic for your</p><b>Videos</b></div>
+            <div class="rb rb-3"><span class="rb-t" aria-hidden="true"><span class="rb-i"><i class="ph-fill ph-chats-circle"></i></span></span><p>We contact and qualify every one of your</p><b>Leads</b></div>
+            <div class="rb rb-4"><span class="rb-t" aria-hidden="true"><span class="rb-i"><i class="ph-fill ph-calendar-check"></i></span></span><p>We book them straight into your</p><b>Schedule</b></div>
             <div class="pz pz-1" aria-hidden="true">
               <svg class="pz-svg" viewBox="0 0 100 90" preserveAspectRatio="none" overflow="visible"><defs><clipPath id="pzc1"><path d="M6,0 H94 Q100,0 100,6 V37 C104,37 104,33 108,33 C114,33 117,39 117,45 C117,51 114,57 108,57 C104,57 104,53 100,53 V84 Q100,90 94,90 H6 Q0,90 0,84 V6 Q0,0 6,0 Z"/></clipPath></defs><path class="pz-shape" d="M6,0 H94 Q100,0 100,6 V37 C104,37 104,33 108,33 C114,33 117,39 117,45 C117,51 114,57 108,57 C104,57 104,53 100,53 V84 Q100,90 94,90 H6 Q0,90 0,84 V6 Q0,0 6,0 Z"/><g clip-path="url(#pzc1)"><svg x="0" y="0" width="100" height="90" viewBox="0 97 100 90" preserveAspectRatio="none" overflow="visible"><g class="pz-grid"><line x1="-20" x2="230" y1="18" y2="18"/><line x1="-20" x2="230" y1="42" y2="42"/><line x1="-20" x2="230" y1="66" y2="66"/><line x1="-20" x2="230" y1="118" y2="118"/><line x1="-20" x2="230" y1="142" y2="142"/><line x1="-20" x2="230" y1="166" y2="166"/></g><path class="pz-area" d="M6,178 C40,174 72,166 100,152 S150,132 158,104 S178,42 196,16 L214,10 L214,190 L6,190 Z"/><path class="pz-line" pathLength="1" d="M6,178 C40,174 72,166 100,152 S150,132 158,104 S178,42 196,16"/><path class="pz-arrow" d="M184,14 L197,14 L197,27"/></svg></g></svg>
               <p class="pz-l"><span>01</span>Leads</p>
@@ -3894,95 +4030,90 @@
               <svg class="pz-svg" viewBox="0 0 100 90" preserveAspectRatio="none" overflow="visible"><defs><clipPath id="pzc3"><path d="M6,0 H94 Q100,0 100,6 V84 Q100,90 94,90 H64 L64,89 C64,84 58,80 50,80 C42,80 36,84 36,89 L36,90 H6 Q0,90 0,84 V6 Q0,0 6,0 Z"/></clipPath></defs><path class="pz-shape" d="M6,0 H94 Q100,0 100,6 V84 Q100,90 94,90 H64 L64,89 C64,84 58,80 50,80 C42,80 36,84 36,89 L36,90 H6 Q0,90 0,84 V6 Q0,0 6,0 Z"/><g clip-path="url(#pzc3)"><svg x="0" y="0" width="100" height="90" viewBox="107 0 100 90" preserveAspectRatio="none" overflow="visible"><g class="pz-grid"><line x1="-20" x2="230" y1="18" y2="18"/><line x1="-20" x2="230" y1="42" y2="42"/><line x1="-20" x2="230" y1="66" y2="66"/><line x1="-20" x2="230" y1="118" y2="118"/><line x1="-20" x2="230" y1="142" y2="142"/><line x1="-20" x2="230" y1="166" y2="166"/></g><path class="pz-area" d="M6,178 C40,174 72,166 100,152 S150,132 158,104 S178,42 196,16 L214,10 L214,190 L6,190 Z"/><path class="pz-line" pathLength="1" d="M6,178 C40,174 72,166 100,152 S150,132 158,104 S178,42 196,16"/><path class="pz-arrow" d="M184,14 L197,14 L197,27"/></svg></g></svg>
               <p class="pz-l"><span>03</span>Revenue <i class="ph ph-trend-up"></i></p>
             </div>
-            <div class="rb rb-5"><svg class="rb-art" viewBox="0 0 160 160" aria-hidden="true" focusable="false"><circle cx="110" cy="52" r="18"/><path d="M90 92 Q100 86 110 86 Q142 86 142 122"/><circle class="f" cx="60" cy="62" r="22"/><path class="f" d="M20 140 Q20 104 60 104 Q100 104 100 140"/></svg><p>Your team just focuses on</p><b>Patients</b></div>
+            <div class="rb rb-5"><span class="rb-t" aria-hidden="true"><span class="rb-i"><i class="ph-fill ph-users"></i></span></span><p>Your team just focuses on</p><b>Patients</b></div>
           </div>
         </div>
       </section>
 
       <div class="sbreak" aria-hidden="true"></div>
 
-      <!-- ============ 3. SERVICES ============ -->
-      <section class="svc" id="services" aria-labelledby="sv-title">
-        <div class="wrap">
-          <div class="sh">
-            <div>
-              <h2 class="t-h2" id="sv-title">
-                <span class="ln-m"><span>Full-service dental</span></span>
-                <span class="sh-l2"><span class="sh-rule" aria-hidden="true"></span><span class="ln-m"><span class="hl">marketing</span></span></span>
-              </h2>
-            </div>
-          </div>
-        </div>
-        <!-- Elementor: Loop Carousel over the "Service" CPT (ACF: stage, title, description, photo, page link), custom skin.
-             The slide comes from the script ("services carousel"). Each card shows its service page's hero photo
-             (assets/img/svc/<slug>-card.webp, 1920px) and links to that page. -->
-        <div class="sx" id="sx" role="region" aria-roledescription="carousel" aria-label="Our services">
-          <div class="sx-stage">
-            <ol class="sx-track">
-              <li class="sx-card on" id="svc-marketing">
-                <span id="treatments" class="sr-anchor"></span>
-                <img src="assets/img/svc/dental-marketing-card.webp" alt="A bright, modern dental surgery" width="1920" height="1280" loading="lazy" decoding="async" draggable="false" />
-                <span class="sx-tag"><b>01</b>Attract</span>
-                <div class="sx-txt">
-                  <h3 class="sx-name"><a class="sx-link" href="dental-marketing.html" draggable="false">Dental Marketing</a></h3>
-                  <div class="sx-more"><p class="sx-p">We create and run your Google and Meta ads for implant, Invisalign and new patients.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
+      <!-- ============ 3. SERVICES: THE SEVEN SERVICES, STACKED ON SCROLL (replaces the services carousel, user 2026-11-24) (inspo: clairvo.io "Every call starts prepared"; our components)
+           Elementor: Container (tall) with a sticky inner Container. H2; left: Repeater (service, line); right: Loop over
+           Services (icon, name, photo, line, link). Each scroll step brings the next card up from below the screen to rest
+           one header under the last; the list grows with it. -->
+      <section class="fl" id="services" aria-labelledby="fl-title">
+        <span id="treatments" class="sr-anchor"></span>
+        <div class="fl-track" id="flTrack">
+          <div class="fl-pin">
+            <div class="wrap">
+              <div class="fl-in">
+                <h2 class="t-h2" id="fl-title">
+                  <span class="ln-m"><span>Full-service dental</span></span>
+                  <span class="sh-l2"><span class="sh-rule" aria-hidden="true"></span><span class="ln-m"><span class="hl">marketing</span></span></span>
+                </h2>
+                <div class="fl-g">
+                  <ol class="fl-list" id="flList">
+                    <li class="fl-row on"><div>
+                      <button class="fl-btn" type="button"><span class="fl-n">01</span><span class="fl-t">Dental Marketing</span></button>
+                      <div class="fl-d"><div><p>We create and run your Google and Meta ads for implant, Invisalign and new patients.</p></div></div>
+                    </div></li>
+                    <li class="fl-row"><div>
+                      <button class="fl-btn" type="button"><span class="fl-n">02</span><span class="fl-t">Dental Video Marketing</span></button>
+                      <div class="fl-d"><div><p>We film your clinic, your team and your patients, and turn it into ads people trust.</p></div></div>
+                    </div></li>
+                    <li class="fl-row"><div>
+                      <button class="fl-btn" type="button"><span class="fl-n">03</span><span class="fl-t">Dental SEO &amp; AI SEO</span></button>
+                      <div class="fl-d"><div><p>We get you found on Google Search, Maps and AI search like ChatGPT, Claude and Gemini.</p></div></div>
+                    </div></li>
+                    <li class="fl-row"><div>
+                      <button class="fl-btn" type="button"><span class="fl-n">04</span><span class="fl-t">Dental Website Design</span></button>
+                      <div class="fl-d"><div><p>We design and build a fast website that turns visitors into booked patients.</p></div></div>
+                    </div></li>
+                    <li class="fl-row"><div>
+                      <button class="fl-btn" type="button"><span class="fl-n">05</span><span class="fl-t">Dental Call Centre</span></button>
+                      <div class="fl-d"><div><p>We call every new lead, qualify them and book them straight into your schedule.</p></div></div>
+                    </div></li>
+                    <li class="fl-row"><div>
+                      <button class="fl-btn" type="button"><span class="fl-n">06</span><span class="fl-t">Treatment Coordinator Training</span></button>
+                      <div class="fl-d"><div><p>We coach your team to present treatment with confidence, so more patients say yes.</p></div></div>
+                    </div></li>
+                    <li class="fl-row"><div>
+                      <button class="fl-btn" type="button"><span class="fl-n">07</span><span class="fl-t">Dental Reporting Dashboard</span></button>
+                      <div class="fl-d"><div><p>See every lead, call and booking live in your Dental Connect dashboard.</p></div></div>
+                    </div></li>
+                  </ol>
+                  <div class="fl-stack" id="flStack">
+                  <a class="fl-c t1" href="dental-marketing.html" style="z-index: 1" aria-label="Dental Marketing">
+                    <span class="fl-m"><img src="assets/img/svc/dental-marketing-card.webp" alt="" width="1920" height="1282" loading="lazy" decoding="async" /></span>
+                    <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-megaphone"></i></span>
+                  </a>
+                  <a class="fl-c t2" href="dental-video-marketing.html" style="z-index: 2" aria-label="Dental Video Marketing">
+                    <span class="fl-m"><img src="assets/img/svc/dental-video-marketing-card.webp" alt="" width="1920" height="1280" loading="lazy" decoding="async" /></span>
+                    <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-video-camera"></i></span>
+                  </a>
+                  <a class="fl-c t3" href="dental-seo.html" style="z-index: 3" aria-label="Dental SEO &amp; AI SEO">
+                    <span class="fl-m"><img src="assets/img/svc/dental-seo-card.webp" alt="" width="1920" height="1280" loading="lazy" decoding="async" /></span>
+                    <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-magnifying-glass"></i></span>
+                  </a>
+                  <a class="fl-c t1" href="dental-website-design.html" style="z-index: 4" aria-label="Dental Website Design">
+                    <span class="fl-m"><img src="assets/img/svc/dental-website-design-card.webp" alt="" width="1920" height="1280" loading="lazy" decoding="async" /></span>
+                    <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-browser"></i></span>
+                  </a>
+                  <a class="fl-c t2" href="dental-call-centre.html" style="z-index: 5" aria-label="Dental Call Centre">
+                    <span class="fl-m"><img src="assets/img/svc/dental-call-centre-card.webp" alt="" width="1920" height="1282" loading="lazy" decoding="async" /></span>
+                    <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-phone-call"></i></span>
+                  </a>
+                  <a class="fl-c t3" href="treatment-coordinator-training.html" style="z-index: 6" aria-label="Treatment Coordinator Training">
+                    <span class="fl-m"><img src="assets/img/svc/treatment-coordinator-training-card.webp" alt="" width="1920" height="1280" loading="lazy" decoding="async" /></span>
+                    <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-chalkboard-teacher"></i></span>
+                  </a>
+                  <a class="fl-c t1" href="dental-reporting-dashboard.html" style="z-index: 7" aria-label="Dental Reporting Dashboard">
+                    <span class="fl-m"><img src="assets/img/svc/dental-reporting-dashboard-card.webp" alt="" width="1920" height="1440" loading="lazy" decoding="async" /></span>
+                    <span class="fl-ic" aria-hidden="true"><i class="ph-fill ph-chart-line-up"></i></span>
+                  </a>
+                  </div>
                 </div>
-              </li>
-              <li class="sx-card" id="svc-video">
-                <img src="assets/img/svc/dental-video-marketing-card.webp" alt="A professional video camera on a tripod in a studio" width="1920" height="1280" loading="lazy" decoding="async" draggable="false" />
-                <span class="sx-tag"><b>02</b>Attract</span>
-                <div class="sx-txt">
-                  <h3 class="sx-name"><a class="sx-link" href="dental-video-marketing.html" draggable="false">Dental Video Marketing</a></h3>
-                  <div class="sx-more"><p class="sx-p">We film your clinic, your team and your patients, and turn it into ads people trust.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
-                </div>
-              </li>
-              <li class="sx-card" id="svc-seo">
-                <img src="assets/img/svc/dental-seo-card.webp" alt="Colourful push pins marking places on a map" width="1920" height="1280" loading="lazy" decoding="async" draggable="false" />
-                <span class="sx-tag"><b>03</b>Attract</span>
-                <div class="sx-txt">
-                  <h3 class="sx-name"><a class="sx-link" href="dental-seo.html" draggable="false">Dental SEO &amp; AI SEO</a></h3>
-                  <div class="sx-more"><p class="sx-p">We get you found on Google Search, Maps and AI search like ChatGPT, Claude and Gemini.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
-                </div>
-              </li>
-              <li class="sx-card" id="svc-web">
-                <img src="assets/img/svc/dental-website-design-card.webp" alt="A bright, minimal desk with a laptop" width="1920" height="1280" loading="lazy" decoding="async" draggable="false" />
-                <span class="sx-tag"><b>04</b>Attract</span>
-                <div class="sx-txt">
-                  <h3 class="sx-name"><a class="sx-link" href="dental-website-design.html" draggable="false">Dental Website Design</a></h3>
-                  <div class="sx-more"><p class="sx-p">We design and build a fast website that turns visitors into booked patients.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
-                </div>
-              </li>
-              <li class="sx-card" id="svc-call">
-                <img src="assets/img/svc/dental-call-centre-card.webp" alt="A smiling call centre agent with a headset in a bright office" width="1920" height="1280" loading="lazy" decoding="async" draggable="false" />
-                <span class="sx-tag"><b>05</b>Convert</span>
-                <div class="sx-txt">
-                  <h3 class="sx-name"><a class="sx-link" href="dental-call-centre.html" draggable="false">Dental Call Centre</a></h3>
-                  <div class="sx-more"><p class="sx-p">We call every new lead, qualify them and book them straight into your schedule.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
-                </div>
-              </li>
-              <li class="sx-card" id="svc-training">
-                <img src="assets/img/svc/treatment-coordinator-training-card.webp" alt="A tablet showing a dental X-ray in a bright clinic" width="1920" height="1280" loading="lazy" decoding="async" draggable="false" />
-                <span class="sx-tag"><b>06</b>Convert</span>
-                <div class="sx-txt">
-                  <h3 class="sx-name"><a class="sx-link" href="treatment-coordinator-training.html" draggable="false">Treatment Coordinator Training</a></h3>
-                  <div class="sx-more"><p class="sx-p">We coach your team to present treatment with confidence, so more patients say yes.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
-                </div>
-              </li>
-              <li class="sx-card" id="svc-reporting">
-                <img src="assets/img/svc/dental-reporting-dashboard-card.webp" alt="A tablet showing a rising green chart beside paper and a pen" width="1920" height="1440" loading="lazy" decoding="async" draggable="false" />
-                <span class="sx-tag"><b>07</b>Measure</span>
-                <div class="sx-txt">
-                  <h3 class="sx-name"><a class="sx-link" href="dental-reporting-dashboard.html" draggable="false">Dental Reporting Dashboard</a></h3>
-                  <div class="sx-more"><p class="sx-p">See every lead, call and booking live in your Dental Connect dashboard.</p><span class="sx-go" aria-hidden="true"><i class="ph ph-arrow-up-right"></i>Explore</span></div>
-                </div>
-              </li>
-            </ol>
-          </div>
-          <div class="sx-ctl">
-            <div class="sx-count"><span><b id="sxNum">01</b> / 07</span><span class="sx-bar" aria-hidden="true"><i></i></span></div>
-            <div class="arw">
-              <button type="button" class="sx-prev" aria-label="Previous service" disabled><i class="ph ph-arrow-left" aria-hidden="true"></i></button>
-              <button type="button" class="sx-next" aria-label="Next service"><i class="ph ph-arrow-right" aria-hidden="true"></i></button>
+              </div>
             </div>
           </div>
         </div>
@@ -3998,37 +4129,37 @@
             <span class="sh-l2"><span class="sh-rule" aria-hidden="true"></span><span class="ln-m"><span class="hl">real results</span></span></span>
           </h2>
         </div>
-        <!-- Elementor: Loop Carousel over the "Case Study" CPT (ACF: render, logo, revenue, ad_spend, roas) -->
+        <!-- Elementor: Loop Carousel over the "Case Study" CPT (ACF: render, revenue, ad_spend, roas). Hover: the results slide into a notch in the photo's top-right corner. -->
         <div class="row" id="cRow" tabindex="0" aria-label="Clinic results. Scroll sideways or use the arrows.">
-          <article class="cs" data-href="case-west-grande-prairie-dental.html" role="link" tabindex="0" aria-label="West Grande Prairie Dental: view the case study"><div class="cs-in">
-            <div class="cs-img"><img class="cs-logo" src="assets/img/clients/case-wgp.webp" alt="West Grande Prairie Dental logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/wgp-photo.jpg" alt="West Grande Prairie Dental storefront" loading="lazy" /></div></div>
+          <article class="cs" data-href="case-west-grande-prairie-dental.html" role="link" tabindex="0" aria-label="West Grande Prairie Dental: $97,000 in revenue from a $5,000 ad spend. View the case study"><div class="cs-in">
+            <div class="cs-img"><div class="cs-cover"><img class="phx" src="assets/img/clients/wgp-photo.jpg" alt="West Grande Prairie Dental storefront" loading="lazy" /></div><p class="cs-tab" aria-hidden="true"><em>$97,000</em> in revenue<br />from a <span class="hl">$5,000 ad spend.</span></p></div>
             <h3>West Grande Prairie Dental</h3>
             <p class="cs-meta">return on ad spend: <b>19.4×</b></p>
-            <div class="cs-res"><p>Campaign results:</p><ul><li><b>$97,000</b> revenue</li><li>from <b>$5,000</b> ad spend</li></ul></div>
+            
           </div></article>
-          <article class="cs" data-href="case-riverbend-denture-implant.html" role="link" tabindex="0" aria-label="Riverbend Denture &amp; Implant: view the case study"><div class="cs-in">
-            <div class="cs-img"><img class="cs-logo" src="assets/img/clients/riverbend.png" alt="Riverbend Denture &amp; Implant logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/riverbend-photo.webp" alt="Riverbend Denture &amp; Implant Clinic reception" loading="lazy" /></div></div>
+          <article class="cs" data-href="case-riverbend-denture-implant.html" role="link" tabindex="0" aria-label="Riverbend Denture &amp; Implant: $255,000 in revenue from a $19,000 ad spend. View the case study"><div class="cs-in">
+            <div class="cs-img"><div class="cs-cover"><img class="phx" src="assets/img/clients/riverbend-photo.webp" alt="Riverbend Denture &amp; Implant Clinic reception" loading="lazy" /></div><p class="cs-tab" aria-hidden="true"><em>$255,000</em> in revenue<br />from a <span class="hl">$19,000 ad spend.</span></p></div>
             <h3>Riverbend Denture &amp; Implant</h3>
             <p class="cs-meta">return on ad spend: <b>13.4×</b></p>
-            <div class="cs-res"><p>Campaign results:</p><ul><li><b>$255,000</b> revenue</li><li>from <b>$19,000</b> ad spend</li></ul></div>
+            
           </div></article>
-          <article class="cs" data-href="case-smile-now.html" role="link" tabindex="0" aria-label="Smile Now: view the case study"><div class="cs-in">
-            <div class="cs-img"><img class="cs-logo" src="assets/img/clients/case-smilenow.webp" alt="Smile Now logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/smilenow-photo.webp" alt="Calgary skyline and the Peace Bridge" loading="lazy" /></div></div>
+          <article class="cs" data-href="case-smile-now.html" role="link" tabindex="0" aria-label="Smile Now: $161,000 in revenue from a $13,000 ad spend. View the case study"><div class="cs-in">
+            <div class="cs-img"><div class="cs-cover"><img class="phx" src="assets/img/clients/smilenow-photo.webp" alt="Calgary skyline and the Peace Bridge" loading="lazy" /></div><p class="cs-tab" aria-hidden="true"><em>$161,000</em> in revenue<br />from a <span class="hl">$13,000 ad spend.</span></p></div>
             <h3>Smile Now</h3>
             <p class="cs-meta">return on ad spend: <b>12.4×</b></p>
-            <div class="cs-res"><p>Campaign results:</p><ul><li><b>$161,000</b> revenue</li><li>from <b>$13,000</b> ad spend</li></ul></div>
+            
           </div></article>
-          <article class="cs" data-href="case-wye-dental.html" role="link" tabindex="0" aria-label="Wye Dental: view the case study"><div class="cs-in">
-            <div class="cs-img"><img class="cs-logo" src="assets/img/clients/case-wye.webp" alt="Wye Dental logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/wye-photo.webp" alt="The Wye Dental team" loading="lazy" /></div></div>
+          <article class="cs" data-href="case-wye-dental.html" role="link" tabindex="0" aria-label="Wye Dental: $92,000 in revenue from a $6,000 ad spend. View the case study"><div class="cs-in">
+            <div class="cs-img"><div class="cs-cover"><img class="phx" src="assets/img/clients/wye-photo.webp" alt="The Wye Dental team" loading="lazy" /></div><p class="cs-tab" aria-hidden="true"><em>$92,000</em> in revenue<br />from a <span class="hl">$6,000 ad spend.</span></p></div>
             <h3>Wye Dental</h3>
             <p class="cs-meta">return on ad spend: <b>15.3×</b></p>
-            <div class="cs-res"><p>Campaign results:</p><ul><li><b>$92,000</b> revenue</li><li>from <b>$6,000</b> ad spend</li></ul></div>
+            
           </div></article>
-          <article class="cs" data-href="case-modern-smiles.html" role="link" tabindex="0" aria-label="Modern Smiles: view the case study"><div class="cs-in">
-            <div class="cs-img"><img class="cs-logo" src="assets/img/clients/case-modern-smiles.webp" alt="Modern Smiles logo" loading="lazy" /><div class="cs-cover"><img class="phx" src="assets/img/clients/modern-smiles-photo.webp" alt="A denture being made at Modern Smiles" loading="lazy" /></div></div>
+          <article class="cs" data-href="case-modern-smiles.html" role="link" tabindex="0" aria-label="Modern Smiles: $72,000 in revenue from a $6,000 ad spend. View the case study"><div class="cs-in">
+            <div class="cs-img"><div class="cs-cover"><img class="phx" src="assets/img/clients/modern-smiles-photo.webp" alt="A denture being made at Modern Smiles" loading="lazy" /></div><p class="cs-tab" aria-hidden="true"><em>$72,000</em> in revenue<br />from a <span class="hl">$6,000 ad spend.</span></p></div>
             <h3>Modern Smiles</h3>
             <p class="cs-meta">return on ad spend: <b>12×</b></p>
-            <div class="cs-res"><p>Campaign results:</p><ul><li><b>$72,000</b> revenue</li><li>from <b>$6,000</b> ad spend</li></ul></div>
+            
           </div></article>
         </div>
         <div class="arw">
@@ -4388,7 +4519,7 @@
             <li><a href="treatment-coordinator-training.html">Coordinator Training</a></li>
           </ul></nav>
           <nav aria-label="Company"><ul>
-            <li><a href="#results">Case Studies</a></li>
+            <li><a href="case-studies.html">Case Studies</a></li>
             <li><a href="#dmc">The DMC Method</a></li>
             <li><a href="#faq">FAQ</a></li>
             <li><a href="blog.html">Blog</a></li>
@@ -4458,6 +4589,24 @@
           }),
         );
 
+        /* ---------- the team cards: cut each card's bottom-left corner around its icon tile (a real notch) ----------
+           The tile + a 10px gap; the curves = the card's radius, like the other notches. Redrawn on resize. */
+        $$(".rb").forEach((card) => {
+          const tile = $(".rb-i", card);
+          if (!tile) return;
+          const cut = () => {
+            const W = card.offsetWidth,
+              H = card.offsetHeight,
+              R = parseFloat(getComputedStyle(card).borderTopLeftRadius) || 28,
+              r = Math.min(R, 22),
+              tw = tile.offsetWidth + 10,
+              th = tile.offsetHeight + 10;
+            card.style.setProperty("--cut", `path("M${R},0 H${W - R} A${R},${R} 0 0 1 ${W},${R} V${H - R} A${R},${R} 0 0 1 ${W - R},${H} H${tw + r} A${r},${r} 0 0 1 ${tw},${H - r} V${H - th + r} A${r},${r} 0 0 0 ${tw - r},${H - th} H${r} A${r},${r} 0 0 1 0,${H - th - r} V${R} A${R},${R} 0 0 1 ${R},0 Z")`);
+          };
+          cut();
+          new ResizeObserver(cut).observe(card);
+        });
+
         /* ---------- header: frosted once scrolled, light text over the dark bands ---------- */
         const top = $("#top");
         const stuck = () => top.classList.toggle("is-stuck", scrollY > 30);
@@ -4506,7 +4655,7 @@
         burger.addEventListener("click", openMnav);
         $(".mnav-x").addEventListener("click", () => closeMnav());
 
-        /* ---------- preloader (no counter: it slides up as soon as the hero image is ready) + hero build ---------- */
+        /* ---------- preloader (no counter: it slides up once every image on the page has loaded) + hero build ---------- */
         const heroIn = () => {
           const tl = gsap.timeline();
           tl.from(".h-obj img", { yPercent: 30, scale: 0.88, opacity: 0, filter: "blur(16px)", duration: 1.9, ease: "expo.out", clearProps: "filter" }, 0)
@@ -4521,9 +4670,9 @@
         const pre = $("#pre");
         if (motion && root.classList.contains("is-pre")) {
           lock(true);
-          const imgs = [$(".pre-obj"), $(".h-obj img")].map((i) => (i.decode ? i.decode().catch(() => {}) : 0));
           gsap.from(".pre-obj", { scale: 1.15, duration: 2.6, ease: "power2.out" });
-          Promise.race([Promise.all(imgs), new Promise((r) => setTimeout(r, 1500))]).then(() => {
+          // held until every image on the page has loaded (window.__preWait, at the top of <body>; at most 8s)
+          window.__preWait().then(() => {
             gsap
               .timeline({
                 onComplete: () => {
@@ -5280,6 +5429,72 @@
             });
           });
 
+        /* ---------- the seven services, stacked on scroll ----------
+           p runs 0 → n-1 through the tall track. Card k rests at k headers down; over p = k-1 → k it rises (eased) from
+           below the screen into that place, and row k rises with it by the same amount. The row that is rising is open. */
+        {
+          const track = $("#flTrack"),
+            pin = $(".fl-pin", track),
+            stack = $("#flStack"),
+            cards = $$(".fl-c", stack),
+            rows = $$(".fl-row"),
+            n = cards.length;
+          let on = -2;
+          const clamp = (v, a, b) => Math.min(b, Math.max(a, v));
+          const ease = (t) => 1 - Math.pow(1 - t, 3); // the rise slows into place
+          const draw = () => {
+            const r = track.getBoundingClientRect(),
+              total = r.height - pin.getBoundingClientRect().height,
+              p = clamp(-r.top / (total || 1), 0, 1) * (n - 1),
+              hd = parseFloat(getComputedStyle(stack).getPropertyValue("--hd")) || 58,
+              z = parseFloat(getComputedStyle(root).zoom) || 1,
+              below = innerHeight / z; // a screen down: out of sight until it rises
+            cards.forEach((c, k) => {
+              const rise = k === 0 ? 1 : ease(clamp(p - (k - 1), 0, 1));
+              c.style.transform = `translate3d(0, ${(k * hd + (1 - rise) * below).toFixed(1)}px, 0)`;
+              c.tabIndex = k === Math.round(p) ? 0 : -1;
+              // its row rises with it, by the same amount, from the same screen below
+              rows[k].style.transform = rise === 1 ? "" : `translate3d(0, ${((1 - rise) * below).toFixed(1)}px, 0)`;
+            });
+            // the rising row opens its line as soon as it starts up; the row before folds to its title
+            const k = Math.min(n - 1, Math.floor(p + 0.85));
+            if (k !== on) {
+              on = k;
+              rows.forEach((row, i) => row.classList.toggle("on", i === k));
+            }
+          };
+          // each photo gets a bottom-left notch for its icon tile (the team cards' path: 8px gap, concave corners)
+          cards.forEach((card) => {
+            const m = $(".fl-m", card),
+              tile = $(".fl-ic i", card);
+            const cut = () => {
+              const W = card.offsetWidth,
+                H = card.offsetHeight,
+                R = parseFloat(getComputedStyle(card).borderTopLeftRadius) || 28,
+                r = Math.min(R, 18),
+                tw = tile.offsetWidth + 8,
+                th = tile.offsetHeight + 8;
+              m.style.setProperty("--cut", `path("M${R},0 H${W - R} A${R},${R} 0 0 1 ${W},${R} V${H - R} A${R},${R} 0 0 1 ${W - R},${H} H${tw + r} A${r},${r} 0 0 1 ${tw},${H - r} V${H - th + r} A${r},${r} 0 0 0 ${tw - r},${H - th} H${r} A${r},${r} 0 0 1 0,${H - th - r} V${R} A${R},${R} 0 0 1 ${R},0 Z")`);
+            };
+            cut();
+            if (window.ResizeObserver) new ResizeObserver(cut).observe(card);
+          });
+          addEventListener("scroll", draw, { passive: true });
+          addEventListener("resize", draw);
+          if (window.ResizeObserver) new ResizeObserver(draw).observe(track);
+          draw();
+          // a row scrolls to its card
+          rows.forEach((row, k) =>
+            $(".fl-btn", row).addEventListener("click", () => {
+              const top = track.getBoundingClientRect().top + scrollY,
+                total = track.offsetHeight - pin.offsetHeight,
+                y = top + (total * k) / (n - 1) + 2;
+              if (lenis) lenis.scrollTo(y, { duration: 1.2 });
+              else scrollTo({ top: y, behavior: reduce ? "auto" : "smooth" });
+            }),
+          );
+        }
+
         /* ---------- scroll choreography ---------- */
         if (!motion) return;
         const st = (trigger, start = "top 82%") => ({ trigger, start, once: true });
@@ -5291,20 +5506,6 @@
         // services + why DMC: headings draw their rule, rows and boxes rise in
         $$(".sh-rule").forEach((r) => {
           gsap.from(r, { scaleX: 0, duration: 1.4, ease: "expo.inOut", scrollTrigger: st(r, "top 90%") });
-        });
-        // services carousel: the cards slide in from the right, the photo settles, the controls follow
-        gsap.from(".sx-card", { x: 160, opacity: 0, duration: 1.3, ease: "expo.out", stagger: 0.08, scrollTrigger: st("#sx", "top 85%") });
-        gsap.from(".sx-ctl", { y: 16, opacity: 0, duration: 0.9, ease: "power3.out", delay: 0.4, scrollTrigger: st("#sx", "top 85%") });
-        // the cards' line drawings: each line draws itself in as its card arrives (the growth line's pen, quieter), then the
-        // fills fade up. Without motion none of this runs and the drawings are simply there.
-        $$(".rb-art").forEach((svg) => {
-          const parts = $$("path, rect, circle", svg);
-          parts.forEach((el) => el.setAttribute("pathLength", "1"));
-          gsap.set(parts, { strokeDasharray: 1, strokeDashoffset: 1, fillOpacity: 0 });
-          gsap
-            .timeline({ scrollTrigger: st(svg.closest(".rb"), "top 88%") })
-            .to(parts, { strokeDashoffset: 0, duration: 1.2, ease: "power2.inOut", stagger: 0.04 }, 0.35)
-            .to(parts, { fillOpacity: 1, duration: 0.6, ease: "power2.out", stagger: 0.02 }, 0.95);
         });
         gsap.set(".rb", { opacity: 0, y: 60 });
         ScrollTrigger.batch(".rb", { start: "top 92%", once: true, onEnter: (b) => gsap.to(b, { opacity: 1, y: 0, duration: 1.1, ease: "expo.out", stagger: 0.1 }) });

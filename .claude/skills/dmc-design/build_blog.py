@@ -5,6 +5,10 @@
 # cards are the home page's "Real clinics" white cards. Posts live in POSTS below. Run from the repo root:
 #   python .claude/skills/dmc-design/build_blog.py
 import re, os, html, json
+import sys as _sys, os as _os
+_sys.dont_write_bytecode = True
+_sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+import preloader  # the home page's preloader on every page
 
 src = open('index.html', 'rb').read().decode('utf-8').replace('\r\n', '\n')
 
@@ -545,5 +549,6 @@ page = f'''<!doctype html>
   </body>
 </html>
 '''
+page = preloader.inject(page)
 open('blog.html', 'wb').write(page.replace('\n', '\r\n').encode('utf-8'))
 print('ok blog.html', len(page.splitlines()))

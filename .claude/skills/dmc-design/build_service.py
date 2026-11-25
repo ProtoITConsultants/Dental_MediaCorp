@@ -4,6 +4,10 @@
 # Layout, photos, video, fonts, sizes and spacing come from this one template; each page's TEXT comes from
 # services_content.py (next to this file). Run from the repo root:  python .claude/skills/dmc-design/build_service.py
 import re, json, os, html
+import sys as _sys, os as _os
+_sys.dont_write_bytecode = True
+_sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+import preloader  # the home page's preloader on every page
 _here = os.path.dirname(os.path.abspath(__file__))
 _ns = {}
 exec(open(os.path.join(_here, 'services_content.py'), encoding='utf-8').read(), _ns)
@@ -726,10 +730,11 @@ JS = r"""
               H = box.offsetHeight,
               R = parseFloat(getComputedStyle(box).borderTopLeftRadius) || 28,
               r = R, // the notch's curves match the card's corners (user request)
-              g = 10,
+              g = Math.round(12 / (parseFloat(getComputedStyle(document.documentElement).zoom) || 1)), // 12px on screen at any laptop zoom (user)
               tw = tab.offsetWidth + g,
-              th = tab.offsetHeight + g;
-            box.style.clipPath = `path("M${R},0 H${W - R} A${R},${R} 0 0 1 ${W},${R} V${H - th - r} A${r},${r} 0 0 1 ${W - r},${H - th} H${W - tw + r} A${r},${r} 0 0 0 ${W - tw},${H - th + r} V${H - r} A${r},${r} 0 0 1 ${W - tw - r},${H} H${R} A${R},${R} 0 0 1 0,${H - R} V${R} A${R},${R} 0 0 1 ${R},0 Z")`;
+              th = tab.offsetHeight + g,
+              p = Math.min(tab.offsetHeight / 2 + g, th - r); // concentric with the pill: the gap stays g all the way round
+            box.style.clipPath = `path("M${R},0 H${W - R} A${R},${R} 0 0 1 ${W},${R} V${H - th - r} A${r},${r} 0 0 1 ${W - r},${H - th} H${W - tw + p} A${p},${p} 0 0 0 ${W - tw},${H - th + p} V${H - r} A${r},${r} 0 0 1 ${W - tw - r},${H} H${R} A${R},${R} 0 0 1 0,${H - R} V${R} A${R},${R} 0 0 1 ${R},0 Z")`;
           };
           cut();
           new ResizeObserver(cut).observe(box);
@@ -1056,5 +1061,6 @@ def render(sv):
 if __name__ == '__main__':  # build_case.py imports this file for its parts; only a direct run writes the pages
     for sv in SERVICES:
         page = render(sv)
+        page = preloader.inject(page)
         open(sv['file'], 'wb').write(page.replace('\n', '\r\n').encode('utf-8'))
         print('ok', sv['file'], len(page.splitlines()))

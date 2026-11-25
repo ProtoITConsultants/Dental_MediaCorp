@@ -100,7 +100,7 @@ PAGE_CSS = """
          (after madebyshape.co.uk/work), with client quotes and a video card in the flow. Cards = the home "Real clinics" /
          blog white card (6px inset photo, --r-card / --r-inner). Hover: the photo drifts up by `top`, the tag chips (the
          services carousel's dark-glass chip) and the home CTA ("Tell me more" size) slide in, the shadow deepens. All of
-         it moves by real position (whole pixels: sharp, no blur). Normal cursor (as on the blog). */
+         it moves by real position (whole pixels: sharp, no blur). Pointer cursor on the cards (user). */
       .header-cur,
       .menu a.is-cur {
         color: var(--teal);
@@ -163,7 +163,7 @@ PAGE_CSS = """
         padding-top: clamp(120px, calc(14 * var(--uvw)), 260px);
       }
       /* the case: no card around it (user). The image stands alone with the card radius; the text sits under it on the
-         page background. The whole case is one link; the normal cursor. */
+         page background. The whole case is one link; the pointer cursor. */
       .wk-in {
         display: block;
         width: 100%;
@@ -173,7 +173,7 @@ PAGE_CSS = """
         color: inherit;
         font: inherit;
         text-align: left;
-        cursor: default;
+        cursor: pointer; /* the whole case card is a link (user) */
       }
       .wk-in:focus-visible {
         outline: 2px solid var(--teal);
@@ -487,17 +487,18 @@ JS = r"""
               H = media.offsetHeight,
               R = parseFloat(getComputedStyle(media).borderTopLeftRadius) || 28,
               r = R,
-              g = 10,
+              g = Math.round(12 / (parseFloat(getComputedStyle(document.documentElement).zoom) || 1)), // 12px on screen at any laptop zoom (user)
               tw = chips ? chips.offsetWidth + g : 0, // top-right notch: the pills (the cards have none now)
               th = chips ? chips.offsetHeight + g : 0,
               bw = cta ? cta.offsetWidth + g : 0, // bottom-left notch: the CTA (the video card has none)
-              bh = cta ? cta.offsetHeight + g : 0;
+              bh = cta ? cta.offsetHeight + g : 0,
+              p = cta ? Math.min(cta.offsetHeight / 2 + g, bh - r) : r; // concentric with the pill: the gap stays g all the way round
             if (!chips && !cta) return void (media.style.clipPath = "");
             const top = chips
               ? `H${W - tw - r} A${r},${r} 0 0 1 ${W - tw},${r} V${th - r} A${r},${r} 0 0 0 ${W - tw + r},${th} H${W - R} A${R},${R} 0 0 1 ${W},${th + R}`
               : `H${W - R} A${R},${R} 0 0 1 ${W},${R}`;
             const bottom = cta
-              ? `H${bw + r} A${r},${r} 0 0 1 ${bw},${H - r} V${H - bh + r} A${r},${r} 0 0 0 ${bw - r},${H - bh} H${R} A${R},${R} 0 0 1 0,${H - bh - R}`
+              ? `H${bw + r} A${r},${r} 0 0 1 ${bw},${H - r} V${H - bh + p} A${p},${p} 0 0 0 ${bw - p},${H - bh} H${R} A${R},${R} 0 0 1 0,${H - bh - R}`
               : `H${R} A${R},${R} 0 0 1 0,${H - R}`;
             media.style.clipPath = `path("M${R},0 ${top} V${H - R} A${R},${R} 0 0 1 ${W - R},${H} ${bottom} V${R} A${R},${R} 0 0 1 ${R},0 Z")`;
           };
@@ -662,5 +663,13 @@ page = f'''<!doctype html>
   </body>
 </html>
 '''
-# case-studies.html is retired (user, 2026-11-23): "Case Studies" and "Browse all case studies" open the home
-# #results section. This file stays only as the parts library for build_case.py (header, footer, card CSS, case_html).
+# case-studies.html is back (user, 2026-11-24): "Case Studies" (nav, menu, footer) and "Browse all case studies" open
+# this page. build_case.py imports this file for its parts, so the page is written only when run directly.
+if __name__ == '__main__':
+    import sys, os
+    sys.dont_write_bytecode = True
+    sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+    import preloader
+    out = preloader.inject(page)
+    open('case-studies.html', 'wb').write(out.replace(chr(10), chr(13) + chr(10)).encode('utf-8'))
+    print('ok case-studies.html', len(out.splitlines()))

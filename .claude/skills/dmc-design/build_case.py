@@ -5,13 +5,19 @@
 #   1. hero: the clinic + H1 in a notch cut into the banner's top-right corner (the service banner and its notch
 #      technique), the home glass numbers on the photo
 #   2. the project: H2 left | intro + Client / Service / Ad spend (row 3 of the service hero)
-#   3. the service page's video card (only the video + "Play video"; 16:9, plays in place)
-#   4. the treatments we book (staggered photo row, enters from the left), 5. the home reviews row, 6. "What next?"
+#   3. the service page's video card + "Play video": the clinic's own testimonial video (name + words on it) where one
+#      exists, otherwise the Dental Marketing video with its line
+#   4. the home reviews row, 5. "What next?" (the "What we book" photo row was removed, user 2026-11-25; BOOK and
+#   book_html are kept unused)
 #   (no challenge | result, no how-we-did-it list, no closing ask: user): two more case cards (the case-studies card) + Browse all case studies
 #   (no How we help, no video card, no results panels: user)
-# Every clinic card (home "Real clinics" and What next) opens these pages; "Browse all case studies" opens index.html#results.
+# Every clinic card (home "Real clinics" and What next) opens these pages; "Browse all case studies" opens case-studies.html.
 # Run from the repo root:  python .claude/skills/dmc-design/build_case.py
 import os, sys, json, html
+import sys as _sys, os as _os
+_sys.dont_write_bytecode = True
+_sys.path.insert(0, _os.path.dirname(_os.path.abspath(__file__)))
+import preloader  # the home page's preloader on every page
 sys.dont_write_bytecode = True  # no __pycache__ next to the builders
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import build_service as bs
@@ -46,7 +52,7 @@ STORY = {
 }
 
 # where each hero photo is anchored in the tall banner (so the clinic's sign clears the notch)
-POS = {"west-grande-prairie-dental": "50% 0%"}
+POS = {"west-grande-prairie-dental": "50% 0%", "wye-dental": "50% 22%"}
 
 # "What we book": four photos per case, picked for what each clinic does (the clinic's own photo where its size allows,
 # then treatment photos). (file, w, h, alt, caption, object-position). Slots: 1 tall 9:16, 2 5:6, 3 big 9:10, 4 square.
@@ -83,6 +89,34 @@ BOOK = {
     ],
 }
 
+# the client video: the clinic's own testimonial (from the home reviews row) where there is one, otherwise the Dental
+# Marketing video with its service-page line. (embed, still, w, h, alt, position, name or None, line)
+YT = "https://www.youtube-nocookie.com/embed/{}?autoplay=1&rel=0&playsinline=1"
+MKT_VIDEO = ("https://drive.google.com/file/d/13MqhWz0r0u-TySTFtp3yZwiZIhq83WXe/preview", "svc/marketing-video.webp", 2880, 1620,
+             "A Dental Media Corp presenter inside a dental clinic", "50% 50%", None, "See how we turn your clinic into ads that book patients.")
+VIDEOS = {
+    "west-grande-prairie-dental": (YT.format("xulePDv7Zt8"), "svc/broyde-video.webp", 1280, 628, "Dr. Greg Broyde in his clinic",
+                                   "50% 35%", "Dr. Greg Broyde", "“For every dollar I spend, DMC makes sure that I get at least $6 to $10 back.”"),
+    "modern-smiles": (YT.format("NgVZUXrVF44"), "svc/rae-lynne-video.webp", 1280, 630, "Rae-Lynne from Modern Smiles in conversation",
+                      "50% 30%", "Rae-Lynne D.", "“DMC is the first marketing that’s actually paid off since I opened in 2012.”"),
+}
+
+def video_html(slug):
+    e = html.escape
+    emb, img, w, h, alt, pos, name, line = VIDEOS.get(slug, MKT_VIDEO)
+    say = (f'<p class="vt-q"><span>{e(name)}</span></p>' + chr(10) + f'                  <p class="vt-d"><span>{e(line)}</span></p>' if name
+           else f'<p class="vt-q"><span>{e(line)}</span></p>')
+    label = f"Play {name}’s video" if name else "Play the Dental Marketing video"
+    return f'''              <div class="vt-box" id="vtBox" data-embed="{e(emb)}">
+                <div class="vt-media"><img src="assets/img/{img}" alt="{e(alt)}" width="{w}" height="{h}" style="object-position: {pos}" loading="lazy" decoding="async" /></div>
+                <div class="vt-say">
+                  {say}
+                </div>
+                <button class="vt-play" type="button" aria-label="{e(label)}"><i class="ph-fill ph-play" aria-hidden="true"></i></button>
+                <button class="vt-x" type="button" aria-label="Close the video" tabindex="-1"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
+              </div>
+'''
+
 def book_html(slug):
     e = html.escape
     return ''.join(f'''            <figure class="cst-i">
@@ -117,9 +151,7 @@ CASE_CSS = """
       .csh-tab .eyb {
         margin-bottom: 18px;
       }
-      .csb {
-        height: clamp(460px, calc(48 * var(--uvw)), 900px); /* tall (about 2:1 on a wide screen): the clinic's building and sign show in full (user) */
-      }
+      /* the banner keeps the service hero's height (.svb), so every hero image card is the same size (user) */
       /* the project (row 2 of the hero, the service hero's statement row rhythm) */
       .cso {
         display: grid;
@@ -171,6 +203,26 @@ CASE_CSS = """
          card's height; play opens it to 16:9 (never taller than the screen), close folds it back. */
       .csv {
         padding-top: var(--sec-y);
+      }
+      /* over the video, the service card's black label lines: the person's name, then their words (smaller) (user) */
+      .csv .vt-q {
+        font-size: var(--fs-h3);
+      }
+      .vt-d {
+        max-width: 34rem;
+        margin: 10px 0 0;
+        font-size: var(--fs-h5);
+        font-weight: 500;
+        letter-spacing: -0.02em;
+        line-height: 1.5;
+      }
+      .vt-d span {
+        padding: 0.12em 0.4em;
+        border-radius: 10px;
+        background: var(--ink);
+        color: #fff;
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
       }
       /* the treatments we booked (inspo: a staggered photo row; our type, radius and motion). The head sits top-left
          over the first two columns; four photos of different heights: 1 and 2 sit on the baseline, 3 rises beside the
@@ -312,6 +364,12 @@ CASE_CSS = """
         .csv {
           padding-top: 72px;
         }
+        .csv .vt-q {
+          font-size: 22px;
+        }
+        .vt-d {
+          font-size: var(--fs-small);
+        }
         /* phones: the head, then the photos two by two, all one shape */
         .cst-g {
           grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -328,7 +386,7 @@ def rep(a, b):
     assert JS.count(a) == 1, a[:70]
     JS = JS.replace(a, b)
 
-VID_JS = '        /* ---------- client video: the bottom-right notch for "Play video", and play opens the card, close folds it back ---------- */\n        {\n          const box = $("#vtBox"),\n            tab = $(".vt-tab"),\n            sec = box.closest(".vt");\n          const cut = () => {\n            if (sec.classList.contains("is-on") || getComputedStyle(tab).position !== "absolute") return void (box.style.clipPath = "");\n            const W = box.offsetWidth,\n              H = box.offsetHeight,\n              R = parseFloat(getComputedStyle(box).borderTopLeftRadius) || 28,\n              r = R,\n              g = 10,\n              tw = tab.offsetWidth + g,\n              th = tab.offsetHeight + g;\n            box.style.clipPath = `path("M${R},0 H${W - R} A${R},${R} 0 0 1 ${W},${R} V${H - th - r} A${r},${r} 0 0 1 ${W - r},${H - th} H${W - tw + r} A${r},${r} 0 0 0 ${W - tw},${H - th + r} V${H - r} A${r},${r} 0 0 1 ${W - tw - r},${H} H${R} A${R},${R} 0 0 1 0,${H - R} V${R} A${R},${R} 0 0 1 ${R},0 Z")`;\n          };\n          cut();\n          new ResizeObserver(cut).observe(box);\n          new ResizeObserver(cut).observe(tab);\n          const go = $(".vt-go"),\n            media = $(".vt-media", box),\n            still = $("img", media),\n            x = $(".vt-x", box);\n          let frame = null;\n          const play = () => {\n            if (frame) return;\n            sec.classList.add("is-on");\n            cut();\n            x.tabIndex = 0;\n            // open to 16:9, but never taller than the screen (the root zoom turns screen px into CSS px)\n            const z = parseFloat(getComputedStyle(root).zoom) || 1;\n            const to = Math.max(box.offsetHeight, Math.min((box.offsetWidth * 9) / 16, (innerHeight * 0.86) / z));\n            if (motion) gsap.to(box, { height: to, duration: 0.9, ease: "expo.inOut" });\n            else box.style.height = to + "px";\n            frame = document.createElement("iframe");\n            frame.src = box.dataset.embed;\n            frame.allow = "autoplay; fullscreen; encrypted-media; picture-in-picture";\n            frame.allowFullscreen = true;\n            frame.referrerPolicy = "strict-origin-when-cross-origin";\n            frame.title = "Client video";\n            media.appendChild(frame);\n            still.style.opacity = "0";\n            x.focus({ preventScroll: true });\n          };\n          const stop = () => {\n            if (!frame) return;\n            frame.remove();\n            frame = null;\n            still.style.opacity = "";\n            sec.classList.remove("is-on");\n            x.tabIndex = -1;\n            // fold back to the height set in the CSS\n            const cur = box.style.height;\n            box.style.height = "";\n            const hh = box.offsetHeight;\n            box.style.height = cur;\n            if (motion) gsap.to(box, { height: hh, duration: 0.9, ease: "expo.inOut", clearProps: "height", onComplete: cut });\n            else box.style.height = "";\n            cut();\n            go.focus({ preventScroll: true });\n          };\n          $(".vt-play").addEventListener("click", play);\n          go.addEventListener("click", play);\n          x.addEventListener("click", stop);\n          addEventListener("keydown", (e) => e.key === "Escape" && stop());\n        }\n\n'
+VID_JS = '        /* ---------- client video: the bottom-right notch for "Play video", and play opens the card, close folds it back ---------- */\n        {\n          const box = $("#vtBox"),\n            tab = $(".vt-tab"),\n            sec = box.closest(".vt");\n          const cut = () => {\n            if (sec.classList.contains("is-on") || getComputedStyle(tab).position !== "absolute") return void (box.style.clipPath = "");\n            const W = box.offsetWidth,\n              H = box.offsetHeight,\n              R = parseFloat(getComputedStyle(box).borderTopLeftRadius) || 28,\n              r = R,\n              g = Math.round(12 / (parseFloat(getComputedStyle(document.documentElement).zoom) || 1)),\n              tw = tab.offsetWidth + g,\n              th = tab.offsetHeight + g,\n              p = Math.min(tab.offsetHeight / 2 + g, th - r); // concentric with the pill: the gap stays g all the way round\n            box.style.clipPath = `path("M${R},0 H${W - R} A${R},${R} 0 0 1 ${W},${R} V${H - th - r} A${r},${r} 0 0 1 ${W - r},${H - th} H${W - tw + p} A${p},${p} 0 0 0 ${W - tw},${H - th + p} V${H - r} A${r},${r} 0 0 1 ${W - tw - r},${H} H${R} A${R},${R} 0 0 1 0,${H - R} V${R} A${R},${R} 0 0 1 ${R},0 Z")`;\n          };\n          cut();\n          new ResizeObserver(cut).observe(box);\n          new ResizeObserver(cut).observe(tab);\n          const go = $(".vt-go"),\n            media = $(".vt-media", box),\n            still = $("img", media),\n            x = $(".vt-x", box);\n          let frame = null;\n          const play = () => {\n            if (frame) return;\n            sec.classList.add("is-on");\n            cut();\n            x.tabIndex = 0;\n            // open to 16:9, but never taller than the screen (the root zoom turns screen px into CSS px)\n            const z = parseFloat(getComputedStyle(root).zoom) || 1;\n            const to = Math.max(box.offsetHeight, Math.min((box.offsetWidth * 9) / 16, (innerHeight * 0.86) / z));\n            if (motion) gsap.to(box, { height: to, duration: 0.9, ease: "expo.inOut" });\n            else box.style.height = to + "px";\n            frame = document.createElement("iframe");\n            frame.src = box.dataset.embed;\n            frame.allow = "autoplay; fullscreen; encrypted-media; picture-in-picture";\n            frame.allowFullscreen = true;\n            frame.referrerPolicy = "strict-origin-when-cross-origin";\n            frame.title = "Client video";\n            media.appendChild(frame);\n            still.style.opacity = "0";\n            x.focus({ preventScroll: true });\n          };\n          const stop = () => {\n            if (!frame) return;\n            frame.remove();\n            frame = null;\n            still.style.opacity = "";\n            sec.classList.remove("is-on");\n            x.tabIndex = -1;\n            // fold back to the height set in the CSS\n            const cur = box.style.height;\n            box.style.height = "";\n            const hh = box.offsetHeight;\n            box.style.height = cur;\n            if (motion) gsap.to(box, { height: hh, duration: 0.9, ease: "expo.inOut", clearProps: "height", onComplete: cut });\n            else box.style.height = "";\n            cut();\n            go.focus({ preventScroll: true });\n          };\n          $(".vt-play").addEventListener("click", play);\n          go.addEventListener("click", play);\n          x.addEventListener("click", stop);\n          addEventListener("keydown", (e) => e.key === "Escape" && stop());\n        }\n\n'
 i = JS.index('        /* ---------- service banner: cut the notch for the button ---------- */')
 j = JS.index('        /* ---------- client video:')
 JS = JS[:i] + '''        /* ---------- case hero: cut the banner's top-right corner around the clinic and the H1 ----------
@@ -371,10 +429,6 @@ rep('''          .from(".svh-top .eyb", { y: 14, opacity: 0, duration: 0.9, ease
           .from(".svb-stat", { y: 16, opacity: 0, duration: 0.9, ease: "power3.out" }, 1);''')
 rep('''        gsap.from([".svs-l > *", ".svs > div:last-child > *"], { y: 30, opacity: 0, duration: 1.1, ease: "expo.out", stagger: 0.08, scrollTrigger: st(".svs", "top 86%") });''',
     '''        gsap.from([".cso .eyb", ".cso-r > *"], { y: 30, opacity: 0, duration: 1.1, ease: "expo.out", stagger: 0.08, scrollTrigger: st(".cso", "top 86%") });
-        // the treatments: the head's label, line and button lift in; the photos come in one by one from the left
-        gsap.from([".cst-hd .eyb", ".cst-hd p:not(.eyb)", ".cst-hd .cta"], { y: 16, opacity: 0, duration: 0.9, ease: "power3.out", stagger: 0.1, scrollTrigger: st(".cst", "top 80%"), clearProps: "opacity,transform" });
-        gsap.from(".cst-i", { x: -80, opacity: 0, duration: 1.2, ease: "expo.out", stagger: 0.16, delay: 0.15, scrollTrigger: st(".cst-g", "top 75%"), clearProps: "opacity,transform" });
-        gsap.from(".cst-m img", { scale: 1.25, duration: 1.8, ease: "expo.out", stagger: 0.16, delay: 0.15, scrollTrigger: st(".cst-g", "top 75%") });
         gsap.from(".vt-box", { y: 60, opacity: 0, duration: 1.3, ease: "expo.out", scrollTrigger: st(".vt", "top 85%") });
         gsap.from(".vt-media img", { scale: 1.25, duration: 1.8, ease: "expo.out", scrollTrigger: st(".vt", "top 85%") });
         gsap.from([".vt-play", ".vt-tab"], { y: 20, opacity: 0, duration: 1, ease: "power3.out", stagger: 0.1, delay: 0.4, scrollTrigger: st(".vt", "top 85%"), clearProps: "opacity,transform" });''')
@@ -510,37 +564,11 @@ def render(k):
         <div class="wrap">
           <div class="vt-in">
             <div class="vt-w">
-              <div class="vt-box" id="vtBox" data-embed="https://drive.google.com/file/d/13MqhWz0r0u-TySTFtp3yZwiZIhq83WXe/preview">
-                <div class="vt-media"><img src="assets/img/svc/marketing-video.webp" alt="A Dental Media Corp presenter inside a dental clinic" width="2880" height="1620" loading="lazy" decoding="async" /></div>
-                <button class="vt-play" type="button" aria-label="Play the video"><i class="ph-fill ph-play" aria-hidden="true"></i></button>
-                <button class="vt-x" type="button" aria-label="Close the video" tabindex="-1"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
-              </div>
-              <div class="vt-tab">
+{video_html(slug)}              <div class="vt-tab">
                 <button class="cta vt-go" type="button"><span class="cta-t">Play video</span><span class="cta-i"><i class="ph-fill ph-play" aria-hidden="true"></i><i class="ph-fill ph-play" aria-hidden="true"></i></span></button>
               </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      <div class="sbreak" aria-hidden="true"></div>
-
-      <!-- ============ 3. THE TREATMENTS WE BOOK (inspo: a staggered photo row; our components)
-           Elementor: Container (CSS grid). Left: label, H2, line, button. Right: Repeater (photo, caption).
-           Four photos of different heights that enter one by one from the left. -->
-      <section class="cst" aria-labelledby="cst-title">
-        <div class="wrap">
-          <div class="cst-g">
-            <div class="cst-hd">
-              <p class="eyb">What we book</p>
-              <h2 class="t-h2" id="cst-title">
-                <span class="ln-m"><span>Every treatment,</span></span>
-                <span class="ln-m"><span><span class="hl">booked for you.</span></span></span>
-              </h2>
-              <p>The treatments {e(clinic)} wanted more of. We brought the patients who wanted them and booked them into the schedule.</p>
-              {cta('See Dental Marketing', 'dental-marketing.html')}
-            </div>
-{book_html(slug)}          </div>
         </div>
       </section>
 
@@ -574,7 +602,7 @@ def render(k):
                   <span class="ln-m"><span>More clinics, <span class="hl">more patients.</span></span></span>
                 </h2>
               </div>
-              {cta('Browse all case studies', 'index.html#results')}
+              {cta('Browse all case studies', 'case-studies.html')}
             </div>
             <div class="csn-g">
 {bc.case_html(nxt[0], 1)}
@@ -602,5 +630,6 @@ if __name__ == '__main__':
     for k, c in enumerate(bc.CASES):
         page = render(k)
         f = page_file(c[0])
+        page = preloader.inject(page)
         open(f, 'wb').write(page.replace('\n', '\r\n').encode('utf-8'))
         print('ok', f, len(page.splitlines()))

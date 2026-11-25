@@ -1537,8 +1537,7 @@
         position: relative;
         display: flex;
         flex-direction: column;
-        height: 410px;
-        padding: 6px;
+        padding: 6px 6px 26px; /* ends under the text, like the blog card (the photo no longer gives way to a results list) */
         border-radius: var(--r-card);
         background: #fff;
         box-shadow: 0 1px 0 rgba(13, 19, 18, 0.03);
@@ -1553,33 +1552,20 @@
         border-radius: var(--r-inner);
         overflow: hidden;
         background: var(--soft);
-        transition: height 0.7s var(--ease);
-        will-change: height;
       }
       .cs-img > .phx {
         width: 100%;
         height: 100%;
         object-fit: cover;
       }
-      /* the clinic photo is the cover; on hover it slides up and the logo underneath shows beside the number */
-      .cs-img:has(.cs-logo) {
-        background: #fff;
-      }
-      .cs-img > .cs-logo {
-        position: absolute;
-        inset: 0;
-        width: 100%;
-        height: 100%;
-        padding: 12px 20px 12px 112px;
-        object-fit: contain;
-      }
+      /* the clinic photo stays put (user). The results always sit in a notch in its top-right corner, the case page
+         hero's notch in small: a white tab (the card's own white) with two concave corners, so the photo curves around it.
+         Only the return line under the name moves, on hover (user). */
       .cs-cover {
         position: absolute;
         inset: 0;
-        z-index: 1;
         overflow: hidden;
         border-radius: inherit;
-        transition: transform 0.7s var(--ease);
       }
       .cs-cover::after {
         content: "";
@@ -1592,24 +1578,44 @@
         height: 100%;
         object-fit: cover;
       }
-      .cs:hover .cs-cover,
-      .cs.on .cs-cover,
-      .cs:focus-within .cs-cover {
-        transform: translateY(-101%);
-      }
-      .cs-img span {
+      .cs-tab {
+        --r: 22px;
         position: absolute;
-        top: 13px;
-        z-index: 1;
-        font-size: var(--fs-xs);
-        color: var(--body);
+        top: -1px;
+        right: -1px;
+        z-index: 2;
+        padding: 1px 1px 14px 16px;
+        border-bottom-left-radius: var(--r);
+        background: #fff;
+        font-size: var(--fs-h4);
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1.12;
+        white-space: nowrap;
       }
-      .cs-img .phx > svg {
-        transition: opacity 0.3s;
+      /* the revenue figure carries the hero stats' pink highlighter (the lower half of the line) */
+      .cs-tab em {
+        font-style: normal;
+        padding: 0 0.1em;
+        background: linear-gradient(180deg, transparent 52%, var(--acc) 52%, var(--acc) 94%, transparent 94%);
       }
-      .cs:hover .cs-img .phx > svg,
-      .cs:focus-within .cs-img .phx > svg {
-        opacity: 0;
+      .cs-tab::before,
+      .cs-tab::after {
+        content: "";
+        position: absolute;
+        width: var(--r);
+        height: var(--r);
+        background: radial-gradient(circle at 0 100%, transparent calc(var(--r) - 0.5px), #fff calc(var(--r) + 0.5px));
+      }
+      .cs-tab::before {
+        top: 0;
+        right: calc(100% - 1px);
+        width: calc(var(--r) + 1px);
+      }
+      .cs-tab::after {
+        top: calc(100% - 1px);
+        right: 0;
+        height: calc(var(--r) + 1px);
       }
       .cs h3 {
         margin: 20px 12px 0;
@@ -1618,10 +1624,25 @@
         letter-spacing: -0.035em;
         line-height: 1.09;
       }
+      /* the return line waits below and rises in on hover (user) */
       .cs-meta {
         margin: 6px 12px 0;
         font-size: var(--fs-small);
         color: var(--body);
+        opacity: 0;
+        transform: translateY(14px);
+        transition:
+          opacity 0.3s ease,
+          transform 0.4s var(--ease);
+      }
+      .cs:hover .cs-meta,
+      .cs.on .cs-meta,
+      .cs:focus-within .cs-meta {
+        opacity: 1;
+        transform: none;
+        transition:
+          opacity 0.5s ease 0.15s,
+          transform 0.7s var(--ease) 0.15s;
       }
       .cs-meta b {
         padding: 1px 7px;
@@ -1630,64 +1651,10 @@
         color: var(--acc-on);
         background: var(--acc);
       }
-      .cs-res {
-        position: absolute;
-        left: 18px;
-        right: 18px;
-        bottom: 18px;
-        opacity: 0;
-        transform: translateY(12px);
-        transition:
-          opacity 0.2s ease,
-          transform 0.3s ease;
-        pointer-events: none;
-      }
-      .cs-res p {
-        font-size: var(--fs-small);
-        color: var(--body);
-      }
-      .cs-res ul {
-        margin-top: 10px;
-        display: grid;
-        gap: 6px;
-        font-size: var(--fs-body);
-      }
-      .cs-res li {
-        position: relative;
-        padding-left: 14px;
-      }
-      .cs-res li::before {
-        content: "";
-        position: absolute;
-        left: 0;
-        top: 0.5em;
-        width: 5px;
-        height: 5px;
-        border-radius: 50%;
-        background: var(--teal-2);
-        box-shadow: 0 0 0 2px var(--mint);
-      }
-      .cs-res b {
-        font-weight: 600;
-      }
       .cs:hover .cs-in,
       .cs.on .cs-in,
       .cs:focus-within .cs-in {
         box-shadow: 0 24px 50px -26px rgba(13, 19, 18, 0.32);
-      }
-      .cs:hover .cs-img,
-      .cs.on .cs-img,
-      .cs:focus-within .cs-img {
-        height: 106px;
-      }
-      .cs:hover .cs-res,
-      .cs.on .cs-res,
-      .cs:focus-within .cs-res {
-        opacity: 1;
-        transform: none;
-        transition:
-          opacity 0.45s ease 0.2s,
-          transform 0.6s var(--ease) 0.2s;
       }
       .arw {
         display: flex;
@@ -2048,7 +2015,8 @@
       /* ---------- 5. why DMC: scattered stat boxes (reference "results" layout) ---------- */
       .rs {
         display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
+        grid-template-columns: repeat(4, minmax(0, 340px)); /* the "Real clinics" card width (user), square cards */
+        justify-content: center;
         gap: 16px;
         max-width: var(--max);
         margin: var(--sec-head) auto 0;
@@ -2059,19 +2027,24 @@
         display: flex;
         flex-direction: column;
         justify-content: space-between;
-        aspect-ratio: 1 / 0.9;
+        aspect-ratio: 1 / 1;
         padding: var(--pad-card);
         border-radius: var(--r-card);
+      }
+      /* the card's surface: its own layer, so the script can cut the notch out of it (clip-path: var(--cut)) while the
+         tile in the notch stays whole. Nothing is painted in the notch: the section's own background shows through. */
+      .rb::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
         border: 1px solid rgba(13, 19, 18, 0.08);
         background: #fff;
-        overflow: hidden;
-        transition:
-          border-color 0.4s,
-          background-color 0.4s;
+        clip-path: var(--cut, none);
+        transition: border-color 0.4s;
       }
-      .rb:hover {
+      .rb:hover::before {
         border-color: rgba(27, 127, 115, 0.45);
-        background: #fff;
       }
       /* the label in each stat card: lead size, near-ink, so it reads without squinting */
       .rb p {
@@ -2092,58 +2065,42 @@
         line-height: 1;
         font-variant-numeric: tabular-nums;
       }
-      /* each card's glyph (inspo: tone-on-tone category cards): one bold, simple icon per card (megaphone, play frame,
-         chat, calendar, people) in thick rounded strokes, a shade deeper than its card (pale teal on white, deeper pink on
-         the pink card). Upright, large and anchored in the top-right corner, cropped by the card's edge; the big word owns
-         the bottom-right. It draws itself in as the card arrives (script: "the cards' line drawings") and on hover nudges
-         into the card and deepens. */
-      .rb {
-        --rb-ic: rgba(27, 127, 115, 0.13);
-        --rb-fill: rgba(27, 127, 115, 0.045);
-      }
-      .rb-5 {
-        --rb-ic: rgba(240, 106, 159, 0.4);
-        --rb-fill: rgba(255, 255, 255, 0.24);
-      }
-      .rb-art {
+      /* each card's icon: the blog card's topic tile in a notch (user, 2026-11-24; replaces the background line drawings).
+         The card is cut around its bottom-left corner (as on the blog card), so it curves around the tile; the cut is
+         real (the script clips the card's surface), nothing is painted in it; the tile is the "How we help" tile (solid brand green, ink filled icon, radius 24%). The pink card's
+         tile is white. The tab sits 1px past the card's edges so it covers the border there too. */
+      .rb-t {
         position: absolute;
-        top: -9%;
-        right: -11%;
-        width: 62%;
-        height: auto;
-        fill: none;
-        stroke: var(--rb-ic);
-        stroke-width: 12;
-        stroke-linecap: round;
-        stroke-linejoin: round;
-        pointer-events: none;
-        transition:
-          transform 0.9s var(--ease),
-          stroke 0.6s var(--ease);
+        bottom: 0;
+        left: 0;
+        z-index: 1;
       }
-      .rb-art .f {
-        fill: var(--rb-fill);
+      .rb-i {
+        display: grid;
+        place-items: center;
+        width: 60px;
+        height: 60px;
+        border-radius: calc(60px * 0.24);
+        background: var(--teal-3);
+        color: var(--ink);
+        font-size: 32px;
       }
-      .rb-art .d {
-        fill: var(--rb-ic);
-        stroke: none;
-        transition: fill 0.6s var(--ease);
+      .rb-5 .rb-i {
+        background: #fff;
       }
-      .rb:hover .rb-art {
-        transform: translate(-6px, 6px) scale(1.04);
-      }
-      .rb:not(.rb-5):hover {
-        --rb-ic: rgba(27, 127, 115, 0.2);
-      }
-      .rb-5:hover {
-        --rb-ic: rgba(240, 106, 159, 0.55);
-      }
-      /* narrow cards: a little smaller, so the wrapped label keeps the corner's top line */
+      /* tablets and phones: a smaller tile, the word above it */
       @media (max-width: 1199px) {
-        .rb-art {
-          width: 58%;
-          top: -6%;
-          right: -12%;
+        .rb-i {
+          width: 44px;
+          height: 44px;
+          border-radius: calc(44px * 0.24);
+          font-size: 24px;
+        }
+        .rb p {
+          max-width: none;
+        }
+        .rb b {
+          margin-bottom: 54px; /* the word sits above the tile: a narrow card has no room beside it */
         }
       }
       .rb-1 {
@@ -2169,20 +2126,20 @@
       }
       .rb-5 {
         grid-area: 2 / 4;
-        border-color: transparent;
-        background: linear-gradient(160deg, var(--acc-2), var(--acc));
         color: var(--ink);
       }
       .rb-5 p {
         color: var(--acc-deep);
       }
-      .rb-5:hover {
+      .rb-5::before,
+      .rb-5:hover::before {
+        border-color: transparent;
         background: linear-gradient(160deg, var(--acc-2), var(--acc));
       }
 
       .pz {
         position: relative;
-        aspect-ratio: 1 / 0.9;
+        aspect-ratio: 1 / 1;
         color: var(--ink);
       }
       .pz-svg {
@@ -2262,6 +2219,197 @@
       .pz-l i {
         font-size: 18px;
         color: var(--teal);
+      }
+
+      /* ---------- 3b. the seven services, stacked on scroll (inspo: clairvo.io "Every call starts prepared"; our type,
+         colours, photos) ----------
+         A tall track with a pinned (sticky) screen. The first service's card is there; each scroll step brings the next
+         card up from below the screen until it stops one header lower than the last, so every earlier card keeps its
+         header strip (number, icon, name) showing above it: nothing is hidden or shrunk. The list on the left grows with
+         it: a service's row appears as its card arrives, its line opens, and the earlier rows fold back to their title. */
+      .fl {
+        position: relative;
+      }
+      .fl-track {
+        height: calc((7 * 70 + 100) * var(--uvh));
+      }
+      .fl-pin {
+        position: sticky;
+        overflow: clip; /* the cards and rows still waiting below stay out of sight */
+        top: 0;
+        display: flex;
+        align-items: center;
+        height: calc(100 * var(--uvh));
+        padding-top: 70px; /* clear of the header */
+      }
+      .fl-pin > .wrap {
+        width: 100%;
+      }
+      .fl-in {
+        max-width: var(--max);
+        margin-inline: auto;
+      }
+      .fl-in > .t-h2 {
+        text-align: center; /* the site's section heading: centred, the rule before the italic line (user) */
+      }
+      .fl-g {
+        display: grid;
+        grid-template-columns: minmax(0, 6fr) minmax(0, 5fr); /* the list leads; the cards are the smaller side */
+        gap: 40px clamp(40px, calc(6 * var(--uvw)), 120px);
+        align-items: start;
+        margin-top: clamp(20px, calc(3 * var(--uvh)), 36px);
+      }
+      /* the list: each row has its own hairline on top. A row waits a screen below and rises with its card (the script
+         moves both by the same eased amount), then stops under the row before it, as the card stops on the card before. */
+      .fl-list {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .fl-row {
+        border-top: 1px solid rgba(13, 19, 18, 0.12);
+      }
+      .fl-btn {
+        display: grid;
+        grid-template-columns: 52px minmax(0, 1fr);
+        align-items: baseline;
+        width: 100%;
+        padding: clamp(10px, calc(1.6 * var(--uvh)), 18px) 0;
+        border: 0;
+        background: none;
+        font: inherit;
+        color: inherit;
+        text-align: left;
+        cursor: pointer;
+      }
+      .fl-n {
+        font-size: var(--fs-small);
+        font-weight: 600;
+        color: var(--grey);
+        font-variant-numeric: tabular-nums;
+        transition: color 0.5s var(--ease);
+      }
+      .fl-t {
+        font-size: var(--fs-list); /* the DMC Method step titles' size ("We create your campaigns"), user */
+        font-weight: 600;
+        letter-spacing: -0.035em;
+        line-height: 1.1;
+      }
+      .fl-row.on .fl-n {
+        color: var(--acc-mid);
+      }
+      .fl-d {
+        display: grid;
+        grid-template-rows: 0fr;
+        transition: grid-template-rows 0.6s var(--ease);
+      }
+      .fl-d > div {
+        overflow: hidden;
+      }
+      .fl-d p {
+        max-width: 28rem;
+        padding: 0 0 clamp(14px, calc(2 * var(--uvh)), 22px) 52px;
+        font-size: var(--fs-lead);
+        line-height: 1.45;
+        color: var(--grey);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      .fl-row.on .fl-d {
+        grid-template-rows: 1fr;
+      }
+      .fl-row.on .fl-d p {
+        opacity: 1;
+        transition: opacity 0.5s ease 0.1s;
+      }
+
+      /* the stack: card k rests k headers down; a card that has not arrived waits below the screen */
+      .fl-stack {
+        --hd: 66px; /* what shows of a card once the next one sits on it: a strip of its photo */
+        --ch: clamp(250px, calc(100 * var(--uvh) - 6 * var(--hd) - 290px), 380px); /* a card's height */
+        position: relative;
+        width: 100%;
+        max-width: 470px;
+        height: calc((7 - 1) * var(--hd) + var(--ch));
+        margin-left: auto;
+      }
+      /* a card is its photo, edge to edge, with one notch cut into it bottom-left for the team cards' icon tile. No name
+         notch (user): the list on the left names it. */
+      .fl-c {
+        position: absolute;
+        inset: 0 0 auto;
+        display: block;
+        height: var(--ch);
+        border-radius: var(--r-card);
+        color: var(--ink);
+        filter: drop-shadow(0 22px 24px rgba(13, 19, 18, 0.16)); /* follows the cut, a box-shadow would not */
+        /* no will-change: seven full-card photos as permanent layers left some unpainted */
+      }
+      .fl-m {
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        overflow: hidden;
+        background: var(--soft);
+        clip-path: var(--cut, none);
+      }
+      .fl-m img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      /* the notch is a real cut in the photo (the team cards' clip-path, from the script), so the page shows through it:
+         nothing painted, no colour to mismatch the glow (user). The front card is always the lowest, so the cut never
+         shows the card behind (--hd is wider than the notch is tall). */
+      .fl-ic {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        z-index: 1;
+      }
+      .fl-ic i {
+        display: grid;
+        place-items: center;
+        width: 48px;
+        height: 48px;
+        border-radius: calc(48px * 0.24);
+        background: var(--teal-3);
+        color: var(--ink);
+        font-size: 26px;
+      }
+      .fl-c:focus-visible {
+        outline: 2px solid var(--teal);
+        outline-offset: 4px;
+      }
+      @supports (corner-shape: squircle) {
+        .fl-c {
+          corner-shape: squircle;
+        }
+      }
+      @media (max-width: 1199px) {
+        .fl-g {
+          grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+          gap: 32px;
+        }
+      }
+      /* phones: the heading and the stack (each card names its service); the list steps aside */
+      @media (max-width: 899px) {
+        .fl-g {
+          grid-template-columns: 1fr;
+        }
+        .fl-list {
+          display: none;
+        }
+        .fl-stack {
+          --hd: 58px;
+          --ch: clamp(240px, calc(100 * var(--uvh) - 6 * var(--hd) - 200px), 400px);
+          max-width: none;
+        }
+        .fl-ic i {
+          width: 42px;
+          height: 42px;
+          font-size: 22px;
+        }
       }
 
       /* ---------- 7. booking (its own section) ---------- */
@@ -2559,10 +2707,8 @@
         .h-stat,
         .cs-in,
         .cs-img,
-        .cs-img > .cs-logo,
         .q,
         .vbox-f,
-        .rb,
         .fq,
         .bk,
         .bk-logo,
@@ -2895,36 +3041,10 @@
         }
       }
       @media (hover: none) {
-        .cs-img {
-          height: 190px;
-        }
-        .cs-res {
+        /* touch: there is no hover, so the results always sit in the photo's notch */
+        .cs .cs-meta {
           opacity: 1;
           transform: none;
-        }
-        .cs:hover .cs-img,
-        .cs.on .cs-img,
-        .cs:focus-within .cs-img {
-          height: 190px;
-        }
-        /* touch: there is no hover, so the photo stays and the logo sits on it in a white chip */
-        .cs:hover .cs-cover,
-        .cs.on .cs-cover,
-        .cs:focus-within .cs-cover {
-          transform: none;
-        }
-        .cs-img > .cs-logo {
-          inset: auto 10px 10px auto;
-          z-index: 2;
-          width: 112px;
-          height: 62px;
-          padding: 8px 10px;
-          border-radius: calc(var(--r-inner) - 10px); /* sits 10px inside the photo */
-          background: #fff;
-        }
-        .cs-in {
-          height: auto;
-          min-height: 410px;
         }
       }
       @media (prefers-reduced-motion: reduce) {
@@ -4059,7 +4179,7 @@
          (after madebyshape.co.uk/work), with client quotes and a video card in the flow. Cards = the home "Real clinics" /
          blog white card (6px inset photo, --r-card / --r-inner). Hover: the photo drifts up by `top`, the tag chips (the
          services carousel's dark-glass chip) and the home CTA ("Tell me more" size) slide in, the shadow deepens. All of
-         it moves by real position (whole pixels: sharp, no blur). Normal cursor (as on the blog). */
+         it moves by real position (whole pixels: sharp, no blur). Pointer cursor on the cards (user). */
       .header-cur,
       .menu a.is-cur {
         color: var(--teal);
@@ -4122,7 +4242,7 @@
         padding-top: clamp(120px, calc(14 * var(--uvw)), 260px);
       }
       /* the case: no card around it (user). The image stands alone with the card radius; the text sits under it on the
-         page background. The whole case is one link; the normal cursor. */
+         page background. The whole case is one link; the pointer cursor. */
       .wk-in {
         display: block;
         width: 100%;
@@ -4132,7 +4252,7 @@
         color: inherit;
         font: inherit;
         text-align: left;
-        cursor: default;
+        cursor: pointer; /* the whole case card is a link (user) */
       }
       .wk-in:focus-visible {
         outline: 2px solid var(--teal);
@@ -4383,9 +4503,7 @@
       .csh-tab .eyb {
         margin-bottom: 18px;
       }
-      .csb {
-        height: clamp(460px, calc(48 * var(--uvw)), 900px); /* tall (about 2:1 on a wide screen): the clinic's building and sign show in full (user) */
-      }
+      /* the banner keeps the service hero's height (.svb), so every hero image card is the same size (user) */
       /* the project (row 2 of the hero, the service hero's statement row rhythm) */
       .cso {
         display: grid;
@@ -4437,6 +4555,26 @@
          card's height; play opens it to 16:9 (never taller than the screen), close folds it back. */
       .csv {
         padding-top: var(--sec-y);
+      }
+      /* over the video, the service card's black label lines: the person's name, then their words (smaller) (user) */
+      .csv .vt-q {
+        font-size: var(--fs-h3);
+      }
+      .vt-d {
+        max-width: 34rem;
+        margin: 10px 0 0;
+        font-size: var(--fs-h5);
+        font-weight: 500;
+        letter-spacing: -0.02em;
+        line-height: 1.5;
+      }
+      .vt-d span {
+        padding: 0.12em 0.4em;
+        border-radius: 10px;
+        background: var(--ink);
+        color: #fff;
+        -webkit-box-decoration-break: clone;
+        box-decoration-break: clone;
       }
       /* the treatments we booked (inspo: a staggered photo row; our type, radius and motion). The head sits top-left
          over the first two columns; four photos of different heights: 1 and 2 sit on the baseline, 3 rises beside the
@@ -4578,6 +4716,12 @@
         .csv {
           padding-top: 72px;
         }
+        .csv .vt-q {
+          font-size: 22px;
+        }
+        .vt-d {
+          font-size: var(--fs-small);
+        }
         /* phones: the head, then the photos two by two, all one shape */
         .cst-g {
           grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -4586,6 +4730,33 @@
     </style>
   </head>
   <body>
+    <script>
+      // preloader only runs when the motion stack is going to run it
+      if (!matchMedia("(prefers-reduced-motion: reduce)").matches) document.documentElement.classList.add("is-pre");
+      // it waits for every image on the page (the lazy ones load now too), at most 8s; the ones in view are also decoded
+      window.__preWait = () => {
+        const imgs = [...document.images];
+        const one = (i) => {
+          if (i.loading === "lazy") i.loading = "eager";
+          if (i.complete && i.naturalWidth) return Promise.resolve();
+          return new Promise((r) => {
+            i.addEventListener("load", r, { once: true });
+            i.addEventListener("error", r, { once: true });
+            if (i.complete) r();
+          });
+        };
+        const inView = () => imgs.filter((i) => i.getBoundingClientRect().top < innerHeight).map((i) => (i.decode ? i.decode().catch(() => {}) : 0));
+        const all = Promise.all(imgs.map(one)).then(() => Promise.all(inView()));
+        return Promise.race([all, new Promise((r) => setTimeout(r, 8000))]);
+      };
+    </script>
+
+    <!-- ============ PRELOADER (the home page's; Elementor: a Custom Code snippet) ============ -->
+    <div class="pre" id="pre" aria-hidden="true">
+      <img class="pre-obj" src="assets/img/v11/mark-pre.webp" alt="" width="1920" height="1080" fetchpriority="high" />
+      <span class="pre-b"><img src="assets/dmc-mark.png" alt="" width="22" height="22" />Dental Media Corp</span>
+    </div>
+    <span class="pre-edge" id="preEdge" aria-hidden="true"></span>
     <a class="skip" href="#main">Skip to content</a>
     <svg width="0" height="0" style="position: absolute" aria-hidden="true">
       <defs>
@@ -4625,7 +4796,7 @@
               <a href="dental-reporting-dashboard.html">Dental Reporting Dashboard</a>
             </div>
           </div>
-          <a href="index.html#results">Case Studies</a>
+          <a class="is-cur" href="case-studies.html">Case Studies</a>
           <a href="index.html#testimonials">Reviews</a>
           <a href="index.html#dmc">DMC Method</a>
           <a href="index.html#faq">FAQ</a>
@@ -4670,7 +4841,7 @@
         </ul>
         <div class="mnav-rule"></div>
         <ul class="mnav-list mnav-2">
-          <li><a href="index.html#results">Case Studies</a></li>
+          <li><a href="case-studies.html">Case Studies</a></li>
           <li><a href="index.html#testimonials">Reviews</a></li>
           <li><a href="index.html#dmc">DMC Method</a></li>
           <li><a href="index.html#faq">FAQ</a></li>
@@ -4735,52 +4906,19 @@
         <div class="wrap">
           <div class="vt-in">
             <div class="vt-w">
-              <div class="vt-box" id="vtBox" data-embed="https://drive.google.com/file/d/13MqhWz0r0u-TySTFtp3yZwiZIhq83WXe/preview">
-                <div class="vt-media"><img src="assets/img/svc/marketing-video.webp" alt="A Dental Media Corp presenter inside a dental clinic" width="2880" height="1620" loading="lazy" decoding="async" /></div>
-                <button class="vt-play" type="button" aria-label="Play the video"><i class="ph-fill ph-play" aria-hidden="true"></i></button>
+              <div class="vt-box" id="vtBox" data-embed="https://www.youtube-nocookie.com/embed/NgVZUXrVF44?autoplay=1&amp;rel=0&amp;playsinline=1">
+                <div class="vt-media"><img src="assets/img/svc/rae-lynne-video.webp" alt="Rae-Lynne from Modern Smiles in conversation" width="1280" height="630" style="object-position: 50% 30%" loading="lazy" decoding="async" /></div>
+                <div class="vt-say">
+                  <p class="vt-q"><span>Rae-Lynne D.</span></p>
+                  <p class="vt-d"><span>“DMC is the first marketing that’s actually paid off since I opened in 2012.”</span></p>
+                </div>
+                <button class="vt-play" type="button" aria-label="Play Rae-Lynne D.’s video"><i class="ph-fill ph-play" aria-hidden="true"></i></button>
                 <button class="vt-x" type="button" aria-label="Close the video" tabindex="-1"><i class="ph-bold ph-x" aria-hidden="true"></i></button>
               </div>
               <div class="vt-tab">
                 <button class="cta vt-go" type="button"><span class="cta-t">Play video</span><span class="cta-i"><i class="ph-fill ph-play" aria-hidden="true"></i><i class="ph-fill ph-play" aria-hidden="true"></i></span></button>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      <div class="sbreak" aria-hidden="true"></div>
-
-      <!-- ============ 3. THE TREATMENTS WE BOOK (inspo: a staggered photo row; our components)
-           Elementor: Container (CSS grid). Left: label, H2, line, button. Right: Repeater (photo, caption).
-           Four photos of different heights that enter one by one from the left. -->
-      <section class="cst" aria-labelledby="cst-title">
-        <div class="wrap">
-          <div class="cst-g">
-            <div class="cst-hd">
-              <p class="eyb">What we book</p>
-              <h2 class="t-h2" id="cst-title">
-                <span class="ln-m"><span>Every treatment,</span></span>
-                <span class="ln-m"><span><span class="hl">booked for you.</span></span></span>
-              </h2>
-              <p>The treatments Modern Smiles wanted more of. We brought the patients who wanted them and booked them into the schedule.</p>
-              <a class="cta mag" href="dental-marketing.html"><span class="cta-t">See Dental Marketing</span><span class="cta-i"><i class="ph ph-arrow-right" aria-hidden="true"></i><i class="ph ph-arrow-right" aria-hidden="true"></i></span></a>
-            </div>
-            <figure class="cst-i">
-              <div class="cst-m"><img src="assets/img/case2.webp" alt="A patient in the chair on treatment day" width="1400" height="2100" style="object-position: 50% 45%" loading="lazy" decoding="async" /></div>
-              <figcaption>Treatment day</figcaption>
-            </figure>
-            <figure class="cst-i">
-              <div class="cst-m"><img src="assets/img/clients/modern-smiles-photo.webp" alt="A denture being made at Modern Smiles" width="1024" height="554" style="object-position: 50% 50%" loading="lazy" decoding="async" /></div>
-              <figcaption>Dentures, made in house</figcaption>
-            </figure>
-            <figure class="cst-i">
-              <div class="cst-m"><img src="assets/img/smile.webp" alt="A woman smiling with her new teeth" width="900" height="1350" style="object-position: 50% 30%" loading="lazy" decoding="async" /></div>
-              <figcaption>New smiles</figcaption>
-            </figure>
-            <figure class="cst-i">
-              <div class="cst-m"><img src="assets/img/case3.webp" alt="A treatment room ready for the next patient" width="1400" height="936" style="object-position: 50% 50%" loading="lazy" decoding="async" /></div>
-              <figcaption>A full schedule</figcaption>
-            </figure>
           </div>
         </div>
       </section>
@@ -4875,7 +5013,7 @@
                   <span class="ln-m"><span>More clinics, <span class="hl">more patients.</span></span></span>
                 </h2>
               </div>
-              <a class="cta mag" href="index.html#results"><span class="cta-t">Browse all case studies</span><span class="cta-i"><i class="ph ph-arrow-right" aria-hidden="true"></i><i class="ph ph-arrow-right" aria-hidden="true"></i></span></a>
+              <a class="cta mag" href="case-studies.html"><span class="cta-t">Browse all case studies</span><span class="cta-i"><i class="ph ph-arrow-right" aria-hidden="true"></i><i class="ph ph-arrow-right" aria-hidden="true"></i></span></a>
             </div>
             <div class="csn-g">
             <article class="wk" id="west-grande-prairie-dental" style="--o: 1">
@@ -4941,7 +5079,7 @@
             <li><a href="treatment-coordinator-training.html">Coordinator Training</a></li>
           </ul></nav>
           <nav aria-label="Company"><ul>
-            <li><a href="index.html#results">Case Studies</a></li>
+            <li><a href="case-studies.html">Case Studies</a></li>
             <li><a href="index.html#dmc">The DMC Method</a></li>
             <li><a href="index.html#faq">FAQ</a></li>
             <li><a href="blog.html">Blog</a></li>
@@ -4961,6 +5099,49 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
     <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+    <script>
+      /* ---------- preloader: hold until every image has loaded, then the home page's wipe ---------- */
+      (() => {
+        const root = document.documentElement,
+          pre = document.getElementById("pre"),
+          edge = document.getElementById("preEdge");
+        if (!pre) return;
+        if (!root.classList.contains("is-pre")) return void (pre.remove(), edge && edge.remove());
+        const G = window.gsap;
+        if (G) G.globalTimeline.pause(); // the page's entrances wait for the wipe
+        // nothing scrolls under the panel (registered before Lenis, so it never sees these)
+        const stop = (e) => (e.preventDefault(), e.stopImmediatePropagation());
+        const keys = (e) => [" ", "ArrowDown", "ArrowUp", "PageDown", "PageUp", "Home", "End"].includes(e.key) && stop(e);
+        addEventListener("wheel", stop, { passive: false, capture: true });
+        addEventListener("touchmove", stop, { passive: false, capture: true });
+        addEventListener("keydown", keys, { capture: true });
+        const inOut = "cubic-bezier(0.87, 0, 0.13, 1)"; // expo.inOut
+        pre.querySelector(".pre-obj").animate([{ transform: "scale(1.15)" }, { transform: "scale(1)" }], { duration: 2600, easing: "cubic-bezier(0.25, 0.46, 0.45, 0.94)", fill: "both" });
+        const t0 = performance.now();
+        window.__preWait().then(() => {
+          // never a flash: the panel shows for at least 0.6s
+          setTimeout(() => {
+            pre.querySelector(".pre-b").animate([{ transform: "none", opacity: 1 }, { transform: "translateY(-40%)", opacity: 0 }], { duration: 500, easing: "cubic-bezier(0.55, 0.06, 0.68, 0.19)", fill: "forwards" });
+            setTimeout(() => {
+              const z = parseFloat(getComputedStyle(root).zoom) || 1;
+              pre.animate([{ clipPath: "inset(0 0 0% 0)" }, { clipPath: "inset(0 0 100% 0)" }], { duration: 1100, easing: inOut, fill: "forwards" });
+              edge.style.opacity = "1";
+              edge.animate([{ transform: "translateY(0)" }, { transform: `translateY(${-innerHeight / z}px)` }], { duration: 1100, easing: inOut, fill: "forwards" });
+            }, 200);
+            setTimeout(() => G && G.globalTimeline.resume(), 750);
+            setTimeout(() => {
+              root.classList.remove("is-pre");
+              pre.remove();
+              edge.remove();
+              removeEventListener("wheel", stop, { capture: true });
+              removeEventListener("touchmove", stop, { capture: true });
+              removeEventListener("keydown", keys, { capture: true });
+              if (window.ScrollTrigger) ScrollTrigger.refresh();
+            }, 1350);
+          }, Math.max(0, 600 - (performance.now() - t0)));
+        });
+      })();
+    </script>
     <script>
       (() => {
         const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -5088,17 +5269,18 @@
               H = media.offsetHeight,
               R = parseFloat(getComputedStyle(media).borderTopLeftRadius) || 28,
               r = R,
-              g = 10,
+              g = Math.round(12 / (parseFloat(getComputedStyle(document.documentElement).zoom) || 1)), // 12px on screen at any laptop zoom (user)
               tw = chips ? chips.offsetWidth + g : 0, // top-right notch: the pills (the cards have none now)
               th = chips ? chips.offsetHeight + g : 0,
               bw = cta ? cta.offsetWidth + g : 0, // bottom-left notch: the CTA (the video card has none)
-              bh = cta ? cta.offsetHeight + g : 0;
+              bh = cta ? cta.offsetHeight + g : 0,
+              p = cta ? Math.min(cta.offsetHeight / 2 + g, bh - r) : r; // concentric with the pill: the gap stays g all the way round
             if (!chips && !cta) return void (media.style.clipPath = "");
             const top = chips
               ? `H${W - tw - r} A${r},${r} 0 0 1 ${W - tw},${r} V${th - r} A${r},${r} 0 0 0 ${W - tw + r},${th} H${W - R} A${R},${R} 0 0 1 ${W},${th + R}`
               : `H${W - R} A${R},${R} 0 0 1 ${W},${R}`;
             const bottom = cta
-              ? `H${bw + r} A${r},${r} 0 0 1 ${bw},${H - r} V${H - bh + r} A${r},${r} 0 0 0 ${bw - r},${H - bh} H${R} A${R},${R} 0 0 1 0,${H - bh - R}`
+              ? `H${bw + r} A${r},${r} 0 0 1 ${bw},${H - r} V${H - bh + p} A${p},${p} 0 0 0 ${bw - p},${H - bh} H${R} A${R},${R} 0 0 1 0,${H - bh - R}`
               : `H${R} A${R},${R} 0 0 1 0,${H - R}`;
             media.style.clipPath = `path("M${R},0 ${top} V${H - R} A${R},${R} 0 0 1 ${W - R},${H} ${bottom} V${R} A${R},${R} 0 0 1 ${R},0 Z")`;
           };
@@ -5121,10 +5303,11 @@
               H = box.offsetHeight,
               R = parseFloat(getComputedStyle(box).borderTopLeftRadius) || 28,
               r = R,
-              g = 10,
+              g = Math.round(12 / (parseFloat(getComputedStyle(document.documentElement).zoom) || 1)),
               tw = tab.offsetWidth + g,
-              th = tab.offsetHeight + g;
-            box.style.clipPath = `path("M${R},0 H${W - R} A${R},${R} 0 0 1 ${W},${R} V${H - th - r} A${r},${r} 0 0 1 ${W - r},${H - th} H${W - tw + r} A${r},${r} 0 0 0 ${W - tw},${H - th + r} V${H - r} A${r},${r} 0 0 1 ${W - tw - r},${H} H${R} A${R},${R} 0 0 1 0,${H - R} V${R} A${R},${R} 0 0 1 ${R},0 Z")`;
+              th = tab.offsetHeight + g,
+              p = Math.min(tab.offsetHeight / 2 + g, th - r); // concentric with the pill: the gap stays g all the way round
+            box.style.clipPath = `path("M${R},0 H${W - R} A${R},${R} 0 0 1 ${W},${R} V${H - th - r} A${r},${r} 0 0 1 ${W - r},${H - th} H${W - tw + p} A${p},${p} 0 0 0 ${W - tw},${H - th + p} V${H - r} A${r},${r} 0 0 1 ${W - tw - r},${H} H${R} A${R},${R} 0 0 1 0,${H - R} V${R} A${R},${R} 0 0 1 ${R},0 Z")`;
           };
           cut();
           new ResizeObserver(cut).observe(box);
@@ -5340,10 +5523,6 @@
           .from(".svb-stat", { y: 16, opacity: 0, duration: 0.9, ease: "power3.out" }, 1);
 
         gsap.from([".cso .eyb", ".cso-r > *"], { y: 30, opacity: 0, duration: 1.1, ease: "expo.out", stagger: 0.08, scrollTrigger: st(".cso", "top 86%") });
-        // the treatments: the head's label, line and button lift in; the photos come in one by one from the left
-        gsap.from([".cst-hd .eyb", ".cst-hd p:not(.eyb)", ".cst-hd .cta"], { y: 16, opacity: 0, duration: 0.9, ease: "power3.out", stagger: 0.1, scrollTrigger: st(".cst", "top 80%"), clearProps: "opacity,transform" });
-        gsap.from(".cst-i", { x: -80, opacity: 0, duration: 1.2, ease: "expo.out", stagger: 0.16, delay: 0.15, scrollTrigger: st(".cst-g", "top 75%"), clearProps: "opacity,transform" });
-        gsap.from(".cst-m img", { scale: 1.25, duration: 1.8, ease: "expo.out", stagger: 0.16, delay: 0.15, scrollTrigger: st(".cst-g", "top 75%") });
         gsap.from(".vt-box", { y: 60, opacity: 0, duration: 1.3, ease: "expo.out", scrollTrigger: st(".vt", "top 85%") });
         gsap.from(".vt-media img", { scale: 1.25, duration: 1.8, ease: "expo.out", scrollTrigger: st(".vt", "top 85%") });
         gsap.from([".vt-play", ".vt-tab"], { y: 20, opacity: 0, duration: 1, ease: "power3.out", stagger: 0.1, delay: 0.4, scrollTrigger: st(".vt", "top 85%"), clearProps: "opacity,transform" });
