@@ -1553,7 +1553,10 @@
         display: flex;
         gap: 22px;
         margin-top: var(--sec-head);
-        padding: 0 var(--side) 30px;
+        /* room under the cards for their hover shadow (a scrolling row clips at its padding edge, user); the arrows
+           below are pulled up by the extra, so nothing moves */
+        padding: 0 var(--side) 80px;
+        margin-bottom: -50px;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         scroll-padding-inline: var(--side);

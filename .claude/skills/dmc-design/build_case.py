@@ -148,6 +148,16 @@ CASE_CSS = """
         max-width: 58%;
         padding: 0 0 4px clamp(20px, calc(1.6 * var(--uvw)), 32px);
       }
+      /* the free space above the photo, left: the strategy call button (user), sitting just above the banner */
+      .csh-cta {
+        position: absolute;
+        left: 0;
+        top: calc(var(--csh-t) - 62px - 22px);
+        z-index: 2;
+      }
+      .cso-cta {
+        margin-top: 32px;
+      }
       .csh-tab .eyb {
         margin-bottom: 18px;
       }
@@ -344,6 +354,11 @@ CASE_CSS = """
           padding: 0;
           margin-bottom: 24px;
         }
+        .csh-cta {
+          position: static;
+          order: 3;
+          margin-top: 20px;
+        }
         .cso-m {
           grid-template-columns: 1fr 1fr;
         }
@@ -369,6 +384,8 @@ style_out = bs.style.replace('    </style>', bs.PAGE_CSS + bc.PAGE_CSS + CASE_CS
 
 # ---------------- script: the service page's, with the hero notch moved to the top-right and the case cards' notch ----
 JS = bs.JS
+JS = JS.replace('        /* ---------- magnetic buttons ---------- */', '{BOOK_JS}        /* ---------- magnetic buttons ---------- */', 1)
+assert '{BOOK_JS}' in JS
 JS = JS.replace('        gsap.set(".hp", { opacity: 0, y: 50 });\n        ScrollTrigger.batch(".hp", { start: "top 94%", once: true, onEnter: (b) => gsap.to(b, { opacity: 1, y: 0, duration: 1.1, ease: "expo.out", stagger: 0.08, clearProps: "opacity,transform" }) });\n\n        // client video: the card rises, the still settles, the quote and buttons follow\n        gsap.from(".vt-box", { y: 60, opacity: 0, duration: 1.3, ease: "expo.out", scrollTrigger: st(".vt", "top 85%") });\n        gsap.from(".vt-media img", { scale: 1.25, duration: 1.8, ease: "expo.out", scrollTrigger: st(".vt", "top 85%") });\n        gsap.from([".vt-say", ".vt-play", ".vt-tab"], { y: 20, opacity: 0, duration: 1, ease: "power3.out", stagger: 0.1, delay: 0.4, scrollTrigger: st(".vt", "top 85%"), clearProps: "opacity,transform" });\n', '')  # no video card on the case pages
 def rep(a, b):
     global JS
@@ -456,6 +473,14 @@ def ld_txt(c, url):
             {"@type": "ListItem", "position": 3, "name": clinic, "item": url}]}]}
     return json.dumps(ld, ensure_ascii=False, indent=2).replace('\n', '\n      ')
 
+_idx = open('index.html', 'rb').read().decode('utf-8').replace('\r\n', '\n')
+_b0 = _idx.index('      <!-- ============ 7. BOOK A FREE STRATEGY CALL ============ -->')
+BOOK_SEC = _idx[_b0:_idx.index('      </section>\n', _b0) + len('      </section>\n')]
+_j0 = _idx.index('        /* ---------- booking calendar: live open times from LeadConnector ---------- */')
+BOOK_JS = _idx[_j0:_idx.index('        /* ---------- ', _j0 + 20)]
+# every "book" link on a case page goes to the calendar on the same page (user)
+HERE = lambda h: h.replace('href="index.html#contact"', 'href="#contact"')
+
 def render(k):
     c = bc.CASES[k]
     slug, clinic, ret, title, img, alt, w, h, tags = c
@@ -497,10 +522,10 @@ def render(k):
 {bs.symbols}
 
     <!-- ============ HEADER (Elementor: Theme Builder > Header, shared with the home page) ============ -->
-{bc.header}
+{HERE(bc.header)}
 
     <!-- ============ MOBILE MENU ============ -->
-{bc.mnav}
+{HERE(bc.mnav)}
     <main id="main">
       <!-- ============ 1. CASE HERO (inspo: madebyshape.co.uk/work/this-is-digital, our components) ============
            Elementor: Single "Case Study" template. ACF: clinic, headline (2 lines), photo, revenue, return.
@@ -510,6 +535,7 @@ def render(k):
         <div class="wrap">
           <div class="svh-in">
             <div class="csh-w">
+              <div class="csh-cta">{cta('Book a strategy call', '#contact')}</div>
               <div class="csh-tab">
                 <p class="eyb">{e(clinic)}</p>
                 <h1 class="t-h1" id="case-title">
@@ -532,6 +558,7 @@ def render(k):
                   <span class="ln-m"><span>{s['o1']}</span></span>
                   <span class="ln-m"><span>{s['o2']}</span></span>
                 </h2>
+                <div class="cso-cta">{cta('Book a strategy call', '#contact')}</div>
               </div>
               <div class="cso-r">
                 <p>{e(s['intro'])}</p>
@@ -579,38 +606,18 @@ def render(k):
 
       <div class="sbreak" aria-hidden="true"></div>
 
-      <!-- ============ 5. WHAT NEXT: two more case cards (the case-studies card) + Browse all case studies ============ -->
-      <section class="help csn" aria-labelledby="csn-title">
-        <div class="wrap">
-          <div class="help-in">
-            <div class="help-hd">
-              <div>
-                <p class="eyb">More results</p>
-                <h2 class="t-h2" id="csn-title">
-                  <span class="ln-m"><span>What next?</span></span>
-                  <span class="ln-m"><span>More clinics, <span class="hl">more patients.</span></span></span>
-                </h2>
-              </div>
-              {cta('Browse all case studies', 'case-studies.html')}
-            </div>
-            <div class="csn-g">
-{bc.case_html(nxt[0], 1)}
-{bc.case_html(nxt[1], 2)}
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
+      <!-- ============ 5. BOOK A FREE STRATEGY CALL (the home page's calendar section; user, replaces What next) ============ -->
+{BOOK_SEC.replace('<!-- ============ 7. BOOK A FREE STRATEGY CALL ============ -->', '<!-- the calendar: live open times from LeadConnector -->')}    </main>
 
     <!-- video lightbox: the review cards' play buttons fill it with a YouTube embed -->
 {bs.vbox}
     <div class="sbreak" aria-hidden="true"></div>
     <!-- ============ FOOTER (shared with the home page) ============ -->
-{bc.footer}
+{HERE(bc.footer)}
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>{JS}
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>{JS.replace('{BOOK_JS}', BOOK_JS)}
   </body>
 </html>
 '''

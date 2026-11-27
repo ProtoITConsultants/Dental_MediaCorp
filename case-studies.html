@@ -1458,7 +1458,10 @@
         display: flex;
         gap: 22px;
         margin-top: var(--sec-head);
-        padding: 0 var(--side) 30px;
+        /* room under the cards for their hover shadow (a scrolling row clips at its padding edge, user); the arrows
+           below are pulled up by the extra, so nothing moves */
+        padding: 0 var(--side) 80px;
+        margin-bottom: -50px;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         scroll-padding-inline: var(--side);
@@ -3900,6 +3903,33 @@
         gap: 14px;
         padding: 20px 14px 0;
       }
+      /* the hover notch holds the case's ad spend in an ink pill (not the blog's icon tile); the tab's corner follows
+         the pill's round end (half its height + the 12px gap) */
+      .wks-list .bc-by {
+        border-top-right-radius: calc(24px + 12px);
+      }
+      /* the pill is wider than the blog's tile: the box the tab travels in fits it and its curved corner (user) */
+      .wks-list .bc-nt {
+        width: min(320px, 100%);
+      }
+      .cc-sp {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        height: 48px;
+        padding: 0 20px;
+        border-radius: var(--r-pill);
+        background: var(--ink);
+        color: #fff;
+        font-size: var(--fs-small);
+        font-weight: 500;
+        white-space: nowrap;
+      }
+      .cc-sp b {
+        font-size: var(--fs-body);
+        font-weight: 600;
+        color: var(--acc);
+      }
       .cc-tags {
         display: flex;
         align-items: center;
@@ -4154,19 +4184,15 @@
               <a class="bc-in" href="case-west-grande-prairie-dental.html" aria-label="West Grande Prairie Dental: $97,000 in revenue from a $5,000 ad spend. View the case study">
                 <div class="bc-fig">
                   <div class="bc-media"><img src="assets/img/clients/wgp-photo.jpg" alt="West Grande Prairie Dental storefront" width="1619" height="1080" loading="lazy" decoding="async" /></div>
-                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-chart-line-up"></i></span></span></span>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="cc-sp"><b>$5k</b> ad spend</span></span></span>
                 </div>
                 <div class="cc">
-                  <p class="cc-tags"><span class="cc-tag">Dental Marketing</span><span class="cc-live">Case study</span></p>
+                  <p class="cc-tags"><span class="cc-tag">Case study</span></p>
                   <h3>West Grande Prairie Dental</h3>
                   <div class="cc-st">
                     <p class="cc-roas"><b>19.4×</b><small>Return on ad spend</small></p>
                     <p class="cc-rev"><b>$97k</b><small>Revenue from ads</small></p>
                   </div>
-                  <ul class="cc-chips">
-                    <li><i class="ph ph-wallet" aria-hidden="true"></i>$5k ad spend</li>
-                    <li><i class="ph ph-calendar-check" aria-hidden="true"></i>Booked into the schedule</li>
-                  </ul>
                   <span class="cc-go">View full case study <i class="ph ph-arrow-right" aria-hidden="true"></i></span>
                 </div>
               </a>
@@ -4175,19 +4201,15 @@
               <a class="bc-in" href="case-riverbend-denture-implant.html" aria-label="Riverbend Denture &amp; Implant: $255,000 in revenue from a $19,000 ad spend. View the case study">
                 <div class="bc-fig">
                   <div class="bc-media"><img src="assets/img/clients/riverbend-photo.webp" alt="Riverbend Denture &amp; Implant Clinic reception" width="1500" height="1000" loading="lazy" decoding="async" /></div>
-                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-chart-line-up"></i></span></span></span>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="cc-sp"><b>$19k</b> ad spend</span></span></span>
                 </div>
                 <div class="cc">
-                  <p class="cc-tags"><span class="cc-tag">Dental Marketing</span><span class="cc-live">Case study</span></p>
+                  <p class="cc-tags"><span class="cc-tag">Case study</span></p>
                   <h3>Riverbend Denture &amp; Implant</h3>
                   <div class="cc-st">
                     <p class="cc-roas"><b>13.4×</b><small>Return on ad spend</small></p>
                     <p class="cc-rev"><b>$255k</b><small>Revenue from ads</small></p>
                   </div>
-                  <ul class="cc-chips">
-                    <li><i class="ph ph-wallet" aria-hidden="true"></i>$19k ad spend</li>
-                    <li><i class="ph ph-calendar-check" aria-hidden="true"></i>Booked into the schedule</li>
-                  </ul>
                   <span class="cc-go">View full case study <i class="ph ph-arrow-right" aria-hidden="true"></i></span>
                 </div>
               </a>
@@ -4196,19 +4218,15 @@
               <a class="bc-in" href="case-smile-now.html" aria-label="Smile Now: $161,000 in revenue from a $13,000 ad spend. View the case study">
                 <div class="bc-fig">
                   <div class="bc-media"><img src="assets/img/clients/smilenow-photo.webp" alt="Calgary skyline and the Peace Bridge" width="1600" height="900" loading="lazy" decoding="async" /></div>
-                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-chart-line-up"></i></span></span></span>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="cc-sp"><b>$13k</b> ad spend</span></span></span>
                 </div>
                 <div class="cc">
-                  <p class="cc-tags"><span class="cc-tag">Dental Marketing</span><span class="cc-live">Case study</span></p>
+                  <p class="cc-tags"><span class="cc-tag">Case study</span></p>
                   <h3>Smile Now</h3>
                   <div class="cc-st">
                     <p class="cc-roas"><b>12.4×</b><small>Return on ad spend</small></p>
                     <p class="cc-rev"><b>$161k</b><small>Revenue from ads</small></p>
                   </div>
-                  <ul class="cc-chips">
-                    <li><i class="ph ph-wallet" aria-hidden="true"></i>$13k ad spend</li>
-                    <li><i class="ph ph-calendar-check" aria-hidden="true"></i>Booked into the schedule</li>
-                  </ul>
                   <span class="cc-go">View full case study <i class="ph ph-arrow-right" aria-hidden="true"></i></span>
                 </div>
               </a>
@@ -4217,19 +4235,15 @@
               <a class="bc-in" href="case-wye-dental.html" aria-label="Wye Dental: $92,000 in revenue from a $6,000 ad spend. View the case study">
                 <div class="bc-fig">
                   <div class="bc-media"><img src="assets/img/clients/wye-photo.webp" alt="The Wye Dental team" width="2048" height="1066" loading="lazy" decoding="async" /></div>
-                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-chart-line-up"></i></span></span></span>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="cc-sp"><b>$6k</b> ad spend</span></span></span>
                 </div>
                 <div class="cc">
-                  <p class="cc-tags"><span class="cc-tag">Dental Marketing</span><span class="cc-live">Case study</span></p>
+                  <p class="cc-tags"><span class="cc-tag">Case study</span></p>
                   <h3>Wye Dental</h3>
                   <div class="cc-st">
                     <p class="cc-roas"><b>15.3×</b><small>Return on ad spend</small></p>
                     <p class="cc-rev"><b>$92k</b><small>Revenue from ads</small></p>
                   </div>
-                  <ul class="cc-chips">
-                    <li><i class="ph ph-wallet" aria-hidden="true"></i>$6k ad spend</li>
-                    <li><i class="ph ph-calendar-check" aria-hidden="true"></i>Booked into the schedule</li>
-                  </ul>
                   <span class="cc-go">View full case study <i class="ph ph-arrow-right" aria-hidden="true"></i></span>
                 </div>
               </a>
@@ -4238,19 +4252,15 @@
               <a class="bc-in" href="case-modern-smiles.html" aria-label="Modern Smiles: $72,000 in revenue from a $6,000 ad spend. View the case study">
                 <div class="bc-fig">
                   <div class="bc-media"><img src="assets/img/clients/modern-smiles-photo.webp" alt="A denture being made at Modern Smiles" width="1024" height="554" loading="lazy" decoding="async" /></div>
-                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-chart-line-up"></i></span></span></span>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="cc-sp"><b>$6k</b> ad spend</span></span></span>
                 </div>
                 <div class="cc">
-                  <p class="cc-tags"><span class="cc-tag">Dental Marketing</span><span class="cc-live">Case study</span></p>
+                  <p class="cc-tags"><span class="cc-tag">Case study</span></p>
                   <h3>Modern Smiles</h3>
                   <div class="cc-st">
                     <p class="cc-roas"><b>12×</b><small>Return on ad spend</small></p>
                     <p class="cc-rev"><b>$72k</b><small>Revenue from ads</small></p>
                   </div>
-                  <ul class="cc-chips">
-                    <li><i class="ph ph-wallet" aria-hidden="true"></i>$6k ad spend</li>
-                    <li><i class="ph ph-calendar-check" aria-hidden="true"></i>Booked into the schedule</li>
-                  </ul>
                   <span class="cc-go">View full case study <i class="ph ph-arrow-right" aria-hidden="true"></i></span>
                 </div>
               </a>

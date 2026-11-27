@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 # Builds reviews.html (inspo: theimplantengine.com/reviews, the layout only; every size, card and motion is ours):
-#   1. hero: the blog / case-studies head, centred (label, H1, intro)
-#   2. the numbers bar: the home hero's glass badge box (.h-badges), filled with our real figures
-#   3. video testimonials: the home hero's review cards, in the service pages' moving row ("What dentists say")
+#   1. hero: the blog / case-studies head (label + H1 left | intro right; user: not centred, consistent)
+#   2. the numbers bar right under it: the home hero's glass badge box (.h-badges), three real figures
+#   3. video testimonials straight after: the home hero's review cards in the service pages' moving row (no heading; user)
 #   then the footer. Nothing else (user).
 # Reuses the service template's parts (build_service.py): style, header, footer, review cards, lightbox and script.
 # Run from the repo root:  python .claude/skills/dmc-design/build_reviews.py
@@ -20,7 +20,6 @@ STATS = [
     ('<i class="ph-fill ph-star rv-ic" aria-hidden="true"></i>', '5.0 <span class="rv-stars" aria-hidden="true">★★★★★</span>', 'Average rating'),
     ('<i class="ph-fill ph-users-three rv-ic" aria-hidden="true"></i>', '5,000+', 'Consultations attended'),
     ('<i class="ph-fill ph-currency-circle-dollar rv-ic" aria-hidden="true"></i>', '$10M+', 'Accepted treatment'),
-    ('<i class="ph-fill ph-chart-line-up rv-ic" aria-hidden="true"></i>', 'Up to 19.4×', 'Return on ad spend'),
 ]
 stats = '\n'.join(f'            <li>{ic}<span><b>{num}</b> {lbl}</span></li>' for ic, num, lbl in STATS)
 
@@ -37,29 +36,32 @@ CSS = """
           radial-gradient(32% 40% at 80% 12%, rgba(255, 191, 215, 0.34), transparent 70%),
           radial-gradient(36% 44% at 16% 30%, rgba(191, 230, 220, 0.5), transparent 70%);
       }
+      /* the head: the blog's row (label + H1 left, intro right) */
       .rvh-in {
-        max-width: 860px;
+        display: grid;
+        grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+        gap: 40px clamp(40px, calc(6 * var(--uvw)), 120px);
+        align-items: start;
+        max-width: var(--max);
         margin-inline: auto;
-        text-align: center;
       }
       .rvh .eyb {
-        justify-content: center;
         margin-bottom: 22px;
       }
       .rvh .t-h1 {
         --fs-h1: clamp(38px, calc(4.2 * var(--uvw)), 68px);
       }
       .rvh-txt {
-        max-width: 600px;
-        margin: 24px auto 0;
+        padding-top: calc(var(--fs-small) * 1.4 + 22px); /* level with the H1, as on the blog */
         font-size: var(--fs-lead);
         line-height: 1.45;
         color: var(--grey);
       }
       /* the numbers bar: the hero's glass badge box, wider, a figure over its label */
       .rvh .h-badges {
-        max-width: 1040px;
-        margin: clamp(40px, calc(5 * var(--uvh)), 64px) auto 0;
+        width: fit-content;
+        max-width: var(--max);
+        margin: clamp(28px, calc(3.5 * var(--uvh)), 44px) 0 0; /* right under the head, on its left edge */
         padding: 20px 6px;
       }
       .rvh .h-badges b {
@@ -85,7 +87,16 @@ CSS = """
         vertical-align: 0.2em;
       }
       .rvw.rv-page {
-        padding-top: var(--sec-y);
+        padding-top: clamp(48px, calc(6 * var(--uvh)), 80px); /* the reviews follow the bar, no heading (user) */
+      }
+      @media (max-width: 1199px) {
+        .rvh-in {
+          grid-template-columns: 1fr;
+        }
+        .rvh-txt {
+          padding-top: 0;
+          max-width: 640px;
+        }
       }
       @media (max-width: 899px) {
         .rvh .h-badges {
@@ -144,29 +155,23 @@ page = f'''<!doctype html>
       <section class="rvh" aria-labelledby="rv-title">
         <div class="wrap">
           <div class="rvh-in">
-            <p class="eyb">Reviews</p>
-            <h1 class="t-h1" id="rv-title">
-              <span class="ln-m"><span>Real reviews from</span></span>
-              <span class="ln-m"><span><span class="hl">real clinics.</span></span></span>
-            </h1>
+            <div>
+              <p class="eyb">Reviews</p>
+              <h1 class="t-h1" id="rv-title">
+                <span class="ln-m"><span>Real reviews from</span></span>
+                <span class="ln-m"><span><span class="hl">real clinics.</span></span></span>
+              </h1>
+            </div>
             <p class="rvh-txt">Dentists across Canada on what changed once we took over their marketing: the ads, the calls and the bookings, so their team could focus on patients.</p>
           </div>
-          <ul class="h-badges" aria-label="Our results in numbers">
+          <ul class="h-badges rvh-bar" aria-label="Our results in numbers">
 {stats}
           </ul>
         </div>
       </section>
 
       <!-- ============ 2. VIDEO TESTIMONIALS (the home hero's moving cards) ============ -->
-      <section class="rvw rv-page" id="testimonials" aria-labelledby="rvw-title">
-        <div class="wrap">
-          <div class="sh">
-            <h2 class="t-h2" id="rvw-title">
-              <span class="ln-m"><span>Video testimonials</span></span>
-              <span class="sh-l2"><span class="sh-rule" aria-hidden="true"></span><span class="ln-m"><span class="hl">from our clinics.</span></span></span>
-            </h2>
-          </div>
-        </div>
+      <section class="rvw rv-page" id="testimonials" aria-label="Video testimonials">
         <div class="rvw-row">
 {bs.reviews}        </div>
       </section>

@@ -689,19 +689,15 @@ if __name__ == '__main__':
               <a class="bc-in" href="case-{slug}.html" aria-label="{html.escape(clinic)}: {html.escape(title)}. View the case study">
                 <div class="bc-fig">
                   <div class="bc-media"><img src="assets/img/{img}" alt="{html.escape(alt)}" width="{w}" height="{h}" loading="lazy" decoding="async" /></div>
-                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="bc-i"><i class="ph-fill ph-chart-line-up"></i></span></span></span>
+                  <span class="bc-nt" aria-hidden="true"><span class="bc-by"><span class="cc-sp"><b>{k(spend.replace(' ad spend', ''))}</b> ad spend</span></span></span>
                 </div>
                 <div class="cc">
-                  <p class="cc-tags"><span class="cc-tag">Dental Marketing</span><span class="cc-live">Case study</span></p>
+                  <p class="cc-tags"><span class="cc-tag">Case study</span></p>
                   <h3>{html.escape(clinic)}</h3>
                   <div class="cc-st">
                     <p class="cc-roas"><b>{ret}</b><small>Return on ad spend</small></p>
                     <p class="cc-rev"><b>{k(rev)}</b><small>Revenue from ads</small></p>
                   </div>
-                  <ul class="cc-chips">
-                    <li><i class="ph ph-wallet" aria-hidden="true"></i>{k(spend.replace(' ad spend', ''))} ad spend</li>
-                    <li><i class="ph ph-calendar-check" aria-hidden="true"></i>Booked into the schedule</li>
-                  </ul>
                   <span class="cc-go">View full case study <i class="ph ph-arrow-right" aria-hidden="true"></i></span>
                 </div>
               </a>
@@ -724,6 +720,33 @@ if __name__ == '__main__':
         flex-direction: column;
         gap: 14px;
         padding: 20px 14px 0;
+      }
+      /* the hover notch holds the case's ad spend in an ink pill (not the blog's icon tile); the tab's corner follows
+         the pill's round end (half its height + the 12px gap) */
+      .wks-list .bc-by {
+        border-top-right-radius: calc(24px + 12px);
+      }
+      /* the pill is wider than the blog's tile: the box the tab travels in fits it and its curved corner (user) */
+      .wks-list .bc-nt {
+        width: min(320px, 100%);
+      }
+      .cc-sp {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        height: 48px;
+        padding: 0 20px;
+        border-radius: var(--r-pill);
+        background: var(--ink);
+        color: #fff;
+        font-size: var(--fs-small);
+        font-weight: 500;
+        white-space: nowrap;
+      }
+      .cc-sp b {
+        font-size: var(--fs-body);
+        font-weight: 600;
+        color: var(--acc);
       }
       .cc-tags {
         display: flex;

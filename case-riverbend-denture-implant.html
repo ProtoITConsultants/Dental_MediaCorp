@@ -1505,7 +1505,10 @@
         display: flex;
         gap: 22px;
         margin-top: var(--sec-head);
-        padding: 0 var(--side) 30px;
+        /* room under the cards for their hover shadow (a scrolling row clips at its padding edge, user); the arrows
+           below are pulled up by the extra, so nothing moves */
+        padding: 0 var(--side) 80px;
+        margin-bottom: -50px;
         overflow-x: auto;
         scroll-snap-type: x mandatory;
         scroll-padding-inline: var(--side);
@@ -4449,6 +4452,16 @@
         max-width: 58%;
         padding: 0 0 4px clamp(20px, calc(1.6 * var(--uvw)), 32px);
       }
+      /* the free space above the photo, left: the strategy call button (user), sitting just above the banner */
+      .csh-cta {
+        position: absolute;
+        left: 0;
+        top: calc(var(--csh-t) - 62px - 22px);
+        z-index: 2;
+      }
+      .cso-cta {
+        margin-top: 32px;
+      }
       .csh-tab .eyb {
         margin-bottom: 18px;
       }
@@ -4645,6 +4658,11 @@
           padding: 0;
           margin-bottom: 24px;
         }
+        .csh-cta {
+          position: static;
+          order: 3;
+          margin-top: 20px;
+        }
         .cso-m {
           grid-template-columns: 1fr 1fr;
         }
@@ -4748,7 +4766,7 @@
         </div>
         <div class="nav-r">
           <a class="nav-txt" href="blog.html">Blog</a>
-          <a class="nav-cta" href="index.html#contact">Book a Call</a>
+          <a class="nav-cta" href="#contact">Book a Call</a>
           <button class="burger" type="button" aria-controls="mnav" aria-expanded="false" aria-label="Open menu">
             <div><span></span><span></span><span></span></div>
           </button>
@@ -4793,7 +4811,7 @@
           <li><a href="blog.html">Blog</a></li>
         </ul>
         <div class="mnav-foot">
-          <a class="cta light" href="index.html#contact"><span class="cta-t">Book a Strategy Call</span><span class="cta-i"><i class="ph ph-arrow-right" aria-hidden="true"></i><i class="ph ph-arrow-right" aria-hidden="true"></i></span></a>
+          <a class="cta light" href="#contact"><span class="cta-t">Book a Strategy Call</span><span class="cta-i"><i class="ph ph-arrow-right" aria-hidden="true"></i><i class="ph ph-arrow-right" aria-hidden="true"></i></span></a>
           <small>© 2026 Dental Media Corp</small>
         </div>
       </div>
@@ -4808,6 +4826,7 @@
         <div class="wrap">
           <div class="svh-in">
             <div class="csh-w">
+              <div class="csh-cta"><a class="cta mag" href="#contact"><span class="cta-t">Book a strategy call</span><span class="cta-i"><i class="ph ph-arrow-right" aria-hidden="true"></i><i class="ph ph-arrow-right" aria-hidden="true"></i></span></a></div>
               <div class="csh-tab">
                 <p class="eyb">Riverbend Denture &amp; Implant</p>
                 <h1 class="t-h1" id="case-title">
@@ -4830,6 +4849,7 @@
                   <span class="ln-m"><span>Implant patients,</span></span>
                   <span class="ln-m"><span>booked <span class="hl">for the team.</span></span></span>
                 </h2>
+                <div class="cso-cta"><a class="cta mag" href="#contact"><span class="cta-t">Book a strategy call</span><span class="cta-i"><i class="ph ph-arrow-right" aria-hidden="true"></i><i class="ph ph-arrow-right" aria-hidden="true"></i></span></a></div>
               </div>
               <div class="cso-r">
                 <p>Riverbend Denture &amp; Implant wanted more patients ready for dentures and implants. We ran the campaigns, contacted every enquiry and booked the right patients straight into their calendar, so the team could focus on treatment.</p>
@@ -4945,45 +4965,203 @@
 
       <div class="sbreak" aria-hidden="true"></div>
 
-      <!-- ============ 5. WHAT NEXT: two more case cards (the case-studies card) + Browse all case studies ============ -->
-      <section class="help csn" aria-labelledby="csn-title">
-        <div class="wrap">
-          <div class="help-in">
-            <div class="help-hd">
-              <div>
-                <p class="eyb">More results</p>
-                <h2 class="t-h2" id="csn-title">
-                  <span class="ln-m"><span>What next?</span></span>
-                  <span class="ln-m"><span>More clinics, <span class="hl">more patients.</span></span></span>
-                </h2>
-              </div>
-              <a class="cta mag" href="case-studies.html"><span class="cta-t">Browse all case studies</span><span class="cta-i"><i class="ph ph-arrow-right" aria-hidden="true"></i><i class="ph ph-arrow-right" aria-hidden="true"></i></span></a>
+      <!-- ============ 5. BOOK A FREE STRATEGY CALL (the home page's calendar section; user, replaces What next) ============ -->
+      <!-- the calendar: live open times from LeadConnector -->
+      <section class="book" id="contact" aria-labelledby="ct-title">
+        <div class="wrap ct">
+          <div class="ct-in">
+            <div class="sh">
+          <h2 class="t-h2" id="ct-title">
+            <span class="ln-m"><span>Book a free</span></span>
+            <span class="sh-l2"><span class="sh-rule" aria-hidden="true"></span><span class="ln-m"><span class="hl">strategy call</span></span></span>
+          </h2>
             </div>
-            <div class="csn-g">
-            <article class="wk" id="smile-now" style="--o: 1">
-              <a class="wk-in" href="case-smile-now.html" aria-label="Smile Now: $161,000 in revenue from a $13,000 ad spend">
-                <div class="wk-fig">
-                  <div class="wk-media">
-                    <img src="assets/img/clients/smilenow-photo.webp" alt="Calgary skyline and the Peace Bridge" width="1600" height="900" loading="lazy" decoding="async" />
+            <div class="ct-body">
+        <!-- Elementor: HTML widget. Open times are read live from LeadConnector (calendar eUrf2zbFwuzAXtbJs1I8).
+       The final booking posts to data-book-endpoint: a WordPress endpoint that creates the appointment
+       through the LeadConnector API with a private token kept on the server. -->
+        <div
+          class="bk"
+          id="bk"
+          data-calendar="eUrf2zbFwuzAXtbJs1I8"
+          data-book-endpoint=""
+        >
+          <aside class="bk-info">
+            <span class="bk-logo"
+              ><img src="assets/dmc-mark.png" alt="" width="34" height="33"
+            /></span>
+            <span class="bk-org">Dental Media Corp</span>
+            <h3 class="bk-title">Growth Strategy Call</h3>
+            <ul class="bk-meta">
+              <li><i class="ph ph-clock" aria-hidden="true"></i>45 min</li>
+              <li>
+                <i class="ph ph-seal-check" aria-hidden="true"></i>Free
+                strategy call
+              </li>
+              <li class="bk-when" id="bkWhenRow" hidden>
+                <i class="ph ph-calendar-check" aria-hidden="true"></i
+                ><span id="bkWhen"></span>
+              </li>
+              <li>
+                <i
+                  class="ph ph-globe-hemisphere-west"
+                  aria-hidden="true"
+                ></i
+                ><span id="bkTzLabel"></span>
+              </li>
+            </ul>
+            <p class="bk-desc">
+              We’ll look at your market and the treatments you want more of,
+              then show you how we’d bring in, call and book those patients for you.
+            </p>
+          </aside>
+          <div class="bk-main">
+            <div class="bk-step" id="bkS1">
+              <h4 class="bk-h">Select a Date &amp; Time</h4>
+              <div class="bk-pick">
+                <div class="bk-cal">
+                  <div class="bk-month">
+                    <button
+                      type="button"
+                      class="bk-nav"
+                      id="bkPrev"
+                      aria-label="Previous month"
+                    >
+                      <i class="ph ph-caret-left" aria-hidden="true"></i>
+                    </button>
+                    <span id="bkMonth" aria-live="polite"></span>
+                    <button
+                      type="button"
+                      class="bk-nav"
+                      id="bkNext"
+                      aria-label="Next month"
+                    >
+                      <i class="ph ph-caret-right" aria-hidden="true"></i>
+                    </button>
                   </div>
-                  <span class="cta wk-cta" aria-hidden="true"><span class="cta-t">View case study</span><span class="cta-i"><i class="ph ph-arrow-right"></i><i class="ph ph-arrow-right"></i></span></span>
-                </div>
-                <p class="wk-meta"><span>Smile Now</span><span>Return on ad spend <b>12.4×</b></span></p>
-                <h2 class="wk-t">$161,000 in revenue from a $13,000 ad spend</h2>
-              </a>
-            </article>
-            <article class="wk" id="wye-dental" style="--o: 2">
-              <a class="wk-in" href="case-wye-dental.html" aria-label="Wye Dental: $92,000 in revenue from a $6,000 ad spend">
-                <div class="wk-fig">
-                  <div class="wk-media">
-                    <img src="assets/img/clients/wye-photo.webp" alt="The Wye Dental team" width="2048" height="1066" loading="lazy" decoding="async" />
+                  <div class="bk-wk" aria-hidden="true">
+                    <span>Mon</span><span>Tue</span><span>Wed</span
+                    ><span>Thu</span><span>Fri</span><span>Sat</span
+                    ><span>Sun</span>
                   </div>
-                  <span class="cta wk-cta" aria-hidden="true"><span class="cta-t">View case study</span><span class="cta-i"><i class="ph ph-arrow-right"></i><i class="ph ph-arrow-right"></i></span></span>
+                  <div class="bk-days" id="bkDays" aria-label="Dates"></div>
+                  <p class="bk-msg" id="bkMsg" role="status"></p>
+                  <div class="bk-tz">
+                    <label for="bkTz">Time zone</label>
+                    <div class="bk-tzsel">
+                      <i class="ph ph-globe" aria-hidden="true"></i
+                      ><select id="bkTz"></select
+                      ><i class="ph ph-caret-down" aria-hidden="true"></i>
+                    </div>
+                  </div>
                 </div>
-                <p class="wk-meta"><span>Wye Dental</span><span>Return on ad spend <b>15.3×</b></span></p>
-                <h2 class="wk-t">$92,000 in revenue from a $6,000 ad spend</h2>
-              </a>
-            </article>
+                <div class="bk-times" id="bkTimes" hidden>
+                  <p class="bk-day" id="bkDay"></p>
+                  <div
+                    class="bk-slots"
+                    id="bkSlots"
+                    aria-label="Available times"
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            <form class="bk-step" id="bkS2" novalidate hidden>
+              <button
+                type="button"
+                class="bk-back"
+                id="bkBack"
+                aria-label="Back to dates and times"
+              >
+                <i class="ph ph-arrow-left" aria-hidden="true"></i>
+              </button>
+              <h4 class="bk-h">Enter your details</h4>
+              <div class="bk-fields">
+                <div class="field">
+                  <label for="f-name">Full name *</label
+                  ><input
+                    id="f-name"
+                    name="name"
+                    type="text"
+                    autocomplete="name"
+                    required
+                  /><span class="err" aria-live="polite"></span>
+                </div>
+                <div class="field">
+                  <label for="f-email">Work email *</label
+                  ><input
+                    id="f-email"
+                    name="email"
+                    type="email"
+                    autocomplete="email"
+                    required
+                  /><span class="err" aria-live="polite"></span>
+                </div>
+                <div class="field">
+                  <label for="f-phone">Phone</label
+                  ><input
+                    id="f-phone"
+                    name="phone"
+                    type="tel"
+                    autocomplete="tel"
+                  /><span class="err"></span>
+                </div>
+                <div class="field">
+                  <label for="f-clinic">Clinic name</label
+                  ><input
+                    id="f-clinic"
+                    name="clinic"
+                    type="text"
+                    autocomplete="organization"
+                  /><span class="err"></span>
+                </div>
+                <div class="field full">
+                  <label for="f-site">Website URL</label
+                  ><input
+                    id="f-site"
+                    name="website"
+                    type="url"
+                    autocomplete="url"
+                    placeholder="https://yourclinic.ca"
+                  /><span class="err"></span>
+                </div>
+                <div class="field full">
+                  <label for="f-msg">What do you need help with?</label
+                  ><textarea
+                    id="f-msg"
+                    name="message"
+                    placeholder="Implants, Invisalign, video, ads..."
+                  ></textarea>
+                </div>
+              </div>
+              <p class="bk-err" id="bkErr" role="alert"></p>
+              <button class="btn btn-lime bk-submit" type="submit">
+                Schedule Call
+              </button>
+            </form>
+
+            <div class="bk-step bk-s3" id="bkS3" role="status" hidden>
+              <span class="bk-ok"
+                ><i class="ph-fill ph-check-circle" aria-hidden="true"></i
+              ></span>
+              <h4 class="bk-h">You're scheduled</h4>
+              <p id="bkDone"></p>
+              <p class="bk-preview" id="bkPreview" hidden>
+                Preview mode: booking isn't connected yet, so nothing was
+                sent.
+              </p>
+            </div>
+          </div>
+        </div>
+        <p class="alt">
+          Prefer LeadConnector's booking page?
+          <a
+            href="https://api.leadconnectorhq.com/widget/bookings/dmc-calendar-intro"
+            target="_blank"
+            rel="noopener"
+            >Open it in a new tab</a
+          >
+        </p>
             </div>
           </div>
         </div>
@@ -5444,6 +5622,422 @@
             }),
           );
           if (items[0]) setOpen(items[0], true, true);
+        }
+
+        /* ---------- booking calendar: live open times from LeadConnector ---------- */
+        {
+          const bk = $("#bk"),
+            CAL = bk.dataset.calendar,
+            BOOK_URL = bk.dataset.bookEndpoint || "";
+          const daysEl = $("#bkDays"),
+            monthEl = $("#bkMonth"),
+            msgEl = $("#bkMsg"),
+            tzSel = $("#bkTz");
+          const timesEl = $("#bkTimes"),
+            slotsEl = $("#bkSlots"),
+            dayEl = $("#bkDay");
+          const prevBtn = $("#bkPrev"),
+            nextBtn = $("#bkNext"),
+            s1 = $("#bkS1"),
+            s2 = $("#bkS2"),
+            s3 = $("#bkS3");
+          const localTz =
+            Intl.DateTimeFormat().resolvedOptions().timeZone ||
+            "America/Edmonton";
+          const ZONES = [
+            [localTz, "Your time zone"],
+            ["America/Edmonton", "Mountain Time (Calgary)"],
+            ["America/Vancouver", "Pacific Time (Vancouver)"],
+            ["America/Regina", "Central Time (Regina)"],
+            ["America/Winnipeg", "Central Time (Winnipeg)"],
+            ["America/Toronto", "Eastern Time (Toronto)"],
+            ["America/Halifax", "Atlantic Time (Halifax)"],
+            ["America/St_Johns", "Newfoundland Time"],
+          ];
+          const MONTHS = [
+            "January",
+            "February",
+            "March",
+            "April",
+            "May",
+            "June",
+            "July",
+            "August",
+            "September",
+            "October",
+            "November",
+            "December",
+          ];
+          const p2 = (n) => String(n).padStart(2, "0");
+          const isoToday = (tz) =>
+            new Intl.DateTimeFormat("en-CA", {
+              timeZone: tz,
+              year: "numeric",
+              month: "2-digit",
+              day: "2-digit",
+            }).format(new Date());
+          const clock = (tz) =>
+            new Intl.DateTimeFormat("en-US", {
+              hour: "numeric",
+              minute: "2-digit",
+              timeZone: tz,
+            })
+              .format(new Date())
+              .toLowerCase()
+              .replace(" ", "");
+          const dayName = (iso) => {
+            const [y, m, d] = iso.split("-").map(Number);
+            return new Date(Date.UTC(y, m - 1, d)).toLocaleDateString("en-US", {
+              weekday: "long",
+              month: "long",
+              day: "numeric",
+              year: "numeric",
+              timeZone: "UTC",
+            });
+          };
+          // slot strings come back already in the requested zone, e.g. 2026-10-26T20:30:00-06:00
+          const slotTime = (s) => {
+            let h = +s.slice(11, 13);
+            const mi = s.slice(14, 16),
+              ap = h >= 12 ? "pm" : "am";
+            h = h % 12 || 12;
+            return h + ":" + mi + ap;
+          };
+
+          [...new Map(ZONES.map((z) => [z[0], z])).values()].forEach(
+            ([id, name]) => {
+              const o = document.createElement("option");
+              o.value = id;
+              o.textContent = name + " (" + clock(id) + ")";
+              tzSel.append(o);
+            },
+          );
+          let tz = localTz,
+            today = isoToday(tz),
+            view = { y: +today.slice(0, 4), m: +today.slice(5, 7) - 1 };
+          const cache = {},
+            sel = { date: null, slot: null };
+          tzSel.value = tz;
+          const tzLabel = () => {
+            $("#bkTzLabel").textContent =
+              tzSel.options[tzSel.selectedIndex].textContent.replace(
+                / \(.*\)$/,
+                "",
+              ) +
+              " (" +
+              tz.replace(/_/g, " ") +
+              ")";
+          };
+
+          // offset of the chosen zone from UTC (ms) around a given instant
+          const tzOff = (t) => {
+            const p = Object.fromEntries(
+              new Intl.DateTimeFormat("en-US", {
+                timeZone: tz,
+                hourCycle: "h23",
+                year: "numeric",
+                month: "2-digit",
+                day: "2-digit",
+                hour: "2-digit",
+                minute: "2-digit",
+                second: "2-digit",
+              })
+                .formatToParts(new Date(t))
+                .map((x) => [x.type, x.value]),
+            );
+            return (
+              Date.UTC(
+                +p.year,
+                p.month - 1,
+                +p.day,
+                +p.hour,
+                +p.minute,
+                +p.second,
+              ) -
+              Math.floor(t / 1000) * 1000
+            );
+          };
+
+          async function load(y, m) {
+            const key = tz + "|" + y + "|" + m;
+            if (!cache[key]) {
+              // the API allows at most 31 days, so ask for exactly this month in the chosen zone
+              const start = Date.UTC(y, m, 1) - tzOff(Date.UTC(y, m, 1)),
+                end = Date.UTC(y, m + 1, 1) - tzOff(Date.UTC(y, m + 1, 1)) - 1;
+              cache[key] = fetch(
+                "https://backend.leadconnectorhq.com/calendars/" +
+                  CAL +
+                  "/free-slots?startDate=" +
+                  start +
+                  "&endDate=" +
+                  end +
+                  "&timezone=" +
+                  encodeURIComponent(tz),
+              )
+                .then((r) => {
+                  if (!r.ok) throw new Error(r.status);
+                  return r.json();
+                })
+                .then((j) => {
+                  const pre = y + "-" + p2(m + 1) + "-",
+                    out = {};
+                  Object.keys(j).forEach((k) => {
+                    if (
+                      k.startsWith(pre) &&
+                      j[k] &&
+                      j[k].slots &&
+                      j[k].slots.length
+                    )
+                      out[k] = j[k].slots;
+                  });
+                  return out;
+                })
+                .catch((e) => {
+                  delete cache[key];
+                  throw e;
+                });
+            }
+            return cache[key];
+          }
+
+          async function render() {
+            const { y, m } = view,
+              now = isoToday(tz);
+            monthEl.textContent = MONTHS[m] + " " + y;
+            prevBtn.disabled =
+              y < +now.slice(0, 4) ||
+              (y === +now.slice(0, 4) && m <= +now.slice(5, 7) - 1);
+            const first = (new Date(Date.UTC(y, m, 1)).getUTCDay() + 6) % 7,
+              days = new Date(Date.UTC(y, m + 1, 0)).getUTCDate();
+            daysEl.innerHTML =
+              "<span></span>".repeat(first) +
+              '<span class="sk"></span>'.repeat(days);
+            msgEl.textContent = "";
+            let open;
+            try {
+              open = await load(y, m);
+            } catch (e) {
+              if (view.y !== y || view.m !== m) return;
+              daysEl.innerHTML =
+                "<span></span>".repeat(first) +
+                Array.from(
+                  { length: days },
+                  (_, i) => "<span>" + (i + 1) + "</span>",
+                ).join("");
+              msgEl.innerHTML =
+                'We couldn’t load open times. <a href="https://api.leadconnectorhq.com/widget/bookings/dmc-calendar-intro" target="_blank" rel="noopener">Book on LeadConnector</a>';
+              return;
+            }
+            if (view.y !== y || view.m !== m) return;
+            let html = "<span></span>".repeat(first);
+            for (let d = 1; d <= days; d++) {
+              const iso = y + "-" + p2(m + 1) + "-" + p2(d),
+                cls = iso === now ? ' class="today"' : "";
+              html += open[iso]
+                ? '<button type="button"' +
+                  cls +
+                  ' data-d="' +
+                  iso +
+                  '" aria-pressed="' +
+                  (sel.date === iso) +
+                  '" aria-label="' +
+                  dayName(iso) +
+                  ", " +
+                  open[iso].length +
+                  ' times available">' +
+                  d +
+                  "</button>"
+                : "<span" + cls + ' aria-hidden="true">' + d + "</span>";
+            }
+            daysEl.innerHTML = html;
+            if (!Object.keys(open).length)
+              msgEl.innerHTML =
+                "No open times in " +
+                MONTHS[m] +
+                '. <button type="button" data-jump>See next month</button>';
+            if (hasG && !reduce)
+              gsap.fromTo($$("button", daysEl), { scale: 0.6, opacity: 0 }, {
+                scale: 1,
+                opacity: 1,
+                clearProps: "transform,opacity",
+                duration: 0.5,
+                ease: "back.out(2)",
+                stagger: 0.025,
+              });
+          }
+
+          function pickDay(iso) {
+            sel.date = iso;
+            sel.slot = null;
+            $$("button", daysEl).forEach((b) =>
+              b.setAttribute("aria-pressed", b.dataset.d === iso),
+            );
+            bk.classList.add("has-day");
+            timesEl.hidden = false;
+            dayEl.textContent = dayName(iso).replace(/, \d{4}$/, "");
+            const key = tz + "|" + view.y + "|" + view.m;
+            cache[key].then((open) => {
+              slotsEl.innerHTML = open[iso]
+                .map(
+                  (s) =>
+                    '<div class="bk-slot"><button type="button" class="t" data-s="' +
+                    s +
+                    '">' +
+                    slotTime(s) +
+                    '</button><button type="button" class="go" tabindex="-1">Next</button></div>',
+                )
+                .join("");
+              if (hasG && !reduce)
+                gsap.from(slotsEl.children, {
+                  x: 24,
+                  opacity: 0,
+                  duration: 0.6,
+                  ease: "expo.out",
+                  stagger: 0.05,
+                });
+            });
+          }
+
+          function step(n) {
+            [s1, s2, s3].forEach((s, i) => {
+              s.hidden = i !== n - 1;
+            });
+            if (hasG && !reduce)
+              gsap.from([s1, s2, s3][n - 1], {
+                y: 16,
+                opacity: 0,
+                duration: 0.6,
+                ease: "power3.out",
+              });
+            if (hasG) ScrollTrigger.refresh();
+          }
+
+          daysEl.addEventListener("click", (e) => {
+            const b = e.target.closest("button[data-d]");
+            if (b) pickDay(b.dataset.d);
+          });
+          msgEl.addEventListener("click", (e) => {
+            if (e.target.closest("[data-jump]")) nextBtn.click();
+          });
+          slotsEl.addEventListener("click", (e) => {
+            const row = e.target.closest(".bk-slot");
+            if (!row) return;
+            if (e.target.closest(".go")) {
+              $("#bkWhenRow").hidden = false;
+              $("#bkWhen").textContent =
+                slotTime(sel.slot) + ", " + dayName(sel.date);
+              step(2);
+              $("#f-name").focus();
+              return;
+            }
+            sel.slot = $(".t", row).dataset.s;
+            $$(".bk-slot", slotsEl).forEach((r) => {
+              const on = r === row;
+              r.classList.toggle("sel", on);
+              $(".go", r).tabIndex = on ? 0 : -1;
+            });
+          });
+          prevBtn.addEventListener("click", () => {
+            if (--view.m < 0) {
+              view.m = 11;
+              view.y--;
+            }
+            render();
+          });
+          nextBtn.addEventListener("click", () => {
+            if (++view.m > 11) {
+              view.m = 0;
+              view.y++;
+            }
+            render();
+          });
+          tzSel.addEventListener("change", () => {
+            tz = tzSel.value;
+            sel.date = sel.slot = null;
+            bk.classList.remove("has-day");
+            timesEl.hidden = true;
+            tzLabel();
+            render();
+          });
+          $("#bkBack").addEventListener("click", () => {
+            $("#bkWhenRow").hidden = true;
+            step(1);
+          });
+
+          s2.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            let ok = true;
+            [
+              [
+                "#f-name",
+                (v) => v.trim().length > 1,
+                "Please enter your name.",
+              ],
+              [
+                "#f-email",
+                (v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v),
+                "Please enter a valid email.",
+              ],
+            ].forEach(([s, test, msg]) => {
+              const inp = $(s),
+                fld = inp.closest(".field"),
+                err = $(".err", fld),
+                good = test(inp.value);
+              fld.classList.toggle("bad", !good);
+              err.textContent = good ? "" : msg;
+              if (!good && ok) {
+                inp.focus();
+                ok = false;
+              }
+            });
+            if (!ok) return;
+            const data = Object.fromEntries(new FormData(s2));
+            $("#bkErr").textContent = "";
+            if (BOOK_URL) {
+              const btn = $(".bk-submit", s2);
+              btn.disabled = true;
+              btn.textContent = "Scheduling...";
+              try {
+                const r = await fetch(BOOK_URL, {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    calendarId: CAL,
+                    slot: sel.slot,
+                    timezone: tz,
+                    ...data,
+                  }),
+                });
+                if (!r.ok) throw new Error(r.status);
+              } catch (err) {
+                btn.disabled = false;
+                btn.textContent = "Schedule Call";
+                $("#bkErr").textContent =
+                  "That time could not be booked. Please pick another time or try again.";
+                return;
+              }
+            }
+            $("#bkDone").textContent =
+              "Intro Strategy Call on " +
+              $("#bkWhen").textContent +
+              ". A confirmation will go to " +
+              data.email +
+              ".";
+            $("#bkPreview").hidden = !!BOOK_URL;
+            step(3);
+          });
+
+          tzLabel();
+          // load open times once the section is close to the viewport
+          new IntersectionObserver(
+            (es, o) => {
+              if (es[0].isIntersecting) {
+                o.disconnect();
+                render();
+              }
+            },
+            { rootMargin: "600px" },
+          ).observe(bk);
         }
 
         /* ---------- magnetic buttons ---------- */
